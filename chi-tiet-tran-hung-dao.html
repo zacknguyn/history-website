@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trần Hưng Đạo | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        /* NAVBAR */
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.78) 45%, rgba(0,0,0,0.2) 100%),
+                        url('images/tran-hung-dao.jpg') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        /* BREADCRUMB */
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* LAYOUT */
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        /* CONTENT BOX */
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8);
+            border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot {
+            position: absolute; left: -24px; top: 4px;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--gold); border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        /* QUOTE BLOCK */
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        /* TRAIT TAGS */
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+
+        /* ACHIEVE GRID */
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* RELATION GRID */
+        .relation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .relation-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 14px; padding: 16px; display: flex; gap: 13px; align-items: flex-start; }
+        .relation-avatar-placeholder { width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .relation-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+        .relation-role { font-size: 11px; color: #888; margin-bottom: 6px; }
+        .relation-desc { font-size: 12px; color: #555; line-height: 1.5; }
+        .relation-link { font-size: 11px; color: var(--main); text-decoration: none; font-weight: 500; margin-top: 6px; display: inline-block; }
+        .relation-link:hover { text-decoration: underline; }
+
+        /* HIGHLIGHT INLINE */
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 42%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #ede7d3; flex-shrink: 0; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        /* LESSON BOX */
+        .lesson-box {
+            background: linear-gradient(135deg, #1e1206, #3a2010);
+            border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white;
+        }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <div class="hero-badge">⚔️ NHÂN VẬT LỊCH SỬ</div>
+        <h1>TRẦN HƯNG ĐẠO</h1>
+        <p class="subtitle">Trần Quốc Tuấn — Đại nguyên soái lừng danh thiên hạ, ba lần lãnh đạo đánh bại đế chế Nguyên Mông hùng mạnh nhất thế giới</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 1228 – 1300</span>
+            <span class="hero-tag">🏛️ Triều đại nhà Trần</span>
+            <span class="hero-tag">⚔️ Đại nguyên soái</span>
+        </div>
+    </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="ly-tran.html">Nhà Lý – Nhà Trần</a>
+    <span>›</span>
+    Trần Hưng Đạo
+</div>
+
+<!-- LAYOUT -->
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- TIỂU SỬ -->
+        <div class="content-box">
+            <h2>📖 TIỂU SỬ</h2>
+            <p>
+                Trần Hưng Đạo, tên thật là <span class="hl">Trần Quốc Tuấn</span>, sinh khoảng năm 1228, là con trai của An Sinh Vương Trần Liễu — anh trai vua Trần Thái Tông. Ngay từ thuở nhỏ, ông đã bộc lộ thiên tư xuất chúng, ham học hỏi binh thư và có chí lớn cứu nước. Ông được học hành bài bản, tinh thông văn võ, đặc biệt uyên thâm về binh pháp và chiến lược quân sự.
+            </p>
+            <p>
+                Mang trong mình mối thù nhà — cha ông từng dặn phải đòi lại ngôi vua từ tay Trần Thái Tông — nhưng <span class="hl">Trần Quốc Tuấn</span> đã chọn đặt lợi ích quốc gia lên trên tư thù cá nhân. Khi vận nước lâm nguy trước giặc Nguyên Mông, ông gác bỏ hiềm khích, một lòng phò vua giữ nước, trở thành trụ cột vĩ đại nhất của triều Trần.
+            </p>
+            <div class="quote-block">
+                <p>"Bệ hạ muốn hàng giặc thì trước hãy chém đầu thần đi đã, rồi hãy hàng!"</p>
+                <span class="quote-source">— Trần Hưng Đạo trả lời vua Trần Nhân Tông khi bàn đến chuyện đầu hàng quân Nguyên</span>
+            </div>
+            <p>
+                Ông lần lượt giữ chức <span class="hl">Quốc công Tiết chế</span> — tổng tư lệnh tối cao toàn bộ lực lượng vũ trang Đại Việt — trong cả ba cuộc kháng chiến chống Nguyên Mông (1258, 1285, 1288). Cả ba lần đều đại thắng, khiến tên tuổi ông vang danh không chỉ ở Đại Việt mà còn trên toàn thế giới thời bấy giờ.
+            </p>
+            <div class="trait-tags">
+                <span class="trait-tag trait-gold">⚔️ Thiên tài quân sự</span>
+                <span class="trait-tag trait-green">🤝 Đặt nước trên tư thù</span>
+                <span class="trait-tag trait-blue">📖 Tinh thông binh pháp</span>
+                <span class="trait-tag trait-red">🦁 Ý chí bất khuất</span>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN LỊCH SỬ -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Khoảng 1228</div>
+                    <div class="tl-title">Trần Quốc Tuấn ra đời</div>
+                    <div class="tl-text">Sinh ra trong hoàng tộc nhà Trần, là con của An Sinh Vương Trần Liễu. Cha ông có mối hiềm khích sâu sắc với vua Trần Thái Tông, và trước khi mất đã dặn con phải đòi lại ngôi vua. Đây là gánh nặng mà ông phải mang suốt cuộc đời — và là thử thách lớn nhất về nhân cách.</div>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">1258</div>
+                    <div class="tl-title">Kháng chiến chống Nguyên Mông lần thứ nhất</div>
+                    <div class="tl-text">Quân Nguyên Mông lần đầu tiến đánh Đại Việt. Trần Quốc Tuấn tham gia lãnh đạo kháng chiến bên cạnh vua Trần Thái Tông. Quân dân Đại Việt áp dụng chiến thuật vườn không nhà trống, rút lui chiến lược rồi phản công quyết liệt, đánh bại quân Nguyên buộc chúng phải rút lui.</div>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">1283</div>
+                    <div class="tl-title">Được phong Quốc công Tiết chế — tổng tư lệnh tối cao</div>
+                    <div class="tl-text">Trước nguy cơ Nguyên Mông chuẩn bị xâm lược lần hai với lực lượng đông gấp bội, vua Trần Nhân Tông phong Trần Quốc Tuấn làm Quốc công Tiết chế — nắm toàn bộ binh quyền cả nước. Ông soạn thảo Hịch tướng sĩ, khích lệ ba quân cùng một lòng bảo vệ non sông.</div>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">1285</div>
+                    <div class="tl-title">Đại thắng kháng chiến lần thứ hai</div>
+                    <div class="tl-text">Hơn 50 vạn quân Nguyên do Thoát Hoan chỉ huy ồ ạt tiến vào Đại Việt. Trần Hưng Đạo chủ động rút lui chiến lược để bảo toàn lực lượng, sau đó phản công mãnh liệt. Các trận Hàm Tử, Chương Dương, Tây Kết liên tiếp đại thắng. Thoát Hoan phải chui vào ống đồng để trốn chạy về nước — nỗi nhục muôn đời của đế chế Nguyên Mông.</td>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">1287 – 1288</div>
+                    <div class="tl-title">Trận Bạch Đằng — đỉnh cao thiên tài quân sự</div>
+                    <div class="tl-text">Nguyên Mông tấn công lần ba với thủy quân hùng mạnh. Trần Hưng Đạo cho đóng cọc nhọn bịt sắt dưới lòng sông Bạch Đằng — chiến thuật kế thừa từ Ngô Quyền. Khi thủy triều rút, toàn bộ hạm đội Nguyên Mông bị cọc đâm vỡ thuyền, bị tiêu diệt hoàn toàn. Đây là chiến thắng vĩ đại nhất, chấm dứt mọi tham vọng xâm lược của đế chế Nguyên Mông đối với Đại Việt.</div>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Sau 1288</div>
+                    <div class="tl-title">Soạn binh thư — để lại di sản trí tuệ</div>
+                    <div class="tl-text">Sau chiến thắng, ông lui về Vạn Kiếp dưỡng lão và dành thời gian soạn thảo các bộ binh thư quý giá: Binh thư yếu lược và Vạn Kiếp tông bí truyền thư — tổng hợp tinh hoa binh pháp của dân tộc Việt, trở thành tài sản quân sự vô giá cho các thế hệ sau.</div>
+                </div>
+
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">1300</div>
+                    <div class="tl-title">Trần Hưng Đạo qua đời — hóa thành Đức Thánh Trần</div>
+                    <div class="tl-text">Ông mất tại phủ đệ Vạn Kiếp (nay thuộc Chí Linh, Hải Dương), hưởng thọ khoảng 72 tuổi. Nhân dân cả nước thương tiếc vô hạn. Vua Trần Anh Tông truy phong ông là Thái sư Thượng phụ Thượng quốc công Nhân Vũ Hưng Đạo Đại Vương. Từ đó đến nay, ông được dân gian tôn thờ là Đức Thánh Trần — vị thần hộ quốc bảo dân của người Việt.</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- THÀNH TỰU -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU NỔI BẬT</h2>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">🏹</span>
+                    <div class="achieve-title">Ba lần đại thắng Nguyên Mông</div>
+                    <div class="achieve-text">Kỳ tích hiếm có trong lịch sử thế giới — đánh bại đế chế Nguyên Mông hùng mạnh nhất thời đại ba lần liên tiếp (1258, 1285, 1288), bảo vệ vẹn toàn nền độc lập của Đại Việt.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">⚓</span>
+                    <div class="achieve-title">Trận Bạch Đằng 1288</div>
+                    <div class="achieve-text">Chiến thắng quân sự vĩ đại nhất lịch sử Việt Nam — dùng cọc gỗ bịt sắt tiêu diệt toàn bộ hạm đội Nguyên Mông, chấm dứt vĩnh viễn tham vọng xâm lược của đế chế hùng mạnh nhất địa cầu.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">📜</span>
+                    <div class="achieve-title">Hịch tướng sĩ bất hủ</div>
+                    <div class="achieve-text">Áng văn chính luận – quân sự xuất sắc nhất lịch sử Việt Nam, thể hiện tinh thần yêu nước mãnh liệt, khích lệ ba quân tướng sĩ một lòng bảo vệ non sông trước giặc ngoại xâm.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">📚</span>
+                    <div class="achieve-title">Binh thư yếu lược</div>
+                    <div class="achieve-text">Bộ binh thư tổng hợp tinh hoa chiến lược quân sự Việt Nam, được các thế hệ tướng lĩnh sau nghiên cứu và ứng dụng. Là di sản trí tuệ quân sự vô giá của dân tộc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA LỊCH SỬ -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA VÀ BÀI HỌC LỊCH SỬ</h2>
+            <p>
+                Trần Hưng Đạo không chỉ là một thiên tài quân sự — ông còn là biểu tượng của <span class="hl">lòng yêu nước vượt trên tư thù</span>. Mang trong mình lời dặn của cha phải đòi lại ngôi vua, nhưng ông đã chọn con đường cao cả hơn: gác bỏ thù riêng, dồn toàn lực cho sự nghiệp bảo vệ đất nước.
+            </p>
+            <p>
+                Chiến lược <span class="hl">vườn không nhà trống</span> — rút lui để bảo toàn lực lượng, rồi phản công khi địch suy yếu — là bài học quân sự trường tồn, được áp dụng trong nhiều cuộc kháng chiến của dân tộc Việt về sau. Tư tưởng "khoan thư sức dân để làm kế sâu rễ bền gốc" của ông vẫn còn nguyên giá trị đến tận ngày nay.
+            </p>
+            <div class="quote-block">
+                <p>"Ngày xưa Triệu Vũ dựng nước, vua Hán cho quân đánh, nhân dân làm kế vườn không nhà trống... Vậy nên khoan thư sức dân để làm kế sâu rễ bền gốc, đó là thượng sách giữ nước vậy."</p>
+                <span class="quote-source">— Trần Hưng Đạo, Di chúc trước khi mất</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🏛️ Nhận định tổng hợp</div>
+                <div class="lesson-text">Trần Hưng Đạo là vị anh hùng dân tộc vĩ đại nhất lịch sử Việt Nam — người mà tên tuổi và tài năng vượt ra ngoài biên giới một quốc gia để trở thành huyền thoại của toàn nhân loại. Ông không chỉ thắng giặc bằng vũ lực mà còn thắng bằng trí tuệ, bằng lòng người và bằng tấm gương hy sinh cá nhân vì đại nghĩa dân tộc.</div>
+            </div>
+        </div>
+
+        <!-- QUAN HỆ NHÂN VẬT -->
+        <div class="content-box">
+            <h2>👥 QUAN HỆ NHÂN VẬT</h2>
+            <div class="relation-grid">
+                <div class="relation-card">
+                    <div class="relation-avatar-placeholder" style="background: #5a7a9a;">👑</div>
+                    <div>
+                        <div class="relation-name">Trần Nhân Tông</div>
+                        <div class="relation-role">Vua / Người giao binh quyền</div>
+                        <div class="relation-desc">Vị vua anh minh đã tin tưởng trao toàn bộ binh quyền cho Trần Hưng Đạo. Cả hai cùng lãnh đạo dân tộc Đại Việt vượt qua hai cuộc kháng chiến chống Nguyên Mông 1285 và 1288.</div>
+                        <a href="chi-tiet-tran-nhan-tong.html" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar-placeholder" style="background: #8a4a3a;">⚔️</div>
+                    <div>
+                        <div class="relation-name">Thoát Hoan</div>
+                        <div class="relation-role">Kẻ thù / Tướng Nguyên Mông</div>
+                        <div class="relation-desc">Con trai Hốt Tất Liệt, thống lĩnh đại quân Nguyên Mông xâm lược Đại Việt. Bị Trần Hưng Đạo đánh bại nhục nhã trong cuộc kháng chiến 1285, phải chui vào ống đồng tháo chạy về nước.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar-placeholder" style="background: #3a6a5a;">🤝</div>
+                    <div>
+                        <div class="relation-name">Trần Quang Khải</div>
+                        <div class="relation-role">Tướng lĩnh / Đồng đội</div>
+                        <div class="relation-desc">Thái sư nhà Trần, người cùng Trần Hưng Đạo lập nên chiến công lừng lẫy tại trận Chương Dương và Hàm Tử trong cuộc kháng chiến lần hai 1285.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar-placeholder" style="background: #7a6855;">👑</div>
+                    <div>
+                        <div class="relation-name">Trần Liễu</div>
+                        <div class="relation-role">Cha ruột</div>
+                        <div class="relation-desc">An Sinh Vương Trần Liễu — người để lại lời dặn đòi ngôi vua nhưng Trần Quốc Tuấn đã chọn đặt quốc gia lên trên, gác bỏ tư thù để phò vua giữ nước, thể hiện nhân cách cao thượng hiếm có.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <!-- THÔNG TIN -->
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Tên thật</td><td>Trần Quốc Tuấn</td></tr>
+                <tr><td>Hiệu</td><td>Hưng Đạo Đại Vương</td></tr>
+                <tr><td>Sinh</td><td>Khoảng 1228</td></tr>
+                <tr><td>Mất</td><td>1300, Vạn Kiếp</td></tr>
+                <tr><td>Chức vụ</td><td>Quốc công Tiết chế</td></tr>
+                <tr><td>Triều đại</td><td>Nhà Trần</td></tr>
+                <tr><td>Thân phụ</td><td>An Sinh Vương Trần Liễu</td></tr>
+                <tr><td>Thờ phụng</td><td>Đức Thánh Trần</td></tr>
+            </table>
+        </div>
+
+        <!-- DI SẢN -->
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+            <div class="legacy-item">
+                <div class="legacy-icon">⛩️</div>
+                <div class="legacy-text">
+                    <strong>Đền Kiếp Bạc – Hải Dương</strong>
+                    Ngôi đền thờ Trần Hưng Đạo tại Chí Linh, Hải Dương — nơi ông từng đặt đại bản doanh và qua đời. Hàng năm thu hút hàng triệu lượt khách hành hương, đặc biệt vào dịp lễ hội tháng 8 âm lịch.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">📜</div>
+                <div class="legacy-text">
+                    <strong>Hịch tướng sĩ</strong>
+                    Áng văn bất hủ được đưa vào chương trình Ngữ văn phổ thông Việt Nam — biểu tượng của tinh thần yêu nước và ý chí chống ngoại xâm bất khuất của dân tộc Việt.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🏅</div>
+                <div class="legacy-text">
+                    <strong>Tượng đài và đường phố</strong>
+                    Tên ông được đặt cho hàng trăm con đường, trường học, bệnh viện trên khắp Việt Nam. Tượng đài Trần Hưng Đạo tại TP.HCM và nhiều tỉnh thành là biểu tượng văn hóa – lịch sử quen thuộc.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">📚</div>
+                <div class="legacy-text">
+                    <strong>Binh thư yếu lược</strong>
+                    Bộ binh thư quý giá do ông soạn thảo, tổng hợp tinh hoa chiến lược quân sự Việt Nam — tài sản trí tuệ vô giá được các thế hệ sau nghiên cứu và kế thừa.
+                </div>
+            </div>
+        </div>
+
+        <!-- NHÂN VẬT LIÊN QUAN -->
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="chi-tiet-ly-thai-to.html" class="char-mini">
+                <img src="images/ly-thai-to1.jpeg" onerror="this.style.background='#c8956c';this.removeAttribute('src');this.style.display='block'">
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lý Thái Tổ</div>
+                    <div class="char-mini-desc">Vua khai quốc — dời đô Thăng Long</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-ngo-quyen.html" class="char-mini">
+                <img src="images/ngo-quyen.jpg" onerror="this.style.background='#5a6e7a';this.removeAttribute('src');this.style.display='block'">
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Ngô Quyền</div>
+                    <div class="char-mini-desc">Tiền nhân — trận Bạch Đằng 938</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-tran-nhan-tong.html" class="char-mini">
+                <img src="images/tran-nhan-tong.jpg" onerror="this.style.background='#7a6855';this.removeAttribute('src');this.style.display='block'">
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Trần Nhân Tông</div>
+                    <div class="char-mini-desc">Vua Trần — lãnh đạo kháng chiến</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <!-- QUAY LẠI -->
+        <a href="ly-tran.html" class="btn-back">← Quay lại Nhà Lý – Nhà Trần</a>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-bottom">
+        <span>© 2026 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hưng Đạo Vương — Bạn Là Trần Quốc Tuấn</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a1a;
+  --parchment: #e8dfc8;
+  --blue: #1a3a6b;
+  --blue-light: #4a7fc1;
+  --gold: #c9a227;
+  --gold-light: #f0c040;
+  --red: #8B1a1a;
+  --silver: #a8b8c8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--ink);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 15% 25%, rgba(26,58,107,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 75%, rgba(139,26,26,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(10,10,26,0.6) 0%, transparent 70%);
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,26,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,162,39,0.3);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 18px; color: var(--gold-light);
+  text-decoration: none; letter-spacing: 3px;
+}
+.nav-back {
+  color: rgba(232,223,200,0.6); font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+}
+.nav-back:hover { color: var(--gold-light); }
+
+.progress-bar {
+  position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+  height: 3px; background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold));
+  transition: width 0.6s ease;
+}
+
+.story-container {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+.scene { display: none; animation: fadeScene 0.8s ease; }
+.scene.active { display: block; }
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(26,58,107,0.2);
+  border: 1px solid rgba(74,127,193,0.4);
+  border-radius: 30px; padding: 6px 16px;
+  font-size: 13px; color: var(--blue-light);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.scene-img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(201,162,39,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  filter: sepia(0.4) contrast(1.1) hue-rotate(180deg);
+}
+
+.narrator {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.8;
+}
+
+.story-text {
+  font-size: 20px; line-height: 1.9;
+  color: rgba(232,223,200,0.92);
+  margin-bottom: 16px;
+}
+.story-text em { color: var(--gold-light); font-style: italic; }
+.story-text strong { color: white; font-weight: 600; }
+
+.dialogue {
+  background: rgba(26,58,107,0.12);
+  border-left: 3px solid var(--blue-light);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-size: 19px; font-style: italic;
+  color: var(--parchment); line-height: 1.7;
+}
+.dialogue-speaker {
+  font-size: 12px; font-style: normal;
+  color: var(--blue-light); letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.divider {
+  text-align: center; color: var(--gold);
+  opacity: 0.4; font-size: 18px; letter-spacing: 12px;
+  margin: 28px 0;
+}
+
+.choices-title {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 36px 0 16px; opacity: 0.8;
+}
+
+.choices { display: flex; flex-direction: column; gap: 12px; }
+
+.choice-btn {
+  background: rgba(232,223,200,0.04);
+  border: 1px solid rgba(232,223,200,0.15);
+  border-radius: 12px; padding: 18px 24px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 17px; text-align: left; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: flex-start; gap: 14px;
+  line-height: 1.5;
+}
+.choice-btn:hover {
+  background: rgba(26,58,107,0.15);
+  border-color: rgba(74,127,193,0.5);
+  transform: translateX(6px);
+}
+
+.choice-letter {
+  width: 28px; height: 28px; min-width: 28px;
+  border-radius: 50%; background: rgba(26,58,107,0.3);
+  border: 1px solid var(--blue-light); color: var(--blue-light);
+  font-size: 13px; font-weight: 600; font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif;
+}
+
+.outcome {
+  background: rgba(139,26,26,0.15);
+  border: 1px solid rgba(139,26,26,0.3);
+  border-radius: 16px; padding: 24px; margin: 24px 0;
+  font-size: 18px; line-height: 1.8;
+}
+.outcome.good {
+  background: rgba(26,107,58,0.1);
+  border-color: rgba(26,107,58,0.3);
+}
+.outcome-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+
+.continue-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 16px 32px;
+  background: linear-gradient(135deg, var(--blue), #0a1f3d);
+  border: 1px solid rgba(201,162,39,0.4);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 17px;
+  cursor: pointer; transition: all 0.3s;
+}
+.continue-btn:hover {
+  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26,58,107,0.5);
+}
+
+.final-result { text-align: center; padding: 40px 20px; }
+.final-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px; color: var(--gold-light);
+  margin-bottom: 16px; line-height: 1.2;
+}
+.final-score {
+  display: inline-block;
+  background: rgba(26,58,107,0.2);
+  border: 1px solid var(--gold);
+  border-radius: 50%; width: 120px; height: 120px;
+  line-height: 120px; font-size: 40px;
+  color: var(--gold-light); margin: 24px auto;
+}
+.final-desc {
+  font-size: 18px; color: rgba(232,223,200,0.8);
+  line-height: 1.8; max-width: 500px; margin: 0 auto 32px;
+}
+.restart-btn {
+  padding: 14px 32px; background: transparent;
+  border: 1px solid var(--gold); border-radius: 12px;
+  color: var(--gold-light); font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+}
+.restart-btn:hover { background: rgba(201,162,39,0.15); }
+.home-btn {
+  padding: 14px 32px; background: var(--blue);
+  border: 1px solid rgba(201,162,39,0.3); border-radius: 12px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+  text-decoration: none; display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen.html" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="story-container">
+
+  <!-- SCENE 1 -->
+  <div class="scene active" id="scene-1">
+    <div class="chapter-badge">🛡️ Chương 1 · Năm 1284</div>
+    <img class="scene-img" src="images/game-hd-trieu.jpg" alt="Trần Hưng Đạo">
+    
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Năm 1284. <strong>Ngươi — Trần Quốc Tuấn, Hưng Đạo Vương</strong> — đứng trước triều đình nhà Trần. Tin tức vừa đến: <em>50 vạn quân Nguyên Mông do Thoát Hoan chỉ huy đang ồ ạt tiến vào Đại Việt.</em>
+    </div>
+    <div class="story-text">
+      Vua Trần Nhân Tông nhìn ngươi, giọng trầm: <em>"Hưng Đạo Vương, tình thế nguy cấp. Khanh có kế gì?"</em>
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Hưng Đạo Vương — trong lòng</div>
+      "50 vạn quân — gấp nhiều lần ta. Không thể đối đầu trực tiếp. Phải dùng mưu kế và địa lợi."
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn tâu vua điều gì?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">A</span>
+        <span>Dốc toàn lực nghênh chiến ngay tại biên giới — không để địch vào sâu</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">B</span>
+        <span>Áp dụng kế "vườn không nhà trống" — rút lui chiến lược, bảo toàn lực lượng</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">C</span>
+        <span>Xin hàng để bảo vệ sinh mạng dân chúng, chờ thời cơ phản công</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1A: ĐÁNH BIÊN GIỚI -->
+  <div class="scene" id="scene-1A">
+    <div class="chapter-badge">📍 Lựa chọn A · Nghênh chiến biên giới</div>
+    <img class="scene-img" src="images/game-hd-bien-gioi.jpg" alt="Trận chiến">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Quân ta dốc sức chặn địch tại biên giới nhưng <strong>50 vạn quân Nguyên Mông quá đông</strong>, trang bị tối tân. Quân ta bị đánh tan, tổn thất nặng nề. Địch vẫn tràn vào được.
+      </div>
+    </div>
+    <div class="story-text">
+      Phò mã Trần Bình Trọng vội báo: <em>"Thưa Vương, ta không thể cản chúng bằng lực lượng! Phải thay đổi chiến thuật!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Hưng Đạo Vương điều chỉnh...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>Rút lui chiến lược — áp dụng "vườn không nhà trống" ngay lập tức!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1B: VƯỜN KHÔNG NHÀ TRỐNG -->
+  <div class="scene" id="scene-1B">
+    <div class="chapter-badge">⭐ Lựa chọn B · Vườn không nhà trống</div>
+    <img class="scene-img" src="images/game-hd-vuon-khong.jpg" alt="Hưng Đạo Vương">
+    <div class="narrator">Kế sách thiên tài!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">✨</span>
+      <div class="story-text">
+        <strong>Đây là kế sách đúng đắn!</strong> Hưng Đạo Vương ra lệnh toàn dân sơ tán, không để lại lương thực hay của cải. Thăng Long bị bỏ trống hoàn toàn.
+      </div>
+    </div>
+    <div class="story-text">
+      Quân Nguyên Mông tiến vào kinh thành — chỉ thấy <em>nhà trống, đường vắng, không một hạt gạo.</em> Chúng bắt đầu thiếu lương thực trầm trọng.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Hưng Đạo Vương — ra lệnh</div>
+      "Để chúng chết đói trong kinh thành trống! Ta sẽ phản công khi thời cơ đến."
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Khi nào phản công?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">A</span>
+        <span>Đợi địch suy yếu vì thiếu lương thực và bệnh dịch, rồi mới tổng phản công</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2B_bad')">
+        <span class="choice-letter">B</span>
+        <span>Phản công ngay khi địch vừa vào Thăng Long — đánh bất ngờ!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1C: XIN HÀNG -->
+  <div class="scene" id="scene-1C">
+    <div class="chapter-badge">📍 Lựa chọn C · Xin hàng</div>
+    <img class="scene-img" src="images/game-hd-hang.jpg" alt="Sai lầm">
+    <div class="narrator">Kết quả thảm họa</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Vua Trần Nhân Tông nhìn ngươi với ánh mắt kinh ngạc rồi lạnh giọng: <em>"Nếu bệ hạ muốn hàng — xin hãy chém đầu thần trước!"</em>
+      </div>
+      <div class="story-text">
+        Hưng Đạo Vương <strong>không bao giờ có thể chấp nhận đầu hàng</strong> — đó là sỉ nhục dân tộc!
+      </div>
+    </div>
+    <div class="story-text">
+      Các tướng sĩ đồng thanh: <em>"Đánh! Quyết đánh đến cùng!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Quyết tâm chiến đấu...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">→</span>
+        <span>Dùng kế "vườn không nhà trống" — đây mới là con đường đúng đắn!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2A -->
+  <div class="scene" id="scene-2A">
+    <div class="chapter-badge">🛡️ Chương 2 · Rút lui chiến lược</div>
+    <img class="scene-img" src="images/tran-hung-dao.jpg" alt="Rút lui">
+    <div class="narrator">Diễn biến</div>
+    <div class="story-text">
+      Hưng Đạo Vương lệnh rút lui toàn diện. Quân dân Đại Việt sơ tán có trật tự. Thăng Long bị bỏ trống.
+    </div>
+    <div class="story-text">
+      Quân Nguyên Mông chiếm được kinh thành nhưng <em>không có gì cả — không lương thực, không của cải.</em> Bệnh dịch bắt đầu hoành hành trong hàng ngũ địch.
+    </div>
+    <button class="continue-btn" onclick="choose('3_victory')">
+      Xem kết quả phản công →
+    </button>
+  </div>
+
+  <!-- SCENE 2B GOOD -->
+  <div class="scene" id="scene-2B_good">
+    <div class="chapter-badge">🛡️ Chương 2 · Thời cơ đã đến!</div>
+    <img class="scene-img" src="images/game-hd-phan-cong-som.jpg" alt="Phản công">
+    <div class="narrator">Khoảnh khắc quyết định</div>
+    <div class="story-text">
+      <strong>Kế sách hoàn hảo!</strong> Sau nhiều tháng thiếu lương thực, quân Nguyên Mông bắt đầu <em>suy yếu vì đói và bệnh dịch nhiệt đới.</em>
+    </div>
+    <div class="story-text">
+      Hưng Đạo Vương quan sát thời cơ. Thoát Hoan bắt đầu rút quân về nước theo đường sông Bạch Đằng.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Hưng Đạo Vương — ra lệnh</div>
+      "Đóng cọc xuống sông Bạch Đằng! Học theo Ngô Quyền — lịch sử sẽ lặp lại!"
+    </div>
+    <button class="continue-btn" onclick="choose('3_victory')">
+      Xem đại thắng Bạch Đằng 1288 →
+    </button>
+  </div>
+
+  <!-- SCENE 2B BAD -->
+  <div class="scene" id="scene-2B_bad">
+    <div class="chapter-badge">📍 Phản công quá sớm</div>
+    <img class="scene-img" src="images/tran-hung-dao.jpg" alt="Sai lầm">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Phản công khi địch vừa vào Thăng Long — chúng vẫn còn <strong>đủ lương thực và sức mạnh!</strong> Quân ta tổn thất nặng dù chiến đấu dũng cảm.
+      </div>
+    </div>
+    <div class="story-text">
+      Trần Bình Trọng nhắc: <em>"Thưa Vương! Phải đợi chúng suy yếu hơn nữa. Kiên nhẫn là chìa khóa!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">→</span>
+        <span>Rút lui — đợi thời cơ chín muồi rồi mới phản công toàn lực!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: ĐẠI THẮNG -->
+  <div class="scene" id="scene-3_victory">
+    <div class="chapter-badge">🏆 Đại Thắng · Năm 1288</div>
+    <img class="scene-img" src="images/game-hd-bach-dang.jpg" alt="Chiến thắng">
+    <div class="narrator">Hưng Đạo Vương</div>
+    <div class="story-text">
+      Năm 1288. Thoát Hoan rút quân theo sông Bạch Đằng. Nhưng dưới lòng sông — <strong>hàng nghìn cọc gỗ đầu sắt nhọn đang chờ đợi.</strong>
+    </div>
+    <div class="story-text">
+      Thủy triều rút. Cọc nhô lên. <em>Thuyền chiến Nguyên Mông vỡ tan hàng loạt!</em> Tướng giặc Ô Mã Nhi bị bắt sống. Thoát Hoan hoảng loạn chui vào ống đồng chạy trốn.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Hưng Đạo Vương — khải hoàn</div>
+      "Ba lần xâm lược — ba lần thất bại! Đại Việt muôn năm!"
+    </div>
+    <div class="story-text">
+      Đế chế Nguyên Mông — hùng mạnh nhất thế giới — <strong>thất bại ba lần liên tiếp trước Đại Việt.</strong> Hưng Đạo Vương Trần Quốc Tuấn được tôn là Đức Thánh Trần, thờ phụng đến tận ngày nay.
+    </div>
+    <button class="continue-btn" onclick="showFinal()">
+      Xem kết quả cuối →
+    </button>
+  </div>
+
+  <!-- FINAL -->
+  <div class="scene" id="scene-final">
+    <div class="final-result">
+      <div class="chapter-badge" style="justify-content:center">🎖️ Kết thúc hành trình</div>
+      <div class="final-title">Hưng Đạo Vương — Người Đánh Bại Đế Chế Vô Địch</div>
+      <div class="final-score" id="finalScore">⭐</div>
+      <div class="final-desc" id="finalDesc">
+        Bạn đã hoàn thành hành trình cùng Hưng Đạo Vương chống quân Nguyên Mông!
+      </div>
+      <div style="margin-top:8px">
+        <button class="restart-btn" onclick="restartStory()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="home-btn">📖 Câu chuyện khác</a>
+      </div>
+      <div style="margin-top:40px; padding:24px; background:rgba(26,58,107,0.1); border:1px solid rgba(74,127,193,0.2); border-radius:16px; text-align:left;">
+        <div style="font-size:13px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📚 Kiến thức lịch sử</div>
+        <div style="font-size:16px;line-height:1.8;color:rgba(232,223,200,0.85);">
+          Trần Hưng Đạo ba lần lãnh đạo quân dân Đại Việt đánh bại đế chế Nguyên Mông — thế lực quân sự mạnh nhất thế giới thế kỷ 13. Kế sách "vườn không nhà trống" và chiến thuật du kích đã biến điểm yếu thành điểm mạnh. Chiến thắng Bạch Đằng 1288 là đỉnh cao của nghệ thuật quân sự Việt Nam thời trung đại.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let correctChoices = 0;
+let totalChoices = 0;
+const correctPaths = ['1B', '2B_good', '3_victory'];
+
+function choose(sceneId) {
+  totalChoices++;
+  if (correctPaths.includes(sceneId)) correctChoices++;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('scene-' + sceneId);
+  if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  updateProgress(sceneId);
+}
+
+function updateProgress(sceneId) {
+  const progressMap = {
+    '1': 0, '1A': 15, '1B': 30, '1C': 10,
+    '2A': 55, '2B_good': 65, '2B_bad': 45,
+    '3_victory': 85, 'final': 100
+  };
+  document.getElementById('progressFill').style.width = (progressMap[sceneId] || 0) + '%';
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-final').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const ratio = totalChoices > 0 ? correctChoices / totalChoices : 0;
+  const scoreEl = document.getElementById('finalScore');
+  const descEl = document.getElementById('finalDesc');
+  if (ratio >= 0.7) {
+    scoreEl.textContent = '⭐⭐⭐';
+    descEl.textContent = 'Xuất sắc! Bạn có tầm nhìn chiến lược như Hưng Đạo Vương — kiên nhẫn, mưu lược và quyết đoán đúng lúc!';
+  } else if (ratio >= 0.4) {
+    scoreEl.textContent = '⭐⭐';
+    descEl.textContent = 'Tốt! Bạn đã hiểu chiến lược cơ bản. Hãy thử lại để đạt kết quả hoàn hảo hơn!';
+  } else {
+    scoreEl.textContent = '⭐';
+    descEl.textContent = 'Cần cố gắng hơn! Chiến tranh cần cả dũng khí lẫn mưu lược. Hãy thử lại!';
+  }
+  if (ratio >= 0.7 && typeof confetti !== 'undefined') {
+    setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 500);
+  }
+}
+
+function restartStory() {
+  correctChoices = 0; totalChoices = 0;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

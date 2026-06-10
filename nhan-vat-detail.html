@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nhân Vật Lịch Sử - Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root { --main:#8B0000; --gold:#f4c542; --cream:#fff8e7; --dark:#2c1b12; }
+
+.nv-hero {
+  width:100%; height:480px; position:relative; overflow:hidden;
+}
+.nv-hero img {
+  width:100%; height:100%; object-fit:cover; object-position:top;
+}
+.nv-hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to right, rgba(44,27,18,0.92) 40%, rgba(44,27,18,0.3));
+  display:flex; align-items:center; padding:0 100px;
+}
+.nv-hero-info { max-width:500px; }
+.nv-era {
+  display:inline-block; background:var(--gold); color:var(--dark);
+  padding:6px 18px; border-radius:30px; font-size:13px; font-weight:600; margin-bottom:16px;
+}
+.nv-hero-info h1 {
+  font-family:'Playfair Display',serif; font-size:46px; color:white;
+  line-height:1.2; margin-bottom:12px;
+}
+.nv-hero-info .nv-title {
+  font-size:16px; color:rgba(255,255,255,0.7); margin-bottom:20px;
+}
+.nv-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.nv-tag {
+  background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.85);
+  padding:5px 14px; border-radius:20px; font-size:13px; border:1px solid rgba(255,255,255,0.2);
+}
+
+/* NỘI DUNG */
+.nv-content {
+  max-width:900px; margin:0 auto; padding:60px 20px 100px;
+  display:grid; grid-template-columns:1fr 300px; gap:50px; align-items:start;
+}
+.nv-main {}
+.nv-sidebar {}
+
+/* SECTION */
+.nv-section { margin-bottom:40px; }
+.nv-section h2 {
+  font-family:'Playfair Display',serif; font-size:26px; color:var(--main);
+  margin-bottom:16px; padding-bottom:10px;
+  border-bottom:2px solid rgba(139,0,0,0.12);
+}
+.nv-section p {
+  font-size:16px; color:#444; line-height:2; margin-bottom:14px;
+}
+
+/* QUOTE */
+.nv-quote {
+  background:#fff3cd; border-left:4px solid var(--gold);
+  padding:20px 24px; border-radius:0 12px 12px 0; margin:24px 0;
+  font-family:'Playfair Display',serif; font-size:18px; color:var(--dark);
+  font-style:italic; line-height:1.7;
+}
+.nv-quote cite {
+  display:block; margin-top:8px; font-size:13px; color:#b85c00;
+  font-style:normal; font-family:'Poppins',sans-serif; font-weight:600;
+}
+
+/* SIDEBAR */
+.nv-info-card {
+  background:white; border-radius:16px; padding:24px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08); position:sticky; top:100px;
+}
+.nv-info-card h3 {
+  font-size:16px; color:var(--dark); font-weight:600; margin-bottom:16px;
+  padding-bottom:10px; border-bottom:1px solid #eee;
+}
+.nv-info-row {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:10px 0; border-bottom:1px solid #f5f5f5; font-size:14px; gap:10px;
+}
+.nv-info-row:last-child { border-bottom:none; }
+.nv-info-label { color:#999; font-weight:500; white-space:nowrap; }
+.nv-info-value { color:var(--dark); font-weight:500; text-align:right; }
+
+.nv-info-img {
+  width:100%; border-radius:12px; margin-bottom:16px;
+  object-fit:cover; height:200px;
+}
+
+/* RELATED */
+.nv-related { padding:60px 80px; background:#fffdf7; }
+.nv-related h2 {
+  font-size:28px; color:var(--dark); margin-bottom:30px; font-weight:700;
+}
+.nv-related-grid {
+  display:flex; gap:20px; overflow-x:auto; padding-bottom:10px;
+}
+.nv-related-card {
+  min-width:200px; background:white; border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,0.07); cursor:pointer; transition:0.3s; flex-shrink:0;
+}
+.nv-related-card:hover { transform:translateY(-6px); }
+.nv-related-card img { width:100%; height:140px; object-fit:cover; object-position:top; }
+.nv-related-card-body { padding:14px; }
+.nv-related-card h3 { font-size:15px; color:var(--main); margin-bottom:4px; }
+.nv-related-card span { font-size:12px; color:#b85c00; font-weight:600; }
+
+/* SCROLL ANIMATION */
+.fade-in { opacity:0; transform:translateY(20px); transition:0.6s ease; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  .nv-hero { height:350px; }
+  .nv-hero-overlay { padding:0 20px; }
+  .nv-hero-info h1 { font-size:30px; }
+  .nv-content { grid-template-columns:1fr; padding:30px 16px; }
+  .nv-sidebar { order:-1; }
+  .nv-info-card { position:static; }
+  .nv-related { padding:40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <nav>
+    <div class="logo">SỬ VIỆT</div>
+    <ul>
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="cau-chuyen.html">Câu chuyện</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="index.html#nhan-vat" style="color:var(--gold)">Nhân vật</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="nvContainer"></div>
+
+<!-- CHATBOX -->
+<div id="chat-fab" onclick="toggleChat()" style="position:fixed;bottom:10px;right:30px;z-index:9999;width:60px;height:60px;border-radius:50%;background:#2c1a0e;border:2px solid #c9a84c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(0,0,0,0.4)">🏯</div>
+<div id="chat-panel" style="display:none;position:fixed;bottom:20px;right:30px;z-index:9998;width:620px;height:75vh;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5)">
+  <iframe src="chatbox.html" style="width:100%;height:100%;border:none"></iframe>
+</div>
+
+<script>
+function toggleChat(){
+  const p=document.getElementById('chat-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
+}
+
+const nhanVat = {
+  'ngo-quyen': {
+    name:'Ngô Quyền', era:'Năm 938', title:'Người chấm dứt 1000 năm Bắc thuộc',
+    heroImg:'images/ngo-quyen.jpg',
+    tags:['⚔️ Trận Bạch Đằng','🏯 Khai quốc','🇻🇳 Độc lập dân tộc'],
+    info:{ 'Sinh':'898, Đường Lâm', 'Mất':'944', 'Triều đại':'Ngô', 'Thời kỳ':'938 - 944', 'Quê quán':'Hà Nội (nay)' },
+    sections:[
+      { title:'Thân thế và xuất thân', content:['Ngô Quyền sinh năm 898 tại Đường Lâm (nay thuộc Hà Nội). Ông xuất thân từ dòng dõi hào kiệt, cha là Ngô Mân — châu mục Đường Lâm.','Từ nhỏ, Ngô Quyền đã nổi tiếng tài giỏi, dũng cảm. Ông được Dương Đình Nghệ — người anh hùng đất Ái Châu — nhận làm con rể và giao cho cai quản Ái Châu (Thanh Hóa).'] },
+      { title:'Chiến thắng Bạch Đằng 938', content:['Khi Dương Đình Nghệ bị Kiều Công Tiễn giết hại, Ngô Quyền kéo quân ra Bắc trị tội kẻ phản bội. Kiều Công Tiễn cầu cứu Nam Hán.','Ngô Quyền dùng kế thiên tài: đóng cọc nhọn bịt sắt xuống lòng sông Bạch Đằng. Khi thủy triều lên, nhử thuyền địch vào sâu. Khi triều rút, cọc nhô lên đâm thủng thuyền giặc.','Lưu Hoằng Tháo — con trai vua Nam Hán — bị giết tại trận. Toàn bộ thủy quân Nam Hán bị tiêu diệt. Hơn 1000 năm Bắc thuộc chính thức kết thúc!'], quote:{ text:'"Lưu Hoằng Tháo là người trẻ tuổi, hăng hái — ta dùng mưu kế mà thắng, không thể địch bằng sức mạnh."', cite:'— Ngô Quyền' } },
+      { title:'Di sản lịch sử', content:['Ngô Quyền lên ngôi vua năm 939, đặt nền móng cho kỷ nguyên độc lập tự chủ của dân tộc Việt Nam.','Dù chỉ trị vì được 6 năm trước khi mất năm 944, công lao của ông được lịch sử ghi nhận mãi mãi. Ông được tôn là người khai mở kỷ nguyên độc lập của Việt Nam.'] }
+    ],
+    related:['tran-hung-dao','quang-trung','le-loi']
+  },
+  'tran-hung-dao': {
+    name:'Trần Hưng Đạo', era:'Thế kỷ XIII', title:'Đại nguyên soái ba lần đánh bại Nguyên Mông',
+    heroImg:'images/tran-hung-dao.jpg',
+    tags:['🛡️ Chống Nguyên Mông','⚔️ Trận Bạch Đằng 1288','📜 Hịch tướng sĩ'],
+    info:{ 'Sinh':'khoảng 1228', 'Mất':'1300', 'Tước vị':'Hưng Đạo Đại Vương', 'Triều đại':'Nhà Trần', 'Thờ phụng':'Đức Thánh Trần' },
+    sections:[
+      { title:'Vị tướng thiên tài', content:['Trần Quốc Tuấn — Hưng Đạo Đại Vương — là con trai An Sinh Vương Trần Liễu, cháu vua Trần Thái Tông. Ông không chỉ là thiên tài quân sự mà còn là người có đức độ phi thường.','Khi được hỏi về kế sách giữ nước, ông tâu: "Khoan thư sức dân để làm kế sâu rễ bền gốc, đó là thượng sách giữ nước."'] },
+      { title:'Ba lần đánh bại Nguyên Mông', content:['Năm 1258: Lần đầu quân Nguyên vào xâm lược, bị đánh lui sau chiến thắng Đông Bộ Đầu.','Năm 1285: 50 vạn quân Nguyên tràn vào. Hưng Đạo Vương áp dụng "vườn không nhà trống", rút lui chiến lược rồi phản công, đại thắng tại Tây Kết, Hàm Tử, Chương Dương.','Năm 1288: Lần thứ ba, dùng lại kế cọc ngầm sông Bạch Đằng. Tướng giặc Ô Mã Nhi bị bắt sống. Đế chế Nguyên Mông — kẻ chinh phục thế giới — đại bại trước Đại Việt!'], quote:{ text:'"Nếu bệ hạ muốn hàng, xin hãy chém đầu thần trước."', cite:'— Trần Hưng Đạo tâu vua Trần Nhân Tông' } },
+      { title:'Hịch Tướng Sĩ — Áng văn bất hủ', content:['Trước trận đánh, Hưng Đạo Vương viết Hịch tướng sĩ — áng văn hùng tráng kêu gọi tướng sĩ đoàn kết chống giặc. Đây là một trong những tác phẩm văn học yêu nước vĩ đại nhất lịch sử Việt Nam.','Sau khi mất năm 1300, ông được nhân dân tôn thờ là Đức Thánh Trần. Đền thờ ông có ở khắp cả nước, đặc biệt tại Kiếp Bạc (Hải Dương).'] }
+    ],
+    related:['ngo-quyen','quang-trung','le-loi']
+  },
+  'quang-trung': {
+    name:'Quang Trung', era:'1753 - 1792', title:'Hoàng đế Tây Sơn — Anh hùng áo vải',
+    heroImg:'images/quangtrung.jpg',
+    tags:['🔥 Đại phá quân Thanh','👑 Hoàng đế Tây Sơn','⚡ Thần tốc Kỷ Dậu'],
+    info:{ 'Sinh':'1753, Bình Định', 'Mất':'1792 (39 tuổi)', 'Niên hiệu':'Quang Trung', 'Triều đại':'Tây Sơn', 'Thủ đô':'Phú Xuân (Huế)' },
+    sections:[
+      { title:'Từ người dân đến Hoàng đế', content:['Nguyễn Huệ sinh năm 1753 trong một gia đình bình dân tại Bình Định. Cùng anh em khởi nghĩa Tây Sơn, ông đánh đổ chúa Nguyễn ở phương Nam, dẹp chúa Trịnh ở phương Bắc.','Năm 1788, ông lên ngôi Hoàng đế, lấy hiệu Quang Trung. Ngay lập tức, ông chuẩn bị đại quân tiến ra Bắc đánh đuổi 29 vạn quân Thanh đang chiếm đóng Thăng Long.'] },
+      { title:'5 ngày thần tốc mùa xuân 1789', content:['Từ Phú Xuân, Quang Trung hành quân thần tốc ra Bắc, tuyển quân dọc đường. Đêm 30 tháng Chạp — đêm Giao thừa — bất ngờ tấn công khi quân Thanh đang ăn Tết.','Sáng mùng 5 Tết, quân Tây Sơn đánh tan đồn Đống Đa. Tướng giặc Sầm Nghi Đống tử trận. Tôn Sĩ Nghị hoảng loạn bỏ cả ấn tín chạy trốn.','Chỉ 5 ngày sau khi xuất phát từ Tam Điệp, Quang Trung đã giải phóng hoàn toàn Thăng Long!'], quote:{ text:'"Đánh cho để dài tóc. Đánh cho để đen răng. Đánh cho nó chích luân bất phản. Đánh cho nó phiến giáp bất hoàn."', cite:'— Lời hịch của vua Quang Trung' } },
+      { title:'Di sản và tiếc nuối', content:['Quang Trung không chỉ là thiên tài quân sự mà còn là nhà cải cách táo bạo: dùng chữ Nôm trong văn bản nhà nước, khuyến khích nông nghiệp, phát triển thương mại.','Tiếc thay, ông mất năm 1792 khi mới 39 tuổi, chưa kịp thực hiện nhiều hoài bão lớn. Lịch sử tiếc thương một thiên tài đoản mệnh.'] }
+    ],
+    related:['tran-hung-dao','ngo-quyen','le-loi']
+  },
+  'le-loi': {
+    name:'Lê Lợi', era:'1385 - 1433', title:'Người sáng lập nhà Hậu Lê',
+    heroImg:'images/le-loi.PNG',
+    tags:['⚔️ Khởi nghĩa Lam Sơn','🗡️ Gươm thần Hồ Hoàn Kiếm','👑 Lê Thái Tổ'],
+    info:{ 'Sinh':'1385, Thanh Hóa', 'Mất':'1433', 'Niên hiệu':'Thuận Thiên', 'Triều đại':'Hậu Lê', 'Thủ đô':'Thăng Long' },
+    sections:[
+      { title:'Hào trưởng đất Lam Sơn', content:['Lê Lợi sinh năm 1385 trong một gia đình hào trưởng tại Lam Sơn, Thanh Hóa. Khi nhà Minh đô hộ Đại Việt với chính sách tàn bạo, ông quyết chí khởi nghĩa giành độc lập.','Tương truyền ông nhặt được gươm thần — lưỡi gươm dưới hồ, chuôi gươm trên rừng — báo hiệu thiên mệnh đánh đuổi giặc Minh.'] },
+      { title:'10 năm kháng chiến gian khổ', content:['Năm 1418, Lê Lợi phát động khởi nghĩa Lam Sơn. Những năm đầu vô cùng gian khổ — có lúc phải ăn rau rừng, bị vây hãm nhiều lần.','Lê Lai đã giả làm Lê Lợi, mặc áo bào của chủ tướng ra chiến đấu và hy sinh để bảo vệ nghĩa quân. Câu nói "Hai mươi mốt Lê Lai, hai hai Lê Lợi" còn lưu truyền đến nay.','Từ năm 1424, được sự giúp sức của quân sư Nguyễn Trãi, nghĩa quân chuyển sang tấn công, liên tiếp đại thắng.'], quote:{ text:'"Việc nhân nghĩa cốt ở yên dân. Quân điếu phạt chỉ vì khử bạo."', cite:'— Bình Ngô đại cáo, Nguyễn Trãi thảo' } },
+      { title:'Lập nên nhà Hậu Lê', content:['Năm 1428, Lê Lợi lên ngôi Hoàng đế, lập ra nhà Hậu Lê — triều đại tồn tại lâu nhất lịch sử Việt Nam (1428-1789).','Gươm thần được trả lại cho Rùa Vàng tại hồ Lục Thủy — từ đó đổi tên thành hồ Hoàn Kiếm, còn lại đến ngày nay như biểu tượng của Hà Nội.'] }
+    ],
+    related:['ngo-quyen','tran-hung-dao','quang-trung']
+  },
+  'ho-chi-minh': {
+    name:'Hồ Chí Minh', era:'1890 - 1969', title:'Chủ tịch đầu tiên nước Việt Nam độc lập',
+    heroImg:'images/HCM.jpg',
+    tags:['🇻🇳 Độc lập 1945','✊ Chống thực dân','📜 Tuyên ngôn độc lập'],
+    info:{ 'Sinh':'19/5/1890, Nghệ An', 'Mất':'2/9/1969', 'Tên khai sinh':'Nguyễn Sinh Cung', 'Chức vụ':'Chủ tịch nước', 'Thủ đô':'Hà Nội' },
+    sections:[
+      { title:'Tuổi trẻ và hành trình tìm đường cứu nước', content:['Nguyễn Sinh Cung — sau này lấy tên Hồ Chí Minh — sinh ngày 19/5/1890 tại làng Kim Liên, Nghệ An. Năm 1911, với hai bàn tay trắng, ông xuống tàu ra đi tìm đường cứu nước.','Trong 30 năm bôn ba khắp thế giới — Pháp, Liên Xô, Trung Quốc, Thái Lan... — ông học hỏi, hoạt động cách mạng, tìm con đường giải phóng dân tộc.'] },
+      { title:'Tuyên ngôn độc lập 2/9/1945', content:['Cách mạng tháng Tám 1945 thành công, Hồ Chí Minh đọc Tuyên ngôn độc lập tại Quảng trường Ba Đình, khai sinh nước Việt Nam Dân chủ Cộng hòa.','Mở đầu Tuyên ngôn, Người trích dẫn Tuyên ngôn độc lập Mỹ 1776 và Tuyên ngôn nhân quyền Pháp 1789 — khẳng định quyền độc lập của dân tộc Việt Nam trước thế giới.'], quote:{ text:'"Không có gì quý hơn độc lập, tự do."', cite:'— Hồ Chí Minh' } },
+      { title:'Di sản vĩ đại', content:['Hồ Chí Minh lãnh đạo nhân dân Việt Nam qua hai cuộc kháng chiến chống Pháp và chống Mỹ. Ông mất ngày 2/9/1969, chưa kịp thấy ngày thống nhất đất nước 1975.','Với 79 năm cuộc đời, Người đã hiến dâng trọn vẹn cho sự nghiệp giải phóng dân tộc. Tư tưởng Hồ Chí Minh tiếp tục soi đường cho dân tộc Việt Nam.'] }
+    ],
+    related:['vo-nguyen-giap','phan-boi-chau','le-loi']
+  },
+  ,
+'phan-boi-chau': {
+  name:'Phan Bội Châu', era:'1867 - 1940', title:'Nhà yêu nước tiêu biểu chống thực dân Pháp',
+  heroImg:'images/phan-boi-chau.PNG',
+  tags:['✊ Chống thực dân','📜 Phong trào Đông Du','🇻🇳 Yêu nước'],
+  info:{ 'Sinh':'26/12/1867, Nghệ An', 'Mất':'29/10/1940', 'Phong trào':'Đông Du', 'Hoạt động':'1900-1925', 'Biệt danh':'Ông già Bến Ngự' },
+  sections:[
+    { title:'Tuổi trẻ và chí lớn', content:['Phan Bội Châu sinh năm 1867 tại Nam Đàn, Nghệ An. Từ nhỏ đã nổi tiếng thông minh, năm 17 tuổi lập Sĩ tử cần vương hội chống Pháp.','Ông đỗ đầu kỳ thi Hương năm 1900, nhưng không ra làm quan mà dốc lòng tìm đường cứu nước.'] },
+    { title:'Phong trào Đông Du', content:['Năm 1905, Phan Bội Châu sang Nhật Bản, lập phong trào Đông Du — vận động thanh niên Việt Nam sang Nhật học để về cứu nước.','Hơn 200 thanh niên ưu tú đã sang Nhật học tập. Đây là phong trào yêu nước có tổ chức đầu tiên của Việt Nam thời cận đại.'], quote:{ text:'"Dù ai nói ngả nói nghiêng, lòng ta vẫn vững như kiềng ba chân."', cite:'— Phan Bội Châu' } },
+    { title:'Di sản tinh thần', content:['Năm 1925, Phan Bội Châu bị Pháp bắt, bị kết án tử hình nhưng do áp lực của nhân dân, được ân xá và bị quản thúc tại Huế cho đến khi mất.','Dù thất bại, Phan Bội Châu đã thắp lên ngọn lửa yêu nước cho cả một thế hệ. Ông được xem là biểu tượng của phong trào giải phóng dân tộc đầu thế kỷ 20.'] }
+  ],
+  related:['ho-chi-minh','vo-nguyen-giap','le-loi']
+},
+'vo-thi-sau': {
+  name:'Võ Thị Sáu', era:'1933 - 1952', title:'Nữ anh hùng trẻ tuổi chống thực dân Pháp',
+  heroImg:'images/vo-thi-sau.PNG',
+  tags:['🌺 Nữ anh hùng','✊ Chống Pháp','💪 Bất khuất'],
+  info:{ 'Sinh':'1933, Bà Rịa', 'Mất':'23/1/1952', 'Hy sinh tại':'Côn Đảo', 'Tuổi hy sinh':'19 tuổi', 'Danh hiệu':'Anh hùng LLVTND' },
+  sections:[
+    { title:'Cô gái gan dạ đất Bà Rịa', content:['Võ Thị Sáu sinh năm 1933 tại Đất Đỏ, Bà Rịa. Từ năm 14 tuổi đã tham gia hoạt động cách mạng, làm liên lạc và trinh sát cho bộ đội.','Năm 15 tuổi, cô một mình ném lựu đạn vào buổi lễ của giặc Pháp, tiêu diệt nhiều tên địch.'] },
+    { title:'Bất khuất trước kẻ thù', content:['Năm 1950, Võ Thị Sáu bị Pháp bắt. Dù bị tra tấn dã man, cô không khai bất kỳ thông tin nào về tổ chức cách mạng.','Thực dân Pháp đưa cô ra Côn Đảo xử bắn. Trước họng súng kẻ thù, cô từ chối bịt mắt, hiên ngang hát Quốc ca cho đến khi ngã xuống.'], quote:{ text:'"Tôi chưa đến tuổi thành niên, các ông không có quyền xử bắn tôi!"', cite:'— Võ Thị Sáu trước tòa án Pháp' } },
+    { title:'Huyền thoại bất tử', content:['Võ Thị Sáu hy sinh năm 1952 khi mới 19 tuổi, trở thành biểu tượng của tuổi trẻ Việt Nam anh hùng, bất khuất.','Ngôi mộ của cô tại Côn Đảo được nhân dân thờ phụng. Tên cô được đặt cho nhiều trường học, đường phố trên khắp cả nước.'] }
+  ],
+  related:['ho-chi-minh','phan-dinh-giot','nguyen-van-troi']
+},
+'phan-dinh-giot': {
+  name:'Phan Đình Giót', era:'1922 - 1954', title:'Anh hùng lấy thân mình lấp lỗ châu mai',
+  heroImg:'images/phan-dinh-giot.PNG',
+  tags:['🏆 Điện Biên Phủ','💛 Hy sinh anh dũng','⭐ Anh hùng'],
+  info:{ 'Sinh':'1922, Hà Tĩnh', 'Mất':'13/3/1954', 'Đơn vị':'Đại đoàn 312', 'Trận đánh':'Điện Biên Phủ', 'Danh hiệu':'Anh hùng LLVTND' },
+  sections:[
+    { title:'Người con đất Hà Tĩnh', content:['Phan Đình Giót sinh năm 1922 trong một gia đình nghèo tại Hà Tĩnh. Năm 1950 ông gia nhập quân đội, trở thành chiến sĩ dũng cảm của Đại đoàn 312.','Trong nhiều trận đánh, ông luôn xung phong đi đầu, lập nhiều chiến công xuất sắc.'] },
+    { title:'Khoảnh khắc bất tử', content:['Ngày 13/3/1954, trong trận tấn công cứ điểm Him Lam mở màn chiến dịch Điện Biên Phủ, đơn vị ông bị hỏa lực từ lỗ châu mai địch chặn lại.','Không một ai có thể tiến lên. Phan Đình Giót lao thân mình vào bịt kín lỗ châu mai, hy sinh để đồng đội xông lên tiêu diệt cứ điểm.'], quote:{ text:'"Vì nhân dân hy sinh, vì Tổ quốc quyết tử!"', cite:'— Tinh thần của Phan Đình Giót' } },
+    { title:'Tấm gương bất diệt', content:['Hành động của Phan Đình Giót đã mở đường cho đơn vị chiếm cứ điểm Him Lam — trận thắng đầu tiên của chiến dịch Điện Biên Phủ.','Ông được truy tặng danh hiệu Anh hùng Lực lượng vũ trang nhân dân. Tên ông được đặt cho nhiều trường học trên cả nước.'] }
+  ],
+  related:['vo-nguyen-giap','vo-thi-sau','ho-chi-minh']
+},
+'nguyen-van-troi': {
+  name:'Nguyễn Văn Trỗi', era:'1940 - 1964', title:'Anh hùng liệt sĩ tiêu biểu thời chống Mỹ',
+  heroImg:'images/nguyen-van-troi.PNG',
+  tags:['✊ Chống Mỹ','💪 Bất khuất','🔥 Tuổi trẻ anh hùng'],
+  info:{ 'Sinh':'1/2/1940, Quảng Nam', 'Mất':'15/10/1964', 'Nghề nghiệp':'Thợ điện', 'Tuổi hy sinh':'24 tuổi', 'Danh hiệu':'Anh hùng LLVTND' },
+  sections:[
+    { title:'Người thợ điện yêu nước', content:['Nguyễn Văn Trỗi sinh năm 1940 tại Quảng Nam, lớn lên ở Sài Gòn. Làm thợ điện tại nhà máy điện Chợ Quán, ông sớm giác ngộ cách mạng và tham gia lực lượng vũ trang bí mật.','Năm 1964, ông nhận nhiệm vụ đặt mìn trên cầu Công Lý để ám sát phái đoàn quân sự Mỹ do McNamara dẫn đầu.'] },
+    { title:'Hiên ngang trước cái chết', content:['Kế hoạch bị lộ, Nguyễn Văn Trỗi bị bắt. Dù bị tra tấn, ông không khai bất kỳ đồng chí nào.','Ngày 15/10/1964, ông bị xử bắn tại Sài Gòn. Trước họng súng, ông hô to "Hồ Chí Minh muôn năm! Việt Nam muôn năm!" — những tiếng hô vang vọng mãi trong lịch sử.'], quote:{ text:'"Hãy nhớ lấy lời tôi! Đả đảo đế quốc Mỹ! Hồ Chí Minh muôn năm!"', cite:'— Nguyễn Văn Trỗi trước khi hy sinh' } },
+    { title:'Biểu tượng tuổi trẻ', content:['Nguyễn Văn Trỗi hy sinh khi mới 24 tuổi, trở thành biểu tượng của thế hệ trẻ Việt Nam trong cuộc kháng chiến chống Mỹ.','Hình ảnh anh được khắc họa trong nhiều tác phẩm văn học, điện ảnh. Tên anh được đặt cho nhiều trường học, đường phố trên cả nước.'] }
+  ],
+  related:['vo-thi-sau','ho-chi-minh','vo-nguyen-giap']
+},
+'nguyen-thi-dinh': {
+  name:'Nguyễn Thị Định', era:'1920 - 1992', title:'Nữ tướng đầu tiên của Quân đội nhân dân Việt Nam',
+  heroImg:'images/nguyen-thi-dinh.PNG',
+  tags:['👩‍✈️ Nữ tướng','✊ Chống Mỹ','🌺 Đồng Khởi'],
+  info:{ 'Sinh':'15/3/1920, Bến Tre', 'Mất':'26/8/1992', 'Quân hàm':'Thiếu tướng', 'Phong trào':'Đồng Khởi 1960', 'Danh hiệu':'Anh hùng LLVTND' },
+  sections:[
+    { title:'Cô gái Bến Tre', content:['Nguyễn Thị Định sinh năm 1920 tại Bến Tre. Từ năm 16 tuổi đã tham gia hoạt động cách mạng, bị Pháp bắt và tù đày nhiều năm nhưng không khuất phục.','Sau Hiệp định Genève 1954, bà ở lại miền Nam tiếp tục hoạt động bí mật, xây dựng cơ sở cách mạng.'] },
+    { title:'Ngọn cờ Đồng Khởi', content:['Năm 1960, bà là một trong những người lãnh đạo phong trào Đồng Khởi tại Bến Tre — cuộc nổi dậy đồng loạt của nhân dân miền Nam chống chính quyền Sài Gòn.','Phong trào Đồng Khởi lan rộng khắp miền Nam, mở ra cục diện mới cho cuộc kháng chiến chống Mỹ.'], quote:{ text:'"Phụ nữ Việt Nam anh hùng, bất khuất, trung hậu, đảm đang."', cite:'— Chủ tịch Hồ Chí Minh tặng phụ nữ Việt Nam' } },
+    { title:'Nữ tướng đầu tiên', content:['Nguyễn Thị Định được phong quân hàm Thiếu tướng — trở thành nữ tướng đầu tiên trong lịch sử Quân đội nhân dân Việt Nam.','Bà là niềm tự hào của phụ nữ Việt Nam, biểu tượng cho tinh thần bất khuất và đóng góp to lớn của người phụ nữ trong hai cuộc kháng chiến.'] }
+  ],
+  related:['vo-thi-sau','ho-chi-minh','nguyen-van-troi']
+}
+  'vo-nguyen-giap': {
+    name:'Võ Nguyên Giáp', era:'1911 - 2013', title:'Đại tướng huyền thoại của dân tộc',
+    heroImg:'images/vonguyengiap.JFIF',
+    tags:['⭐ Đại tướng','🏆 Điện Biên Phủ','🇻🇳 Giải phóng 1975'],
+    info:{ 'Sinh':'25/8/1911, Quảng Bình', 'Mất':'4/10/2013', 'Quân hàm':'Đại tướng', 'Chiến thắng':'Điện Biên Phủ 1954', 'Biệt danh':'Anh Văn' },
+    sections:[
+      { title:'Từ thầy giáo đến Đại tướng', content:['Võ Nguyên Giáp sinh năm 1911 tại Quảng Bình. Xuất thân là thầy giáo dạy sử, ông tự học binh pháp và trở thành nhà chiến lược quân sự xuất sắc nhất Việt Nam.','Được Chủ tịch Hồ Chí Minh tin tưởng giao cho xây dựng lực lượng vũ trang, ông trở thành Tổng Tư lệnh Quân đội nhân dân Việt Nam.'] },
+      { title:'Chiến thắng Điện Biên Phủ 1954', content:['Trận Điện Biên Phủ (13/3 - 7/5/1954) là chiến thắng quân sự vĩ đại nhất thế kỷ 20. Đại tướng Võ Nguyên Giáp chỉ huy 55.000 quân đánh tan cứ điểm mạnh nhất của Pháp tại Đông Dương.','Quyết định thay đổi chiến thuật từ "đánh nhanh thắng nhanh" sang "đánh chắc tiến chắc" là thiên tài quân sự của ông — cứu hàng nghìn sinh mạng chiến sĩ và dẫn đến đại thắng.'], quote:{ text:'"Chúng ta sẽ chiến đấu, chiến đấu mãi cho đến thắng lợi hoàn toàn."', cite:'— Đại tướng Võ Nguyên Giáp' } },
+      { title:'Huyền thoại sống', content:['Võ Nguyên Giáp được thế giới tôn vinh là một trong những thiên tài quân sự vĩ đại nhất lịch sử nhân loại. Ông được so sánh với Napoleon, Hannibal, Julius Caesar.','Ông sống đến 102 tuổi, mất ngày 4/10/2013, được nhân dân cả nước tiễn đưa trong nỗi tiếc thương vô hạn. Tên ông gắn liền với những chiến thắng vĩ đại nhất của dân tộc Việt Nam.'] }
+    ],
+    related:['ho-chi-minh','phan-dinh-giot','vo-thi-sau']
+  }
+};
+
+// ẢNH VÀ TÊN CHO RELATED
+const relatedInfo = {
+  'ngo-quyen':{ name:'Ngô Quyền', era:'Năm 938', img:'images/ngo-quyen.jpg' },
+  'tran-hung-dao':{ name:'Trần Hưng Đạo', era:'1288', img:'images/tran-hung-dao.jpg' },
+  'quang-trung':{ name:'Quang Trung', era:'1789', img:'images/quangtrung.jpg' },
+  'le-loi':{ name:'Lê Lợi', era:'1418-1427', img:'images/le-loi.PNG' },
+  'ho-chi-minh':{ name:'Hồ Chí Minh', era:'1945', img:'images/HCM.jpg' },
+  'vo-nguyen-giap':{ name:'Võ Nguyên Giáp', era:'1954', img:'images/vonguyengiap.JFIF' },
+  'phan-boi-chau':{ name:'Phan Bội Châu', era:'1867-1940', img:'images/phan-boi-chau.PNG' },
+  'phan-dinh-giot':{ name:'Phan Đình Giót', era:'1954', img:'images/phan-dinh-giot.PNG' },
+  'vo-thi-sau':{ name:'Võ Thị Sáu', era:'1933-1952', img:'images/vo-thi-sau.PNG' }
+};
+
+function getId() {
+  return new URLSearchParams(window.location.search).get('id') || 'ngo-quyen';
+}
+
+function render() {
+  const id = getId();
+  const nv = nhanVat[id];
+  if (!nv) { window.location.href='index.html'; return; }
+  document.title = nv.name + ' - Sử Việt';
+
+  let sectionsHtml = '';
+  nv.sections.forEach(sec => {
+    sectionsHtml += `<div class="nv-section fade-in"><h2>${sec.title}</h2>`;
+    sec.content.forEach(p => sectionsHtml += `<p>${p}</p>`);
+    if (sec.quote) sectionsHtml += `<blockquote class="nv-quote">${sec.quote.text}<cite>${sec.quote.cite}</cite></blockquote>`;
+    sectionsHtml += `</div>`;
+  });
+
+  let infoRows = Object.entries(nv.info).map(([k,v]) =>
+    `<div class="nv-info-row"><span class="nv-info-label">${k}</span><span class="nv-info-value">${v}</span></div>`
+  ).join('');
+
+  let relatedHtml = nv.related.map(rid => {
+    const r = relatedInfo[rid];
+    if (!r) return '';
+    return `<div class="nv-related-card" onclick="window.location.href='nhan-vat-detail.html?id=${rid}'">
+      <img src="${r.img}" alt="${r.name}">
+      <div class="nv-related-card-body"><h3>${r.name}</h3><span>${r.era}</span></div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('nvContainer').innerHTML = `
+    <div class="nv-hero">
+      <img src="${nv.heroImg}" alt="${nv.name}">
+      <div class="nv-hero-overlay">
+        <div class="nv-hero-info">
+          <div class="nv-era">${nv.era}</div>
+          <h1>${nv.name}</h1>
+          <p class="nv-title">${nv.title}</p>
+          <div class="nv-tags">${nv.tags.map(t=>`<span class="nv-tag">${t}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="nv-content">
+      <div class="nv-main">${sectionsHtml}</div>
+      <div class="nv-sidebar">
+        <div class="nv-info-card">
+          <img class="nv-info-img" src="${nv.heroImg}" alt="${nv.name}">
+          <h3>Thông tin</h3>
+          ${infoRows}
+        </div>
+      </div>
+    </div>
+    <div class="nv-related">
+      <h2>Nhân vật liên quan</h2>
+      <div class="nv-related-grid">${relatedHtml}</div>
+    </div>
+  `;
+
+  // scroll animation
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold:0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+
+render();
+</script>
+</body>
+</html>

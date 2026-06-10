@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trận Bạch Đằng — Bạn Là Ngô Quyền</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0e00;
+  --parchment: #f5ead6;
+  --gold: #c9920a;
+  --gold-light: #f4c542;
+  --red: #8B0000;
+  --brown: #3d1f00;
+  --smoke: rgba(255,255,255,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--ink);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* PARTICLES BG */
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(201,146,10,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,0,0,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(61,31,0,0.4) 0%, transparent 70%);
+}
+
+/* NAVBAR */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(26,14,0,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,146,10,0.3);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; color: var(--gold-light);
+  text-decoration: none; letter-spacing: 2px;
+}
+.nav-back {
+  color: rgba(245,234,214,0.6); font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-back:hover { color: var(--gold-light); }
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+  height: 3px; background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--red), var(--gold));
+  transition: width 0.6s ease;
+}
+
+/* MAIN CONTAINER */
+.story-container {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+/* SCENE */
+.scene {
+  display: none;
+  animation: fadeScene 0.8s ease;
+}
+.scene.active { display: block; }
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CHAPTER BADGE */
+.chapter-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,146,10,0.15);
+  border: 1px solid rgba(201,146,10,0.4);
+  border-radius: 30px; padding: 6px 16px;
+  font-size: 13px; color: var(--gold-light);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* SCENE IMAGE */
+.scene-img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(201,146,10,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  filter: sepia(0.3) contrast(1.1);
+}
+
+/* NARRATOR */
+.narrator {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.8;
+}
+
+/* STORY TEXT */
+.story-text {
+  font-size: 20px; line-height: 1.9;
+  color: rgba(245,234,214,0.92);
+  margin-bottom: 16px;
+}
+
+.story-text em {
+  color: var(--gold-light);
+  font-style: italic;
+}
+
+.story-text strong {
+  color: white; font-weight: 600;
+}
+
+/* DIALOGUE */
+.dialogue {
+  background: rgba(201,146,10,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-size: 19px; font-style: italic;
+  color: var(--parchment);
+  line-height: 1.7;
+}
+.dialogue-speaker {
+  font-size: 12px; font-style: normal;
+  color: var(--gold); letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+/* DIVIDER */
+.divider {
+  text-align: center; color: var(--gold);
+  opacity: 0.4; font-size: 18px; letter-spacing: 12px;
+  margin: 28px 0;
+}
+
+/* CHOICES */
+.choices-title {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 36px 0 16px; opacity: 0.8;
+}
+
+.choices {
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.choice-btn {
+  background: rgba(245,234,214,0.04);
+  border: 1px solid rgba(245,234,214,0.15);
+  border-radius: 12px; padding: 18px 24px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 17px; text-align: left; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: flex-start; gap: 14px;
+  line-height: 1.5;
+}
+
+.choice-btn:hover {
+  background: rgba(201,146,10,0.12);
+  border-color: rgba(201,146,10,0.5);
+  transform: translateX(6px);
+}
+
+.choice-letter {
+  width: 28px; height: 28px; min-width: 28px;
+  border-radius: 50%; background: rgba(201,146,10,0.2);
+  border: 1px solid var(--gold); color: var(--gold-light);
+  font-size: 13px; font-weight: 600; font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+}
+
+/* OUTCOME */
+.outcome {
+  background: rgba(139,0,0,0.15);
+  border: 1px solid rgba(139,0,0,0.3);
+  border-radius: 16px; padding: 24px;
+  margin: 24px 0;
+  font-size: 18px; line-height: 1.8;
+}
+
+.outcome.good {
+  background: rgba(76,175,80,0.1);
+  border-color: rgba(76,175,80,0.3);
+}
+
+.outcome-icon {
+  font-size: 32px; margin-bottom: 12px; display: block;
+}
+
+/* CONTINUE BTN */
+.continue-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 16px 32px;
+  background: linear-gradient(135deg, var(--red), #5a0000);
+  border: 1px solid rgba(201,146,10,0.4);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 17px;
+  cursor: pointer; transition: all 0.3s; letter-spacing: 0.5px;
+}
+.continue-btn:hover {
+  background: linear-gradient(135deg, #a00000, var(--red));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139,0,0,0.4);
+}
+
+/* FINAL RESULT */
+.final-result {
+  text-align: center; padding: 40px 20px;
+}
+.final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; color: var(--gold-light);
+  margin-bottom: 16px; line-height: 1.2;
+}
+.final-score {
+  display: inline-block;
+  background: rgba(201,146,10,0.15);
+  border: 1px solid var(--gold);
+  border-radius: 50%; width: 120px; height: 120px;
+  line-height: 120px; font-size: 40px;
+  color: var(--gold-light); margin: 24px auto;
+  font-family: 'Playfair Display', serif;
+}
+.final-desc {
+  font-size: 18px; color: rgba(245,234,214,0.8);
+  line-height: 1.8; max-width: 500px; margin: 0 auto 32px;
+}
+.restart-btn {
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 12px; color: var(--gold-light);
+  font-family: 'Crimson Pro', serif; font-size: 16px;
+  cursor: pointer; transition: 0.3s; margin: 0 8px;
+}
+.restart-btn:hover {
+  background: rgba(201,146,10,0.15);
+}
+.home-btn {
+  padding: 14px 32px;
+  background: var(--red);
+  border: 1px solid rgba(201,146,10,0.3);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 16px;
+  cursor: pointer; transition: 0.3s; margin: 0 8px;
+  text-decoration: none; display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen.html" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="story-container">
+
+  <!-- SCENE 1: MỞ ĐẦU -->
+  <div class="scene active" id="scene-1">
+    <div class="chapter-badge">⚔️ Chương 1 · Năm 938</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Sông Bạch Đằng">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Năm 938. Mùa thu. Trên bờ sông Bạch Đằng, <strong>ngươi — Ngô Quyền</strong> — đứng nhìn dòng nước chảy xiết, lòng nặng trĩu.
+    </div>
+    <div class="story-text">
+      Tin tình báo vừa đến: <em>30.000 quân Nam Hán do Lưu Hoằng Tháo chỉ huy đang tiến vào cửa biển.</em> Chúng đông gấp đôi quân ta, thuyền chiến hùng hậu, trang bị tối tân.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Ngô Quyền — trong lòng</div>
+      "Ta không thể địch chúng bằng sức mạnh. Phải có mưu kế."
+    </div>
+    <div class="story-text">
+      Bộ tướng Dương Tam Kha tiến lại thưa: <em>"Thưa chủ tướng, quân địch sẽ đến trong ba ngày. Chúng ta phải quyết định ngay!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">A</span>
+        <span>Cho quân mai phục hai bờ sông, chờ địch vào sâu rồi tấn công bất ngờ</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">B</span>
+        <span>Dùng kế cọc ngầm — đóng cọc gỗ đầu sắt xuống lòng sông, lợi dụng thủy triều</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">C</span>
+        <span>Ra nghênh chiến trực tiếp trên biển, dùng số đông dân binh để áp đảo</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1A: MAI PHỤC ĐƠN THUẦN -->
+  <div class="scene" id="scene-1A">
+    <div class="chapter-badge">📍 Lựa chọn A · Mai phục hai bờ</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Mai phục">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Quân ta mai phục hai bờ nhưng <strong>thuyền địch quá vững chắc</strong>. Mũi tên và đá ném từ bờ khó phá được thuyền chiến bọc đồng của Nam Hán.
+      </div>
+      <div class="story-text">
+        Trận đánh kéo dài, tổn thất nặng nề. Dù địch không thắng hoàn toàn, ta cũng không tiêu diệt được chủ lực của chúng.
+      </div>
+    </div>
+    <div class="story-text">
+      Dương Tam Kha thở dài: <em>"Chủ tướng ơi, ta cần một kế hay hơn. Cần lợi dụng địa thế sông này!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Ngô Quyền suy nghĩ lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>Kết hợp mai phục với bẫy cọc ngầm — lần này quyết không để địch thoát!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1B: CỌC NGẦM — LỰA CHỌN ĐÚNG -->
+  <div class="scene" id="scene-1B">
+    <div class="chapter-badge">⭐ Lựa chọn B · Kế cọc ngầm</div>
+    <img class="scene-img" src="images/ngo-quyen.jpg" alt="Ngô Quyền">
+    <div class="narrator">Kết quả xuất sắc!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">✨</span>
+      <div class="story-text">
+        <strong>Đây chính là kế sách thiên tài!</strong> Ngô Quyền ra lệnh cho hàng nghìn dân binh ngày đêm đóng cọc gỗ lớn đầu bịt sắt nhọn xuống lòng sông.
+      </div>
+    </div>
+    <div class="story-text">
+      Khi thủy triều lên, cọc chìm sâu dưới nước — <em>không ai có thể nhìn thấy.</em> Khi thủy triều rút, những mũi sắt nhọn nhô lên như răng hổ.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Ngô Quyền — ra lệnh</div>
+      "Cho thuyền nhỏ ra khiêu chiến! Nhử địch vào sâu khi nước đang lên. Khi triều rút — tấn công toàn lực!"
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Tiếp theo — bạn xử lý thế nào?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">A</span>
+        <span>Cho thuyền nhỏ giả vờ thua chạy vào sông, dẫn địch vào bẫy khi triều lên</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2B_bad')">
+        <span class="choice-letter">B</span>
+        <span>Tấn công ngay khi địch vừa vào cửa biển, không chờ thủy triều</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1C: ĐÁNH TRỰC TIẾP -->
+  <div class="scene" id="scene-1C">
+    <div class="chapter-badge">📍 Lựa chọn C · Nghênh chiến ngoài biển</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Trận hải chiến">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Quân ta ra biển nghênh chiến. Nhưng thuyền chiến Nam Hán <strong>to lớn gấp đôi</strong>, trang bị mạnh hơn. Chỉ sau vài giờ, quân ta bị đẩy lui về bờ với tổn thất nặng nề.
+      </div>
+      <div class="story-text">
+        Lưu Hoằng Tháo cười ngạo mạn: <em>"Quân Nam man này yếu ớt! Tiến vào!"</em>
+      </div>
+    </div>
+    <div class="story-text">
+      Dương Tam Kha vội vã báo: <em>"Chủ tướng! Phải dùng mưu kế thôi. Ta không thể thắng bằng lực lượng đơn thuần!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Rút lui — lên kế mới...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">→</span>
+        <span>Quay lại lập kế cọc ngầm — còn kịp nếu làm ngay!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2A: KẾT HỢP -->
+  <div class="scene" id="scene-2A">
+    <div class="chapter-badge">⚔️ Chương 2 · Trận chiến bùng nổ</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Trận Bạch Đằng">
+    <div class="narrator">Diễn biến trận đánh</div>
+    <div class="story-text">
+      Kế hoạch cọc ngầm được triển khai gấp rút. Hàng ngàn cọc gỗ được đóng xuống lòng sông Bạch Đằng trong đêm tối.
+    </div>
+    <div class="story-text">
+      Sáng hôm sau, thuyền nhỏ của ta ra khiêu chiến rồi <em>giả vờ thua chạy ngược vào sông</em>. Lưu Hoằng Tháo hí hửng đuổi theo...
+    </div>
+    <button class="continue-btn" onclick="choose('3_victory')">
+      Xem kết quả trận đánh →
+    </button>
+  </div>
+
+  <!-- SCENE 2B GOOD: NHỬ ĐỊCH VÀO BẪY -->
+  <div class="scene" id="scene-2B_good">
+    <div class="chapter-badge">⚔️ Chương 2 · Bẫy kích hoạt!</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Thủy triều rút">
+    <div class="narrator">Khoảnh khắc định mệnh</div>
+    <div class="story-text">
+      <strong>Kế sách hoàn hảo!</strong> Thuyền nhỏ của ta giả thua chạy vào sông. Lưu Hoằng Tháo hét lớn: <em>"Đuổi theo! Không để một tên nào thoát!"</em>
+    </div>
+    <div class="story-text">
+      30.000 quân Nam Hán ào ạt tiến vào sông Bạch Đằng khi thủy triều đang ở mức cao nhất. Chúng không hề biết rằng <em>bên dưới lòng sông — cái chết đang chờ đợi.</em>
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Ngô Quyền — ra hiệu lệnh</div>
+      "Bây giờ! Tấn công toàn lực! Cho trống đánh vang trời!"
+    </div>
+    <button class="continue-btn" onclick="choose('3_victory')">
+      Xem đại thắng →
+    </button>
+  </div>
+
+  <!-- SCENE 2B BAD: TẤN CÔNG SỚM -->
+  <div class="scene" id="scene-2B_bad">
+    <div class="chapter-badge">📍 Tấn công quá sớm</div>
+    <img class="scene-img" src="images/bachdang.jfif" alt="Sai lầm">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Tấn công khi địch vừa vào cửa biển — cọc ngầm chưa phát huy tác dụng vì <strong>thủy triều chưa rút!</strong> Trận chiến diễn ra ác liệt nhưng không đạt hiệu quả như mong muốn.
+      </div>
+    </div>
+    <div class="story-text">
+      Dương Tam Kha nhắc nhở: <em>"Chủ tướng! Phải đợi triều rút! Đó là then chốt của toàn bộ kế hoạch!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Rút lui chờ thủy triều...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">→</span>
+        <span>Nhử địch vào sâu hơn — đợi đúng lúc thủy triều rút mới phản công!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: ĐẠI THẮNG -->
+  <div class="scene" id="scene-3_victory">
+    <div class="chapter-badge">🏆 Chiến thắng lịch sử · Năm 938</div>
+    <img class="scene-img" src="images/ngo-quyen.jpg" alt="Ngô Quyền chiến thắng">
+    <div class="narrator">Ngô Quyền</div>
+    <div class="story-text">
+      Thủy triều rút. Hàng ngàn mũi cọc sắc nhọn đồng loạt nhô lên khỏi mặt nước như những chiếc răng khổng lồ.
+    </div>
+    <div class="story-text">
+      <strong>Thuyền chiến Nam Hán lao vào — vỡ tan!</strong> Tiếng gỗ gãy, tiếng la hét, tiếng nước xô — tất cả hòa thành một thứ âm thanh hỗn loạn kinh hoàng.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Lưu Hoằng Tháo — hoảng loạn</div>
+      "Rút lui! Rút... không thể rút được nữa rồi!"
+    </div>
+    <div class="story-text">
+      Quân ta từ hai bờ đồng loạt xông ra. Trận chiến kết thúc nhanh chóng. <em>Lưu Hoằng Tháo — con trai vua Nam Hán — tử trận.</em> Toàn bộ thủy quân địch bị tiêu diệt.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="story-text">
+      Chiến thắng Bạch Đằng năm 938 đã <strong>chấm dứt hơn 1000 năm Bắc thuộc</strong> — mở ra kỷ nguyên độc lập tự chủ lâu dài của dân tộc Việt Nam.
+    </div>
+    <button class="continue-btn" onclick="showFinal()">
+      Xem kết quả cuối →
+    </button>
+  </div>
+
+  <!-- FINAL RESULT -->
+  <div class="scene" id="scene-final">
+    <div class="final-result">
+      <div class="chapter-badge" style="justify-content:center">🎖️ Kết thúc hành trình</div>
+      <div class="final-title">Ngô Quyền — Người Khai Mở Kỷ Nguyên Độc Lập</div>
+      <div class="final-score" id="finalScore">⭐</div>
+      <div class="final-desc" id="finalDesc">
+        Bạn đã hoàn thành hành trình cùng Ngô Quyền trên sông Bạch Đằng lịch sử!
+      </div>
+      <div style="margin-top:8px">
+        <button class="restart-btn" onclick="restartStory()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="home-btn">📖 Câu chuyện khác</a>
+      </div>
+      <div style="margin-top:40px; padding:24px; background:rgba(201,146,10,0.08); border:1px solid rgba(201,146,10,0.2); border-radius:16px; text-align:left;">
+        <div style="font-size:13px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📚 Kiến thức lịch sử</div>
+        <div style="font-size:16px;line-height:1.8;color:rgba(245,234,214,0.85);">
+          Trận Bạch Đằng năm 938 là một trong những chiến thắng vĩ đại nhất lịch sử Việt Nam. Ngô Quyền đã sử dụng kế sách cọc ngầm thiên tài — lợi dụng thủy triều để biến điểm yếu thành điểm mạnh. Chiến thắng này kết thúc hơn 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập tự chủ cho dân tộc Việt Nam.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let correctChoices = 0;
+let totalChoices = 0;
+
+const correctPaths = ['1B', '2B_good', '3_victory'];
+
+function choose(sceneId) {
+  totalChoices++;
+  if (correctPaths.includes(sceneId)) correctChoices++;
+
+  // Hide all scenes
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+
+  // Show target scene
+  const target = document.getElementById('scene-' + sceneId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Update progress
+  updateProgress(sceneId);
+}
+
+function updateProgress(sceneId) {
+  const progressMap = {
+    '1': 0, '1A': 15, '1B': 30, '1C': 15,
+    '2A': 55, '2B_good': 65, '2B_bad': 45,
+    '3_victory': 85, 'final': 100
+  };
+  const pct = progressMap[sceneId] || 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-final').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Score
+  const ratio = totalChoices > 0 ? correctChoices / totalChoices : 0;
+  const scoreEl = document.getElementById('finalScore');
+  const descEl = document.getElementById('finalDesc');
+
+  if (ratio >= 0.7) {
+    scoreEl.textContent = '⭐⭐⭐';
+    descEl.textContent = 'Xuất sắc! Bạn đã đưa ra những quyết định sáng suốt như chính Ngô Quyền. Tầm nhìn chiến lược và sự kiên nhẫn của bạn đã dẫn đến đại thắng!';
+  } else if (ratio >= 0.4) {
+    scoreEl.textContent = '⭐⭐';
+    descEl.textContent = 'Tốt! Bạn đã hiểu được chiến lược cơ bản nhưng còn một vài sai lầm. Hãy thử lại để đạt kết quả tốt hơn!';
+  } else {
+    scoreEl.textContent = '⭐';
+    descEl.textContent = 'Cần cố gắng hơn! Chiến trận không chỉ cần dũng cảm mà còn cần mưu lược. Hãy thử lại và học từ sai lầm!';
+  }
+
+  // Confetti
+  if (ratio >= 0.7 && typeof confetti !== 'undefined') {
+    setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 500);
+  }
+}
+
+function restartStory() {
+  correctChoices = 0;
+  totalChoices = 0;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

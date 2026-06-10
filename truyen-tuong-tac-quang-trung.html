@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quang Trung — Bạn Là Nguyễn Huệ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0800;
+  --parchment: #f5e6c8;
+  --red: #8B0000;
+  --red-light: #c0392b;
+  --gold: #c9920a;
+  --gold-light: #f4c542;
+  --dark: #2c1200;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--ink);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(139,0,0,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(201,146,10,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(44,18,0,0.5) 0%, transparent 70%);
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,8,0,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,146,10,0.3);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 18px; color: var(--gold-light);
+  text-decoration: none; letter-spacing: 3px;
+}
+.nav-back {
+  color: rgba(245,230,200,0.6); font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+}
+.nav-back:hover { color: var(--gold-light); }
+
+.progress-bar {
+  position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+  height: 3px; background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--red), var(--gold));
+  transition: width 0.6s ease;
+}
+
+.story-container {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+.scene { display: none; animation: fadeScene 0.8s ease; }
+.scene.active { display: block; }
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(139,0,0,0.2);
+  border: 1px solid rgba(192,57,43,0.4);
+  border-radius: 30px; padding: 6px 16px;
+  font-size: 13px; color: #e74c3c;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.scene-img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(201,146,10,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  filter: sepia(0.3) contrast(1.1);
+}
+
+.narrator {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.8;
+}
+
+.story-text {
+  font-size: 20px; line-height: 1.9;
+  color: rgba(245,230,200,0.92);
+  margin-bottom: 16px;
+}
+.story-text em { color: var(--gold-light); font-style: italic; }
+.story-text strong { color: white; font-weight: 600; }
+
+.dialogue {
+  background: rgba(139,0,0,0.1);
+  border-left: 3px solid var(--red-light);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-size: 19px; font-style: italic;
+  color: var(--parchment); line-height: 1.7;
+}
+.dialogue-speaker {
+  font-size: 12px; font-style: normal;
+  color: #e74c3c; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.divider {
+  text-align: center; color: var(--gold);
+  opacity: 0.4; font-size: 18px; letter-spacing: 12px;
+  margin: 28px 0;
+}
+
+.choices-title {
+  font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 36px 0 16px; opacity: 0.8;
+}
+
+.choices { display: flex; flex-direction: column; gap: 12px; }
+
+.choice-btn {
+  background: rgba(245,230,200,0.04);
+  border: 1px solid rgba(245,230,200,0.15);
+  border-radius: 12px; padding: 18px 24px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 17px; text-align: left; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: flex-start; gap: 14px;
+  line-height: 1.5;
+}
+.choice-btn:hover {
+  background: rgba(139,0,0,0.15);
+  border-color: rgba(192,57,43,0.5);
+  transform: translateX(6px);
+}
+
+.choice-letter {
+  width: 28px; height: 28px; min-width: 28px;
+  border-radius: 50%; background: rgba(139,0,0,0.3);
+  border: 1px solid var(--red-light); color: #e74c3c;
+  font-size: 13px; font-weight: 600; font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif;
+}
+
+.outcome {
+  background: rgba(139,0,0,0.15);
+  border: 1px solid rgba(139,0,0,0.3);
+  border-radius: 16px; padding: 24px; margin: 24px 0;
+  font-size: 18px; line-height: 1.8;
+}
+.outcome.good {
+  background: rgba(26,107,58,0.1);
+  border-color: rgba(26,107,58,0.3);
+}
+.outcome-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+
+.continue-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 16px 32px;
+  background: linear-gradient(135deg, var(--red), #5a0000);
+  border: 1px solid rgba(201,146,10,0.4);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 17px;
+  cursor: pointer; transition: all 0.3s;
+}
+.continue-btn:hover {
+  background: linear-gradient(135deg, var(--red-light), var(--red));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139,0,0,0.5);
+}
+
+.final-result { text-align: center; padding: 40px 20px; }
+.final-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px; color: var(--gold-light);
+  margin-bottom: 16px; line-height: 1.2;
+}
+.final-score {
+  display: inline-block;
+  background: rgba(139,0,0,0.2);
+  border: 1px solid var(--gold);
+  border-radius: 50%; width: 120px; height: 120px;
+  line-height: 120px; font-size: 40px;
+  color: var(--gold-light); margin: 24px auto;
+}
+.final-desc {
+  font-size: 18px; color: rgba(245,230,200,0.8);
+  line-height: 1.8; max-width: 500px; margin: 0 auto 32px;
+}
+.restart-btn {
+  padding: 14px 32px; background: transparent;
+  border: 1px solid var(--gold); border-radius: 12px;
+  color: var(--gold-light); font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+}
+.restart-btn:hover { background: rgba(201,146,10,0.15); }
+.home-btn {
+  padding: 14px 32px; background: var(--red);
+  border: 1px solid rgba(201,146,10,0.3); border-radius: 12px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+  text-decoration: none; display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen.html" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="story-container">
+
+  <!-- SCENE 1 -->
+  <div class="scene active" id="scene-1">
+    <div class="chapter-badge">🔥 Chương 1 · Tháng 12 năm 1788</div>
+    <img class="scene-img" src="images/game-qt-trieu.jpg" alt="Quang Trung lên ngôi">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Tháng 12 năm 1788. <strong>Ngươi — Nguyễn Huệ</strong> — vừa lên ngôi Hoàng đế, lấy hiệu là <em>Quang Trung</em>. Tin tức cấp báo: 29 vạn quân Thanh đã chiếm Thăng Long, vua Lê Chiêu Thống đang giúp giặc cai trị đất nước.
+    </div>
+    <div class="story-text">
+      Các tướng sĩ nhìn ngươi chờ đợi. Thời gian không còn nhiều — <em>mỗi ngày chờ đợi là thêm một ngày dân chúng lầm than dưới ách giặc.</em>
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Quang Trung — quyết đoán</div>
+      "29 vạn quân Thanh — ta chỉ có 10 vạn. Nhưng chính nghĩa thuộc về ta. Phải đánh và phải thắng!"
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn chọn chiến lược nào?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">A</span>
+        <span>Hành quân chậm rãi, cẩn thận — tích lũy thêm lực lượng trước khi đánh</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">B</span>
+        <span>Hành quân thần tốc ra Bắc, đánh bất ngờ vào đêm Giao thừa khi địch đang ăn Tết</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">C</span>
+        <span>Gửi sứ giả cầu hòa với nhà Thanh, tránh đổ máu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1A: CHẬM CHẠP -->
+  <div class="scene" id="scene-1A">
+    <div class="chapter-badge">📍 Lựa chọn A · Hành quân chậm</div>
+    <img class="scene-img" src="images/game-qt-hanh-quan.jpg" alt="Hành quân">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Hành quân chậm rãi khiến <strong>quân Thanh có thời gian củng cố phòng thủ.</strong> Tôn Sĩ Nghị nhận được tin báo và bắt đầu bố trí lại quân đội.
+      </div>
+      <div class="story-text">
+        Yếu tố bất ngờ — lợi thế lớn nhất của ta — đã mất đi!
+      </div>
+    </div>
+    <div class="story-text">
+      Đô đốc Long vội tâu: <em>"Hoàng thượng! Phải đánh nhanh! Chờ lâu địch sẽ phòng bị kỹ hơn!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">→</span>
+        <span>Thay đổi ngay — hành quân thần tốc, đánh bất ngờ!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1B: THẦN TỐC -->
+  <div class="scene" id="scene-1B">
+    <div class="chapter-badge">⭐ Lựa chọn B · Hành quân thần tốc</div>
+    <img class="scene-img" src="images/game-qt-hanh-quan.jpg" alt="Quân Tây Sơn">
+    <div class="narrator">Quyết định thiên tài!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">✨</span>
+      <div class="story-text">
+        <strong>Đây là kế sách đúng đắn!</strong> Từ Phú Xuân, đại quân Tây Sơn hành quân ra Bắc với tốc độ chưa từng có — mỗi ngày đi hàng chục dặm, vừa đi vừa tuyển thêm quân.
+      </div>
+    </div>
+    <div class="story-text">
+      Quân Thanh hoàn toàn không hay biết. Tôn Sĩ Nghị vẫn <em>đang ăn Tết sung sướng trong Thăng Long,</em> tưởng rằng mùa xuân này sẽ bình yên.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Quang Trung — ra lệnh</div>
+      "Đêm 30 tháng Chạp — ta tấn công! Khi chúng say sưa ăn Tết chính là lúc ta ra tay!"
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Đêm Giao thừa — bạn chọn hướng tấn công nào?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">A</span>
+        <span>Đánh thẳng vào đồn Hà Hồi và Đống Đa — hai cứ điểm then chốt bảo vệ Thăng Long</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2B_bad')">
+        <span class="choice-letter">B</span>
+        <span>Chờ đến sáng mùng 1 Tết mới tấn công — để quân sĩ nghỉ ngơi thêm một đêm</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1C: CẦU HÒA -->
+  <div class="scene" id="scene-1C">
+    <div class="chapter-badge">📍 Lựa chọn C · Cầu hòa</div>
+    <img class="scene-img" src="images/game-qt-trieu.jpg" alt="Sai lầm">
+    <div class="narrator">Kết quả thảm họa</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Nhà Thanh từ chối cầu hòa — họ coi Đại Việt là chư hầu phải thần phục! <strong>Tôn Sĩ Nghị còn cho quân tiến xuống phía Nam thêm.</strong>
+      </div>
+      <div class="story-text">
+        Các tướng sĩ phẫn nộ: <em>"Hoàng thượng! Cầu hòa chỉ làm chúng khinh thường ta hơn!"</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">→</span>
+        <span>Quyết chiến! Hành quân thần tốc — đánh cho chúng không kịp trở tay!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2B GOOD -->
+  <div class="scene" id="scene-2B_good">
+    <div class="chapter-badge">🔥 Chương 2 · Đêm Giao thừa lịch sử</div>
+    <img class="scene-img" src="images/game-qt-giao-thua.jpg" alt="Đêm Giao thừa">
+    <div class="narrator">Khoảnh khắc định mệnh</div>
+    <div class="story-text">
+      <strong>Quyết định hoàn hảo!</strong> Đêm 30 tháng Chạp — khi quân Thanh đang say sưa đón Tết, tiếng pháo nổ vang khắp nơi — <em>đại quân Tây Sơn bất ngờ xuất hiện!</em>
+    </div>
+    <div class="story-text">
+      Đồn Hà Hồi bị hạ chỉ trong chốc lát. Quân giặc không kịp phản ứng. Bình minh mùng 5 Tết — trận Đống Đa bắt đầu!
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Quang Trung — xung trận</div>
+      "Ta tự dẫn đầu! Tướng sĩ nhìn ta mà đánh!"
+    </div>
+    <button class="continue-btn" onclick="choose('3_victory')">
+      Xem đại thắng Đống Đa →
+    </button>
+  </div>
+
+  <!-- SCENE 2B BAD -->
+  <div class="scene" id="scene-2B_bad">
+    <div class="chapter-badge">📍 Chờ đến sáng</div>
+    <img class="scene-img" src="images/game-qt-hanh-quan.jpg" alt="Sai lầm">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Chờ đến sáng mùng 1 — <strong>quân Thanh đã tỉnh rượu và nhận được tin báo!</strong> Tôn Sĩ Nghị vội vã điều quân bố phòng. Yếu tố bất ngờ không còn nữa.
+      </div>
+    </div>
+    <div class="story-text">
+      Đô đốc Bảo thúc giục: <em>"Hoàng thượng! Phải đánh ngay đêm nay! Mỗi giờ trôi qua là một lợi thế mất đi!"</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2B_good')">
+        <span class="choice-letter">→</span>
+        <span>Tấn công ngay đêm nay — không để địch chuẩn bị thêm!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: ĐẠI THẮNG -->
+  <div class="scene" id="scene-3_victory">
+    <div class="chapter-badge">🏆 Đại Thắng · Mùng 5 Tết Kỷ Dậu 1789</div>
+    <img class="scene-img" src="images/game-qt-dong-da.jpg" alt="Trận Đống Đa">
+    <div class="narrator">Quang Trung</div>
+    <div class="story-text">
+      Sáng mùng 5 Tết. Quân Tây Sơn như vũ bão xông vào đồn Đống Đa. <strong>Tướng giặc Sầm Nghi Đống tử trận.</strong> Quân Thanh vỡ trận tháo chạy tán loạn.
+    </div>
+    <div class="story-text">
+      Tôn Sĩ Nghị hoảng loạn <em>bỏ cả ấn tín chạy trốn qua cầu phao sông Hồng.</em> Cầu phao gãy — hàng vạn quân Thanh chết đuối. Thăng Long được giải phóng!
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Quang Trung — khải hoàn</div>
+      "Chỉ 5 ngày — ta đã quét sạch 29 vạn quân Thanh! Đại Việt muôn năm!"
+    </div>
+    <div class="story-text">
+      Chỉ trong <strong>5 ngày thần tốc</strong>, vua Quang Trung đã đánh tan 29 vạn quân Thanh — một trong những chiến thắng vĩ đại nhất lịch sử Việt Nam.
+    </div>
+    <button class="continue-btn" onclick="showFinal()">
+      Xem kết quả cuối →
+    </button>
+  </div>
+
+  <!-- FINAL -->
+  <div class="scene" id="scene-final">
+    <div class="final-result">
+      <div class="chapter-badge" style="justify-content:center">🎖️ Kết thúc hành trình</div>
+      <div class="final-title">Quang Trung — Người Anh Hùng Áo Vải</div>
+      <div class="final-score" id="finalScore">⭐</div>
+      <div class="final-desc" id="finalDesc">
+        Bạn đã hoàn thành hành trình cùng vua Quang Trung đại phá quân Thanh!
+      </div>
+      <div style="margin-top:8px">
+        <button class="restart-btn" onclick="restartStory()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="home-btn">📖 Câu chuyện khác</a>
+      </div>
+      <div style="margin-top:40px; padding:24px; background:rgba(139,0,0,0.08); border:1px solid rgba(192,57,43,0.2); border-radius:16px; text-align:left;">
+        <div style="font-size:13px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📚 Kiến thức lịch sử</div>
+        <div style="font-size:16px;line-height:1.8;color:rgba(245,230,200,0.85);">
+          Chiến thắng mùa xuân Kỷ Dậu 1789 là một trong những trang sử hào hùng nhất của dân tộc Việt Nam. Vua Quang Trung đã dùng chiến thuật hành quân thần tốc và tấn công bất ngờ vào đêm Giao thừa — biến điểm yếu về quân số thành lợi thế bất ngờ. Chỉ 5 ngày đã quét sạch 29 vạn quân Thanh, giải phóng Thăng Long.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let correctChoices = 0;
+let totalChoices = 0;
+const correctPaths = ['1B', '2B_good', '3_victory'];
+
+function choose(sceneId) {
+  totalChoices++;
+  if (correctPaths.includes(sceneId)) correctChoices++;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('scene-' + sceneId);
+  if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  updateProgress(sceneId);
+}
+
+function updateProgress(sceneId) {
+  const progressMap = {
+    '1': 0, '1A': 15, '1B': 30, '1C': 10,
+    '2B_good': 65, '2B_bad': 45,
+    '3_victory': 85, 'final': 100
+  };
+  document.getElementById('progressFill').style.width = (progressMap[sceneId] || 0) + '%';
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-final').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const ratio = totalChoices > 0 ? correctChoices / totalChoices : 0;
+  const scoreEl = document.getElementById('finalScore');
+  const descEl = document.getElementById('finalDesc');
+  if (ratio >= 0.7) {
+    scoreEl.textContent = '⭐⭐⭐';
+    descEl.textContent = 'Xuất sắc! Bạn có tầm nhìn và quyết đoán như vua Quang Trung — thần tốc, bất ngờ và chính xác!';
+  } else if (ratio >= 0.4) {
+    scoreEl.textContent = '⭐⭐';
+    descEl.textContent = 'Tốt! Bạn đã hiểu chiến lược cơ bản. Hãy thử lại để đạt kết quả hoàn hảo hơn!';
+  } else {
+    scoreEl.textContent = '⭐';
+    descEl.textContent = 'Cần cố gắng hơn! Chiến tranh cần cả tốc độ lẫn mưu lược. Hãy thử lại!';
+  }
+  if (ratio >= 0.7 && typeof confetti !== 'undefined') {
+    setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 500);
+  }
+}
+
+function restartStory() {
+  correctChoices = 0; totalChoices = 0;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

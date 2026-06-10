@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kháng chiến chống Pháp | Sử Việt</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --main: #8B0000; 
+            --gold: #FFD700;
+            --dark: #2c1b12;
+            --bg-light: #fdfaf1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        /* NAV: Khớp 100% khoảng cách và màu sắc Lý Trần */
+        nav { background: #2c1b12; display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; color: white; height: 100px; }
+        .logo { font-weight: 700; font-size: 32px; color: var(--gold); text-decoration: none; }
+        nav ul { display: flex; list-style: none; gap: 30px; } 
+        nav ul li a { color: white; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        
+        .nav-item.active { color: var(--gold); }
+        .nav-item:hover { color: var(--gold); }
+
+        /* HERO - Đổi tên class để tránh nhầm lẫn, giữ cấu trúc cũ */
+        .chong-phap-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/chong-phap-hero.jpg');
+            background-size: cover; background-position: center;
+            height: 65vh; display: flex; align-items: center; padding: 0 80px; color: white; border-bottom: 5px solid var(--gold);
+        }
+        
+        /* Tiêu đề H1 màu TRẮNG theo ý bạn */
+        .lesson-overlay h1 { 
+            font-size: 70px; 
+            margin-bottom: 15px; 
+            color: white; 
+            text-transform: uppercase;
+        }
+        .lesson-overlay p { font-size: 22px; max-width: 900px; line-height: 1.6; font-weight: 300; }
+
+        /* GIỮ NGUYÊN LAYOUT ĐỒNG BỘ */
+        .lesson-layout { display: flex; gap: 40px; padding: 50px 80px; max-width: 1600px; margin: 0 auto; }
+        .lesson-main { flex: 2.5; }
+        .lesson-sidebar { flex: 1; }
+
+        .content-box { background: white; border-radius: 25px; padding: 40px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .content-box h2 { color: var(--main); margin-bottom: 25px; font-size: 28px; border-left: 5px solid var(--gold); padding-left: 15px; }
+
+        .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .event-card { background: #fffdf7; border-radius: 20px; border: 1px solid #eee; overflow: hidden; transition: 0.4s; }
+        .event-card img { width: 100%; height: 200px; object-fit: cover; }
+        .event-card h3 { padding: 20px 20px 10px; font-size: 18px; }
+        .event-card p { padding: 0 20px 20px; font-size: 14px; color: #555; }
+
+        .character-row { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 35px; }
+        .mini-character { display: flex; gap: 20px; background: #fffdf7; border-radius: 20px; border: 1px solid #eee; overflow: hidden; align-items: center; padding: 10px; }
+        .mini-character img { width: 150px; height: 150px; border-radius: 15px; object-fit: cover; }
+
+        .discover-btn-link { 
+            display: inline-block; padding: 12px 25px; background: var(--main); color: white !important; 
+            text-decoration: none; border-radius: 12px; font-size: 14px; font-weight: 600; 
+            margin: 0 20px 20px; transition: 0.3s; 
+        }
+
+        .quiz-box { 
+            background: #fff2cc; border-radius: 25px; padding: 40px; 
+            display: flex; justify-content: space-between; align-items: center;
+            border: 2px dashed var(--gold);
+        }
+        .quiz-box button { 
+            background: var(--dark); color: white; border: none; padding: 15px 35px; 
+            border-radius: 15px; font-weight: 600; cursor: pointer; 
+        }
+
+        .video-item iframe { width: 100%; height: 230px; border-radius: 20px; margin-bottom: 15px; border: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">SỬ VIỆT</a>
+    <ul>
+        <li><a href="index.html" class="nav-item">Trang chủ</a></li>
+        <li><a href="#" class="nav-item ">Hành trình lịch sử</a></li>
+        <li><a href="#" class="nav-item">Nhân vật</a></li>
+        <li><a href="#" class="nav-item">Quiz</a></li>
+        <li><a href="#" class="nav-item">Mini game</a></li>
+    </ul>
+</nav>
+
+<section class="chong-phap-bg">
+    <div class="lesson-overlay">
+        <h1>CHỐNG PHÁP</h1>
+        <p>Cuộc trường kỳ kháng chiến anh dũng, kết thúc bằng chiến thắng Điện Biên Phủ lừng lẫy năm châu, chấn động địa cầu.</p>
+    </div>
+</section>
+
+<section class="lesson-layout">
+    <div class="lesson-main">
+        <div class="content-box">
+             <h2>⭐ SỰ KIỆN NỔI BẬT</h2>
+             <div class="event-grid">
+                 <div class="event-card">
+                     <img src="images/ngay-doc-lap.jpg">
+                     <h3>Cách mạng Tháng Tám</h3>
+                     <p>Ngày 2/9/1945, Bác Hồ đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+                 <div class="event-card">
+                     <img src="images/chien-khu.jpg">
+                     <h3>Chiến khu Việt Bắc</h3>
+                     <p>Căn cứ địa cách mạng quan trọng trong những năm kháng chiến trường kỳ.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+                 <div class="event-card">
+                     <img src="images/dien-bien-phu.jpg">
+                     <h3>Điện Biên Phủ 1954</h3>
+                     <p>Chiến thắng lịch sử kết thúc ách đô hộ của thực dân Pháp tại Việt Nam.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+             </div>
+        </div>
+
+        <div class="character-row">
+            <div class="mini-character">
+                 <img src="images/ho-chi-minh.jpg">
+                 <div>
+                     <h3>Hồ Chí Minh</h3>
+                     <p>Vị lãnh tụ vĩ đại, người tìm ra con đường cứu nước cho dân tộc.</p>
+                     <a href="#" class="discover-btn-link">Khám phá</a>
+                 </div>
+            </div>
+            <div class="mini-character">
+                 <img src="images/vo-nguyen-giap.jpg">
+                 <div>
+                     <h3>Võ Nguyên Giáp</h3>
+                     <p>Đại tướng của nhân dân, thiên tài quân sự thế kỷ XX.</p>
+                     <a href="#" class="discover-btn-link">Khám phá</a>
+                 </div>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <div>
+                <h3>🧠 QUIZ NHANH</h3>
+                <p>Trả lời câu hỏi nhanh để kiểm tra kiến thức của bạn!</p>
+            </div>
+            <button onclick="location.href='quiz-chong-phap.html'">Làm quiz ngay ></button>
+        </div>
+    </div>
+
+    <div class="lesson-sidebar">
+        <div class="content-box">
+            <h2 style="font-size: 22px;">🎬 TƯ LIỆU</h2>
+            <div class="video-item">
+                <iframe src="https://www.youtube.com/embed/S_I5p6T-s5Q" allowfullscreen></iframe>
+                <h3 style="font-size: 16px; margin-top:10px;">Chiến thắng Điện Biên Phủ</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

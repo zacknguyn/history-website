@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lê Lợi | Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #8B0000;
+  --gold: #d4a017;
+  --dark: #1a0f06;
+  --bg: #f5f0e8;
+  --white: #ffffff;
+  --border: #e8dfc8;
+  --text: #333333;
+  --muted: #777777;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+
+nav {
+  background:var(--dark);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px; height:56px; position:sticky; top:0; z-index:100;
+}
+.nav-logo { color:var(--gold); font-weight:800; font-size:20px; letter-spacing:1px; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a { color:#ccc; text-decoration:none; font-size:13px; padding:7px 15px; border-radius:7px; transition:.2s; }
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.1); }
+.nav-links .active a { background:var(--gold); color:var(--dark); font-weight:600; }
+
+.hero {
+  background: linear-gradient(to right, rgba(15,8,3,.90) 42%, rgba(15,8,3,.45) 75%, rgba(0,0,0,.15) 100%),
+              url('images/leloi.jpg') center/cover no-repeat;
+  min-height:400px; display:flex; align-items:center;
+  padding:56px 56px 50px; color:#fff;
+  border-bottom:3px solid var(--gold);
+  position:relative; overflow:hidden;
+}
+.hero-badge {
+  display:inline-block; background:rgba(212,160,23,.2); border:1px solid var(--gold);
+  color:var(--gold); font-size:11px; font-weight:600; padding:4px 14px; border-radius:20px;
+  margin-bottom:14px; letter-spacing:.8px; text-transform:uppercase;
+}
+.hero h1 { font-size:58px; font-weight:800; line-height:1; margin-bottom:12px; letter-spacing:-.5px; }
+.hero-sub { font-size:15px; color:rgba(255,255,255,.8); max-width:480px; line-height:1.6; margin-bottom:24px; }
+.hero-stats { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px; }
+.hero-stat { display:flex; align-items:center; gap:9px; }
+.hero-stat-icon { width:36px; height:36px; background:rgba(212,160,23,.2); border:1px solid rgba(212,160,23,.5); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.hero-stat-label { font-size:11px; color:rgba(255,255,255,.6); }
+.hero-stat-val { font-size:13px; font-weight:600; color:#fff; }
+.btn-story { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--dark); font-weight:700; font-size:13px; padding:11px 22px; border-radius:9px; text-decoration:none; transition:.2s; }
+.btn-story:hover { background:#e8b820; }
+
+.breadcrumb { background:#fff; padding:12px 56px; font-size:13px; color:#999; border-bottom:1px solid var(--border); }
+.breadcrumb a { color:var(--red); text-decoration:none; font-weight:500; }
+.breadcrumb a:hover { text-decoration:underline; }
+.breadcrumb span { margin:0 7px; color:#ccc; }
+
+.layout { display:grid; grid-template-columns:1fr 310px; gap:24px; padding:26px 56px 40px; max-width:1400px; margin:0 auto; }
+
+.card { background:#fff; border-radius:14px; padding:24px 28px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.card-title { color:var(--red); font-size:15px; font-weight:700; padding-bottom:14px; margin-bottom:18px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:8px; }
+.card p { font-size:13.5px; line-height:1.85; color:#444; margin-bottom:12px; }
+.card p:last-child { margin-bottom:0; }
+
+.key-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
+.ks-item { text-align:center; padding:14px 10px; background:#fffdf7; border:1px solid var(--border); border-radius:10px; }
+.ks-icon { font-size:22px; margin-bottom:6px; display:block; }
+.ks-val { font-size:13px; font-weight:700; color:var(--red); }
+.ks-label { font-size:11px; color:#999; margin-top:2px; }
+
+.photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 0; }
+.photo-item img { width:100%; height:110px; object-fit:cover; border-radius:10px; border:1px solid var(--border); display:block; background:#eee; }
+.photo-caption { font-size:12px; font-weight:600; margin-top:6px; color:#222; }
+.photo-sub { font-size:11px; color:#999; }
+
+.tl-h { position:relative; padding:10px 0 0; }
+.tl-h-track { position:relative; display:flex; justify-content:space-between; padding:0 10px; }
+.tl-h-track::before { content:''; position:absolute; top:22px; left:20px; right:20px; height:2px; background:linear-gradient(to right, var(--gold),#e8d080); }
+.tl-h-item { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.tl-h-dot { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 0 0 2px var(--gold); z-index:1; margin-bottom:10px; flex-shrink:0; }
+.tl-h-dot.red { background:var(--red); box-shadow:0 0 0 2px var(--red); }
+.tl-h-year { font-size:10px; font-weight:700; color:var(--gold); margin-bottom:4px; text-align:center; }
+.tl-h-icon { font-size:24px; margin-bottom:6px; }
+.tl-h-name { font-size:12px; font-weight:700; text-align:center; margin-bottom:4px; }
+.tl-h-desc { font-size:10.5px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
+
+.achieve-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+.ac-item { text-align:center; padding:18px 12px; background:#fffdf7; border:1px solid var(--border); border-radius:12px; }
+.ac-icon { font-size:28px; margin-bottom:10px; display:block; }
+.ac-title { font-size:13px; font-weight:700; margin-bottom:6px; }
+.ac-text { font-size:11.5px; color:#666; line-height:1.55; }
+
+.ff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+.ff-item { background:#fffdf7; border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:12px; }
+.ff-icon-wrap { width:44px; height:44px; border-radius:10px; background:#f2ead8; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.ff-text { font-size:12px; color:#555; line-height:1.6; }
+.ff-text strong { color:#222; display:block; margin-bottom:3px; font-size:13px; }
+.ff-highlight { color:var(--red); font-weight:700; }
+
+.sidebar { display:flex; flex-direction:column; gap:18px; }
+.sb { background:#fff; border-radius:14px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.sb-title { font-size:13px; font-weight:700; color:var(--red); padding-bottom:10px; margin-bottom:14px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:7px; }
+.sb-title .sb-icon { width:22px; height:22px; border-radius:6px; background:var(--gold); display:inline-flex; align-items:center; justify-content:center; font-size:12px; color:var(--dark); }
+
+.info-tbl { width:100%; border-collapse:collapse; }
+.info-tbl tr { border-bottom:1px solid #f2ead8; }
+.info-tbl tr:last-child { border-bottom:none; }
+.info-tbl td { padding:8px 0; font-size:12.5px; vertical-align:top; }
+.info-tbl td:first-child { color:#999; width:38%; padding-right:8px; display:flex; align-items:center; gap:6px; }
+.info-tbl td:last-child { font-weight:600; color:#222; }
+
+.char-list { display:flex; flex-direction:column; gap:0; }
+.char-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; cursor:pointer; border-radius:8px; }
+.char-row:last-child { border-bottom:none; }
+.char-row:hover { background:#faf5ec; padding-left:6px; }
+.char-avatar { width:42px; height:42px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; border:2px solid var(--border); }
+.char-name { font-size:13px; font-weight:600; }
+.char-role { font-size:11px; color:#999; }
+.char-arrow { margin-left:auto; color:#ccc; font-size:16px; }
+
+.explore-list { display:flex; flex-direction:column; }
+.explore-item { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; }
+.explore-item:last-child { border-bottom:none; }
+.explore-item:hover { color:var(--red); padding-left:4px; }
+.explore-icon { font-size:16px; flex-shrink:0; }
+.explore-name { font-size:13px; font-weight:500; flex:1; }
+.explore-arrow { color:#ccc; font-size:14px; }
+
+.btn-back { display:flex; align-items:center; justify-content:center; gap:8px; background:var(--red); color:#fff; font-weight:700; font-size:13px; padding:13px 20px; border-radius:10px; text-decoration:none; transition:.2s; text-align:center; }
+.btn-back:hover { background:#a00000; }
+
+footer { background:var(--dark); color:#888; padding:22px 56px; font-size:12px; display:flex; justify-content:space-between; align-items:center; }
+footer a { color:#777; text-decoration:none; }
+footer a:hover { color:#aaa; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">SỬ VIỆT</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Trang chủ</a></li>
+    <li><a href="index.html">Hành trình lịch sử</a></li>
+    <li><a href="cauchuyen.html">Câu chuyện</a></li>
+    <li><a href="quiz.html">Quiz</a></li>
+    <li><a href="index.html">Nhân vật</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-badge">⚔️ Nhân vật lịch sử</div>
+    <h1>LÊ LỢI</h1>
+    <p class="hero-sub">Bình Định Vương – Anh hùng áo vải đất Lam Sơn,<br>lãnh đạo khởi nghĩa 10 năm giải phóng đất nước khỏi ách đô hộ nhà Minh.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🏛️</div>
+        <div>
+          <div class="hero-stat-label">Khởi nghĩa</div>
+          <div class="hero-stat-val">1418 – 1427</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">👑</div>
+        <div>
+          <div class="hero-stat-label">Triều đại</div>
+          <div class="hero-stat-val">Nhà Lê Sơ</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">⚔️</div>
+        <div>
+          <div class="hero-stat-label">Gươm báu</div>
+          <div class="hero-stat-val">Thuận Thiên</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🏯</div>
+        <div>
+          <div class="hero-stat-label">Kinh đô</div>
+          <div class="hero-stat-val">Thăng Long</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-story">📖 Xem câu chuyện</a>
+  </div>
+</section>
+
+<div class="breadcrumb">
+  <a href="index.html">Trang chủ</a><span>›</span>
+  <a href="le-nguyen.html">Lê - Nguyễn</a><span>›</span>
+  Lê Lợi
+</div>
+
+<div class="layout">
+  <div class="main-col">
+
+    <!-- TIỂU SỬ -->
+    <div class="card">
+      <div class="card-title">📖 TIỂU SỬ</div>
+      <p>Lê Lợi (1385 – 1433), tự xưng <strong>Bình Định Vương</strong>, quê ở Lam Sơn, Thanh Hóa. Xuất thân từ một hào trưởng địa phương, ông nuôi chí lớn giải phóng đất nước khỏi ách đô hộ của nhà Minh. Năm 1418, ông phất cờ khởi nghĩa tại Lam Sơn, trải qua 10 năm gian khổ, đến năm 1427 giành thắng lợi hoàn toàn, lập nên nhà Lê Sơ – một trong những triều đại hưng thịnh nhất lịch sử Việt Nam.</p>
+      <p>Ông được sử sách ca ngợi là người có chí khí phi thường, biết trọng dụng nhân tài, đặc biệt là Nguyễn Trãi – quân sư kiệt xuất. Chiến thắng của Lê Lợi không chỉ bằng sức mạnh quân sự mà còn bằng đường lối "lấy nhân nghĩa thắng hung tàn".</p>
+
+      <div class="key-stats">
+        <div class="ks-item">
+          <span class="ks-icon">⚔️</span>
+          <div class="ks-val">1418</div>
+          <div class="ks-label">Khởi nghĩa Lam Sơn</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🏆</span>
+          <div class="ks-val">1427</div>
+          <div class="ks-label">Giải phóng hoàn toàn</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">👑</span>
+          <div class="ks-val">Lê Thái Tổ</div>
+          <div class="ks-label">Miếu hiệu</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">📜</span>
+          <div class="ks-val">Bình Ngô</div>
+          <div class="ks-label">Đại Cáo</div>
+        </div>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-item">
+          <div style="width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#4a3010,#8a6030);display:flex;align-items:center;justify-content:center;font-size:36px;">⚔️</div>
+          <div class="photo-caption">Khởi nghĩa Lam Sơn</div>
+          <div class="photo-sub">Đất thiêng Thanh Hóa</div>
+        </div>
+        <div class="photo-item">
+          <div style="width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#1a3a5a,#2a5a8a);display:flex;align-items:center;justify-content:center;font-size:36px;">🗡️</div>
+          <div class="photo-caption">Gươm Thuận Thiên</div>
+          <div class="photo-sub">Biểu tượng chính nghĩa</div>
+        </div>
+        <div class="photo-item">
+          <div style="width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#3a5a2a,#5a8a3a);display:flex;align-items:center;justify-content:center;font-size:36px;">🐢</div>
+          <div class="photo-caption">Hồ Hoàn Kiếm</div>
+          <div class="photo-sub">Truyền thuyết trả gươm</div>
+        </div>
+        <div class="photo-item">
+          <div style="width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a2a2a,#9a4040);display:flex;align-items:center;justify-content:center;font-size:36px;">📜</div>
+          <div class="photo-caption">Bình Ngô Đại Cáo</div>
+          <div class="photo-sub">Tuyên ngôn độc lập</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DÒNG THỜI GIAN -->
+    <div class="card">
+      <div class="card-title">🗓️ DÒNG THỜI GIAN</div>
+      <div class="tl-h">
+        <div class="tl-h-track">
+          <div class="tl-h-item">
+            <div class="tl-h-year">1385</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">👶</div>
+            <div class="tl-h-name">Sinh tại Lam Sơn</div>
+            <div class="tl-h-desc">Sinh ra trong gia đình hào trưởng tại Thanh Hóa.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">1418</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">⚔️</div>
+            <div class="tl-h-name">Phất cờ khởi nghĩa</div>
+            <div class="tl-h-desc">Tự xưng Bình Định Vương, chiêu mộ nghĩa quân tại Lam Sơn.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">1418 – 1423</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🏔️</div>
+            <div class="tl-h-name">Ba lần rút lên núi Chí Linh</div>
+            <div class="tl-h-desc">Vượt qua gian khổ cực kỳ, giữ vững ngọn lửa kháng chiến.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">1426 – 1427</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🏆</div>
+            <div class="tl-h-name">Đại thắng Chi Lăng</div>
+            <div class="tl-h-desc">Tiêu diệt viện binh Liễu Thăng, buộc quân Minh đầu hàng.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">1428</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">👑</div>
+            <div class="tl-h-name">Lên ngôi Hoàng đế</div>
+            <div class="tl-h-desc">Lập nhà Lê Sơ, đặt quốc hiệu Đại Việt, mở kỷ nguyên mới.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THÀNH TỰU NỔI BẬT -->
+    <div class="card">
+      <div class="card-title">🏆 THÀNH TỰU NỔI BẬT</div>
+      <div class="achieve-grid">
+        <div class="ac-item">
+          <span class="ac-icon">🏳️</span>
+          <div class="ac-title">Giải phóng Đại Việt</div>
+          <div class="ac-text">Chấm dứt 20 năm đô hộ nhà Minh, khôi phục nền độc lập.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">👑</span>
+          <div class="ac-title">Lập nhà Lê Sơ</div>
+          <div class="ac-text">Triều đại kéo dài hơn 100 năm hưng thịnh trong lịch sử Việt Nam.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">📜</span>
+          <div class="ac-title">Bình Ngô Đại Cáo</div>
+          <div class="ac-text">Bản tuyên ngôn độc lập hùng hồn qua ngòi bút Nguyễn Trãi.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">⚖️</span>
+          <div class="ac-title">Luật Hồng Đức</div>
+          <div class="ac-text">Đặt nền móng pháp luật tiến bộ, bảo vệ dân quyền.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ý NGHĨA LỊCH SỬ -->
+    <div class="card" style="background:#fffbf0;border:1px solid #f0d890;">
+      <div class="card-title">⭐ Ý NGHĨA LỊCH SỬ</div>
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="flex-shrink:0;width:180px;min-height:160px;border-radius:10px;background:linear-gradient(135deg,#3a2010,#7a5030);display:flex;align-items:center;justify-content:center;font-size:64px;">⚔️</div>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Biểu tượng ý chí bất khuất:</strong> Lê Lợi là hình mẫu của người anh hùng xuất thân từ dân, dám đứng lên chống lại cường quyền với lòng kiên nhẫn phi thường.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Đường lối "lấy nhân nghĩa thắng hung tàn":</strong> Chính sách nhân đạo với tù binh và dân chúng đã tạo ra sức mạnh chính trị to lớn cho cuộc kháng chiến.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Trọng dụng nhân tài:</strong> Biết tận dụng tài năng của Nguyễn Trãi, Trần Nguyên Hãn, Lê Văn Linh – bài học về xây dựng đội ngũ lãnh đạo.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Mở kỷ nguyên thịnh vượng:</strong> Triều Lê Sơ dưới thời Lê Thánh Tông kế thừa nền móng của Lê Lợi, đưa Đại Việt đến đỉnh cao văn minh phong kiến.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SỰ THẬT THÚ VỊ -->
+    <div class="card">
+      <div class="card-title">💡 SỰ THẬT THÚ VỊ</div>
+      <div class="ff-grid">
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🗡️</div>
+          <div class="ff-text">
+            <strong>Gươm Thuận Thiên huyền thoại</strong>
+            Tương truyền Lê Lợi nhặt được gươm báu có khắc chữ <span class="ff-highlight">"Thuận Thiên"</span>, sau đại thắng đã trả lại cho Rùa Vàng ở hồ Tả Vọng – nay là Hồ Hoàn Kiếm.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🍚</div>
+          <div class="ff-text">
+            <strong>Ăn rau, ăn củ giữ nước</strong>
+            Trong những năm gian khổ nhất, nghĩa quân Lam Sơn phải <span class="ff-highlight">ăn rau rừng, củ mài</span> để sống, nhưng không một ai bỏ ngũ – minh chứng cho tinh thần đoàn kết.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🦅</div>
+          <div class="ff-text">
+            <strong>"Anh hùng áo vải" đích thực</strong>
+            Lê Lợi không xuất thân từ hoàng tộc mà là <span class="ff-highlight">hào trưởng địa phương</span>, là vị vua xuất thân từ dân, gần dân và hiểu dân nhất trong lịch sử phong kiến.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main-col -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sb">
+      <div class="sb-title"><span class="sb-icon">ℹ</span> THÔNG TIN NHANH</div>
+      <table class="info-tbl" style="width:100%;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📖</span>
+            <span style="color:#888;font-size:13px;">Tên thật</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Lê Lợi</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏅</span>
+            <span style="color:#888;font-size:13px;">Miếu hiệu</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Lê Thái Tổ</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📅</span>
+            <span style="color:#888;font-size:13px;">Sinh – Mất</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">1385 – 1433</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⏱</span>
+            <span style="color:#888;font-size:13px;">Trị vì</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">1428 – 1433</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏳️</span>
+            <span style="color:#888;font-size:13px;">Quốc hiệu</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Đại Việt</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏯</span>
+            <span style="color:#888;font-size:13px;">Kinh đô</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Thăng Long (Hà Nội)</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📍</span>
+            <span style="color:#888;font-size:13px;">Quê hương</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Lam Sơn, Thanh Hóa</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sb">
+      <div class="sb-title">🗺️ BẢN ĐỒ DI SẢN</div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.3!2d105.852!3d21.028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab9bd9861ca1%3A0xe7887f7b72ca17a9!2zSOG7kyBIo2AgS2nhur9t!5e0!3m2!1svi!2s!4v1"
+        width="100%" height="200"
+        style="border-radius:12px;border:0;display:block;margin-bottom:12px;"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;">Khu di tích Lam Sơn</div>
+            <div style="font-size:12px;color:#888;">Thanh Hóa – nơi phát tích khởi nghĩa</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;">Hồ Hoàn Kiếm</div>
+            <div style="font-size:12px;color:#888;">Hà Nội – truyền thuyết trả gươm</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;">Ải Chi Lăng</div>
+            <div style="font-size:12px;color:#888;">Lạng Sơn – đại thắng lịch sử</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sb">
+      <div class="sb-title">👑 NHÂN VẬT LIÊN QUAN</div>
+      <div class="char-list">
+        <div class="char-row">
+          <div class="char-avatar" style="background:#8B0000;">📜</div>
+          <div>
+            <div class="char-name">Nguyễn Trãi</div>
+            <div class="char-role">Quân sư – Công thần số 1</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </div>
+        <div class="char-row">
+          <div class="char-avatar" style="background:#5a3010;">⚔️</div>
+          <div>
+            <div class="char-name">Trần Nguyên Hãn</div>
+            <div class="char-role">Tướng quân tài ba</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </div>
+        <div class="char-row">
+          <div class="char-avatar" style="background:#2a5a2a;">🏹</div>
+          <div>
+            <div class="char-name">Lê Lai</div>
+            <div class="char-role">Người liều mình cứu chúa</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sb">
+      <div class="sb-title">🔍 KHÁM PHÁ THÊM</div>
+      <div class="explore-list">
+        <div class="explore-item"><span class="explore-icon">📜</span><span class="explore-name">Bình Ngô Đại Cáo</span><span class="explore-arrow">›</span></div>
+        <div class="explore-item"><span class="explore-icon">🗡️</span><span class="explore-name">Gươm Thuận Thiên</span><span class="explore-arrow">›</span></div>
+        <div class="explore-item"><span class="explore-icon">⚔️</span><span class="explore-name">Trận Chi Lăng – Xương Giang</span><span class="explore-arrow">›</span></div>
+        <div class="explore-item"><span class="explore-icon">⚖️</span><span class="explore-name">Luật Hồng Đức</span><span class="explore-arrow">›</span></div>
+        <div class="explore-item"><span class="explore-icon">🏯</span><span class="explore-name">Nhà Lê Sơ</span><span class="explore-arrow">›</span></div>
+      </div>
+    </div>
+
+    <a href="le-nguyen.html" class="btn-back">← Quay lại Lê - Nguyễn</a>
+
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+  <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+</footer>
+
+</body>
+</html>

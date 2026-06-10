@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lý Bí | Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #8B0000;
+  --gold: #d4a017;
+  --dark: #1a0f06;
+  --bg: #f5f0e8;
+  --white: #ffffff;
+  --border: #e8dfc8;
+  --text: #333333;
+  --muted: #777777;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+
+/* NAV */
+nav {
+  background:var(--dark);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px; height:56px; position:sticky; top:0; z-index:100;
+}
+.nav-logo { color:var(--gold); font-weight:800; font-size:20px; letter-spacing:1px; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a { color:#ccc; text-decoration:none; font-size:13px; padding:7px 15px; border-radius:7px; transition:.2s; }
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.1); }
+.nav-links .active a { background:var(--gold); color:var(--dark); font-weight:600; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(to right, rgba(15,8,3,.90) 42%, rgba(15,8,3,.45) 75%, rgba(0,0,0,.15) 100%),
+              url('images/lybi.jpg') center/cover no-repeat;
+  min-height:400px; display:flex; align-items:center;
+  padding:56px 56px 50px; color:#fff;
+  border-bottom:3px solid var(--gold);
+  position:relative; overflow:hidden;
+}
+.hero-badge {
+  display:inline-block; background:rgba(212,160,23,.2); border:1px solid var(--gold);
+  color:var(--gold); font-size:11px; font-weight:600; padding:4px 14px; border-radius:20px;
+  margin-bottom:14px; letter-spacing:.8px; text-transform:uppercase;
+}
+.hero h1 { font-size:58px; font-weight:800; line-height:1; margin-bottom:12px; letter-spacing:-.5px; }
+.hero-sub { font-size:15px; color:rgba(255,255,255,.8); max-width:480px; line-height:1.6; margin-bottom:24px; }
+.hero-stats { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px; }
+.hero-stat { display:flex; align-items:center; gap:9px; }
+.hero-stat-icon { width:36px; height:36px; background:rgba(212,160,23,.2); border:1px solid rgba(212,160,23,.5); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.hero-stat-label { font-size:11px; color:rgba(255,255,255,.6); }
+.hero-stat-val { font-size:13px; font-weight:600; color:#fff; }
+.btn-story { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--dark); font-weight:700; font-size:13px; padding:11px 22px; border-radius:9px; text-decoration:none; transition:.2s; }
+.btn-story:hover { background:#e8b820; }
+
+/* BREADCRUMB */
+.breadcrumb { background:#fff; padding:12px 56px; font-size:13px; color:#999; border-bottom:1px solid var(--border); }
+.breadcrumb a { color:var(--red); text-decoration:none; font-weight:500; }
+.breadcrumb a:hover { text-decoration:underline; }
+.breadcrumb span { margin:0 7px; color:#ccc; }
+
+/* LAYOUT */
+.layout { display:grid; grid-template-columns:1fr 310px; gap:24px; padding:26px 56px 40px; max-width:1400px; margin:0 auto; }
+
+/* CARD */
+.card { background:#fff; border-radius:14px; padding:24px 28px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.card-title { color:var(--red); font-size:15px; font-weight:700; padding-bottom:14px; margin-bottom:18px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:8px; }
+.card p { font-size:13.5px; line-height:1.85; color:#444; margin-bottom:12px; }
+.card p:last-child { margin-bottom:0; }
+
+/* KEY STATS ROW */
+.key-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
+.ks-item { text-align:center; padding:14px 10px; background:#fffdf7; border:1px solid var(--border); border-radius:10px; }
+.ks-icon { font-size:22px; margin-bottom:6px; display:block; }
+.ks-val { font-size:13px; font-weight:700; color:var(--red); }
+.ks-label { font-size:11px; color:#999; margin-top:2px; }
+
+/* PHOTO GRID */
+.photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 0; }
+.photo-item img { width:100%; height:110px; object-fit:cover; border-radius:10px; border:1px solid var(--border); display:block; background:#eee; }
+.photo-caption { font-size:12px; font-weight:600; margin-top:6px; color:#222; }
+.photo-sub { font-size:11px; color:#999; }
+
+/* TIMELINE HORIZONTAL */
+.tl-h { position:relative; padding:10px 0 0; }
+.tl-h-track { position:relative; display:flex; justify-content:space-between; padding:0 10px; }
+.tl-h-track::before { content:''; position:absolute; top:22px; left:20px; right:20px; height:2px; background:linear-gradient(to right, var(--gold),#e8d080); }
+.tl-h-item { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.tl-h-dot { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 0 0 2px var(--gold); z-index:1; margin-bottom:10px; flex-shrink:0; }
+.tl-h-dot.red { background:var(--red); box-shadow:0 0 0 2px var(--red); }
+.tl-h-year { font-size:10px; font-weight:700; color:var(--gold); margin-bottom:4px; text-align:center; }
+.tl-h-icon { font-size:24px; margin-bottom:6px; }
+.tl-h-name { font-size:12px; font-weight:700; text-align:center; margin-bottom:4px; }
+.tl-h-desc { font-size:10.5px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
+
+/* ACHIEVE GRID */
+.achieve-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+.ac-item { text-align:center; padding:18px 12px; background:#fffdf7; border:1px solid var(--border); border-radius:12px; }
+.ac-icon { font-size:28px; margin-bottom:10px; display:block; }
+.ac-title { font-size:13px; font-weight:700; margin-bottom:6px; }
+.ac-text { font-size:11.5px; color:#666; line-height:1.55; }
+
+/* FUN FACTS */
+.ff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+.ff-item { background:#fffdf7; border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:12px; }
+.ff-icon-wrap { width:44px; height:44px; border-radius:10px; background:#f2ead8; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.ff-text { font-size:12px; color:#555; line-height:1.6; }
+.ff-text strong { color:#222; display:block; margin-bottom:3px; font-size:13px; }
+.ff-highlight { color:var(--red); font-weight:700; }
+
+/* SIDEBAR */
+.sidebar { display:flex; flex-direction:column; gap:18px; }
+.sb { background:#fff; border-radius:14px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.sb-title { font-size:13px; font-weight:700; color:var(--red); padding-bottom:10px; margin-bottom:14px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:7px; }
+.sb-title .sb-icon { width:22px; height:22px; border-radius:6px; background:var(--gold); display:inline-flex; align-items:center; justify-content:center; font-size:12px; color:var(--dark); }
+
+/* RELATED CHARS */
+.char-list { display:flex; flex-direction:column; gap:0; }
+.char-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; cursor:pointer; border-radius:8px; }
+.char-row:last-child { border-bottom:none; }
+.char-row:hover { background:#faf5ec; padding-left:6px; }
+.char-avatar { width:42px; height:42px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; border:2px solid var(--border); }
+.char-name { font-size:13px; font-weight:600; }
+.char-role { font-size:11px; color:#999; }
+.char-arrow { margin-left:auto; color:#ccc; font-size:16px; }
+
+/* EXPLORE MORE */
+.explore-list { display:flex; flex-direction:column; }
+.explore-item { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; }
+.explore-item:last-child { border-bottom:none; }
+.explore-item:hover { color:var(--red); padding-left:4px; }
+.explore-icon { font-size:16px; flex-shrink:0; }
+.explore-name { font-size:13px; font-weight:500; flex:1; }
+.explore-arrow { color:#ccc; font-size:14px; }
+
+/* BTN BACK */
+.btn-back { display:flex; align-items:center; justify-content:center; gap:8px; background:var(--red); color:#fff; font-weight:700; font-size:13px; padding:13px 20px; border-radius:10px; text-decoration:none; transition:.2s; text-align:center; }
+.btn-back:hover { background:#a00000; }
+
+/* FOOTER */
+footer { background:var(--dark); color:#888; padding:22px 56px; font-size:12px; display:flex; justify-content:space-between; align-items:center; }
+footer a { color:#777; text-decoration:none; }
+footer a:hover { color:#aaa; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SỬ VIỆT</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Trang chủ</a></li>
+    <li><a href="index.html">Hành trình lịch sử</a></li>
+    <li><a href="cauchuyen.html">Câu chuyện</a></li>
+    <li><a href="quiz.html">Quiz</a></li>
+    <li><a href="index.html">Nhân vật</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">👑 Nhân vật lịch sử</div>
+    <h1>LÝ BÍ</h1>
+    <p class="hero-sub">Lý Bôn – Người khởi xướng cuộc khởi nghĩa chống ách đô hộ nhà Lương,<br>khai sinh nước Vạn Xuân và trở thành Lý Nam Đế đầu tiên của người Việt.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🏛️</div>
+        <div>
+          <div class="hero-stat-label">Thời gian trị vì</div>
+          <div class="hero-stat-val">544 – 548</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🏯</div>
+        <div>
+          <div class="hero-stat-label">Quốc hiệu</div>
+          <div class="hero-stat-val">Vạn Xuân</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">⚔️</div>
+        <div>
+          <div class="hero-stat-label">Sự kiện lớn</div>
+          <div class="hero-stat-val">Khởi nghĩa 542</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🗺️</div>
+        <div>
+          <div class="hero-stat-label">Kinh đô</div>
+          <div class="hero-stat-val">Long Biên</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-story">📖 Xem câu chuyện</a>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Trang chủ</a><span>›</span>
+  <a href="bac-thuoc.html">Thời kỳ Bắc thuộc</a><span>›</span>
+  Lý Bí – Lý Nam Đế
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+  <div class="main-col">
+
+    <!-- TIỂU SỬ -->
+    <div class="card">
+      <div class="card-title">📖 TIỂU SỬ</div>
+      <p>Lý Bí (còn gọi là <strong>Lý Bôn</strong>), sinh năm 503, quê ở Thái Bình (nay thuộc tỉnh Thái Bình hoặc Hà Nội). Ông xuất thân từ dòng dõi quan lại Trung Hoa di cư sang đất Việt nhiều đời, nhưng mang trọn tinh thần người bản địa. Năm 542, ông phất cờ khởi nghĩa chống lại ách cai trị tàn bạo của nhà Lương, giải phóng đất nước chỉ trong chưa đầy 3 tháng. Năm 544, ông lên ngôi xưng <strong>Lý Nam Đế</strong>, đặt quốc hiệu <strong>Vạn Xuân</strong> – thể hiện khát vọng đất nước trường tồn muôn đời.</p>
+
+      <div class="key-stats">
+        <div class="ks-item">
+          <span class="ks-icon">⚔️</span>
+          <div class="ks-val">542</div>
+          <div class="ks-label">Khởi nghĩa</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">👑</span>
+          <div class="ks-val">544</div>
+          <div class="ks-label">Lập nước Vạn Xuân</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🏯</span>
+          <div class="ks-val">Long Biên</div>
+          <div class="ks-label">Kinh đô</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🌸</span>
+          <div class="ks-val">Vạn Xuân</div>
+          <div class="ks-label">Muôn mùa xuân</div>
+        </div>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img
+            src="images/vanxuan.jpg"
+            alt="Nước Vạn Xuân"
+            style="width:100%;height:110px;border-radius:10px;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#2a5a3a,#4a9a60);align-items:center;justify-content:center;font-size:32px;">🌸</div>
+          <div class="photo-caption">Nước Vạn Xuân</div>
+          <div class="photo-sub">Quốc hiệu đầy khát vọng</div>
+        </div>
+
+        <div class="photo-item">
+          <img
+            src="images/lybi_khoinghi.jpg"
+            alt="Khởi nghĩa Lý Bí"
+            style="width:100%;height:110px;border-radius:10px;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#6a2020,#b04040);align-items:center;justify-content:center;font-size:32px;">⚔️</div>
+          <div class="photo-caption">Khởi nghĩa 542</div>
+          <div class="photo-sub">Đánh đuổi quân Lương</div>
+        </div>
+
+        <div class="photo-item">
+          <img
+            src="images/den_lybi.jpg"
+            alt="Đền thờ Lý Nam Đế"
+            style="width:100%;height:110px;border-radius:10px;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#3a3a6a,#5a5aaa);align-items:center;justify-content:center;font-size:32px;">⛩️</div>
+          <div class="photo-caption">Đền thờ Lý Nam Đế</div>
+          <div class="photo-sub">Di tích thờ phụng</div>
+        </div>
+
+        <div class="photo-item">
+          <img
+            src="images/longbien.jpg"
+            alt="Long Biên – Kinh đô"
+            style="width:100%;height:110px;border-radius:10px;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a4a20,#9a8030);align-items:center;justify-content:center;font-size:32px;">🏙️</div>
+          <div class="photo-caption">Long Biên</div>
+          <div class="photo-sub">Kinh đô Vạn Xuân</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DÒNG THỜI GIAN -->
+    <div class="card">
+      <div class="card-title">🗓️ DÒNG THỜI GIAN</div>
+      <div class="tl-h">
+        <div class="tl-h-track">
+          <div class="tl-h-item">
+            <div class="tl-h-year">503</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🌱</div>
+            <div class="tl-h-name">Lý Bí ra đời</div>
+            <div class="tl-h-desc">Sinh tại Thái Bình, dòng dõi có học vấn, lớn lên nuôi chí lớn.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">Trước 542</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🏛️</div>
+            <div class="tl-h-name">Làm quan, bỏ về</div>
+            <div class="tl-h-desc">Từng làm quan cho nhà Lương, chứng kiến bất công, quyết từ chức về quê.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">542</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">⚔️</div>
+            <div class="tl-h-name">Khởi nghĩa bùng nổ</div>
+            <div class="tl-h-desc">Phất cờ nổi dậy, chỉ trong 3 tháng đánh đuổi quân Lương ra khỏi Giao Châu.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">544</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">👑</div>
+            <div class="tl-h-name">Lên ngôi Lý Nam Đế</div>
+            <div class="tl-h-desc">Lập nước Vạn Xuân, xưng đế, đặt niên hiệu Thiên Đức, định đô Long Biên.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">548</div>
+            <div class="tl-h-dot red"></div>
+            <div class="tl-h-icon">🕊️</div>
+            <div class="tl-h-name">Lý Nam Đế qua đời</div>
+            <div class="tl-h-desc">Sau trận hồ Điển Triệt, rút vào động Khuất Lão và mất tại đây.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THÀNH TỰU NỔI BẬT -->
+    <div class="card">
+      <div class="card-title">🏆 THÀNH TỰU NỔI BẬT</div>
+      <div class="achieve-grid">
+        <div class="ac-item">
+          <span class="ac-icon">👑</span>
+          <div class="ac-title">Lý Nam Đế – Hoàng đế đầu tiên</div>
+          <div class="ac-text">Người Việt đầu tiên tự xưng đế, ngang hàng với thiên tử phương Bắc.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">🌸</span>
+          <div class="ac-title">Lập nước Vạn Xuân</div>
+          <div class="ac-text">Quốc hiệu mang tầm nhìn trường tồn, khẳng định nền độc lập lâu dài.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">⚡</span>
+          <div class="ac-title">Giải phóng chớp nhoáng</div>
+          <div class="ac-text">Chỉ trong 3 tháng đánh đuổi hoàn toàn quân đô hộ nhà Lương.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">📜</span>
+          <div class="ac-title">Thiết lập triều đình riêng</div>
+          <div class="ac-text">Xây dựng bộ máy nhà nước độc lập, đặt niên hiệu, đúc ấn tín riêng.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ý NGHĨA LỊCH SỬ -->
+    <div class="card" style="background:#fffbf0;border:1px solid #f0d890;">
+      <div class="card-title">⭐ Ý NGHĨA LỊCH SỬ</div>
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+
+        <img
+          src="images/ynls_lybi.jpg"
+          alt="Ý nghĩa lịch sử Lý Bí"
+          style="flex-shrink:0;width:180px;min-height:160px;border-radius:10px;object-fit:cover;"
+          onerror="this.style.display='none'"
+        >
+
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Người Việt đầu tiên xưng đế:</strong> Lý Bí xưng là Nam Đế – ngang hàng thiên tử Trung Hoa, tuyên bố chủ quyền độc lập hoàn toàn, không phải chư hầu.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Khai mở ý thức quốc gia:</strong> Quốc hiệu Vạn Xuân và niên hiệu Thiên Đức là biểu tượng cho ý thức dựng nước tự chủ đầu tiên sau hàng trăm năm Bắc thuộc.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Ngọn lửa bất khuất:</strong> Dù thất bại, cuộc khởi nghĩa tiếp lửa cho Triệu Quang Phục, Đinh Bộ Lĩnh và các thế hệ sau trên con đường giành độc lập.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Bài học dựng nước:</strong> Câu chuyện Lý Bí là bài học về sức mạnh đoàn kết toàn dân, lòng yêu nước và bản lĩnh đối mặt với kẻ thù mạnh hơn gấp nhiều lần.</span>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <!-- SỰ THẬT THÚ VỊ -->
+    <div class="card">
+      <div class="card-title">💡 SỰ THẬT THÚ VỊ</div>
+      <div class="ff-grid">
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🌸</div>
+          <div class="ff-text">
+            <strong>Vạn Xuân – tên nước đẹp nhất?</strong>
+            "Vạn Xuân" nghĩa là <span class="ff-highlight">muôn nghìn mùa xuân</span> – thể hiện khát vọng đất nước trường tồn, phồn thịnh mãi mãi.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🏆</div>
+          <div class="ff-text">
+            <strong>Hoàng đế – không phải vương</strong>
+            Lý Bí tự xưng <span class="ff-highlight">Hoàng đế</span>, không phải "vương" hay chư hầu – đây là lần đầu tiên trong lịch sử người Việt tuyên bố đứng ngang hàng với thiên tử Trung Hoa.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">⚡</div>
+          <div class="ff-text">
+            <strong>Giải phóng chỉ trong 3 tháng</strong>
+            Từ khi phất cờ đến khi chiếm toàn bộ Giao Châu, Lý Bí chỉ mất chưa đầy 3 tháng – một chiến thắng chớp nhoáng hiếm thấy trong lịch sử.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main-col -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- THÔNG TIN NHANH -->
+    <div class="sb">
+      <div class="sb-title"><span class="sb-icon">ℹ</span> THÔNG TIN NHANH</div>
+      <table style="width:100%;border-collapse:collapse;">
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📖</span>
+            <span style="color:#888;font-size:13px;">Tên thật</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Lý Bôn (Lý Bí)</td>
+        </tr>
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏅</span>
+            <span style="color:#888;font-size:13px;">Hiệu</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Lý Nam Đế</td>
+        </tr>
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🌱</span>
+            <span style="color:#888;font-size:13px;">Sinh năm</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">503</td>
+        </tr>
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⏱</span>
+            <span style="color:#888;font-size:13px;">Trị vì</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">544 – 548</td>
+        </tr>
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏳️</span>
+            <span style="color:#888;font-size:13px;">Quốc hiệu</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Vạn Xuân</td>
+        </tr>
+
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📜</span>
+            <span style="color:#888;font-size:13px;">Niên hiệu</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Thiên Đức</td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏯</span>
+            <span style="color:#888;font-size:13px;">Kinh đô</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Long Biên (Hà Nội)</td>
+        </tr>
+
+      </table>
+    </div>
+
+    <!-- BẢN ĐỒ DI SẢN -->
+    <div class="sb">
+      <div class="sb-title">🗺️ BẢN ĐỒ DI SẢN</div>
+
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3717.0815240382362!2d105.25356617503954!3d21.307794780412245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31348fb0161e8835%3A0xab79facbac3fe22b!2zxJDhu4FuIFRo4budIFZ1YSBMw70gTmFtIMSQ4bq_!5e0!3m2!1svi!2s!4v1780994610178!5m2!1svi!2s"
+        width="100%"
+        height="200"
+        style="border-radius:12px;border:0;display:block;margin-bottom:12px;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Long Biên – Kinh đô Vạn Xuân</div>
+            <div style="font-size:12px;color:#888;">Trung tâm quyền lực của nước Vạn Xuân</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Đền thờ Lý Nam Đế</div>
+            <div style="font-size:12px;color:#888;">Nơi thờ phụng, tưởng nhớ ở nhiều tỉnh thành</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Hồ Điển Triệt</div>
+            <div style="font-size:12px;color:#888;">Nơi diễn ra trận chiến cuối cùng năm 546</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Động Khuất Lão</div>
+            <div style="font-size:12px;color:#888;">Nơi Lý Nam Đế ẩn náu và qua đời năm 548</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NHÂN VẬT LIÊN QUAN -->
+    <div class="sb">
+      <div class="sb-title">👑 NHÂN VẬT LIÊN QUAN</div>
+      <div class="char-list">
+
+        <a href="chi-tiet-trieu-quang-phuc.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <div class="char-avatar" style="background:linear-gradient(135deg,#5a2a8a,#8a50c0);">🗡️</div>
+          <div>
+            <div class="char-name">Triệu Quang Phục</div>
+            <div class="char-role">Tướng tài, người kế tục</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+
+        <a href="chi-tiet-ly-thien-bao.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <div class="char-avatar" style="background:linear-gradient(135deg,#8a3a2a,#c06040);">⚔️</div>
+          <div>
+            <div class="char-name">Lý Thiên Bảo</div>
+            <div class="char-role">Anh trai Lý Bí</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+
+        <a href="chi-tiet-trien-ba-tien.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <div class="char-avatar" style="background:linear-gradient(135deg,#2a5a8a,#4080b0);">🛡️</div>
+          <div>
+            <div class="char-name">Trần Bá Tiên</div>
+            <div class="char-role">Tướng nhà Lương, đối thủ</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- KHÁM PHÁ THÊM -->
+    <div class="sb">
+      <div class="sb-title">🔍 KHÁM PHÁ THÊM</div>
+      <div class="explore-list">
+        <div class="explore-item">
+          <span class="explore-icon">🌸</span>
+          <span class="explore-name">Nước Vạn Xuân</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">⚔️</span>
+          <span class="explore-name">Khởi nghĩa Lý Bí 542</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🏯</span>
+          <span class="explore-name">Kinh đô Long Biên</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🗡️</span>
+          <span class="explore-name">Triệu Quang Phục – Dạ Trạch Vương</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">📜</span>
+          <span class="explore-name">Thời kỳ Bắc thuộc lần II</span>
+          <span class="explore-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="bac-thuoc.html" class="btn-back">← Quay lại Thời kỳ Bắc thuộc</a>
+
+  </div><!-- /.sidebar -->
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+  <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+</footer>
+
+</body>
+</html>

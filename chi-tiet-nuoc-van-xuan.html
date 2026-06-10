@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nước Vạn Xuân | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.82) 45%, rgba(0,0,0,0.25) 100%),
+                        url('images/vanxuan-hero.WEBP') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+            background-color: #2a1a0a;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        /* INLINE IMAGES */
+        .inline-img-right {
+            float: right; width: 250px;
+            margin: 0 0 16px 22px;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-right img { width: 100%; display: block; }
+        .inline-img-left {
+            float: left; width: 250px;
+            margin: 0 22px 16px 0;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-left img { width: 100%; display: block; }
+        .img-cap { background: #f8f4ea; font-size: 11px; color: #888; text-align: center; padding: 6px 8px; font-style: italic; }
+        .img-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); border: 2px solid #ede7d3; }
+        .img-banner img { width: 100%; display: block; max-height: 280px; object-fit: cover; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8); border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 2px solid white; box-shadow: 0 0 0 2px var(--gold); }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-dot.green { background: #2a8a2a; box-shadow: 0 0 0 2px #2a8a2a; }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        /* QUOTE */
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        /* TAGS */
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+
+        /* ACHIEVE GRID */
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* STAT CARDS */
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .stat-card { background: linear-gradient(135deg, #fffdf7, #f8f4ea); border: 1px solid #ede7d3; border-radius: 14px; padding: 20px 16px; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--main); display: block; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+
+        /* CAUSE GRID */
+        .cause-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .cause-card { border-radius: 12px; padding: 18px 16px; }
+        .cause-card.economy { background: #f0f7e6; border: 2px solid #8fb86a; }
+        .cause-card.politics { background: #fdf3d0; border: 2px solid var(--gold); }
+        .cause-card.military  { background: #fdeaea; border: 2px solid #c0392b; }
+        .cause-card.culture  { background: #e6f0fb; border: 2px solid #5a9bd4; }
+        .cause-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+        .cause-card.economy .cause-title { color: #2a6e1a; }
+        .cause-card.politics .cause-title { color: #8a6800; }
+        .cause-card.military .cause-title { color: #8b0000; }
+        .cause-card.culture .cause-title { color: #1a5fa8; }
+        .cause-text { font-size: 12px; color: #555; line-height: 1.6; }
+
+        /* LESSON BOX */
+        .lesson-box { background: linear-gradient(135deg, #1e1206, #3a2010); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        /* LEGACY BOX */
+        .legacy-box { background: linear-gradient(135deg, #0a2010, #1a4a2a); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .legacy-box .lesson-title { color: #7dffaa; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 44%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .heritage-card {
+            margin-bottom: 16px; border: 1px solid #ede7d3;
+            border-radius: 12px; overflow: hidden; background: #fffdf7; transition: 0.2s;
+        }
+        .heritage-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .heritage-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .heritage-content { padding: 12px; }
+        .heritage-content strong { display: block; font-size: 13px; color: #222; margin-bottom: 6px; }
+        .heritage-content p { font-size: 12px; color: #666; line-height: 1.6; margin: 0; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">🏛️ SỰ KIỆN LỊCH SỬ</div>
+        <h1>NƯỚC VẠN XUÂN</h1>
+        <p class="subtitle">Nhà nước độc lập đầu tiên sau hơn 500 năm Bắc thuộc — khát vọng trường tồn "muôn mùa xuân" của dân tộc Việt dưới triều đại Lý Nam Đế thế kỷ VI</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 544 – 602 SCN</span>
+            <span class="hero-tag">📍 Vùng châu thổ Sông Hồng</span>
+            <span class="hero-tag">🏛️ Quốc hiệu độc lập đầu tiên</span>
+            <span class="hero-tag">⚔️ Khởi nghĩa chống Bắc thuộc</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="bac-thuoc.html">Bắc Thuộc</a>
+    <span>›</span>
+    Nước Vạn Xuân
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- GIỚI THIỆU -->
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="clearfix">
+                <div class="inline-img-right">
+                    <img src="images/vanxuan.PNG" alt="Lý Nam Đế và nước Vạn Xuân" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Lý Nam Đế — người khai sinh nước Vạn Xuân năm 544</div>
+                </div>
+                <p>
+                    Nước <span class="hl">Vạn Xuân</span> là nhà nước độc lập đầu tiên của người Việt sau hơn 500 năm chịu ách đô hộ của các triều đại phong kiến phương Bắc. Ra đời vào năm <span class="hl">544 sau Công Nguyên</span>, nhà nước này do Lý Nam Đế (tên thật Lý Bí) sáng lập sau cuộc khởi nghĩa thành công chống lại nhà Lương.
+                </p>
+                <p>
+                    Tên gọi "<span class="hl">Vạn Xuân</span>" mang ý nghĩa sâu sắc — "muôn mùa xuân" — thể hiện khát vọng đất nước trường tồn, độc lập vĩnh cửu. Đây không chỉ là tên gọi một nhà nước, mà là tuyên ngôn về ý chí dân tộc của người Việt trước sự thống trị của phương Bắc.
+                </p>
+                <p>
+                    Tuy chỉ tồn tại trong khoảng <span class="hl">58 năm</span> (544–602), nước Vạn Xuân đánh dấu bước ngoặt lịch sử quan trọng bậc nhất: người Việt lần đầu tiên có <span class="hl">quốc hiệu riêng</span>, <span class="hl">hoàng đế riêng</span>, <span class="hl">niên hiệu riêng</span> — khẳng định ngang hàng với các vương triều Trung Hoa.
+                </p>
+            </div>
+            <div class="trait-tags">
+                <span class="trait-tag trait-gold">🏛️ Quốc hiệu đầu tiên</span>
+                <span class="trait-tag trait-green">🌸 Ý nghĩa "Muôn Mùa Xuân"</span>
+                <span class="trait-tag trait-blue">👑 Xưng Hoàng Đế</span>
+                <span class="trait-tag trait-red">⚔️ Độc lập sau 500 năm</span>
+            </div>
+        </div>
+
+        <!-- SỐ LIỆU NỔI BẬT -->
+        <div class="content-box">
+            <h2>📊 DẤU MỐC & CON SỐ</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">544</span>
+                    <span class="stat-label">Năm Vạn Xuân độc lập (SCN)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">58</span>
+                    <span class="stat-label">Năm tồn tại của nhà nước (544–602)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Năm Bắc thuộc trước đó</span>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Vị vua cầm quyền (Lý Nam Đế, Triệu Quang Phục, Lý Phật Tử)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Niên hiệu Thiên Đức — niên hiệu riêng đầu tiên của người Việt</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">602</span>
+                    <span class="stat-label">Năm nhà Tùy tái chiếm, Vạn Xuân chấm dứt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NGUYÊN NHÂN KHỞI NGHĨA -->
+        <div class="content-box">
+            <h2>⚡ NGUYÊN NHÂN KHỞI NGHĨA</h2>
+            <p>Cuộc khởi nghĩa của Lý Bí không bùng phát ngẫu nhiên — đó là kết quả tích tụ của nhiều mâu thuẫn sâu sắc giữa nhân dân Việt và chính quyền đô hộ nhà Lương. Bốn nhóm nguyên nhân chính đã tạo nên ngọn lửa cách mạng.</p>
+
+            <div class="cause-grid">
+                <div class="cause-card politics">
+                    <div class="cause-title">🏛️ Áp bức chính trị</div>
+                    <div class="cause-text">Quan lại nhà Lương cai trị hà khắc, tàn bạo. Người Việt bị phân biệt đối xử, không được giữ chức vụ cao dù tài năng xuất chúng. Lý Bí bản thân từng bị quan Lương chèn ép, phải bỏ chức về quê.</div>
+                </div>
+                <div class="cause-card economy">
+                    <div class="cause-title">💰 Bóc lột kinh tế</div>
+                    <div class="cause-text">Nhà Lương áp đặt thuế má nặng nề, bắt nhân dân cống nạp hàng hóa quý hiếm. Sản phẩm nông nghiệp, thủ công và hàng hóa địa phương bị vơ vét về phương Bắc, đẩy đời sống nhân dân vào cảnh bần cùng.</div>
+                </div>
+                <div class="cause-card military">
+                    <div class="cause-title">⚔️ Nhà Lương suy yếu</div>
+                    <div class="cause-text">Thế kỷ VI, nhà Lương lâm vào khủng hoảng nội loạn, lực lượng quân sự phân tán. Đây là thời cơ vàng — khi kẻ thù yếu, người Việt quyết định hành động để giành lại chủ quyền.</div>
+                </div>
+                <div class="cause-card culture">
+                    <div class="cause-title">🎭 Tinh thần dân tộc</div>
+                    <div class="cause-text">Hàng thế kỷ dưới ách đô hộ không thể xóa bỏ ý thức dân tộc người Việt. Truyền thống chống xâm lược từ thời Hai Bà Trưng, Bà Triệu tiếp thêm sức mạnh tinh thần cho thế hệ kế tiếp.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN LỊCH SỬ -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~542 SCN</div>
+                    <div class="tl-title">Lý Bí phát động khởi nghĩa</div>
+                    <div class="tl-text">Lý Bí (Lý Bôn) người Thái Bình, vốn xuất thân từ gia đình Hán di cư nhưng đã hoàn toàn Việt hóa. Ông tập hợp hào kiệt khắp nơi, xây dựng lực lượng và phát động khởi nghĩa chống lại sự cai trị hà khắc của thứ sử nhà Lương.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">542 – 544 SCN</div>
+                    <div class="tl-title">Đánh tan quân Lương, làm chủ đất nước</div>
+                    <div class="tl-text">Nghĩa quân của Lý Bí nhanh chóng đánh tan nhiều đợt tấn công của quân Lương. Trong khoảng hai năm, lực lượng khởi nghĩa làm chủ toàn bộ vùng châu thổ Sông Hồng — minh chứng cho tài năng quân sự xuất chúng và sự ủng hộ rộng rãi của nhân dân.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">Tháng 2/544 SCN</div>
+                    <div class="tl-title">Khai sinh nước Vạn Xuân — Lý Nam Đế lên ngôi</div>
+                    <div class="tl-text">Lý Bí chính thức lên ngôi Hoàng đế, lấy hiệu là <strong>Lý Nam Đế</strong>, đặt quốc hiệu <strong>Vạn Xuân</strong>, niên hiệu <strong>Thiên Đức</strong> (Đức Trời). Đây là lần đầu tiên trong lịch sử, người Việt có vị hoàng đế ngang hàng với thiên tử Trung Hoa — tuyên bố chủ quyền tuyệt đối.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">545 – 546 SCN</div>
+                    <div class="tl-title">Nhà Lương phản công — Lý Nam Đế thất bại</div>
+                    <div class="tl-text">Nhà Lương cử đại tướng Trần Bá Tiên đem đại quân sang tái chiếm. Lý Nam Đế chống cự quyết liệt nhưng liên tiếp thất bại ở hồ Điển Triệt. Sức khỏe suy yếu, ông trao quyền lại cho Triệu Quang Phục rồi mất năm 548.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">548 – 571 SCN</div>
+                    <div class="tl-title">Triệu Quang Phục — Dạ Trạch Vương giữ vững Vạn Xuân</div>
+                    <div class="tl-text">Triệu Quang Phục lui về đầm Dạ Trạch (Hưng Yên), dùng chiến thuật du kích kiên trì kháng chiến suốt nhiều năm. Ông tận dụng địa hình đầm lầy hiểm trở, ban ngày ẩn náu, ban đêm đột kích quân địch — cuối cùng đánh tan quân Lương và khôi phục Vạn Xuân năm 550.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">571 – 602 SCN</div>
+                    <div class="tl-title">Lý Phật Tử — giai đoạn cuối của Vạn Xuân</div>
+                    <div class="tl-text">Lý Phật Tử (cháu Lý Nam Đế) giành quyền từ Triệu Quang Phục và làm vua giai đoạn cuối. Tuy nhiên ông mắc sai lầm chiến lược — chủ quan trước sức mạnh của nhà Tùy đang thống nhất Trung Hoa.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">602 SCN</div>
+                    <div class="tl-title">Nhà Tùy tái chiếm — Vạn Xuân chấm dứt</div>
+                    <div class="tl-text">Tướng Lưu Phương của nhà Tùy đem đại quân tiến vào. Lý Phật Tử đầu hàng, bị bắt về Trung Hoa. Nước Vạn Xuân chấm dứt sau 58 năm tồn tại — mở ra giai đoạn Bắc thuộc lần thứ ba kéo dài đến thế kỷ X.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NHỮNG THÀNH TỰU -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU & DẤU ẤN</h2>
+            <p>
+                Trong thời gian tồn tại, nước Vạn Xuân đã để lại những dấu ấn quan trọng trong lịch sử dân tộc — vừa về tư tưởng, vừa về tổ chức nhà nước, vừa về tinh thần kháng chiến.
+            </p>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">👑</span>
+                    <div class="achieve-title">Xưng Hoàng Đế — ngang hàng Thiên Tử</div>
+                    <div class="achieve-text">Lý Nam Đế không xưng Vương mà xưng Hoàng Đế — tuyên bố ngang bằng với vua Trung Hoa. Niên hiệu "Thiên Đức" khẳng định quyền trời cho, không thần phục bất kỳ triều đình nào. Đây là tuyên ngôn độc lập sắc bén nhất thời bấy giờ.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🏛️</span>
+                    <div class="achieve-title">Xây dựng nhà nước hoàn chỉnh</div>
+                    <div class="achieve-text">Vạn Xuân có bộ máy triều đình riêng, quan lại người Việt, hệ thống hành chính độc lập. Chùa Khai Quốc (nay là chùa Trấn Quốc, Hà Nội) được xây dựng — trung tâm Phật giáo đầu tiên, thể hiện bản sắc văn hóa riêng.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🌾</span>
+                    <div class="achieve-title">Chính sách phát triển dân sinh</div>
+                    <div class="achieve-text">Giải phóng người dân khỏi thuế má hà khắc, phát triển nông nghiệp và thương mại địa phương. Nhân dân lần đầu tiên được cai trị bởi người của mình — đời sống cải thiện rõ rệt trong giai đoạn đầu độc lập.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🛡️</span>
+                    <div class="achieve-title">Tinh thần kháng chiến bất khuất</div>
+                    <div class="achieve-text">Dù Lý Nam Đế thất bại, Triệu Quang Phục đã kiên trì du kích hàng chục năm tại đầm Dạ Trạch, khôi phục Vạn Xuân năm 550. Minh chứng rằng ý chí độc lập người Việt không thể bị dập tắt bằng vũ lực.</div>
+                </div>
+            </div>
+
+            <div class="quote-block" style="margin-top:20px;">
+                <p>"Lý Bí là nhân vật đặc biệt trong lịch sử Việt Nam — ông không chỉ đánh đuổi ngoại xâm mà còn dám tuyên bố sự bình đẳng với Trung Hoa bằng cách xưng Hoàng Đế và đặt niên hiệu riêng. Đó là hành động dũng cảm phi thường thế kỷ VI."</p>
+                <span class="quote-source">— Đánh giá của các nhà sử học Việt Nam hiện đại</span>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA LỊCH SỬ</h2>
+            <p>
+                Nước Vạn Xuân tuy tồn tại chưa đầy 60 năm, nhưng ý nghĩa lịch sử của nó vượt xa khoảng thời gian ngắn ngủi đó. Đây là <span class="hl">bằng chứng hùng hồn nhất</span> rằng người Việt không chấp nhận thân phận bị trị — dù bị đô hộ bao lâu, ngọn lửa tự chủ vẫn không bao giờ tắt.
+            </p>
+            <p>
+                Việc Lý Nam Đế đặt quốc hiệu <span class="hl">Vạn Xuân</span> — không dùng tên Hán, không dùng tên vùng đất cũ — là tuyên bố mang tính biểu tượng sâu sắc: đây là một dân tộc mới, một nhà nước mới, một tương lai mới. Từ đây, ý thức về một <span class="hl">quốc gia có chủ quyền riêng</span> được củng cố trong tâm thức người Việt.
+            </p>
+            <div class="quote-block">
+                <p>"Vạn Xuân là hạt giống — dù bị nghiền nát năm 602, hạt giống ấy đã nảy mầm trong tâm hồn dân tộc Việt suốt 400 năm tiếp theo, cho đến khi Ngô Quyền khai sinh kỷ nguyên độc lập vĩnh cửu năm 938."</p>
+                <span class="quote-source">— Nhận định lịch sử Việt Nam</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🌸 Ý nghĩa cái tên "Vạn Xuân"</div>
+                <div class="lesson-text">Không có vị vua nào trong lịch sử Đông Nam Á thế kỷ VI dám đặt tên nước với khát vọng lớn như vậy — "muôn mùa xuân". Đó không chỉ là ước mơ về tuổi thọ nhà nước, mà là tuyên ngôn: đất nước Việt sẽ tươi đẹp, sinh sôi và trường tồn như mùa xuân bất tận.</div>
+            </div>
+            <div class="legacy-box" style="margin-top:14px;">
+                <div class="lesson-title">🏅 Di sản tinh thần</div>
+                <div class="lesson-text">Từ Vạn Xuân trở đi, mỗi cuộc khởi nghĩa người Việt đều mang theo ý thức: chúng ta từng có nhà nước riêng, chúng ta xứng đáng có nhà nước riêng. Tinh thần ấy — qua Mai Thúc Loan, Phùng Hưng, Khúc Thừa Dụ — cuối cùng dẫn đến chiến thắng Bạch Đằng năm 938 và nền độc lập vĩnh cửu.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Quốc hiệu</td><td>Vạn Xuân (萬春)</td></tr>
+                <tr><td>Người lập</td><td>Lý Nam Đế (Lý Bí)</td></tr>
+                <tr><td>Thành lập</td><td>Tháng 2 năm 544</td></tr>
+                <tr><td>Sụp đổ</td><td>Năm 602 SCN</td></tr>
+                <tr><td>Thời gian</td><td>~58 năm</td></tr>
+                <tr><td>Vị trí</td><td>Châu thổ Sông Hồng</td></tr>
+                <tr><td>Niên hiệu</td><td>Thiên Đức (天德)</td></tr>
+                <tr><td>Số vị vua</td><td>3 (Lý Nam Đế, Triệu Quang Phục, Lý Phật Tử)</td></tr>
+                <tr><td>Trước đó</td><td>Bắc thuộc lần I & II</td></tr>
+                <tr><td>Sau đó</td><td>Bắc thuộc lần III (602–905)</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+
+            <div class="heritage-card">
+                <img src="images/chuatranquoc.jpg" alt="Chùa Trấn Quốc" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Chùa Trấn Quốc (chùa Khai Quốc) — Hà Nội</strong>
+                    <p>Xây dựng năm 541 dưới thời Lý Nam Đế, ban đầu tên Khai Quốc. Ngôi chùa cổ nhất Hà Nội (hơn 1.500 năm tuổi), tọa lạc trên đảo nhỏ Hồ Tây. Được công nhận Di tích lịch sử văn hóa Quốc gia từ năm 1962.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/denmuc.jpg" alt="Đền Mục — Khu di tích Lý Nam Đế" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Khu di tích Lý Nam Đế (Đền Mục) — Thái Nguyên</strong>
+                    <p>Gồm Đền Mục, chùa Hương Ấp, chùa Mãn Tăng tại quê hương Lý Bí (Phổ Yên, Thái Nguyên). Đền Mục và chùa Hương Ấp được xếp hạng Di tích lịch sử Quốc gia năm 2014. Được trùng tu lớn và khánh thành năm 2024.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/damdatrach.jpg" alt="Đầm Dạ Trạch" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Đầm Dạ Trạch — Hưng Yên</strong>
+                    <p>Căn cứ kháng chiến của Triệu Quang Phục ("Dạ Trạch Vương") suốt nhiều năm chống quân Lương. Vùng đất lịch sử gắn liền với huyền thoại bảo vệ nước Vạn Xuân trong giai đoạn nguy nan nhất.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/denlynamdephutho.PNG" alt="Đền thờ Lý Nam Đế — Phú Thọ" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Đền thờ Lý Nam Đế — Phú Thọ</strong>
+                    <p>Tọa lạc tại xã Vạn Xuân, huyện Tam Nông, tỉnh Phú Thọ. Được UBND tỉnh Phú Thọ xếp hạng Di tích lịch sử văn hóa cấp tỉnh năm 2020. Hàng năm tổ chức lễ hội tháng Giêng kỷ niệm ngày vua xuất quân.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="chi-tiet-ly-nam-de.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #6a3a1a;">👑</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lý Nam Đế</div>
+                    <div class="char-mini-desc">Người khai sinh nước Vạn Xuân</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-trieu-quang-phuc.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #2a5a3a;">🛡️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Triệu Quang Phục</div>
+                    <div class="char-mini-desc">Dạ Trạch Vương — người giữ lửa Vạn Xuân</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-ly-phat-tu.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #5a4a7a;">⚔️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lý Phật Tử</div>
+                    <div class="char-mini-desc">Vị vua cuối cùng của Vạn Xuân</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #8a2a2a;">🗡️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Trần Bá Tiên</div>
+                    <div class="char-mini-desc">Đại tướng nhà Lương tái chiếm</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>✨ SỰ THẬT THÚ VỊ</h3>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🌸</div>
+                <div class="legacy-text">
+                    <strong>Tên nước đặc biệt nhất</strong>
+                    "Vạn Xuân" là quốc hiệu đầy chất thơ và khát vọng nhất trong lịch sử Việt Nam — "muôn mùa xuân".
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">👑</div>
+                <div class="legacy-text">
+                    <strong>Hoàng Đế đầu tiên</strong>
+                    Lý Nam Đế là người Việt đầu tiên xưng Hoàng Đế — ngang hàng thiên tử Trung Hoa, không phải chư hầu.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🌊</div>
+                <div class="legacy-text">
+                    <strong>Du kích đầm lầy</strong>
+                    Triệu Quang Phục ẩn náu trong đầm Dạ Trạch nhiều năm, ban đêm đột kích — được gọi là "Dạ Trạch Vương" (Vua Đầm Đêm).
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🏯</div>
+                <div class="legacy-text">
+                    <strong>Chùa cổ nhất Việt Nam</strong>
+                    Chùa Khai Quốc (nay là Trấn Quốc) được xây từ thời Lý Nam Đế năm 541 — hơn 1.480 năm tuổi.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">⏳</div>
+                <div class="legacy-text">
+                    <strong>Hạt giống độc lập</strong>
+                    Dù chỉ tồn tại 58 năm, Vạn Xuân là ngọn lửa dẫn đường cho các cuộc khởi nghĩa tiếp theo suốt 400 năm sau.
+                </div>
+            </div>
+        </div>
+
+        <a href="bac-thuoc.html" class="btn-back">← Quay lại Bắc Thuộc</a>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

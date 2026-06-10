@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ══ MINDMAP SECTION ══ */
+        .mindmap-section {
+            padding: 30px 60px;
+            background: rgba(255,253,240,0.7);
+            border-top: 1px solid rgba(200,169,110,0.25);
+            border-bottom: 1px solid rgba(200,169,110,0.25);
+        }
+       .mindmap-section-title {
+    text-align: center;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c1b12;
+    margin-bottom: 4px;
+}
+.mindmap-section-sub {
+    text-align: center;
+    color: #7a5c3a;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+        .mindmap-inner {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        /* Left: image viewer */
+        .mindmap-viewer {
+            flex: 1;
+            background: white;
+            border-radius: 18px;
+            border: 1.5px solid rgba(200,169,110,0.4);
+            box-shadow: 0 6px 28px rgba(90,48,16,0.1);
+            overflow: hidden;
+            position: relative;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+        .mindmap-viewer-header {
+            background: #2c1b12;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .mindmap-viewer-header span {
+            color: #c8a96e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .mindmap-zoom-btn {
+            background: rgba(200,169,110,0.2);
+            border: 1px solid #c8a96e;
+            color: #c8a96e;
+            font-size: 12px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.25s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        .mindmap-zoom-btn:hover { background: #c8a96e; color: #2c1b12; }
+        .mindmap-img-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    cursor: pointer;
+    min-height: 260px;
+}
+
+#mindmapImg {
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: contain;
+    border-radius: 8px;
+    display: none;
+    transition: opacity 0.3s;
+}
+        #mindmapPH {
+            color: #b0a090;
+            font-size: 14px;
+            text-align: center;
+        }
+        /* Right: period list */
+        .mindmap-sidebar {
+            width: 260px;
+            flex-shrink: 0;
+        }
+        .mindmap-sidebar-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7a5c3a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        #periodList {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        #periodList li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: white;
+            border: 1.5px solid rgba(200,169,110,0.3);
+            cursor: pointer;
+            transition: 0.25s;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c1b12;
+        }
+        #periodList li:hover { border-color: #c8a96e; background: #fffbf0; transform: translateX(4px); }
+        #periodList li.active {
+            background: #2c1b12;
+            color: #c8a96e;
+            border-color: #2c1b12;
+            box-shadow: 0 4px 14px rgba(44,27,18,0.2);
+        }
+        #periodList li .period-meta { font-size: 11px; opacity: 0.6; font-weight: 400; }
+        #periodList li.active .period-meta { opacity: 0.7; }
+        .mindmap-view-all {
+            margin-top: 14px;
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background: #8B0000;
+            color: white;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.25s;
+        }
+        .mindmap-view-all:hover { background: #c8a96e; color: #2c1b12; }
+
+        /* Lightbox */
+        #mindmapLightbox {
+            display: none;
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,0.88);
+            align-items: center; justify-content: center;
+            flex-direction: column;
+        }
+        #mindmapLightbox.open { display: flex; }
+        .mindmap-lb-header {
+            display: flex; align-items: center; justify-content: space-between;
+            width: min(90vw, 1100px);
+            padding: 0 0 14px;
+        }
+        #mindmapLbTitle { color: #c8a96e; font-size: 16px; font-weight: 700; }
+        .mindmap-lb-close {
+            background: rgba(200,169,110,0.2); border: 1px solid #c8a96e;
+            color: #c8a96e; font-size: 20px; width: 38px; height: 38px;
+            border-radius: 50%; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+        }
+        #mindmapLbImg {
+            max-width: min(90vw, 1100px);
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 60px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo">
+    <img src="images/logo.png" alt="Sử Việt Logo">
+    SỬ VIỆT
+</div>
+            <ul>
+                <li><a href="index.html" class="active">Trang chủ</a></li>
+                <li><a href="#timeline">Hành trình lịch sử</a></li>
+                <li><a href="cau-chuyen.html">Câu chuyện</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+               <li><a href="#nhanvat">Nhân vật</a></li>
+              <li class="nav-user-item">
+    <div class="nav-user-trigger" onclick="toggleUserMenu(this)">
+        <div class="nav-user-avatar" id="navAvatarCircle">U</div>
+        <span class="nav-user-email-text" id="navEmailText">user@gmail.com</span>
+        <span style="color:#c8a96e; font-size:10px;">▾</span>
+    </div>
+    <div class="nav-user-dropdown" id="navUserDropdown">
+        <div class="nav-dropdown-info">
+            <div class="nav-dropdown-avatar" id="navDropAvatar">U</div>
+            <div>
+                <div style="font-weight:700; color:#2c1b12; font-size:13px;" id="navDropName">Người dùng</div>
+                <div style="font-size:11px; color:#7a5c3a;" id="navDropEmail">user@gmail.com</div>
+            </div>
+        </div>
+        <div class="nav-dropdown-divider"></div>
+        <a href="login-signup.html" class="nav-dropdown-logout" onclick="doLogout()">🚪 Đăng xuất</a>
+    </div>
+</li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">🏯 Tự hào dân tộc</div>
+      <h1>KHÁM PHÁ <br> LỊCH SỬ VIỆT NAM</h1>
+      <p class="hero-sub">Học sử chưa bao giờ thú vị đến thế</p>
+      <p class="hero-desc">Cùng tìm hiểu những chặng đường lịch sử hào hùng của dân tộc, khám phá các câu chuyện, thử thách bản thân qua quiz và nhiều trải nghiệm thú vị khác.</p>
+      <button onclick="location.href='#'">Khám phá ngay ›</button>
+    </div>
+    <div class="hero-image">
+      <img src="images/Hero.png" alt="Nhân vật lịch sử">
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-icon">📖</div>
+      <div class="stat-num">1000<span>+</span></div>
+      <div class="stat-label">Câu chuyện lịch sử</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">❓</div>
+      <div class="stat-num">500<span>+</span></div>
+      <div class="stat-label">Câu hỏi quiz</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">🧠</div>
+      <div class="stat-num">50<span>+</span></div>
+      <div class="stat-label">Sơ đồ tư duy</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">👑</div>
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Nhân vật tiêu biểu</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">⚔️</div>
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Sự kiện lịch sử</div>
+    </div>
+  </div>
+</section>
+    <!-- TIMELINE -->
+    <section class="timeline" id="timeline">
+        <div class="timeline-top">
+            <h2 class="timeline-title">HÀNH TRÌNH LỊCH SỬ</h2>
+            <div class="timeline-buttons">
+                <button class="arrow-btn" id="timelinePrev">&#10094;</button>
+                <button class="arrow-btn" id="timelineNext">&#10095;</button>
+            </div>
+        </div>
+        <div class="timeline-wrapper" id="timelineWrapper">
+            <div class="timeline-card">
+                <div class="timeline-year">2879 TCN - 179 TCN</div>
+                <img src="images/vanlang.jfif">
+                <h3>VĂN LANG - ÂU LẠC</h3>
+                <p>Nhà nước đầu tiên của người Việt cổ.</p>
+                <a href="van-lang.html" class="discover-btn-link">Khám phá</a>
+            </div>
+            <div class="timeline-card">
+                <div class="timeline-year">179 TCN - 938</div>
+                <img src="images/bacthuoc.jpg">
+                <h3>THỜI BẮC THUỘC</h3>
+                <p>Hơn 1000 năm đấu tranh giành độc lập.</p>
+                <a href="bac-thuoc.html" class="discover-btn-link">Khám phá</a>
+            </div>
+            <div class="timeline-card">
+                <div class="timeline-year">1009 - 1400</div>
+                <img src="images/tran.jpg">
+                <h3>NHÀ LÝ - TRẦN</h3>
+                <p>Thời kỳ phát triển rực rỡ của dân tộc.</p>
+                <a href="ly-tran.html" class="discover-btn-link">Khám phá</a>
+            </div>
+            <div class="timeline-card">
+                <div class="timeline-year">1428 - 1945</div>
+                <img src="images/le_nguyen.jpg">
+                <h3>NHÀ LÊ - NGUYỄN</h3>
+                <p>Xây dựng và bảo vệ đất nước.</p>
+                <a href="le-nguyen.html" class="discover-btn-link">Khám phá</a>
+            </div>
+            <div class="timeline-card">
+                <div class="timeline-year">1858 - 1954</div>
+                <img src="images/chongphap.jpg">
+                <h3>KHÁNG CHIẾN CHỐNG PHÁP</h3>
+                <p>Cuộc chiến giành độc lập của dân tộc thế kỷ 19 - 20.</p>
+                <a href="chong-phap.html" class="discover-btn-link">Khám phá</a>
+            </div>
+            <div class="timeline-card">
+                <div class="timeline-year">1954 - 1975</div>
+                <img src="images/chongmy.jfif">
+                <h3>KHÁNG CHIẾN CHỐNG MỸ</h3>
+                <p>Đại thắng mùa xuân 1975 thống nhất đất nước.</p>
+                <a href="chong-my.html" class="discover-btn-link">Khám phá</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ MINDMAP SECTION (NEW) ══ -->
+    <section class="mindmap-section">
+        <h2 class="mindmap-section-title">SƠ ĐỒ TƯ DUY LỊCH SỬ</h2>
+        <p class="mindmap-section-sub">Hệ thống hóa kiến thức một cách trực quan, dễ nhớ</p>
+        <div class="mindmap-inner">
+            <!-- Viewer -->
+            <div class="mindmap-viewer">
+                <div class="mindmap-viewer-header">
+                    <span id="mindmapViewerLabel">🧠 Chọn thời kỳ để xem sơ đồ</span>
+                    <button class="mindmap-zoom-btn" onclick="openMindmapLB()">🔍 Xem &rsaquo;</button>
+                </div>
+                <div class="mindmap-img-wrap" onclick="openMindmapLB()">
+                    <img id="mindmapImg" alt="Sơ đồ tư duy">
+                    <div id="mindmapPH">👆 Chọn một thời kỳ ở bên phải để xem sơ đồ tư duy</div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="mindmap-sidebar">
+                <div class="mindmap-sidebar-title">Chọn thời kỳ để xem sơ đồ</div>
+                <ul id="periodList">
+                    <li onclick="changeMindmap(0)">
+                        <span>Văn Lang – Âu Lạc</span>
+                        <span class="period-meta"></span>
+                    </li>
+                    <li onclick="changeMindmap(1)">
+                        <span>Thời Bắc thuộc</span>
+                        <span class="period-meta"></span>
+                    </li>
+                    <li onclick="changeMindmap(2)">
+                        <span>Nhà Lý – Trần</span>
+                        <span class="period-meta"></span>
+                    </li>
+                    <li onclick="changeMindmap(3)">
+                        <span>Nhà Lê – Nguyễn</span>
+                        <span class="period-meta"></span>
+                    </li>
+                    <li onclick="changeMindmap(4)">
+                        <span>Kháng chiến chống Pháp</span>
+                        <span class="period-meta"></span>
+                    </li>
+                    <li onclick="changeMindmap(5)">
+                        <span>Kháng chiến chống Mỹ</span>
+                        <span class="period-meta"></span>
+                    </li>
+                </ul>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="mindmapLightbox" onclick="closeMindmapLB()">
+        <div class="mindmap-lb-header" onclick="event.stopPropagation()">
+            <span id="mindmapLbTitle">🧠 Sơ đồ tư duy</span>
+            <button class="mindmap-lb-close" onclick="closeMindmapLB()">✕</button>
+        </div>
+        <img id="mindmapLbImg" onclick="event.stopPropagation()" alt="Sơ đồ tư duy lớn">
+    </div>
+
+    <!-- TRẢI NGHIỆM NỔI BẬT -->
+    <section class="tnb-section">
+        <h2 class="tnb-title">TRẢI NGHIỆM NỔI BẬT</h2>
+        <div class="tnb-grid">
+
+            <!-- Card 1: Học qua câu chuyện — tím -->
+            <a href="cau-chuyen.html" class="tnb-card tnb-purple">
+                <!-- ===== ĐẶT ẢNH NỀN TRONG SUỐT VÀO ĐÂY ===== -->
+                <img class="tnb-deco" src="images/cauchien.png" alt="">
+                <!-- ============================================= -->
+                <div class="tnb-body">
+                    <h3>HỌC QUA<br>CÂU CHUYỆN</h3>
+                    <p>Những câu chuyện lịch sử sống động, dễ hiểu.</p>
+                    <span class="tnb-btn">Khám phá ›</span>
+                </div>
+            </a>
+
+            <!-- Card 2: Trò chơi lịch sử — cam -->
+            <a href="game.html" class="tnb-card tnb-orange">
+                <!-- ===== ĐẶT ẢNH NỀN TRONG SUỐT VÀO ĐÂY ===== -->
+                <img class="tnb-deco" src="images/trochoils.png" alt="">
+                <!-- ============================================= -->
+                <div class="tnb-body">
+                    <h3>TRÒ CHƠI<br>LỊCH SỬ</h3>
+                    <p>Vừa học vừa chơi, ghi nhớ dễ dàng.</p>
+                    <span class="tnb-btn">Chơi ngay ›</span>
+                </div>
+            </a>
+
+            <!-- Card 3: Quiz thử thách — xanh lá -->
+            <a href="quiz.html" class="tnb-card tnb-green">
+                <!-- ===== ĐẶT ẢNH NỀN TRONG SUỐT VÀO ĐÂY ===== -->
+                <img class="tnb-deco" src="images/quiz.png" alt="">
+                <!-- ============================================= -->
+                <div class="tnb-body">
+                    <h3>QUIZ THỬ<br>THÁCH</h3>
+                    <p>Kiểm tra kiến thức và nhận huy hiệu.</p>
+                    <span class="tnb-btn">Làm quiz ›</span>
+                </div>
+            </a>
+
+            <!-- Card 4: Trải nghiệm người dùng — vàng -->
+            <a href="train-nghiem-nguoi-dung.html" class="tnb-card tnb-gold">
+                <!-- ===== ĐẶT ẢNH NỀN TRONG SUỐT VÀO ĐÂY ===== -->
+                <img class="tnb-deco" src="images/danhgia.png" alt="">
+                <!-- ============================================= -->
+                <div class="tnb-body">
+                    <h3>TRẢI NGHIỆM<br>NGƯỜI DÙNG</h3>
+                    <p>Chia sẻ góp ý để chúng tôi cải thiện tốt hơn.</p>
+                   
+
+
+
+                    <span class="tnb-btn">Đánh giá ›</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <style>
+    /* ══ TRẢI NGHIỆM NỔI BẬT ══ */
+    .tnb-section {
+       padding: 70px 60px 0;
+        background: #f5e9c8;
+    }
+    .tnb-title {
+        text-align: center;
+        font-family: 'Libre Baskerville', serif;
+        font-size: 36px;
+        font-weight: 700;
+        color: #2c1b12;
+        margin-bottom: 36px;
+        letter-spacing: 1px;
+    }
+    .tnb-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .tnb-card {
+        position: relative;
+        border-radius: 18px;
+        overflow: hidden;
+        min-height: 320px;
+        display: flex;
+        align-items: flex-end;
+        text-decoration: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    }
+    .tnb-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 18px 48px rgba(0,0,0,0.26);
+    }
+
+    /* Màu nền từng card */
+    .tnb-purple { background: linear-gradient(135deg, #4a1a78 0%, #6d2fa0 100%); }
+    .tnb-orange { background: linear-gradient(135deg, #a84800 0%, #d06010 100%); }
+    .tnb-green  { background: linear-gradient(135deg, #1a5e2e 0%, #2a8a44 100%); }
+    .tnb-gold   { background: linear-gradient(135deg, #c8860a 0%, #e8a820 100%); }
+
+    /* Ảnh trang trí — PNG nền trong suốt, góc phải */
+    .tnb-deco {
+        position: absolute;
+        right: -4px;
+        bottom: -4px;
+         width: 200px;
+    height: 200px;
+        object-fit: contain;
+        object-position: bottom right;
+        pointer-events: none;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+        transition: transform 0.35s ease;
+        z-index: 1;
+    }
+    .tnb-card:hover .tnb-deco {
+        transform: scale(1.06) translateY(-4px);
+    }
+
+    /* Overlay gradient từ trái sang phải để chữ dễ đọc */
+    .tnb-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        border-radius: inherit;
+    }
+    .tnb-purple::before { background: linear-gradient(100deg, rgba(55,10,100,0.97) 38%, rgba(80,30,130,0.6) 62%, transparent 100%); }
+    .tnb-orange::before { background: linear-gradient(100deg, rgba(130,50,0,0.97) 38%, rgba(168,72,0,0.6) 62%, transparent 100%); }
+    .tnb-green::before  { background: linear-gradient(100deg, rgba(20,75,35,0.97) 38%, rgba(35,110,55,0.6) 62%, transparent 100%); }
+    .tnb-gold::before   { background: linear-gradient(100deg, rgba(160,95,0,0.97) 38%, rgba(200,130,10,0.6) 62%, transparent 100%); }
+
+    /* Nội dung chữ */
+    .tnb-body {
+        position: relative;
+        z-index: 3;
+        padding: 24px 22px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+    .tnb-body h3 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.25;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 0.3px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .tnb-gold .tnb-body h3 { color: #fff8e1; }
+    .tnb-body p {
+        font-size: 13px;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.6;
+        font-weight: 400;
+        max-width: 160px;
+    }
+    .tnb-gold .tnb-body p { color: rgba(255,245,200,0.9); }
+    .tnb-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 6px;
+        padding: 9px 20px;
+        background: rgba(255,255,255,0.18);
+        border: 1.5px solid rgba(255,255,255,0.5);
+        border-radius: 50px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        width: fit-content;
+        transition: 0.25s;
+        backdrop-filter: blur(4px);
+    }
+    .tnb-card:hover .tnb-btn {
+        background: rgba(255,255,255,0.95);
+        color: #2c1b12;
+        border-color: transparent;
+    }
+    .tnb-gold .tnb-btn { color: #fff8e1; border-color: rgba(255,240,180,0.6); }
+    .tnb-gold:hover .tnb-btn { color: #7a4a00; }
+
+    @media(max-width:900px) {
+        .tnb-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width:520px) {
+        .tnb-section { padding: 50px 16px; }
+        .tnb-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+
+    <!-- CHARACTERS -->
+<section class="history-showcase" id="nhanvat">
+        <div class="history-left">
+           <div class="showcase-top">
+    <h2>NHÂN VẬT TIÊU BIỂU</h2>
+</div>
+<div class="showcase-arrows">
+    <button id="charPrev">❮</button>
+    <button id="charNext">❯</button>
+</div>
+            </div>
+           <div class="character-wrapper" id="characterWrapper">
+
+<style>
+.flip-card{height:320px;perspective:1000px;cursor:pointer;min-width:220px;flex-shrink:0;}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform 0.65s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;overflow:hidden;}
+.flip-front{background:#1a1a1a;}
+.flip-front img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.85) saturate(1.1);transition:transform 0.4s ease;}
+.flip-card:hover .flip-front img{transform:scale(1.05);}
+.front-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 20%,rgba(20,8,4,0.98) 100%);}
+.front-content{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;}
+.front-badge{display:inline-block;background:rgba(244,197,66,0.2);border:1px solid #f4c542;color:#f4c542;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:5px;}
+.front-name{font-size:16px;font-weight:600;color:#fff;margin-bottom:2px;}
+.front-year{font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+.front-hint{font-size:10px;color:rgba(244,197,66,0.6);margin-bottom:8px;}
+
+/* Nút xem chi tiết */
+.front-detail-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:7px 16px;
+    background:rgba(255,255,255,0.15);
+    border:1.5px solid rgba(255,255,255,0.5);
+    border-radius:50px;
+    color:#fff;
+    font-size:12px;font-weight:700;
+    text-decoration:none;
+    backdrop-filter:blur(6px);
+    transition:all 0.25s ease;
+    font-family:'Poppins',sans-serif;
+    position:relative;z-index:10;
+}
+.front-detail-btn:hover{
+    background:rgba(244,197,66,0.9);
+    border-color:#f4c542;
+    color:#2c1b12;
+    transform:translateY(-2px);
+    box-shadow:0 4px 14px rgba(244,197,66,0.4);
+}
+.front-detail-btn::after{content:'›';font-size:16px;line-height:1;}
+
+.flip-back{background:#2c1b12;transform:rotateY(180deg);padding:18px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(244,197,66,0.2);}
+.back-line{width:40px;height:3px;background:#f4c542;border-radius:2px;margin-bottom:10px;}
+.back-era{display:inline-block;background:rgba(244,197,66,0.15);border:1px solid rgba(244,197,66,0.4);color:#f4c542;font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.back-name{font-size:16px;font-weight:600;color:#f4c542;margin-bottom:10px;}
+.back-quote{font-size:12px;color:rgba(255,255,255,0.8);font-style:italic;line-height:1.7;border-left:2px solid #f4c542;padding-left:10px;margin-bottom:12px;}
+.back-facts{display:flex;flex-direction:column;gap:7px;}
+.back-fact{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.fact-dot{width:5px;height:5px;min-width:5px;border-radius:50%;background:#f4c542;margin-top:5px;}
+.back-hint{font-size:10px;color:rgba(255,255,255,0.25);text-align:center;margin-top:8px;}
+</style>
+
+<!-- Hùng Vương -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/hungvuong.jpg" alt="Hùng Vương">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">👑 Dựng nước</div>
+        <div class="front-name">Hùng Vương</div>
+        <div class="front-year">2879 TCN – 258 TCN</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-hung-vuong.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Văn Lang</div>
+        <div class="back-name">Hùng Vương</div>
+        <div class="back-quote">"Các Vua Hùng đã có công dựng nước — Bác cháu ta phải cùng nhau giữ lấy nước."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Nhà nước đầu tiên của người Việt — nước Văn Lang</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Đỉnh cao văn hóa Đông Sơn — trống đồng huyền thoại</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>UNESCO công nhận tín ngưỡng thờ cúng Hùng Vương 2012</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- An Dương Vương -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/anduongvuong.PNG" alt="An Dương Vương">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">🏯 Dựng nước</div>
+        <div class="front-name">An Dương Vương</div>
+        <div class="front-year">257 TCN – 179 TCN</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-an-duong-vuong.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Âu Lạc</div>
+        <div class="back-name">An Dương Vương</div>
+        <div class="back-quote">"Thành Cổ Loa không thể bị phá từ bên ngoài — chỉ có thể sụp đổ từ bên trong."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Xây thành Cổ Loa 9 vòng xoáy ốc — kỳ công cổ đại</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chế tạo Nỏ Thần Liên Châu — vũ khí vô địch</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Bi kịch Mỵ Châu – Trọng Thủy khiến giang sơn sụp đổ</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hai Bà Trưng -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/haibatrung.jpg" alt="Hai Bà Trưng">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">👸 Nữ anh hùng</div>
+        <div class="front-name">Hai Bà Trưng</div>
+        <div class="front-year">Năm 40</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-2batrung.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Bắc thuộc</div>
+        <div class="back-name">Hai Bà Trưng</div>
+        <div class="back-quote">"Một xin rửa sạch nước thù. Hai xin đem lại nghiệp xưa họ Hùng."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Phất cờ khởi nghĩa, đánh chiếm 65 thành trì</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Trưng Trắc lên ngôi vương, giữ độc lập hơn 3 năm</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Giỗ Hai Bà mùng 6 tháng 2 âm lịch hàng năm</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Bà Triệu -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/ba-trieu.WEBP" alt="Bà Triệu">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">👸 Nữ anh hùng</div>
+        <div class="front-name">Bà Triệu</div>
+        <div class="front-year">Năm 248</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-ba-trieu.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Bắc thuộc</div>
+        <div class="back-name">Bà Triệu</div>
+        <div class="back-quote">"Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ, chém cá kình ở biển Đông!"</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Cưỡi voi xông trận với áo giáp vàng uy dũng</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Lãnh đạo nghĩa quân chống quân Đông Ngô năm 248</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Hy sinh anh dũng khi mới 23 tuổi</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Ngô Quyền -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/ngo-quyen.jpg" alt="Ngô Quyền">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">⚔️ Chiến trận</div>
+        <div class="front-name">Ngô Quyền</div>
+        <div class="front-year">Năm 938</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-ngo-quyen.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Chấm dứt Bắc thuộc</div>
+        <div class="back-name">Ngô Quyền</div>
+        <div class="back-quote">"Ta không thể địch được với chúng bằng sức mạnh, chỉ có thể dùng mưu kế mà thắng."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Dùng cọc ngầm đánh tan thủy quân Nam Hán trên sông Bạch Đằng</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chấm dứt hơn 1000 năm Bắc thuộc</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Lên ngôi vua, mở kỷ nguyên độc lập tự chủ</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Lý Thường Kiệt -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/ly-thuong-kiet.PNG" alt="Lý Thường Kiệt">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">⚔️ Chiến trận</div>
+        <div class="front-name">Lý Thường Kiệt</div>
+        <div class="front-year">1075 – 1077</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-ly-thuong-kiet.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Nhà Lý</div>
+        <div class="back-name">Lý Thường Kiệt</div>
+        <div class="back-quote">"Nam quốc sơn hà Nam đế cư. Tiệt nhiên định phận tại thiên thư."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Đọc bài thơ thần — Tuyên ngôn độc lập đầu tiên</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Đánh bại 30 vạn quân Tống trên sông Như Nguyệt</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chiến lược gia xuất sắc nhất thời Lý</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Trần Hưng Đạo -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/tran-hung-dao.jpg" alt="Trần Hưng Đạo">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">🛡️ Anh hùng dân tộc</div>
+        <div class="front-name">Trần Hưng Đạo</div>
+        <div class="front-year">1258 – 1288</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-tran-hung-dao.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Nhà Trần</div>
+        <div class="back-name">Trần Hưng Đạo</div>
+        <div class="back-quote">"Nếu bệ hạ muốn hàng, xin hãy chém đầu thần trước."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Ba lần đánh bại đế chế Nguyên Mông hùng mạnh nhất thế giới</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chiến thuật vườn không nhà trống thiên tài</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Được tôn là Đức Thánh Trần, thờ phụng đến ngày nay</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Lê Lợi -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/le-loi.PNG" alt="Lê Lợi">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">⚔️ Chiến trận</div>
+        <div class="front-name">Lê Lợi</div>
+        <div class="front-year">1418 – 1427</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-le-loi.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Khởi nghĩa Lam Sơn</div>
+        <div class="back-name">Lê Lợi</div>
+        <div class="back-quote">"Nhân nghĩa chi cử, yếu tại an dân. Điếu phạt chi sư, mạc tiên khứ bạo."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>10 năm kháng chiến gian khổ đánh đuổi quân Minh</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Lập ra nhà Lê — triều đại tồn tại lâu nhất lịch sử</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Trả gươm thần cho Rùa Vàng ở hồ Hoàn Kiếm</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Nguyễn Trãi -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/nguyen-trai.PNG" alt="Nguyễn Trãi">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">📜 Danh nhân</div>
+        <div class="front-name">Nguyễn Trãi</div>
+        <div class="front-year">Thế kỷ XV</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-nguyen-trai.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Nhà Lê</div>
+        <div class="back-name">Nguyễn Trãi</div>
+        <div class="back-quote">"Việc nhân nghĩa cốt ở yên dân. Quân điếu phạt trước lo trừ bạo."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Tác giả Bình Ngô đại cáo — áng văn bất hủ của dân tộc</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Quân sư tài ba của Lê Lợi trong kháng chiến chống Minh</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>UNESCO vinh danh Danh nhân văn hóa thế giới</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quang Trung -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/quangtrung.JFIF" alt="Quang Trung">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">🔥 Đại thắng</div>
+        <div class="front-name">Quang Trung</div>
+        <div class="front-year">1789</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="nguyen-hue.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Thời Tây Sơn</div>
+        <div class="back-name">Quang Trung</div>
+        <div class="back-quote">"Đánh cho nó chích luân bất phản. Đánh cho nó phiến giáp bất hoàn."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Đại phá 29 vạn quân Thanh chỉ trong 5 ngày thần tốc</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Hành quân từ Huế ra Thăng Long trong vài ngày</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Băng hà năm 39 tuổi — để lại bao hoài bão dang dở</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hồ Chí Minh -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/hochiminh.JFIF" alt="Hồ Chí Minh">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge"> Việt Nam độc lập</div>
+        <div class="front-name">Hồ Chí Minh</div>
+        <div class="front-year">1945</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-ho-chi-minh.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Việt Nam hiện đại</div>
+        <div class="back-name">Hồ Chí Minh</div>
+        <div class="back-quote">"Không có gì quý hơn độc lập, tự do."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>30 năm bôn ba tìm đường cứu nước</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Đọc Tuyên ngôn Độc lập 2/9/1945 tại Ba Đình</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chủ tịch đầu tiên nước Việt Nam Dân chủ Cộng hòa</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+<!-- Võ Nguyên Giáp -->
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-inner">
+    <div class="flip-front">
+      <img src="images/vonguyengiap.JFIF" alt="Võ Nguyên Giáp">
+      <div class="front-gradient"></div>
+      <div class="front-content">
+        <div class="front-badge">⭐ Đại tướng</div>
+        <div class="front-name">Võ Nguyên Giáp</div>
+        <div class="front-year">1954</div>
+        <div class="front-hint">↻ Nhấn để khám phá</div>
+        <a href="chi-tiet-vo-nguyen-giap.html" class="front-detail-btn" onclick="event.stopPropagation()">Tìm hiểu thêm</a>
+      </div>
+    </div>
+    <div class="flip-back">
+      <div>
+        <div class="back-line"></div>
+        <div class="back-era">Kháng chiến chống Pháp</div>
+        <div class="back-name">Võ Nguyên Giáp</div>
+        <div class="back-quote">"Chắc thắng mới đánh, không chắc thắng không đánh."</div>
+        <div class="back-facts">
+          <div class="back-fact"><span class="fact-dot"></span><span>Chiến thắng Điện Biên Phủ — vĩ đại nhất thế kỷ 20</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Đại tướng huyền thoại được thế giới kính nể</span></div>
+          <div class="back-fact"><span class="fact-dot"></span><span>Chấm dứt 80 năm đô hộ của thực dân Pháp</span></div>
+        </div>
+      </div>
+      <div class="back-hint">↻ Nhấn để lật lại</div>
+    </div>
+  </div>
+</div>
+
+</div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background:#2c1b12; color:white; padding:50px 80px 0;">
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-bottom:40px;">
+            <div>
+                <h3 style="color:#f4c542; font-size:28px; font-weight:700; margin-bottom:12px; font-family:'Libre Baskerville',serif;">SỬ VIỆT</h3>
+                <p style="color:rgba(255,255,255,0.6); line-height:1.8; max-width:260px; font-size:14px;">
+                    Website học lịch sử Việt Nam tương tác — khám phá hàng nghìn năm văn hiến dân tộc.
+                </p>
+            </div>
+            <div>
+                <h4 style="color:#f4c542; margin-bottom:16px;">Khám phá</h4>
+                <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+                    <li><a href="index.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Trang chủ</a></li>
+                    <li><a href="cau-chuyen.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Học qua câu chuyện</a></li>
+                    <li><a href="quiz.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Quiz thử thách</a></li>
+                    <li><a href="game.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Trò chơi lịch sử</a></li>
+                    <li><a href="train-nghiem-nguoi-dung.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">📊 Đánh giá</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:#f4c542; margin-bottom:16px;">Thông tin</h4>
+                <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:rgba(255,255,255,0.7);">
+                    <li>🏫 Trường: <strong style="color:white;">ĐH CNTT & TT VIỆT HÀN</strong></li>
+                    <li>👥 Nhóm: <strong style="color:white;">CMW</strong></li>
+                    <li>🏆 Cuộc thi: <strong style="color:white;">Best Web Design</strong></li>
+                    <li>📅 Năm: <strong style="color:white;">2026</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div style="border-top:1px solid rgba(200,169,110,0.25); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
+            <div style="color:#c8a96e; font-size:14px; font-weight:600;">
+                📖 Hiểu sử – Yêu nước – Tự hào dân tộc
+            </div>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none; transition:0.3s;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">f</a>
+                <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none; transition:0.3s;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">▶</a>
+                <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none; transition:0.3s;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">🌐</a>
+            </div>
+        </div>
+        <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:12px; padding:10px 0 20px;">
+            © 2026 Sử Việt — Tự hào lịch sử Việt Nam 
+        </div>
+    </footer>
+
+    <!-- CHATBOX -->
+    <div id="chat-fab" onclick="toggleChat()" style="position:fixed;bottom:10px;right:30px;z-index:9999;width:60px;height:60px;border-radius:50%;background:#2c1a0e;border:2px solid #c9a84c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(0,0,0,0.4)">🏯</div>
+    <div id="chat-panel" style="display:none;position:fixed;bottom:20px;right:30px;z-index:9998;width:620px;height:95vh;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5)">
+        <iframe src="chatbox.html" style="width:100%;height:100%;border:none"></iframe>
+    </div>
+
+    <script>
+        // Timeline scroll buttons
+        const tw = document.getElementById('timelineWrapper');
+        document.getElementById('timelinePrev').onclick = () => tw.scrollBy({left:-250,behavior:'smooth'});
+        document.getElementById('timelineNext').onclick = () => tw.scrollBy({left:250,behavior:'smooth'});
+
+        // Character scroll buttons
+        const cw = document.getElementById('characterWrapper');
+        document.getElementById('charPrev').onclick = () => cw.scrollBy({left:-280,behavior:'smooth'});
+        document.getElementById('charNext').onclick = () => cw.scrollBy({left:280,behavior:'smooth'});
+
+        // Mindmap — ảnh theo thời kỳ, click mở lightbox
+        const mindmapImages = [
+            {src:'images/sodovanlang.PNG',    title:'Văn Lang – Âu Lạc'},
+            {src:'images/sodobacthuoc.PNG',   title:'Thời Bắc thuộc'},
+            {src:'images/sodolytran.PNG',     title:'Nhà Lý – Trần'},
+            {src:'images/sodoleguyen.PNG',    title:'Nhà Lê – Nguyễn'},
+            {src:'images/sodochongphap.PNG',  title:'Kháng chiến chống Pháp'},
+            {src:'images/sodochongmy.PNG',    title:'Kháng chiến chống Mỹ'},
+        ];
+
+        function changeMindmap(idx) {
+            document.querySelectorAll('#periodList li').forEach((l,i) => l.classList.toggle('active', i===idx));
+            const img = document.getElementById('mindmapImg');
+            const ph  = document.getElementById('mindmapPH');
+            const lbl = document.getElementById('mindmapViewerLabel');
+            img.src = mindmapImages[idx].src;
+            img.style.display = 'block';
+            img.style.opacity = '0';
+            ph.style.display = 'none';
+            lbl.textContent = '🧠 ' + mindmapImages[idx].title;
+            img.onload  = () => { img.style.opacity = '1'; };
+            img.onerror = () => { img.style.display='none'; ph.style.display='block'; };
+        }
+
+        function openMindmapLB() {
+            const img = document.getElementById('mindmapImg');
+            if (!img.src || img.style.display==='none') return;
+            const activeIdx = [...document.querySelectorAll('#periodList li')].findIndex(l=>l.classList.contains('active'));
+            document.getElementById('mindmapLbImg').src = img.src;
+            document.getElementById('mindmapLbTitle').textContent = '🧠 ' + (mindmapImages[activeIdx]?.title || 'Sơ đồ tư duy');
+            document.getElementById('mindmapLightbox').classList.add('open');
+        }
+
+        function closeMindmapLB() { document.getElementById('mindmapLightbox').classList.remove('open'); }
+        document.addEventListener('keydown', e => { if(e.key==='Escape') closeMindmapLB(); });
+
+        function toggleChat() {
+            const p = document.getElementById('chat-panel');
+            p.style.display = p.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Auto-select first period on load
+        changeMindmap(0);
+        // Auto-select first period on load
+        changeMindmap(0);
+
+        // ── Hiển thị thông tin user đã đăng nhập ──
+        (function() {
+            const raw = localStorage.getItem('suVietUser');
+            if (!raw) return;
+            const u = JSON.parse(raw);
+            const email   = u.email || '';
+            const name    = u.name  || email.split('@')[0] || 'Người dùng';
+            const initial = name[0]?.toUpperCase() || 'U';
+            document.getElementById('navEmailText').textContent  = email;
+            document.getElementById('navDropEmail').textContent  = email;
+            document.getElementById('navDropName').textContent   = name;
+            function setAvatar(el, avatarUrl, fallbackText) {
+                if (avatarUrl) {
+                    el.innerHTML = `<img src="${avatarUrl}" onerror="this.parentElement.textContent='${fallbackText}'">`;
+                } else {
+                    el.textContent = fallbackText;
+                }
+            }
+            setAvatar(document.getElementById('navAvatarCircle'),  u.avatar, initial);
+            setAvatar(document.getElementById('navDropAvatar'),    u.avatar, initial);
+        })();
+
+        function toggleUserMenu(trigger) {
+            document.getElementById('navUserDropdown').classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-user-item'))
+                document.getElementById('navUserDropdown')?.classList.remove('open');
+        });
+        function doLogout() {
+            localStorage.removeItem('suVietUser');
+        }
+
+   
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hùng Vương — Dựng Nước Văn Lang | Sử Việt</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9920a;--gold-l:#f4c542;--gold-dim:#8b6914;
+  --red:#8B0000;--green:#2d5a1b;--green-l:#4a8a2e;
+  --ink:#1a1008;--parch:#f5ead6;
+  --parch-dim:rgba(245,234,214,0.75);--parch-faint:rgba(245,234,214,0.45);
+  --bg:#060904;
+}
+body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--parch);min-height:100vh;overflow-x:hidden;}
+
+/* ── BAMBOO PARTICLES ── */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;width:1px;background:linear-gradient(transparent,rgba(201,146,10,0.4),transparent);opacity:0;animation:bambooFall linear infinite;}
+@keyframes bambooFall{0%{opacity:0;transform:translateY(-20px);}10%{opacity:.5;}90%{opacity:.2;}100%{opacity:0;transform:translateY(100vh);}}
+
+/* ── AMBIENT ── */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 10%,rgba(45,90,27,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%,rgba(201,146,10,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 40%,rgba(139,0,0,0.05) 0%,transparent 60%);}
+
+/* ── DECO CORNERS ── */
+.deco-corner{position:fixed;width:50px;height:50px;border-color:rgba(201,146,10,0.25);border-style:solid;z-index:2;pointer-events:none;}
+.deco-corner.tl{top:14px;left:14px;border-width:2px 0 0 2px;}
+.deco-corner.tr{top:14px;right:14px;border-width:2px 2px 0 0;}
+.deco-corner.bl{bottom:14px;left:14px;border-width:0 0 2px 2px;}
+.deco-corner.br{bottom:14px;right:14px;border-width:0 2px 2px 0;}
+.deco-dot{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(201,146,10,0.3);z-index:2;pointer-events:none;}
+.deco-dot.tl{top:12px;left:12px;}
+.deco-dot.tr{top:12px;right:12px;}
+.deco-dot.bl{bottom:12px;left:12px;}
+.deco-dot.br{bottom:12px;right:12px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,9,4,0.97);border-bottom:1px solid rgba(201,146,10,0.18);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(14px);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-l);text-decoration:none;letter-spacing:3px;display:flex;align-items:center;gap:10px;}
+.nav-logo::before{content:'🥁';font-size:16px;}
+.nav-back{font-size:13px;color:var(--parch-faint);text-decoration:none;letter-spacing:1px;transition:color .3s;}
+.nav-back:hover{color:var(--gold-l);}
+
+/* ── PROGRESS ── */
+.prog-bar{position:fixed;top:56px;left:0;right:0;z-index:199;height:3px;background:rgba(255,255,255,0.04);}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--gold-l));transition:width .8s cubic-bezier(.4,0,.2,1);box-shadow:0 0 12px rgba(74,138,46,0.6);}
+
+/* ── SCORE BADGE ── */
+.score-badge{position:fixed;top:68px;right:24px;z-index:198;background:rgba(6,9,4,0.92);border:1px solid rgba(201,146,10,0.3);border-radius:40px;padding:8px 18px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+.score-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-l);font-weight:700;min-width:32px;text-align:center;transition:transform .3s;}
+.score-num.bump{transform:scale(1.4);}
+.score-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-dim);}
+
+/* ── WRAP ── */
+.wrap{max-width:800px;margin:0 auto;padding:84px 24px 80px;position:relative;z-index:2;}
+
+/* ── SCENE ── */
+.scene{display:none;}
+.scene.active{display:block;animation:fadeUp .65s cubic-bezier(.4,0,.2,1);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── CHAPTER BADGE ── */
+.chap{display:inline-flex;align-items:center;gap:8px;background:rgba(45,90,27,0.15);border:1px solid rgba(74,138,46,0.35);border-radius:30px;padding:6px 18px;font-size:12px;color:#a5d6a7;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;}
+
+/* ── HERO IMG ── */
+.hero-img{width:100%;height:340px;object-fit:cover;border-radius:16px;margin-bottom:28px;border:1px solid rgba(201,146,10,0.2);box-shadow:0 24px 64px rgba(0,0,0,0.85);filter:sepia(.3) contrast(1.1);transition:filter .4s;}
+.hero-img:hover{filter:sepia(.1) contrast(1.2);}
+
+/* ── TIMELINE ── */
+.tl{display:flex;align-items:flex-start;margin:28px 0;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;}
+.tl::-webkit-scrollbar{display:none;}
+.tl-item{flex:1;min-width:90px;display:flex;flex-direction:column;align-items:center;position:relative;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;top:13px;left:50%;width:100%;height:2px;background:linear-gradient(90deg,rgba(201,146,10,.3),rgba(201,146,10,.08));z-index:0;}
+.tl-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;z-index:1;position:relative;transition:all .4s;}
+.tl-dot.done{background:var(--gold-dim);border:2px solid var(--gold);color:var(--ink);}
+.tl-dot.current{background:var(--green-l);border:2px solid var(--gold-l);color:#fff;box-shadow:0 0 20px rgba(74,138,46,.7);animation:pulseGreen 2s infinite;}
+@keyframes pulseGreen{0%,100%{box-shadow:0 0 20px rgba(74,138,46,.6);}50%{box-shadow:0 0 35px rgba(74,138,46,1),0 0 50px rgba(201,146,10,.3);}}
+.tl-dot.todo{background:rgba(245,234,214,.05);border:2px solid rgba(245,234,214,.15);color:var(--parch-faint);}
+.tl-year{font-size:11px;color:var(--gold-dim);margin-top:6px;text-align:center;letter-spacing:.5px;}
+.tl-event{font-size:10px;color:var(--parch-faint);margin-top:3px;text-align:center;line-height:1.3;padding:0 4px;}
+
+/* ── EDU PILL ── */
+.edu-pill{float:right;width:215px;margin:0 0 20px 24px;background:rgba(45,90,27,0.1);border:1px solid rgba(74,138,46,0.25);border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.7;color:var(--parch-dim);}
+.edu-pill .edu-tag{font-size:11px;color:#81c784;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block;}
+
+/* ── STORY ── */
+.story{font-size:19px;line-height:1.95;color:rgba(245,234,214,.9);margin-bottom:16px;}
+.story em{color:#d4a574;font-style:italic;}
+.story strong{color:#fff;font-weight:600;}
+.story::after{content:'';display:block;clear:both;}
+
+/* ── DIALOGUE ── */
+.dlg{background:rgba(45,90,27,0.1);border-left:3px solid rgba(74,138,46,0.5);border-radius:0 12px 12px 0;padding:16px 22px;margin:22px 0;font-style:italic;font-size:18px;line-height:1.75;color:var(--parch);position:relative;}
+.dlg::before{content:'"';position:absolute;top:-10px;left:14px;font-size:60px;color:rgba(74,138,46,.12);font-family:'Playfair Display',serif;line-height:1;}
+.dlg-who{font-size:11px;font-style:normal;color:#81c784;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+/* ── FACT ── */
+.fact{background:rgba(139,0,0,0.1);border:1px solid rgba(139,0,0,0.28);border-radius:12px;padding:18px 22px;margin:22px 0;font-size:15px;line-height:1.8;color:var(--parch-dim);}
+.fact-tag{font-size:11px;color:#ef9a9a;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block;}
+
+/* ── OUTCOME ── */
+.outcome{border-radius:14px;padding:22px;margin:22px 0;font-size:17px;line-height:1.8;}
+.outcome.bad{background:rgba(139,0,0,0.13);border:1px solid rgba(139,0,0,0.28);}
+.outcome.good{background:rgba(45,90,27,0.15);border:1px solid rgba(74,138,46,0.3);}
+.outcome-icon{font-size:32px;display:block;margin-bottom:10px;}
+
+/* ── CHOICES ── */
+.choices-label{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+.choices-label::before,.choices-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,146,10,.25),transparent);}
+.choices{display:flex;flex-direction:column;gap:12px;}
+.c-btn{background:rgba(245,234,214,.03);border:1px solid rgba(245,234,214,.12);border-radius:12px;padding:18px 22px;color:var(--parch);font-family:'Crimson Pro',serif;font-size:17px;text-align:left;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);display:flex;align-items:flex-start;gap:14px;line-height:1.55;position:relative;overflow:hidden;}
+.c-btn:hover{background:rgba(74,138,46,0.1);border-color:rgba(74,138,46,.4);transform:translateX(8px);box-shadow:0 4px 20px rgba(0,0,0,.3),-4px 0 0 rgba(74,138,46,.4);}
+.c-btn:active{transform:translateX(4px) scale(.99);}
+.c-letter{width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(74,138,46,.15);border:1px solid rgba(74,138,46,.4);color:#81c784;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;flex-shrink:0;margin-top:2px;transition:all .3s;}
+.c-btn:hover .c-letter{background:rgba(74,138,46,.3);border-color:#81c784;}
+.c-sub{font-size:13px;color:var(--parch-faint);font-style:italic;margin-top:4px;}
+
+/* ── CONTINUE ── */
+.cont-btn{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:15px 32px;background:rgba(45,90,27,0.6);border:1px solid rgba(201,146,10,0.35);border-radius:12px;color:var(--parch);font-family:'Crimson Pro',serif;font-size:17px;cursor:pointer;transition:all .3s;letter-spacing:.5px;}
+.cont-btn:hover{background:var(--green-l);border-color:rgba(201,146,10,.7);transform:translateY(-3px);box-shadow:0 10px 30px rgba(45,90,27,.5);}
+
+/* ══════════════════════════
+   🥁 TRỐNG ĐỒNG INFOGRAPHIC
+══════════════════════════ */
+.trong-dong-section{background:rgba(201,146,10,0.05);border:1px solid rgba(201,146,10,0.2);border-radius:20px;padding:28px;margin:28px 0;}
+.trong-dong-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-l);margin-bottom:6px;text-align:center;}
+.trong-dong-sub{font-size:13px;color:var(--parch-faint);text-align:center;margin-bottom:24px;letter-spacing:1px;}
+.trong-dong-svg-wrap{display:flex;justify-content:center;margin-bottom:24px;}
+.td-svg{width:280px;height:280px;cursor:pointer;}
+.td-ring{transition:all .4s;cursor:pointer;}
+.td-ring:hover{filter:brightness(1.4);}
+.td-label{fill:var(--parch);font-size:11px;font-family:Georgia,serif;text-anchor:middle;}
+.td-info-panel{background:rgba(201,146,10,0.08);border:1px solid rgba(201,146,10,0.2);border-radius:12px;padding:16px 20px;font-size:15px;line-height:1.8;color:var(--parch-dim);min-height:80px;transition:all .4s;}
+.td-info-title{font-size:14px;color:var(--gold-l);font-weight:600;margin-bottom:6px;}
+.td-hint{font-size:12px;color:var(--parch-faint);text-align:center;margin-top:12px;font-style:italic;}
+
+/* ══════════════════════════
+   🗺️ BẢN ĐỒ VĂN LANG
+══════════════════════════ */
+.map-section{background:rgba(45,90,27,0.07);border:1px solid rgba(74,138,46,0.2);border-radius:20px;padding:28px;margin:28px 0;}
+.map-title{font-family:'Playfair Display',serif;font-size:18px;color:#81c784;margin-bottom:6px;text-align:center;}
+.map-sub{font-size:13px;color:var(--parch-faint);text-align:center;margin-bottom:20px;}
+.map-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
+.map-region{background:rgba(45,90,27,0.15);border:1px solid rgba(74,138,46,0.25);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+.map-region:hover,.map-region.active{background:rgba(74,138,46,0.25);border-color:rgba(74,138,46,0.6);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3);}
+.map-region-icon{font-size:26px;margin-bottom:6px;}
+.map-region-name{font-size:13px;color:#a5d6a7;font-weight:600;margin-bottom:4px;}
+.map-region-desc{font-size:12px;color:var(--parch-faint);line-height:1.4;}
+.map-info{background:rgba(45,90,27,0.12);border:1px solid rgba(74,138,46,0.2);border-radius:10px;padding:14px 18px;font-size:15px;line-height:1.8;color:var(--parch-dim);min-height:60px;}
+
+/* ══════════════════════════
+   🎮 MINI-GAME GHÉP VĂN HÓA
+══════════════════════════ */
+.minigame-section{background:rgba(139,0,0,0.07);border:1px solid rgba(139,0,0,0.2);border-radius:20px;padding:28px;margin:28px 0;}
+.mg-title{font-family:'Playfair Display',serif;font-size:18px;color:#ef9a9a;margin-bottom:6px;text-align:center;}
+.mg-sub{font-size:13px;color:var(--parch-faint);text-align:center;margin-bottom:20px;}
+.mg-pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mg-col{display:flex;flex-direction:column;gap:8px;}
+.mg-col-title{font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin-bottom:6px;}
+.mg-item{background:rgba(245,234,214,.05);border:1.5px solid rgba(245,234,214,.12);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .25s;font-size:14px;color:var(--parch);text-align:center;user-select:none;}
+.mg-item:hover{background:rgba(201,146,10,.1);border-color:rgba(201,146,10,.35);}
+.mg-item.selected{background:rgba(201,146,10,.15);border-color:var(--gold);color:var(--gold-l);}
+.mg-item.correct{background:rgba(39,100,30,.25);border-color:#4caf50;color:#a5d6a7;cursor:default;}
+.mg-item.wrong{background:rgba(139,0,0,.25);border-color:#e53935;color:#ef9a9a;}
+.mg-score{text-align:center;font-size:22px;font-family:'Playfair Display',serif;color:var(--gold-l);margin-top:14px;min-height:30px;}
+.mg-btn{display:block;margin:14px auto 0;padding:10px 26px;background:rgba(139,0,0,.5);border:1px solid rgba(201,146,10,.3);border-radius:8px;color:var(--parch);font-family:'Crimson Pro',serif;font-size:15px;cursor:pointer;transition:.3s;}
+.mg-btn:hover{background:var(--red);}
+
+/* ══════════════════════════
+   🎓 KNOWLEDGE CHECK
+══════════════════════════ */
+.kc{background:rgba(201,146,10,0.06);border:1px solid rgba(201,146,10,.22);border-radius:14px;padding:20px 24px;margin:24px 0;}
+.kc-tag{font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:block;}
+.kc-q{font-size:17px;font-weight:600;color:#fff;margin-bottom:14px;line-height:1.5;}
+.kc-opts{display:flex;flex-direction:column;gap:8px;}
+.kc-opt{background:rgba(245,234,214,.04);border:1px solid rgba(245,234,214,.12);border-radius:8px;padding:11px 16px;font-family:'Crimson Pro',serif;font-size:16px;color:var(--parch);cursor:pointer;text-align:left;transition:all .25s;}
+.kc-opt:hover:not(:disabled){background:rgba(201,146,10,.1);border-color:rgba(201,146,10,.3);transform:translateX(4px);}
+.kc-opt.correct{background:rgba(39,100,30,.25)!important;border-color:#4caf50!important;color:#a5d6a7!important;}
+.kc-opt.wrong{background:rgba(139,0,0,.25)!important;border-color:#e53935!important;color:#ef9a9a!important;}
+.kc-opt:disabled{cursor:default;}
+.kc-fb{margin-top:12px;font-size:15px;line-height:1.7;display:none;padding:10px 14px;border-radius:8px;}
+.kc-fb.show{display:block;}
+.kc-fb.ok{background:rgba(39,100,30,.15);color:#a5d6a7;}
+.kc-fb.no{background:rgba(139,0,0,.15);color:#ef9a9a;}
+
+/* ══════════════════════════
+   📊 INFOGRAPHIC TRIỀU ĐẠI
+══════════════════════════ */
+.dynasty-infographic{background:rgba(201,146,10,0.04);border:1px solid rgba(201,146,10,0.15);border-radius:18px;padding:24px;margin:24px 0;}
+.dy-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold-l);text-align:center;margin-bottom:18px;}
+.dy-row{display:flex;gap:8px;margin-bottom:8px;align-items:stretch;}
+.dy-cell{flex:1;background:rgba(245,234,214,.04);border:1px solid rgba(245,234,214,.1);border-radius:8px;padding:10px 12px;text-align:center;}
+.dy-cell.highlight{background:rgba(74,138,46,.15);border-color:rgba(74,138,46,.35);}
+.dy-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-l);font-weight:700;}
+.dy-label{font-size:11px;color:var(--parch-faint);margin-top:3px;line-height:1.3;}
+.dy-bar-wrap{margin-top:16px;}
+.dy-bar-label{font-size:12px;color:var(--parch-faint);margin-bottom:4px;}
+.dy-bar{height:20px;border-radius:4px;background:linear-gradient(90deg,var(--green-l),var(--gold));position:relative;transition:width 1s ease;}
+.dy-bar span{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;color:#fff;font-weight:600;}
+
+/* ── +POINTS POPUP ── */
+.pts-popup{position:fixed;top:80px;right:90px;z-index:999;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-l);font-weight:700;pointer-events:none;opacity:0;text-shadow:0 0 20px rgba(201,146,10,.8);}
+.pts-popup.show{animation:popUp .9s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes popUp{0%{opacity:0;transform:translateY(0) scale(.8);}30%{opacity:1;transform:translateY(-20px) scale(1.2);}70%{opacity:1;transform:translateY(-35px) scale(1);}100%{opacity:0;transform:translateY(-50px) scale(.9);}}
+
+/* ── FINAL ── */
+.final{text-align:center;padding:40px 0;}
+.final-seal{width:130px;height:130px;border-radius:50%;background:rgba(201,146,10,.1);border:2px solid var(--gold-dim);margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-size:50px;animation:sealPulse 3s infinite;}
+@keyframes sealPulse{0%,100%{box-shadow:0 0 40px rgba(201,146,10,.2);}50%{box-shadow:0 0 70px rgba(201,146,10,.5),0 0 120px rgba(74,138,46,.15);}}
+.final-h{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold-l);margin-bottom:12px;line-height:1.3;}
+.final-pts{font-size:52px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;margin:12px 0;text-shadow:0 0 30px rgba(201,146,10,.5);}
+.final-rank{display:inline-block;background:rgba(201,146,10,.12);border:1px solid rgba(201,146,10,.35);border-radius:30px;padding:7px 24px;font-size:14px;color:#d4a574;margin-bottom:24px;letter-spacing:1px;}
+.final-desc{font-size:17px;color:var(--parch-dim);line-height:1.9;max-width:540px;margin:0 auto 32px;}
+.final-lesson{background:rgba(201,146,10,.06);border:1px solid rgba(201,146,10,.2);border-radius:14px;padding:22px 26px;text-align:left;margin:0 0 36px;font-size:16px;line-height:1.85;color:var(--parch-dim);}
+.final-lesson .fl-tag{font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:block;}
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-restart{padding:13px 28px;background:transparent;border:1px solid var(--gold-dim);border-radius:10px;color:#d4a574;font-family:'Crimson Pro',serif;font-size:16px;cursor:pointer;transition:.3s;}
+.btn-restart:hover{background:rgba(201,146,10,.15);}
+.btn-home{padding:13px 28px;background:rgba(45,90,27,.5);border:1px solid rgba(201,146,10,.3);border-radius:10px;color:var(--parch);font-family:'Crimson Pro',serif;font-size:16px;cursor:pointer;transition:.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.btn-home:hover{background:var(--green-l);}
+
+@media(max-width:640px){
+  nav{padding:12px 16px;}
+  .wrap{padding:72px 14px 60px;}
+  .edu-pill{float:none;width:100%;margin:0 0 16px;}
+  .hero-img{height:220px;}
+  .story{font-size:17px;}
+  .map-grid{grid-template-columns:1fr 1fr;}
+  .td-svg{width:220px;height:220px;}
+}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<div class="ambient"></div>
+<div class="deco-corner tl"></div><div class="deco-corner tr"></div>
+<div class="deco-corner bl"></div><div class="deco-corner br"></div>
+<div class="deco-dot tl"></div><div class="deco-dot tr"></div>
+<div class="deco-dot bl"></div><div class="deco-dot br"></div>
+<div class="pts-popup" id="ptsPopup">+0</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen.html" class="nav-back">← Về câu chuyện</a>
+</nav>
+<div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+<div class="score-badge">
+  <div><div class="score-title">Điểm của bạn</div><div class="score-num" id="scoreNum">0</div></div>
+  <div><div class="score-title">Danh hiệu</div><div id="scoreRank" style="font-size:12px;color:#d4a574;">—</div></div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════
+     SCENE 1 — NGUỒN GỐC CON RỒNG CHÁU TIÊN
+═══════════════════════════════════ -->
+<div class="scene active" id="s1">
+  <div class="chap">🐉 Chương 1 · Huyền Sử — Con Rồng Cháu Tiên</div>
+  <img class="hero-img" src="images/hungvuong.jpg" onerror="this.src='images/hungvuong1.jpg'" alt="Hùng Vương">
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot current">1</div><div class="tl-year">~2879 TCN</div><div class="tl-event">Con Rồng Cháu Tiên</div></div>
+    <div class="tl-item"><div class="tl-dot todo">2</div><div class="tl-year">~2700 TCN</div><div class="tl-event">Lập nước Văn Lang</div></div>
+    <div class="tl-item"><div class="tl-dot todo">3</div><div class="tl-year">~1000 TCN</div><div class="tl-event">Trống đồng Đông Sơn</div></div>
+    <div class="tl-item"><div class="tl-dot todo">4</div><div class="tl-year">~258 TCN</div><div class="tl-event">Di sản Hùng Vương</div></div>
+  </div>
+
+  <div class="story">
+    <div class="edu-pill">
+      <span class="edu-tag">📚 Huyền sử & Lịch sử</span>
+      Câu chuyện <strong>Lạc Long Quân — Âu Cơ</strong> là huyền thoại giải thích nguồn gốc dân tộc. Dù là huyền sử, nhưng chứa đựng <em>triết lý sâu sắc</em>: người Việt cùng chung một nguồn cội, dù sống ở miền núi hay miền biển.
+    </div>
+    Ngàn năm trước Công nguyên. <strong>Ngươi — Hùng Vương đời thứ nhất</strong> — đang đứng trước quyết định trọng đại: xây dựng nhà nước đầu tiên của người Việt trên mảnh đất màu mỡ bên dòng sông Hồng.
+  </div>
+
+  <div class="story">
+    Truyền thuyết kể rằng: cha ngươi là <strong>Lạc Long Quân</strong> — con Rồng từ biển cả; mẹ là <strong>Âu Cơ</strong> — tiên nữ từ núi cao. Họ sinh ra <em>bọc trăm trứng, nở trăm con</em> — tổ tiên của trăm dòng họ người Việt hôm nay.
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Lạc Long Quân — lời dặn dò trước khi chia tay Âu Cơ</div>
+    "Ta thuộc nòi rồng, nàng thuộc dòng tiên — khác nhau như nước với lửa, không thể sống mãi cùng nhau. Năm mươi con theo ta xuống biển, năm mươi con theo nàng lên núi. <em>Khi cần nhau, hãy gọi — ta sẽ đến ngay.</em>"
+  </div>
+
+  <!-- 🗺️ BẢN ĐỒ VĂN LANG TƯƠNG TÁC -->
+  <div class="map-section">
+    <div class="map-title">🗺️ Lãnh Thổ Nước Văn Lang</div>
+    <div class="map-sub">Nhấn vào từng vùng để khám phá địa lý — đất nước đầu tiên của người Việt</div>
+    <div class="map-grid" id="mapGrid">
+      <div class="map-region" onclick="showMapInfo('bacbo')">
+        <div class="map-region-icon">🏔️</div>
+        <div class="map-region-name">Vùng Bắc Bộ</div>
+        <div class="map-region-desc">Trung tâm quyền lực Hùng Vương</div>
+      </div>
+      <div class="map-region" onclick="showMapInfo('songnuoc')">
+        <div class="map-region-icon">🌊</div>
+        <div class="map-region-name">Sông Hồng</div>
+        <div class="map-region-desc">Cái nôi của nền văn minh lúa nước</div>
+      </div>
+      <div class="map-region" onclick="showMapInfo('phongchau')">
+        <div class="map-region-icon">👑</div>
+        <div class="map-region-name">Phong Châu</div>
+        <div class="map-region-desc">Kinh đô đầu tiên — Phú Thọ ngày nay</div>
+      </div>
+      <div class="map-region" onclick="showMapInfo('ruongnuoc')">
+        <div class="map-region-icon">🌾</div>
+        <div class="map-region-name">Đồng bằng</div>
+        <div class="map-region-desc">Ruộng lúa — nguồn sống chính</div>
+      </div>
+      <div class="map-region" onclick="showMapInfo('bien')">
+        <div class="map-region-icon">🐟</div>
+        <div class="map-region-name">Ven biển</div>
+        <div class="map-region-desc">Đánh cá, muối, giao thương</div>
+      </div>
+      <div class="map-region" onclick="showMapInfo('nui')">
+        <div class="map-region-icon">🌿</div>
+        <div class="map-region-name">Miền núi</div>
+        <div class="map-region-desc">Lâm sản, khoáng sản, phòng thủ</div>
+      </div>
+    </div>
+    <div class="map-info" id="mapInfo">👆 Nhấn vào một vùng lãnh thổ để tìm hiểu vai trò của nó trong nước Văn Lang...</div>
+  </div>
+
+  <!-- Knowledge Check 1 -->
+  <div class="kc">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Theo truyền thuyết, Âu Cơ sinh ra bao nhiêu người con từ bọc trứng?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">A. 50 người con</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc1')">B. 100 người con</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">C. 18 người con</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">D. 1000 người con</button>
+    </div>
+    <div class="kc-fb" id="kc1-fb"></div>
+  </div>
+
+  <div class="choices-label">⚡ Với nguồn gốc cao quý, bạn quyết định...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s1A',15)">
+      <span class="c-letter">A</span>
+      <div>Triệu tập các lạc tướng, công bố dựng nước — lấy tên là <em>Văn Lang</em>!
+        <div class="c-sub">Quyết đoán và có tầm nhìn — đây chính là Hùng Vương trong lịch sử!</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s1B',5)">
+      <span class="c-letter">B</span>
+      <div>Chờ thêm — chưa đủ sức mạnh để xưng vương, lo nội bộ trước.
+        <div class="c-sub">Thận trọng nhưng bỏ lỡ thời cơ lịch sử</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s1C',10)">
+      <span class="c-letter">C</span>
+      <div>Hỏi ý kiến dân chúng và các bô lão trước khi quyết định.
+        <div class="c-sub">Gần dân — nhưng người lãnh đạo cần dứt khoát hơn</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- SCENE 1A -->
+<div class="scene" id="s1A">
+  <div class="chap">⭐ Lựa chọn A · Văn Lang Ra Đời!</div>
+  <img class="hero-img" src="images/vanlang-hero.png" onerror="this.src='images/hungvuong1.jpg'" alt="Văn Lang">
+
+  <div class="outcome good">
+    <span class="outcome-icon">🐉</span>
+    <strong>Nước Văn Lang chính thức ra đời!</strong> Hùng Vương đặt kinh đô tại <em>Phong Châu</em> (Phú Thọ ngày nay), chia đất nước thành <em>15 bộ</em>, đặt ra chức quan Lạc tướng và Lạc hầu. Đây là nhà nước đầu tiên trong lịch sử người Việt!
+  </div>
+
+  <!-- 📊 INFOGRAPHIC TRIỀU ĐẠI HÙNG VƯƠNG -->
+  <div class="dynasty-infographic">
+    <div class="dy-title">📊 Nhà nước Văn Lang — Những con số đáng kinh ngạc</div>
+    <div class="dy-row">
+      <div class="dy-cell highlight">
+        <div class="dy-num">18</div>
+        <div class="dy-label">Đời Hùng Vương trị vì</div>
+      </div>
+      <div class="dy-cell highlight">
+        <div class="dy-num">15</div>
+        <div class="dy-label">Bộ (tỉnh/vùng) của Văn Lang</div>
+      </div>
+      <div class="dy-cell">
+        <div class="dy-num">2621</div>
+        <div class="dy-label">Năm tồn tại (~2879–258 TCN)</div>
+      </div>
+    </div>
+    <div class="dy-bar-wrap">
+      <div class="dy-bar-label">Thời gian tồn tại so với các triều đại (năm)</div>
+      <div style="margin-bottom:8px;">
+        <div class="dy-bar-label" style="color:#81c784;">Văn Lang (~2621 năm)</div>
+        <div class="dy-bar" id="bar1" style="width:0%;background:linear-gradient(90deg,#4a8a2e,#81c784);"><span>~2621 năm</span></div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div class="dy-bar-label">Nhà Lê (360 năm)</div>
+        <div class="dy-bar" id="bar2" style="width:0%;background:linear-gradient(90deg,var(--red),#ef9a9a);"><span>360 năm</span></div>
+      </div>
+      <div>
+        <div class="dy-bar-label">Nhà Lý (216 năm)</div>
+        <div class="dy-bar" id="bar3" style="width:0%;background:linear-gradient(90deg,var(--gold-dim),var(--gold-l));"><span>216 năm</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fact">
+    <span class="fact-tag">📖 Lịch sử & Khảo cổ học</span>
+    Các nhà khảo cổ tìm thấy <strong>hàng nghìn hiện vật thời Hùng Vương</strong> tại Phú Thọ, Hà Nội — từ trống đồng, đồ gốm đến công cụ lao động. Ngày <strong>10/3 Âm lịch</strong> hàng năm là Giỗ Tổ Hùng Vương, ngày lễ quốc gia quan trọng nhất của người Việt.
+  </div>
+
+  <div class="choices-label">⚡ Tiếp tục...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s2',0)">
+      <span class="c-letter">→</span>
+      <div>Xây dựng nền văn minh — Trống đồng Đông Sơn và văn hóa Lạc Việt...</div>
+    </button>
+  </div>
+</div>
+
+<!-- SCENE 1B & 1C -->
+<div class="scene" id="s1B">
+  <div class="chap">📍 Lựa chọn B · Chần Chừ</div>
+  <div class="outcome bad"><span class="outcome-icon">⚠️</span><strong>Hùng Vương không chần chừ!</strong> Thời cơ lịch sử chỉ đến một lần. Chính sự quyết đoán đã tạo nên nhà nước đầu tiên của người Việt.</div>
+  <div class="choices-label">⚡ Dứt khoát hơn...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s1A',8)"><span class="c-letter">→</span><div>"Dân tộc ta cần một nhà nước — Văn Lang ra đời hôm nay!"</div></button></div>
+</div>
+<div class="scene" id="s1C">
+  <div class="chap">📍 Lựa chọn C · Gần Dân</div>
+  <div class="outcome bad"><span class="outcome-icon">💭</span>Gần dân là tốt, nhưng <strong>người lãnh đạo khai quốc cần dẫn dắt, không chỉ hỏi ý kiến</strong>. Hùng Vương có uy tín từ dòng dõi — dân chúng sẽ ủng hộ khi ngài đứng ra lãnh đạo.</div>
+  <div class="choices-label">⚡ Lãnh đạo dứt khoát...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s1A',8)"><span class="c-letter">→</span><div>"Ta sẽ dẫn dắt — vì dân, cho dân, bởi dân!"</div></button></div>
+</div>
+
+<!-- ══════════════════════════════
+     SCENE 2 — TRỐNG ĐỒNG & VĂN HÓA
+═══════════════════════════════════ -->
+<div class="scene" id="s2">
+  <div class="chap">🥁 Chương 2 · Văn Hóa Đông Sơn — Trống Đồng Huyền Thoại</div>
+  <img class="hero-img" src="images/trong-dong.png" onerror="this.src='images/thongnhatgianson.png'" alt="Trống đồng">
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">1</div><div class="tl-year">~2879 TCN</div><div class="tl-event">Con Rồng Cháu Tiên</div></div>
+    <div class="tl-item"><div class="tl-dot current">2</div><div class="tl-year">~1000 TCN</div><div class="tl-event">Trống đồng Đông Sơn</div></div>
+    <div class="tl-item"><div class="tl-dot todo">3</div><div class="tl-year">~700 TCN</div><div class="tl-event">Bánh chưng bánh giầy</div></div>
+    <div class="tl-item"><div class="tl-dot todo">4</div><div class="tl-year">~258 TCN</div><div class="tl-event">Di sản Hùng Vương</div></div>
+  </div>
+
+  <div class="story">
+    <div class="edu-pill">
+      <span class="edu-tag">🥁 Trống đồng Đông Sơn</span>
+      Trống đồng là <strong>biểu tượng quyền lực và văn minh</strong> của người Lạc Việt. Được đúc từ đồng thau với kỹ thuật tinh xảo — một số chiếc nặng tới <em>100kg</em>! Tìm thấy ở khắp Đông Nam Á.
+    </div>
+    Triều đình Hùng Vương đang vang tiếng trống đồng. Ngươi nhìn những họa tiết tinh xảo trên mặt trống — hình người nhảy múa, chim lạc bay, thuyền chiến trên sóng nước — <em>đó là toàn bộ cuộc sống của dân Lạc Việt được khắc vào đồng</em>.
+  </div>
+
+  <!-- 🥁 TRỐNG ĐỒNG TƯƠNG TÁC -->
+  <div class="trong-dong-section">
+    <div class="trong-dong-title">🥁 Khám Phá Trống Đồng Đông Sơn</div>
+    <div class="trong-dong-sub">Nhấn vào từng vòng để tìm hiểu ý nghĩa hoa văn</div>
+    <div class="trong-dong-svg-wrap">
+      <svg class="td-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="140" cy="140" r="130" fill="none" stroke="rgba(201,146,10,0.15)" stroke-width="1"/>
+        <!-- Ring 4 - Thuyền chiến -->
+        <circle class="td-ring" cx="140" cy="140" r="125" fill="rgba(45,90,27,0.08)" stroke="rgba(74,138,46,0.4)" stroke-width="20" stroke-dasharray="0" onclick="showTrong(4)" style="cursor:pointer;"/>
+        <text class="td-label" x="140" y="30" font-size="10" fill="rgba(165,214,167,0.8)">🚢 Thuyền chiến</text>
+        <!-- Ring 3 - Chim lạc -->
+        <circle class="td-ring" cx="140" cy="140" r="100" fill="rgba(201,146,10,0.08)" stroke="rgba(201,146,10,0.4)" stroke-width="18" onclick="showTrong(3)" style="cursor:pointer;"/>
+        <text class="td-label" x="140" y="58" font-size="10" fill="rgba(244,197,66,0.8)">🦅 Chim Lạc</text>
+        <!-- Ring 2 - Người nhảy múa -->
+        <circle class="td-ring" cx="140" cy="140" r="77" fill="rgba(139,0,0,0.08)" stroke="rgba(139,0,0,0.4)" stroke-width="16" onclick="showTrong(2)" style="cursor:pointer;"/>
+        <text class="td-label" x="140" y="82" font-size="10" fill="rgba(239,154,154,0.8)">💃 Lễ hội</text>
+        <!-- Ring 1 - Ngôi sao trung tâm -->
+        <circle class="td-ring" cx="140" cy="140" r="56" fill="rgba(201,146,10,0.12)" stroke="rgba(201,146,10,0.5)" stroke-width="14" onclick="showTrong(1)" style="cursor:pointer;"/>
+        <text class="td-label" x="140" y="104" font-size="10" fill="rgba(244,197,66,0.9)">☀️ Mặt trời</text>
+        <!-- Center star -->
+        <polygon points="140,100 147,125 172,125 152,141 159,166 140,151 121,166 128,141 108,125 133,125" fill="rgba(201,146,10,0.5)" stroke="rgba(201,146,10,0.8)" stroke-width="1" onclick="showTrong(0)" style="cursor:pointer;"/>
+        <!-- Click hint circles -->
+        <circle cx="140" cy="140" r="15" fill="rgba(201,146,10,0.2)" onclick="showTrong(0)" style="cursor:pointer;"/>
+        <text x="140" y="145" text-anchor="middle" font-size="10" fill="rgba(244,197,66,0.9)" onclick="showTrong(0)" style="cursor:pointer;">✦</text>
+      </svg>
+    </div>
+    <div class="td-info-panel" id="tdPanel">
+      <div class="td-info-title">👆 Nhấn vào các vòng trống đồng để khám phá!</div>
+      Mỗi vòng hoa văn trên trống đồng chứa đựng một câu chuyện về cuộc sống của người Lạc Việt cách đây hơn 2000 năm...
+    </div>
+    <div class="td-hint">✨ Có 5 lớp hoa văn để khám phá</div>
+  </div>
+
+  <!-- Knowledge Check 2 -->
+  <div class="kc">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Trống đồng Đông Sơn lớn nhất được tìm thấy tên là gì?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,true,'kc2')">A. Trống đồng Ngọc Lũ</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">B. Trống đồng Hoàng Hạ</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">C. Trống đồng Sông Đà</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">D. Trống đồng Phú Thọ</button>
+    </div>
+    <div class="kc-fb" id="kc2-fb"></div>
+  </div>
+
+  <div class="choices-label">⚡ Trước khi lễ hội, có người báo tin giặc Ân đang kéo đến. Bạn...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s2A',20)">
+      <span class="c-letter">A</span>
+      <div>Triệu tập anh hùng cả nước, tìm người tài — đánh trống đồng kêu gọi khắp 15 bộ!
+        <div class="c-sub">Đây chính là cách Hùng Vương thứ 6 đã làm — và tìm ra Thánh Gióng!</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s2B',8)">
+      <span class="c-letter">B</span>
+      <div>Sai quân đội chủ lực ra đánh ngay, không cần tìm người tài nữa.
+        <div class="c-sub">Quyết đoán nhưng bỏ lỡ nhân tài có thể cứu đất nước</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s2C',12)">
+      <span class="c-letter">C</span>
+      <div>Cử sứ giả đàm phán — tránh đổ máu vô ích nếu có thể.
+        <div class="c-sub">Nhân đạo, nhưng giặc Ân không có ý định hòa bình</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- SCENE 2A -->
+<div class="scene" id="s2A">
+  <div class="chap">⭐ Lựa chọn A · Thánh Gióng Xuất Hiện!</div>
+  <img class="hero-img" src="images/tran.jpg" onerror="this.src='images/hungvuong1.jpg'" alt="Thánh Gióng">
+
+  <div class="outcome good">
+    <span class="outcome-icon">⚡</span>
+    <strong>Đây chính là truyền thuyết Thánh Gióng!</strong> Hùng Vương thứ 6 sai sứ đi khắp nơi tìm người tài. Tại làng Phù Đổng, một cậu bé 3 tuổi chưa biết nói bỗng lên tiếng: <em>"Hãy làm cho ta một con ngựa sắt, một áo giáp sắt — ta sẽ đánh tan giặc Ân!"</em> — Thánh Gióng ra đời!
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Thánh Gióng — trước khi ra trận</div>
+    "Nhà vua! Hãy cho ta ngựa sắt, roi sắt, áo giáp sắt. Ta sẽ vì nước mà đánh tan quân thù. <em>Đất nước này là của tất cả chúng ta — không ai được phép cướp đi!</em>"
+  </div>
+
+  <div class="fact">
+    <span class="fact-tag">📖 Ý nghĩa truyền thuyết</span>
+    Thánh Gióng là biểu tượng của <strong>tinh thần yêu nước và sức mạnh toàn dân</strong>. Cậu bé lớn lên nhờ cơm gạo của cả làng — chiến thắng nhờ sức mạnh cộng đồng. Đây là thông điệp sâu sắc: <em>bảo vệ đất nước là trách nhiệm của mỗi người dân, không kể tuổi tác!</em>
+  </div>
+
+  <div class="choices-label">⚡ Tiếp tục...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s3',0)">
+      <span class="c-letter">→</span>
+      <div>Chương 3 — Bánh chưng bánh giầy và truyền ngôi báu...</div>
+    </button>
+  </div>
+</div>
+
+<div class="scene" id="s2B">
+  <div class="chap">📍 Lựa chọn B · Bỏ Lỡ Nhân Tài</div>
+  <div class="outcome bad"><span class="outcome-icon">⚠️</span><strong>Bỏ lỡ mất Thánh Gióng!</strong> Chỉ bằng cách tìm người tài khắp nơi, Hùng Vương mới có được vị anh hùng huyền thoại. Đôi khi người cứu nước không ở nơi bạn nghĩ!</div>
+  <div class="choices-label">⚡ Tìm người tài...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s2A',10)"><span class="c-letter">→</span><div>"Đánh trống đồng! Tìm người tài cứu nước — dù là ai, ở đâu!"</div></button></div>
+</div>
+<div class="scene" id="s2C">
+  <div class="chap">📍 Lựa chọn C · Đàm Phán Thất Bại</div>
+  <div class="outcome bad"><span class="outcome-icon">💭</span>Giặc Ân không có ý định hòa bình — <strong>chỉ có sức mạnh và người tài mới đẩy lui được quân xâm lược</strong>. Hùng Vương hiểu rằng đôi khi phải chiến đấu để bảo vệ hòa bình.</div>
+  <div class="choices-label">⚡ Hành động dứt khoát...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s2A',10)"><span class="c-letter">→</span><div>"Đất nước không thể bị xâm lược — tìm người tài ngay!"</div></button></div>
+</div>
+
+<!-- ══════════════════════════════
+     SCENE 3 — BÁNH CHƯNG & TRUYỀN NGÔI
+═══════════════════════════════════ -->
+<div class="scene" id="s3">
+  <div class="chap">🍀 Chương 3 · Bánh Chưng Bánh Giầy — Trí Tuệ Dân Gian</div>
+  <img class="hero-img" src="images/vanlang.jfif" onerror="this.src='images/hungvuong1.jpg'" alt="Bánh chưng">
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">1</div><div class="tl-year">~2879 TCN</div><div class="tl-event">Con Rồng Cháu Tiên</div></div>
+    <div class="tl-item"><div class="tl-dot done">2</div><div class="tl-year">~1000 TCN</div><div class="tl-event">Trống đồng Đông Sơn</div></div>
+    <div class="tl-item"><div class="tl-dot current">3</div><div class="tl-year">~700 TCN</div><div class="tl-event">Bánh chưng bánh giầy</div></div>
+    <div class="tl-item"><div class="tl-dot todo">4</div><div class="tl-year">~258 TCN</div><div class="tl-event">Di sản Hùng Vương</div></div>
+  </div>
+
+  <div class="story">
+    <div class="edu-pill">
+      <span class="edu-tag">🍀 Triết lý sâu sắc</span>
+      <strong>Bánh chưng = Đất</strong> (vuông, màu xanh lá lúa, nhân thịt mỡ)<br>
+      <strong>Bánh giầy = Trời</strong> (tròn, trắng tinh)<br>
+      Đây là triết lý <em>Thiên — Địa — Nhân</em>: Trời tròn, Đất vuông, Con người ở giữa hài hòa với tự nhiên.
+    </div>
+    Đến tuổi già, Hùng Vương thứ 6 muốn tìm người xứng đáng truyền ngôi. Ngài triệu tập <strong>22 hoàng tử</strong> và ra điều kiện: ai dâng lễ vật ngon nhất, quý nhất — người đó sẽ được truyền ngôi báu.
+  </div>
+
+  <div class="story">
+    Các hoàng tử tranh nhau đi khắp bốn phương tìm của ngon vật lạ. Chỉ có <strong>Lang Liêu</strong> — hoàng tử nghèo nhất, mẹ mất sớm, không có tiền đi tìm của ngon — ngồi buồn rầu một mình.
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Thần linh hiện ra trong giấc mơ của Lang Liêu</div>
+    "Lang Liêu ơi! Trên đời này không có gì quý bằng hạt gạo — hạt gạo nuôi sống con người. Hãy lấy gạo nếp làm hai loại bánh: một loại hình vuông tượng trưng cho Đất, một loại hình tròn tượng trưng cho Trời. <em>Đó sẽ là lễ vật xứng đáng nhất!</em>"
+  </div>
+
+  <!-- 🎮 MINI-GAME GHÉP VĂN HÓA -->
+  <div class="minigame-section">
+    <div class="mg-title">🎮 Mini-Game: Ghép Biểu Tượng Văn Hóa!</div>
+    <div class="mg-sub">Ghép đúng mỗi biểu tượng với ý nghĩa của nó — thử kiến thức của bạn!</div>
+    <div class="mg-pairs">
+      <div class="mg-col">
+        <div class="mg-col-title">Biểu tượng</div>
+        <div class="mg-item" id="sym1" onclick="selectSym('sym1','A')">🥁 Trống đồng</div>
+        <div class="mg-item" id="sym2" onclick="selectSym('sym2','B')">🟩 Bánh chưng</div>
+        <div class="mg-item" id="sym3" onclick="selectSym('sym3','C')">🦅 Chim Lạc</div>
+        <div class="mg-item" id="sym4" onclick="selectSym('sym4','D')">🌾 Lúa nước</div>
+      </div>
+      <div class="mg-col">
+        <div class="mg-col-title">Ý nghĩa</div>
+        <div class="mg-item" id="mA" onclick="selectMeaning('mA','A')">Nguồn gốc tên "Lạc Việt"</div>
+        <div class="mg-item" id="mB" onclick="selectMeaning('mB','B')">Quyền lực & lễ hội cộng đồng</div>
+        <div class="mg-item" id="mC" onclick="selectMeaning('mC','C')">Nền văn minh nông nghiệp</div>
+        <div class="mg-item" id="mD" onclick="selectMeaning('mD','D')">Đất vuông — Triết lý Thiên Địa</div>
+      </div>
+    </div>
+    <div class="mg-score" id="mgScore"></div>
+    <button class="mg-btn" onclick="resetMG()">🔄 Chơi lại</button>
+  </div>
+
+  <!-- Knowledge Check 3 -->
+  <div class="kc">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Hình dạng bánh chưng (vuông) tượng trưng cho điều gì trong triết lý cổ đại?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,true,'kc3')">A. Mặt Đất — theo quan niệm "Trời tròn Đất vuông"</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">B. Sức mạnh quân sự của Hùng Vương</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">C. Bốn mùa trong năm</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">D. Bốn phương trời Đông Tây Nam Bắc</button>
+    </div>
+    <div class="kc-fb" id="kc3-fb"></div>
+  </div>
+
+  <div class="choices-label">⚡ Là Hùng Vương, khi thấy lễ vật của Lang Liêu, bạn...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s3A',20)">
+      <span class="c-letter">A</span>
+      <div>Truyền ngôi cho Lang Liêu — người hiểu trân trọng hạt gạo chính là người xứng đáng nhất!
+        <div class="c-sub">Đây chính là quyết định của Hùng Vương thứ 6 trong truyền thuyết!</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s3B',5)">
+      <span class="c-letter">B</span>
+      <div>Chọn hoàng tử mang của lạ từ phương xa về — thể hiện tài năng đi tìm kiếm.
+        <div class="c-sub">Của ngon vật lạ không phải giá trị cao nhất</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s3C',10)">
+      <span class="c-letter">C</span>
+      <div>Tổ chức thi đấu thêm — chưa đủ căn cứ để quyết định.
+        <div class="c-sub">Thận trọng, nhưng Hùng Vương đã nhìn ra chân lý trong chiếc bánh đơn giản</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- SCENE 3A -->
+<div class="scene" id="s3A">
+  <div class="chap">⭐ Lựa chọn A · Trí Tuệ Dân Gian Được Vinh Danh!</div>
+
+  <div class="outcome good">
+    <span class="outcome-icon">🌾</span>
+    <strong>Quyết định vĩ đại!</strong> Hùng Vương truyền ngôi cho Lang Liêu với lý lẽ đơn giản mà sâu sắc: <em>"Không có gì quý bằng hạt gạo, không có gì thiêng liêng bằng tình cảm gia đình — hai thứ đó đều có trong chiếc bánh của con."</em>
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Hùng Vương thứ 6 — tuyên bố trước triều thần</div>
+    "Lang Liêu đã hiểu điều ta muốn hơn tất cả! Ta muốn tìm người biết <em>trân trọng hạt gạo nuôi dân</em>, biết nhớ ơn đất trời, biết thương người lao động. Người đó xứng đáng trị vì Văn Lang!"
+  </div>
+
+  <div class="fact">
+    <span class="fact-tag">📖 Di sản văn hóa sống mãi</span>
+    <strong>Bánh chưng bánh giầy</strong> ngày nay vẫn là món không thể thiếu trong Tết Nguyên Đán — tồn tại <em>hơn 2000 năm</em>! Đây là một trong những phong tục lâu đời nhất còn được lưu giữ nguyên vẹn trên thế giới. UNESCO công nhận <strong>Tín ngưỡng thờ cúng Hùng Vương</strong> là Di sản văn hóa phi vật thể của nhân loại năm 2012.
+  </div>
+
+  <div class="choices-label">⚡ Tiếp tục...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s4',0)">
+      <span class="c-letter">→</span>
+      <div>Chương cuối — Di sản Hùng Vương và bài học cho muôn đời...</div>
+    </button>
+  </div>
+</div>
+
+<div class="scene" id="s3B">
+  <div class="chap">📍 Lựa chọn B · Của Lạ Không Phải Giá Trị Cao Nhất</div>
+  <div class="outcome bad"><span class="outcome-icon">⚠️</span><strong>Hùng Vương hiểu sâu hơn!</strong> Của ngon vật lạ có thể tìm được bằng tiền bạc — nhưng <em>trí tuệ và lòng biết ơn đất trời</em> mới là thứ một vị vua cần có. Lang Liêu chính là người đó.</div>
+  <div class="choices-label">⚡ Nhìn ra chân lý...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s3A',10)"><span class="c-letter">→</span><div>"Hạt gạo mới là quý nhất — Lang Liêu hiểu điều ta muốn!"</div></button></div>
+</div>
+<div class="scene" id="s3C">
+  <div class="chap">📍 Lựa chọn C · Thận Trọng Quá Mức</div>
+  <div class="outcome bad"><span class="outcome-icon">💭</span>Hùng Vương không do dự — <strong>khi nhìn thấy chiếc bánh, ngài lập tức hiểu triết lý sâu xa bên trong</strong>. Đó là trí tuệ của vị vua lớn.</div>
+  <div class="choices-label">⚡ Nhìn ra ngay...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s3A',10)"><span class="c-letter">→</span><div>"Chiếc bánh này chứa đựng cả trời đất — Lang Liêu, con sẽ là vua tiếp theo!"</div></button></div>
+</div>
+
+<!-- ══════════════════════════════
+     SCENE 4 — DI SẢN HÙNG VƯƠNG
+═══════════════════════════════════ -->
+<div class="scene" id="s4">
+  <div class="chap">🏛️ Chương 4 · Di Sản Hùng Vương — Nguồn Cội Ngàn Năm</div>
+  <img class="hero-img" src="images/vanlang-hero.png" onerror="this.src='images/Den-Hung.jpg'" alt="Đền Hùng">
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">1</div><div class="tl-year">~2879 TCN</div><div class="tl-event">Con Rồng Cháu Tiên</div></div>
+    <div class="tl-item"><div class="tl-dot done">2</div><div class="tl-year">~1000 TCN</div><div class="tl-event">Trống đồng Đông Sơn</div></div>
+    <div class="tl-item"><div class="tl-dot done">3</div><div class="tl-year">~700 TCN</div><div class="tl-event">Bánh chưng bánh giầy</div></div>
+    <div class="tl-item"><div class="tl-dot current">4</div><div class="tl-year">~258 TCN → nay</div><div class="tl-event">Di sản ngàn năm</div></div>
+  </div>
+
+  <div class="story">
+    <div class="edu-pill">
+      <span class="edu-tag">🏛️ Đền Hùng ngày nay</span>
+      <strong>Đền Hùng</strong> tại Phú Thọ là nơi thờ tự 18 đời Hùng Vương. Giỗ Tổ <strong>10/3 Âm lịch</strong> là ngày quốc lễ — hàng triệu người hành hương mỗi năm từ khắp cả nước và kiều bào nước ngoài.
+    </div>
+    Sau gần <strong>2600 năm</strong> kể từ ngày Hùng Vương dựng nước, ngươi nhìn lại hành trình của mình — từ một thủ lĩnh bộ lạc nhỏ bé đến người dựng nên <em>nhà nước đầu tiên của dân tộc Việt Nam</em>.
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Hùng Vương — lời di chúc cho muôn đời</div>
+    "Ta sắp về với tổ tiên. Nhưng ta yên lòng vì biết rằng: <em>dân Lạc Việt không bao giờ quên nguồn cội</em>. Dù trải qua ngàn năm Bắc thuộc, dù bao nhiêu ngoại xâm — các con cháu sẽ luôn nhớ: ta là Con Rồng Cháu Tiên, ta là người Việt Nam!"
+  </div>
+
+  <!-- Knowledge Check 4 -->
+  <div class="kc">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">UNESCO công nhận tín ngưỡng thờ cúng Hùng Vương là Di sản văn hóa phi vật thể của nhân loại vào năm nào?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">A. Năm 2005</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">B. Năm 2010</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc4')">C. Năm 2012</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">D. Năm 2016</button>
+    </div>
+    <div class="kc-fb" id="kc4-fb"></div>
+  </div>
+
+  <div class="choices-label">⚡ Di sản quan trọng nhất mà Hùng Vương để lại là gì?</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s4A',25)">
+      <span class="c-letter">A</span>
+      <div>Ý thức về nguồn cội và tinh thần đoàn kết — "Nhiễu điều phủ lấy giá gương, người trong một nước phải thương nhau cùng."
+        <div class="c-sub">Di sản tinh thần quan trọng nhất — đây là câu trả lời đúng đắn nhất!</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s4B',10)">
+      <span class="c-letter">B</span>
+      <div>Trống đồng và nền văn minh vật chất Đông Sơn.
+        <div class="c-sub">Quan trọng, nhưng di sản tinh thần còn giá trị hơn</div>
+      </div>
+    </button>
+    <button class="c-btn" onclick="go('s4C',8)">
+      <span class="c-letter">C</span>
+      <div>Nhà nước với hệ thống quản lý 15 bộ.
+        <div class="c-sub">Đúng nhưng chưa phải điều cốt lõi nhất</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- SCENE 4A -->
+<div class="scene" id="s4A">
+  <div class="chap">⭐ Lựa chọn A · Di Sản Vĩ Đại Nhất!</div>
+
+  <div class="outcome good">
+    <span class="outcome-icon">🇻🇳</span>
+    <strong>Đúng! Di sản vĩ đại nhất của Hùng Vương không phải trống đồng hay lãnh thổ — mà là <em>ý thức về nguồn cội chung</em>.</strong> Dù qua hàng nghìn năm, dù bị đô hộ, dù chiến tranh chia cắt — người Việt luôn biết mình là Con Rồng Cháu Tiên, cùng chung tổ tiên Hùng Vương.
+  </div>
+
+  <div class="dlg">
+    <div class="dlg-who">Chủ tịch Hồ Chí Minh — nói về Hùng Vương năm 1954</div>
+    "Các Vua Hùng đã có công dựng nước — <em>Bác cháu ta phải cùng nhau giữ lấy nước.</em>"
+  </div>
+
+  <div class="fact">
+    <span class="fact-tag">📖 Di sản sống mãi đến ngày nay</span>
+    Câu nói của Bác Hồ năm 1954 tại Đền Hùng nối liền <strong>4000 năm lịch sử</strong> — từ Hùng Vương đến thời hiện đại. Đây là minh chứng rõ nhất: di sản tinh thần của Hùng Vương vẫn đang sống trong lòng mỗi người Việt Nam hôm nay và mãi mãi về sau.
+  </div>
+
+  <button class="cont-btn" onclick="go('final',0)">
+    Xem kết quả cuối cùng 🥁
+  </button>
+</div>
+
+<div class="scene" id="s4B">
+  <div class="chap">📍 Lựa chọn B · Văn Hóa Vật Chất</div>
+  <div class="outcome bad"><span class="outcome-icon">💭</span>Trống đồng quan trọng, nhưng <strong>thứ không thể phá hủy được là tinh thần</strong>. 1000 năm Bắc thuộc — họ phá hủy trống đồng, đốt sách — nhưng không thể xóa đi ký ức về Hùng Vương trong lòng dân Việt.</div>
+  <div class="choices-label">⚡ Hiểu sâu hơn về di sản...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s4A',12)"><span class="c-letter">→</span><div>"Di sản tinh thần mới là thứ bất diệt — nguồn cội Con Rồng Cháu Tiên!"</div></button></div>
+</div>
+<div class="scene" id="s4C">
+  <div class="chap">📍 Lựa chọn C · Thể Chế Nhà Nước</div>
+  <div class="outcome bad"><span class="outcome-icon">💭</span>Nhà nước Văn Lang tan rã năm 258 TCN — nhưng <strong>tinh thần Hùng Vương không bao giờ mất</strong>. Điều quan trọng nhất không phải bộ máy nhà nước, mà là lòng người nhớ về tổ tiên.</div>
+  <div class="choices-label">⚡ Nhận ra điều cốt lõi...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s4A',12)"><span class="c-letter">→</span><div>"Tổ tiên sống mãi trong lòng dân — đó mới là di sản vĩnh cửu!"</div></button></div>
+</div>
+
+<!-- ══════════════════════════════
+     FINAL
+═══════════════════════════════════ -->
+<div class="scene" id="final">
+  <div class="final">
+    <div class="final-seal" id="finalSeal">🥁</div>
+    <div class="final-h" id="finalH">Hành Trình Hoàn Thành!</div>
+    <div class="final-pts" id="finalPts">0 điểm</div>
+    <div class="final-rank" id="finalRank">—</div>
+    <div class="final-desc" id="finalDesc">...</div>
+
+    <div class="final-lesson">
+      <span class="fl-tag">📚 Bài học từ thời đại Hùng Vương</span>
+      <strong>4 bài học vượt thời gian từ 18 đời Hùng Vương:</strong><br><br>
+      <strong>1. 🐉 Nguồn cội tạo nên bản sắc:</strong> "Con Rồng Cháu Tiên" không chỉ là huyền thoại — đó là nền tảng để người Việt tự hào về mình dù ở bất kỳ hoàn cảnh nào.<br><br>
+      <strong>2. 🥁 Văn hóa là sức mạnh:</strong> Trống đồng Đông Sơn, bánh chưng bánh giầy — những di sản văn hóa trở thành "vũ khí" giúp người Việt giữ bản sắc suốt 1000 năm Bắc thuộc.<br><br>
+      <strong>3. 🌾 Trân trọng lao động:</strong> Bài học bánh chưng: không có gì quý bằng hạt gạo — người biết trân trọng nguồn lực đơn giản nhất mới là người lãnh đạo thực sự.<br><br>
+      <strong>4. 🤝 Đoàn kết là sức mạnh:</strong> Thánh Gióng lớn lên nhờ cơm của cả làng — chiến thắng lớn cần sức mạnh cộng đồng, không ai thắng một mình.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-restart" onclick="restart()">🔄 Chơi lại</button>
+      <a href="cau-chuyen.html" class="btn-home">🗺️ Về câu chuyện</a>
+      <a href="cau-chuyen.html" class="btn-home" style="background:transparent;border-color:rgba(245,234,214,.2);color:var(--parch-dim);">← Câu chuyện khác</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .wrap -->
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.height=(40+Math.random()*80)+'px';
+    p.style.animationDuration=(8+Math.random()*14)+'s';
+    p.style.animationDelay=(Math.random()*10)+'s';
+    p.style.opacity=Math.random()*0.3;
+    c.appendChild(p);
+  }
+})();
+
+// ── BARS ANIMATION ──
+setTimeout(function(){
+  const b1=document.getElementById('bar1');
+  const b2=document.getElementById('bar2');
+  const b3=document.getElementById('bar3');
+  if(b1){b1.style.width='100%';}
+  if(b2){b2.style.width='14%';}
+  if(b3){b3.style.width='8%';}
+},400);
+
+var pts=0;
+var sceneProgress={'s1':5,'s1A':18,'s1B':10,'s1C':12,'s2':30,'s2A':48,'s2B':35,'s2C':38,'s3':60,'s3A':76,'s3B':62,'s3C':65,'s4':85,'s4A':100,'s4B':88,'s4C':90,'final':100};
+
+function go(id,addPts){
+  if(addPts>0)showPtsPopup(addPts);
+  pts+=(addPts||0);
+  updateScore();
+  document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById(id);
+  if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+  document.getElementById('prog').style.width=(sceneProgress[id]||0)+'%';
+  if(id==='final')showFinal();
+  // animate bars if going to s1A
+  if(id==='s1A'){
+    setTimeout(function(){
+      var b1=document.getElementById('bar1'),b2=document.getElementById('bar2'),b3=document.getElementById('bar3');
+      if(b1)b1.style.width='100%';
+      if(b2)b2.style.width='14%';
+      if(b3)b3.style.width='8%';
+    },500);
+  }
+}
+
+function showPtsPopup(n){
+  var p=document.getElementById('ptsPopup');
+  p.textContent='+'+n;p.className='pts-popup';void p.offsetWidth;p.className='pts-popup show';
+}
+
+function updateScore(){
+  var el=document.getElementById('scoreNum');
+  el.textContent=pts;el.classList.add('bump');
+  setTimeout(function(){el.classList.remove('bump');},300);
+  document.getElementById('scoreRank').textContent=getRank(pts).label;
+}
+
+function getRank(p){
+  if(p>=80)return{label:'👑 Hùng Vương',emoji:'🥁',desc:'Xuất sắc! Bạn có trí tuệ và tâm hồn của một Hùng Vương — biết trân trọng nguồn cội, biết dùng người tài, biết để lại di sản tinh thần bất diệt cho muôn đời con cháu!'};
+  if(p>=50)return{label:'🐉 Lạc Tướng',emoji:'🐉',desc:'Tốt! Bạn có khí phách của một lạc tướng dưới thời Hùng Vương. Hãy thêm sự thấu hiểu văn hóa và tình yêu đất nước — bạn sẽ xứng đáng với tổ tiên!'};
+  return{label:'🌾 Con Lạc Cháu Hồng',emoji:'🌾',desc:'Bạn đã bước đầu khám phá thời đại Hùng Vương! Hãy chơi lại để hiểu sâu hơn về nguồn cội Con Rồng Cháu Tiên của dân tộc Việt Nam.'};
+}
+
+function showFinal(){
+  var rank=getRank(pts);
+  document.getElementById('finalSeal').textContent=rank.emoji;
+  document.getElementById('finalH').textContent=rank.label==='👑 Hùng Vương'?'👑 Xứng Danh Hùng Vương!':rank.label==='🐉 Lạc Tướng'?'🐉 Lạc Tướng Văn Lang!':'🌾 Con Lạc Cháu Hồng!';
+  document.getElementById('finalPts').textContent=pts+' điểm';
+  document.getElementById('finalRank').textContent=rank.label;
+  document.getElementById('finalDesc').textContent=rank.desc;
+}
+
+function restart(){
+  pts=0;updateScore();
+  document.getElementById('prog').style.width='5%';
+  document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s1').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  kcAnswered={};resetMG();
+}
+
+// ── KNOWLEDGE CHECK ──
+var kcAnswered={};
+function ansKC(btn,correct,id){
+  if(kcAnswered[id])return;
+  kcAnswered[id]=true;
+  var container=btn.parentElement;
+  container.querySelectorAll('.kc-opt').forEach(function(b){b.disabled=true;});
+  var fb=document.getElementById(id+'-fb');
+  if(correct){
+    btn.classList.add('correct');pts+=5;updateScore();showPtsPopup(5);
+    fb.textContent='✅ Chính xác! +5 điểm. '+getKCFeedback(id,true);
+    fb.className='kc-fb show ok';
+  }else{
+    btn.classList.add('wrong');
+    container.querySelectorAll('.kc-opt').forEach(function(b){
+      if(b.getAttribute('onclick')&&b.getAttribute('onclick').indexOf('true')>-1)b.classList.add('correct');
+    });
+    fb.textContent='❌ Chưa đúng. '+getKCFeedback(id,false);
+    fb.className='kc-fb show no';
+  }
+}
+function getKCFeedback(id,correct){
+  var fb={
+    'kc1':{ok:'Âu Cơ sinh ra 100 người con từ một bọc trứng — đây là hình ảnh tượng trưng cho sự thống nhất của người Việt: cùng chung một nguồn cội, dù sống ở đâu.',no:'Đáp án đúng là B — 100 người con. "Đồng bào" nghĩa đen là "cùng một bọc" — chính từ truyền thuyết này!'},
+    'kc2':{ok:'Trống đồng Ngọc Lũ (tìm thấy ở Hà Nam) là trống đồng đẹp và nguyên vẹn nhất, được lưu giữ tại Bảo tàng Lịch sử Quốc gia Việt Nam, được coi là Quốc bảo.',no:'Đáp án đúng là A — Trống đồng Ngọc Lũ, tìm thấy ở Hà Nam, là trống đẹp nhất và quan trọng nhất trong số hàng trăm trống đồng Đông Sơn được phát hiện.'},
+    'kc3':{ok:'"Trời tròn Đất vuông" là triết lý cổ đại của người Á Đông. Bánh giầy tròn = Trời, bánh chưng vuông = Đất. Lang Liêu đã mã hóa cả vũ trụ quan vào hai chiếc bánh!',no:'Đáp án đúng là A. Quan niệm "Trời tròn Đất vuông" rất phổ biến trong văn hóa Á Đông cổ đại — Lang Liêu đã dùng triết lý này để tạo ra hai loại bánh có ý nghĩa sâu xa.'},
+    'kc4':{ok:'Năm 2012, UNESCO chính thức công nhận "Tín ngưỡng thờ cúng Hùng Vương ở Phú Thọ" là Di sản văn hóa phi vật thể đại diện của nhân loại — ghi nhận giá trị đặc biệt của phong tục này.',no:'Đáp án đúng là C — năm 2012. Đây là niềm tự hào lớn của Việt Nam, khẳng định giá trị của tín ngưỡng thờ cúng Hùng Vương trước cộng đồng quốc tế.'}
+  };
+  return correct?fb[id].ok:fb[id].no;
+}
+
+// ── BẢN ĐỒ TƯƠNG TÁC ──
+var mapData={
+  bacbo:{title:'🏔️ Vùng Bắc Bộ — Trái Tim Văn Lang',text:'Đây là trung tâm quyền lực của các Hùng Vương. Địa hình đồng bằng sông Hồng màu mỡ, bao bọc bởi núi non — lý tưởng để trồng lúa nước và phòng thủ. Phú Thọ, Hà Nội, Ninh Bình ngày nay đều thuộc vùng cốt lõi của Văn Lang.'},
+  songnuoc:{title:'🌊 Sông Hồng — Cái Nôi Văn Minh',text:'Sông Hồng mang phù sa đỏ màu mỡ từ Vân Nam (Trung Quốc) đổ về đồng bằng. Chính lượng phù sa này đã nuôi dưỡng nền văn minh lúa nước rực rỡ của người Lạc Việt — tương tự như sông Nile với Ai Cập cổ đại!'},
+  phongchau:{title:'👑 Phong Châu — Kinh Đô Đầu Tiên',text:'Phong Châu (Phú Thọ ngày nay) là nơi Hùng Vương đặt kinh đô. Đây cũng là nơi có Đền Hùng linh thiêng — nơi hàng triệu người hành hương mỗi dịp Giỗ Tổ 10/3 Âm lịch. Khảo cổ học tìm thấy nhiều hiện vật quý giá tại đây.'},
+  ruongnuoc:{title:'🌾 Đồng Bằng Lúa Nước — Kinh Tế Chủ Lực',text:'Nền kinh tế Văn Lang chủ yếu dựa vào lúa nước. Người Lạc Việt đã phát triển kỹ thuật tưới tiêu, làm đê đập từ rất sớm. Lúa gạo không chỉ là thức ăn mà còn là đơn vị trao đổi, lễ vật thần linh và biểu tượng văn hóa (bánh chưng!).'},
+  bien:{title:'🐟 Ven Biển — Cửa Ngõ Giao Thương',text:'Người Lạc Việt không chỉ là nông dân — họ còn là ngư dân và thương nhân tài ba. Bờ biển dài giúp giao thương với Trung Hoa, Ấn Độ và các đảo Đông Nam Á. Trống đồng Đông Sơn được tìm thấy khắp vùng biển Đông Nam Á — bằng chứng về tầm ảnh hưởng văn hóa rộng lớn!'},
+  nui:{title:'🌿 Miền Núi — Kho Báu Thiên Nhiên',text:'Rừng núi cung cấp gỗ, khoáng sản (đồng để đúc trống!), lâm sản và là tuyến phòng thủ tự nhiên. Người Lạc Việt miền núi và miền đồng bằng trao đổi hàng hóa với nhau — tạo nên sự thống nhất kinh tế của Văn Lang.'}
+};
+function showMapInfo(key){
+  var d=mapData[key];
+  document.getElementById('mapInfo').innerHTML='<div style="font-size:14px;color:var(--gold-l);font-weight:600;margin-bottom:6px;">'+d.title+'</div>'+d.text;
+  document.querySelectorAll('.map-region').forEach(function(r){r.classList.remove('active');});
+  event.currentTarget.classList.add('active');
+}
+
+// ── TRỐNG ĐỒNG TƯƠNG TÁC ──
+var tdData={
+  0:{title:'✦ Ngôi Sao Trung Tâm — Mặt Trời',text:'Trung tâm trống đồng luôn là hình ngôi sao nhiều cánh — tượng trưng cho Mặt Trời. Người Lạc Việt thờ Mặt Trời như nguồn sống của vạn vật. Số cánh sao (thường 12–16) tượng trưng cho các tháng trong năm.'},
+  1:{title:'☀️ Vòng 1 — Mặt Trời và Tia Sáng',text:'Vòng trong cùng thể hiện các tia sáng Mặt Trời chiếu ra. Đây là biểu tượng của sự sống, mùa màng và phồn thịnh. Người nào sở hữu trống đồng được coi là người có quyền lực và được thần linh che chở.'},
+  2:{title:'💃 Vòng 2 — Lễ Hội và Con Người',text:'Hình người nhảy múa, đánh trống trong lễ hội — đây là cảnh sinh hoạt cộng đồng của người Lạc Việt. Người mặc trang phục lông chim, đầu đội mũ lông — cho thấy người Việt cổ đã có trang phục lễ hội độc đáo!'},
+  3:{title:'🦅 Vòng 3 — Chim Lạc Huyền Thoại',text:'Chim Lạc (hình chim cò bay) là biểu tượng thiêng liêng nhất của người Lạc Việt — tên dân tộc "Lạc Việt" chính từ đây! Chim Lạc bay theo chiều kim đồng hồ — tượng trưng cho vòng quay của Mặt Trời và thời gian.'},
+  4:{title:'🚢 Vòng ngoài — Thuyền Chiến và Cuộc Sống',text:'Vòng ngoài cùng thường khắc hình thuyền chiến nhiều tầng chèo, người cầm vũ khí — thể hiện sức mạnh quân sự và cuộc sống sông nước của người Lạc Việt. Đây cũng là bằng chứng về mạng lưới giao thương đường biển phát triển!'}
+};
+function showTrong(idx){
+  var d=tdData[idx];
+  document.getElementById('tdPanel').innerHTML='<div class="td-info-title">'+d.title+'</div>'+d.text;
+}
+
+// ── MINI-GAME GHÉP VĂN HÓA ──
+// Đáp án đúng: sym1(A)→mB, sym2(B)→mD, sym3(C)→mA, sym4(D)→mC
+var correctMap={A:'mB',B:'mD',C:'mA',D:'mC'};
+var symSelected=null,meaningSelected=null;
+var matched={};
+
+function selectSym(elemId,symKey){
+  if(matched[symKey])return;
+  symSelected={id:elemId,key:symKey};
+  document.querySelectorAll('[id^="sym"]').forEach(function(e){if(!matched[e.id.replace('sym','').toUpperCase()])e.classList.remove('selected');});
+  document.getElementById(elemId).classList.add('selected');
+  tryMatch();
+}
+function selectMeaning(elemId,mKey){
+  var alreadyMatched=false;
+  Object.values(matched).forEach(function(v){if(v===elemId)alreadyMatched=true;});
+  if(alreadyMatched)return;
+  meaningSelected={id:elemId,key:mKey};
+  document.querySelectorAll('[id^="m"]').forEach(function(e){
+    var inMatched=false;Object.values(matched).forEach(function(v){if(v===e.id)inMatched=true;});
+    if(!inMatched)e.classList.remove('selected');
+  });
+  document.getElementById(elemId).classList.add('selected');
+  tryMatch();
+}
+function tryMatch(){
+  if(!symSelected||!meaningSelected)return;
+  var s=symSelected,m=meaningSelected;
+  symSelected=null;meaningSelected=null;
+  if(correctMap[s.key]===m.id){
+    document.getElementById(s.id).classList.remove('selected');document.getElementById(s.id).classList.add('correct');
+    document.getElementById(m.id).classList.remove('selected');document.getElementById(m.id).classList.add('correct');
+    matched[s.key]=m.id;
+    pts+=3;updateScore();showPtsPopup(3);
+    if(Object.keys(matched).length===4){
+      document.getElementById('mgScore').textContent='🏆 Xuất sắc! Ghép đúng tất cả! +12 điểm tổng';
+    }
+  }else{
+    document.getElementById(s.id).classList.add('wrong');document.getElementById(m.id).classList.add('wrong');
+    setTimeout(function(){
+      if(!matched[s.key])document.getElementById(s.id).classList.remove('wrong','selected');
+      var inMatched=false;Object.values(matched).forEach(function(v){if(v===m.id)inMatched=true;});
+      if(!inMatched)document.getElementById(m.id).classList.remove('wrong','selected');
+    },800);
+    document.getElementById('mgScore').textContent='❌ Sai rồi! Thử lại...';
+    setTimeout(function(){if(Object.keys(matched).length<4)document.getElementById('mgScore').textContent='';},1200);
+  }
+}
+function resetMG(){
+  matched={};symSelected=null;meaningSelected=null;
+  document.querySelectorAll('.mg-item').forEach(function(e){e.className='mg-item';});
+  document.getElementById('mgScore').textContent='';
+}
+</script>
+</body>
+</html>

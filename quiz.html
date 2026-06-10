@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thử Thách Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: var(--cream);background-image:url('images/bg.png');background-size:cover;background-position:center;background-attachment:fixed;">
+
+    <nav>
+    <div class="logo">
+        <img src="images/logo.png" alt="Sử Việt Logo">
+        SỬ VIỆT
+    </div>
+    <ul>
+       <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="index.html#timeline">Hành trình lịch sử</a></li>
+        <li><a href="cau-chuyen.html">Câu chuyện</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+        <li><a href="index.html#nhanvat">Nhân vật</a></li>
+        <li><a href="login-signup.html">Đăng xuất</a></li>
+    </ul>
+</nav>
+
+    <div class="quiz-nav-container"> 
+        <button class="nav-arrow" onclick="scrollNav(-1)">&#10094;</button> 
+        <div class="quiz-nav-scroll" id="navScroll"> 
+            <button class="nav-item active" onclick="loadTopic('van-lang', event)">01. Văn Lang</button>
+            <button class="nav-item" onclick="loadTopic('bac-thuoc', event)">02. Bắc Thuộc</button>
+            <button class="nav-item" onclick="loadTopic('ly-tran', event)">03. Lý - Trần</button>
+            <button class="nav-item" onclick="loadTopic('le-nguyen', event)">04. Lê - Nguyễn</button>
+            <button class="nav-item" onclick="loadTopic('khang-chien-phap', event)">05. Chống Pháp</button>
+            <button class="nav-item" onclick="loadTopic('khang-chien-my', event)">06. Chống Mỹ</button>
+        </div>
+        <button class="nav-arrow" onclick="scrollNav(1)">&#10095;</button> 
+    </div>
+
+  <main class="main-quiz-wrapper">
+  <button class="nav-arrow" onclick="changeQuestion(-1)">&#10094;</button>
+  <div style="width:100%;max-width:700px;">
+
+   <div id="ready-screen" style="display:flex;align-items:center;justify-content:center;min-height:70vh;padding:20px;">
+  <div class="ready-card">
+    <div class="ready-banner">◆ CHỌN CHỦ ĐỀ ◆</div>
+    <p class="ready-sub">Chọn chủ đề bạn muốn thử thách kiến thức lịch sử của mình</p>
+    <div class="ready-icon-wrap">
+      <img id="ready-icon" src="images/icon-van-lang2.png">
+    </div>
+    <div id="ready-title" class="ready-title">Văn Lang</div>
+    
+    <div class="ready-stats">
+      <div class="ready-stat-box">
+        <div class="ready-stat-icon">📝</div>
+        <div class="ready-stat-val" id="ready-count">30</div>
+        <div class="ready-stat-label">Câu hỏi</div>
+      </div>
+      <div class="ready-stat-box">
+        <div class="ready-stat-icon">⏱️</div>
+        <div class="ready-stat-val">15s</div>
+        <div class="ready-stat-label">Mỗi câu</div>
+      </div>
+      <div class="ready-stat-box">
+        <div class="ready-stat-icon">🏆</div>
+        <div class="ready-stat-val">10đ</div>
+        <div class="ready-stat-label">Mỗi câu đúng</div>
+      </div>
+    </div>
+    <button onclick="startQuizNow()" class="ready-start-btn">BẮT ĐẦU THỬ THÁCH →</button>
+  </div>
+</div>
+  
+
+    <!-- QUIZ -->
+    <section class="quiz" id="quiz-section" style="display:none;">
+    </section>
+
+  </div>
+  <button class="nav-arrow" onclick="changeQuestion(1)">&#10095;</button>
+</main>
+<footer style="background:#2c1b12; color:white; padding:50px 80px 0;">
+    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-bottom:40px;">
+        <div>
+            <h3 style="color:#f4c542; font-size:28px; font-weight:700; margin-bottom:12px; font-family:'Libre Baskerville',serif;">SỬ VIỆT</h3>
+            <p style="color:rgba(255,255,255,0.6); line-height:1.8; max-width:260px; font-size:14px;">
+                Website học lịch sử Việt Nam tương tác — khám phá hàng nghìn năm văn hiến dân tộc.
+            </p>
+        </div>
+        <div>
+            <h4 style="color:#f4c542; margin-bottom:16px;">Khám phá</h4>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+                <li><a href="index.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Trang chủ</a></li>
+                <li><a href="cau-chuyen.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Học qua câu chuyện</a></li>
+                <li><a href="quiz.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Quiz thử thách</a></li>
+                <li><a href="game.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">Trò chơi lịch sử</a></li>
+                <li><a href="train-nghiem-nguoi-dung.html" style="color:rgba(255,255,255,0.7); text-decoration:none; font-size:14px;">📊 Đánh giá</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color:#f4c542; margin-bottom:16px;">Thông tin</h4>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:rgba(255,255,255,0.7);">
+                <li>🏫 Trường: <strong style="color:white;">ĐH CNTT & TT VIỆT HÀN</strong></li>
+                <li>👥 Nhóm: <strong style="color:white;">CMW</strong></li>
+                <li>🏆 Cuộc thi: <strong style="color:white;">Best Web Design</strong></li>
+                <li>📅 Năm: <strong style="color:white;">2026</strong></li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-top:1px solid rgba(200,169,110,0.25); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
+        <div style="color:#c8a96e; font-size:14px; font-weight:600;">
+            📖 Hiểu sử – Yêu nước – Tự hào dân tộc
+        </div>
+        <div style="display:flex; gap:20px; align-items:center;">
+            <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">f</a>
+            <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">▶</a>
+            <a href="#" style="color:rgba(255,255,255,0.5); font-size:20px; text-decoration:none;" onmouseover="this.style.color='#c8a96e'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">🌐</a>
+        </div>
+    </div>
+    <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:12px; padding:10px 0 20px;">
+        © 2026 Sử Việt — Tự hào lịch sử Việt Nam
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

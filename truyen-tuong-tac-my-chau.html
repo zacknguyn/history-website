@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mỵ Châu — Tình Yêu Hay Phản Bội | Sử Việt</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --rose:#8b1a3a;
+  --rose-l:#c4455e;
+  --rose-pale:#e8a0b0;
+  --gold:#c9a84c;
+  --gold-l:#e8d27a;
+  --jade:#1a6b3a;
+  --jade-l:#2ea855;
+  --ink:#050206;
+  --parch:#f5f0ea;
+  --parch-dim:rgba(245,240,234,0.78);
+  --parch-faint:rgba(245,240,234,0.42);
+  --bg:#080205;
+  --panel:rgba(8,2,5,0.96);
+}
+
+body{
+  font-family:'Crimson Pro',Georgia,serif;
+  background:var(--bg);
+  color:var(--parch);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── FEATHER PARTICLES ── */
+#featherCanvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ── AMBIENT GLOW ── */
+.ambient{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 55% 45% at 20% 25%,rgba(139,26,58,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 60% at 80% 70%,rgba(201,168,76,0.06) 0%,transparent 55%),
+    radial-gradient(ellipse 70% 50% at 50% 100%,rgba(26,107,58,0.05) 0%,transparent 60%);
+}
+
+/* ── DECO CORNERS ── */
+.deco-border{position:fixed;inset:0;pointer-events:none;z-index:1;border:1px solid rgba(139,26,58,0.1);margin:8px;}
+.deco-corner{position:fixed;width:44px;height:44px;border-color:rgba(201,168,76,0.35);border-style:solid;z-index:2;pointer-events:none;}
+.deco-corner.tl{top:16px;left:16px;border-width:2px 0 0 2px;}
+.deco-corner.tr{top:16px;right:16px;border-width:2px 2px 0 0;}
+.deco-corner.bl{bottom:16px;left:16px;border-width:0 0 2px 2px;}
+.deco-corner.br{bottom:16px;right:16px;border-width:0 2px 2px 0;}
+
+/* ── FLAG STRIPE ── */
+.flag-stripe{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:300;
+  background:linear-gradient(90deg,#8b1a3a 0%,#c4455e 33%,#c9a84c 66%,#e8d27a 100%);
+  opacity:.55;
+}
+
+/* ── NAVBAR ── */
+nav{
+  position:fixed;top:3px;left:0;right:0;z-index:200;
+  background:rgba(8,2,5,0.97);
+  border-bottom:1px solid rgba(139,26,58,0.25);
+  padding:14px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(12px);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:18px;color:var(--gold-l);
+  text-decoration:none;letter-spacing:3px;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo::before{content:'🕊️';font-size:16px;}
+.nav-back{
+  font-size:13px;color:var(--parch-faint);
+  text-decoration:none;letter-spacing:1px;
+  transition:color .3s;
+}
+.nav-back:hover{color:var(--gold-l);}
+
+/* ── PROGRESS ── */
+.prog-bar{position:fixed;top:60px;left:0;right:0;z-index:199;height:3px;background:rgba(255,255,255,0.04);}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--rose),var(--gold),var(--rose-l));
+  transition:width .8s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 10px rgba(139,26,58,0.6);
+}
+
+/* ── SCORE BADGE ── */
+.score-badge{
+  position:fixed;top:72px;right:24px;z-index:198;
+  background:rgba(8,2,5,0.92);
+  border:1px solid rgba(201,168,76,0.35);
+  border-radius:40px;padding:8px 18px;
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;color:var(--parch-dim);
+  backdrop-filter:blur(12px);
+}
+.score-num{
+  font-family:'Playfair Display',serif;
+  font-size:22px;color:var(--gold-l);font-weight:700;
+  min-width:32px;text-align:center;transition:transform .3s;
+}
+.score-num.bump{transform:scale(1.4);}
+
+/* ── HEART METER ── */
+.heart-meter{
+  position:fixed;top:72px;left:24px;z-index:198;
+  background:rgba(8,2,5,0.92);
+  border:1px solid rgba(139,26,58,0.35);
+  border-radius:40px;padding:8px 18px;
+  display:flex;align-items:center;gap:8px;
+  backdrop-filter:blur(12px);
+  font-size:13px;color:var(--parch-dim);
+}
+.hearts{display:flex;gap:3px;font-size:16px;}
+
+/* ── WRAP ── */
+.wrap{max-width:800px;margin:0 auto;padding:90px 24px 80px;position:relative;z-index:2;}
+
+/* ── SCENE ── */
+.scene{display:none;}
+.scene.active{display:block;animation:fadeUp .65s cubic-bezier(.4,0,.2,1);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── CHAPTER BADGE ── */
+.chap{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(139,26,58,0.12);
+  border:1px solid rgba(139,26,58,0.4);
+  border-radius:30px;padding:6px 18px;
+  font-size:12px;color:#e8a0b0;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;
+}
+
+/* ── ANIMATED SVG HERO ── */
+.hero-svg-wrap{
+  width:100%;height:260px;border-radius:16px;margin-bottom:28px;
+  border:1px solid rgba(139,26,58,0.25);
+  overflow:hidden;position:relative;
+  box-shadow:0 24px 64px rgba(0,0,0,0.8);
+}
+.hero-svg-wrap svg{width:100%;height:100%;}
+
+/* ── TIMELINE ── */
+.tl{display:flex;align-items:flex-start;gap:0;margin:28px 0;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;}
+.tl::-webkit-scrollbar{display:none;}
+.tl-item{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;position:relative;}
+.tl-item:not(:last-child)::after{
+  content:'';position:absolute;top:13px;left:50%;
+  width:100%;height:2px;
+  background:linear-gradient(90deg,rgba(139,26,58,.3),rgba(139,26,58,.1));z-index:0;
+}
+.tl-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;z-index:1;position:relative;transition:all .4s;}
+.tl-dot.done{background:rgba(139,26,58,0.5);border:2px solid var(--rose);color:#f5f0ea;}
+.tl-dot.current{
+  background:var(--rose);border:2px solid var(--gold-l);color:#fff;
+  box-shadow:0 0 20px rgba(139,26,58,.8);
+  animation:pulseRose 2s infinite;
+}
+@keyframes pulseRose{0%,100%{box-shadow:0 0 20px rgba(139,26,58,.7);}50%{box-shadow:0 0 30px rgba(196,69,94,1),0 0 50px rgba(139,26,58,.4);}}
+.tl-dot.todo{background:rgba(245,240,234,.05);border:2px solid rgba(245,240,234,.15);color:var(--parch-faint);}
+.tl-year{font-size:10px;color:#e8a0b0;margin-top:6px;text-align:center;letter-spacing:.5px;}
+.tl-event{font-size:10px;color:var(--parch-faint);margin-top:3px;text-align:center;line-height:1.3;padding:0 4px;}
+
+/* ── STORY TEXT ── */
+.story{font-size:19px;line-height:1.95;color:rgba(245,240,234,.9);margin-bottom:16px;}
+.story em{color:#e8a0b0;font-style:italic;}
+.story strong{color:#fff;font-weight:600;}
+.story::after{content:'';display:block;clear:both;}
+
+/* ── EDU PILL ── */
+.edu-pill{
+  float:right;width:215px;margin:0 0 20px 24px;
+  background:rgba(139,26,58,0.08);
+  border:1px solid rgba(139,26,58,0.28);
+  border-radius:12px;padding:14px 16px;
+  font-size:14px;line-height:1.7;color:var(--parch-dim);
+}
+.edu-pill .edu-tag{font-size:11px;color:#e8a0b0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block;}
+
+/* ── DIALOGUE ── */
+.dlg{
+  background:rgba(139,26,58,0.07);
+  border-left:3px solid rgba(201,168,76,0.55);
+  border-radius:0 12px 12px 0;
+  padding:16px 22px;margin:22px 0;
+  font-style:italic;font-size:18px;line-height:1.75;
+  color:var(--parch);position:relative;
+}
+.dlg::before{
+  content:'"';position:absolute;top:-10px;left:14px;
+  font-size:60px;color:rgba(201,168,76,.12);
+  font-family:'Playfair Display',serif;line-height:1;
+}
+.dlg-who{font-size:11px;font-style:normal;color:#e8a85a;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+
+/* ── FACT BOX ── */
+.fact{
+  background:rgba(201,168,76,0.07);
+  border:1px solid rgba(201,168,76,0.28);
+  border-radius:12px;padding:18px 22px;margin:22px 0;
+  font-size:15px;line-height:1.8;color:var(--parch-dim);
+}
+.fact-tag{font-size:11px;color:#e8a85a;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block;}
+
+/* ── OUTCOME ── */
+.outcome{border-radius:14px;padding:22px;margin:22px 0;font-size:17px;line-height:1.8;}
+.outcome.bad{background:rgba(139,26,58,0.14);border:1px solid rgba(139,26,58,0.35);}
+.outcome.good{background:rgba(26,107,58,0.1);border:1px solid rgba(26,107,58,0.3);}
+.outcome.neutral{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.28);}
+.outcome-icon{font-size:32px;display:block;margin-bottom:10px;}
+
+/* ── KNOWLEDGE CHECK ── */
+.kc{
+  background:rgba(139,26,58,0.06);
+  border:1px solid rgba(139,26,58,.22);
+  border-radius:14px;padding:20px 24px;margin:24px 0;
+}
+.kc-tag{font-size:11px;color:#e8a0b0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:block;}
+.kc-q{font-size:17px;font-weight:600;color:#fff;margin-bottom:14px;line-height:1.5;}
+.kc-opts{display:flex;flex-direction:column;gap:8px;}
+.kc-opt{
+  background:rgba(245,240,234,.04);border:1px solid rgba(245,240,234,.12);
+  border-radius:8px;padding:11px 16px;
+  font-family:'Crimson Pro',serif;font-size:16px;
+  color:var(--parch);cursor:pointer;text-align:left;transition:all .25s;
+}
+.kc-opt:hover:not(:disabled){background:rgba(139,26,58,.12);border-color:rgba(201,168,76,.3);transform:translateX(4px);}
+.kc-opt.correct{background:rgba(26,107,58,.25)!important;border-color:#4caf50!important;color:#a5d6a7!important;}
+.kc-opt.wrong{background:rgba(139,0,0,.25)!important;border-color:#e53935!important;color:#ef9a9a!important;}
+.kc-opt:disabled{cursor:default;}
+.kc-fb{margin-top:12px;font-size:15px;line-height:1.7;display:none;padding:10px 14px;border-radius:8px;}
+.kc-fb.show{display:block;}
+.kc-fb.ok{background:rgba(26,107,58,.15);color:#a5d6a7;}
+.kc-fb.no{background:rgba(139,0,0,.15);color:#ef9a9a;}
+
+/* ── CHOICES ── */
+.choices-label{
+  font-size:11px;color:#e8a85a;
+  letter-spacing:2px;text-transform:uppercase;
+  margin:34px 0 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.choices-label::before,.choices-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);
+}
+.choices{display:flex;flex-direction:column;gap:12px;}
+
+.c-btn{
+  background:rgba(245,240,234,.03);
+  border:1px solid rgba(245,240,234,.12);
+  border-radius:12px;padding:18px 22px;
+  color:var(--parch);font-family:'Crimson Pro',serif;font-size:17px;
+  text-align:left;cursor:pointer;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  display:flex;align-items:flex-start;gap:14px;
+  line-height:1.55;position:relative;overflow:hidden;
+}
+.c-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(139,26,58,.08),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.c-btn:hover{
+  background:rgba(139,26,58,0.12);
+  border-color:rgba(201,168,76,.5);
+  transform:translateX(8px);
+  box-shadow:0 4px 20px rgba(0,0,0,.3),-4px 0 0 rgba(201,168,76,.5);
+}
+.c-btn:hover::before{opacity:1;}
+.c-letter{
+  width:30px;height:30px;min-width:30px;border-radius:50%;
+  background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);
+  color:#e8a85a;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;flex-shrink:0;margin-top:2px;
+  transition:all .3s;
+}
+.c-btn:hover .c-letter{background:rgba(201,168,76,.25);border-color:#e8d27a;}
+.c-sub{font-size:13px;color:var(--parch-faint);font-style:italic;margin-top:4px;}
+
+/* ── CONTINUE BTN ── */
+.cont-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:32px;padding:15px 32px;
+  background:rgba(139,26,58,0.45);
+  border:1px solid rgba(139,26,58,0.5);
+  border-radius:12px;color:var(--parch);
+  font-family:'Crimson Pro',serif;font-size:17px;
+  cursor:pointer;transition:all .3s;letter-spacing:.5px;
+}
+.cont-btn:hover{background:var(--rose);transform:translateY(-3px);box-shadow:0 10px 30px rgba(139,26,58,.4);}
+
+/* ── LEGEND MOMENT ── */
+.legend-moment{
+  text-align:center;padding:30px;
+  background:rgba(201,168,76,0.06);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:16px;margin:28px 0;
+  font-family:'Playfair Display',serif;
+  font-size:20px;color:var(--gold-l);
+  line-height:1.75;font-style:italic;
+}
+.legend-moment .legend-icon{font-size:44px;display:block;margin-bottom:12px;}
+
+/* ── +PTS POPUP ── */
+.pts-popup{
+  position:fixed;top:80px;right:90px;z-index:999;
+  font-family:'Playfair Display',serif;
+  font-size:22px;color:#e8a0b0;font-weight:700;
+  pointer-events:none;opacity:0;
+  text-shadow:0 0 20px rgba(139,26,58,.8);
+}
+.pts-popup.show{animation:popUp .9s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes popUp{
+  0%{opacity:0;transform:translateY(0) scale(.8);}
+  30%{opacity:1;transform:translateY(-20px) scale(1.2);}
+  70%{opacity:1;transform:translateY(-35px) scale(1);}
+  100%{opacity:0;transform:translateY(-50px) scale(.9);}
+}
+
+/* ── TRIVIA CHIP ── */
+.trivia-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(139,26,58,0.12);
+  border:1px solid rgba(139,26,58,0.28);
+  border-radius:20px;padding:4px 12px;
+  font-size:12px;color:#e8a0b0;
+  margin:4px 4px 4px 0;
+  animation:chipIn .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes chipIn{from{opacity:0;transform:scale(0.7);}to{opacity:1;transform:scale(1);}}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── FINAL ── */
+.final{text-align:center;padding:40px 0;}
+.final-seal{
+  width:130px;height:130px;border-radius:50%;
+  background:rgba(139,26,58,.1);
+  border:2px solid rgba(201,168,76,.5);
+  margin:0 auto 24px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:52px;
+  animation:sealGlow 3s ease-in-out infinite;
+}
+@keyframes sealGlow{
+  0%,100%{box-shadow:0 0 40px rgba(139,26,58,.2);}
+  50%{box-shadow:0 0 70px rgba(196,69,94,.5),0 0 100px rgba(201,168,76,.15);}
+}
+.final-h{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold-l);margin-bottom:12px;line-height:1.3;}
+.final-pts{font-size:52px;font-weight:700;color:var(--rose-l);font-family:'Playfair Display',serif;margin:12px 0;text-shadow:0 0 30px rgba(139,26,58,.6);}
+.final-rank{display:inline-block;background:rgba(139,26,58,.12);border:1px solid rgba(201,168,76,.35);border-radius:30px;padding:7px 24px;font-size:14px;color:#e8a85a;margin-bottom:24px;letter-spacing:1px;}
+.final-desc{font-size:17px;color:var(--parch-dim);line-height:1.9;max-width:540px;margin:0 auto 28px;}
+.final-lesson{background:rgba(139,26,58,.06);border:1px solid rgba(139,26,58,.2);border-radius:14px;padding:22px 26px;text-align:left;margin:0 0 32px;font-size:16px;line-height:1.85;color:var(--parch-dim);}
+.final-lesson .fl-tag{font-size:11px;color:#e8a0b0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:block;}
+
+/* ── ACHIEVEMENTS ── */
+.achievements{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0 28px;}
+.ach-card{
+  background:rgba(139,26,58,0.08);border:1px solid rgba(139,26,58,0.28);
+  border-radius:12px;padding:12px 16px;text-align:center;min-width:100px;
+  animation:achIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+.ach-card.locked{opacity:0.3;filter:grayscale(1);}
+@keyframes achIn{from{opacity:0;transform:translateY(20px) scale(0.8);}to{opacity:1;transform:translateY(0) scale(1);}}
+.ach-icon{font-size:28px;display:block;margin-bottom:6px;}
+.ach-name{font-size:11px;color:#e8a0b0;letter-spacing:1px;}
+
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.btn-restart{padding:13px 28px;background:transparent;border:1px solid rgba(201,168,76,.4);border-radius:10px;color:#e8a85a;font-family:'Crimson Pro',serif;font-size:16px;cursor:pointer;transition:.3s;}
+.btn-restart:hover{background:rgba(201,168,76,.15);}
+.btn-home{padding:13px 28px;background:rgba(139,26,58,.45);border:1px solid rgba(139,26,58,.4);border-radius:10px;color:var(--parch);font-family:'Crimson Pro',serif;font-size:16px;cursor:pointer;transition:.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.btn-home:hover{background:var(--rose);}
+
+/* ── EMOTION TAG ── */
+.emotion-bar{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap;}
+.etag{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border-radius:20px;border:1px solid;letter-spacing:.5px;}
+.etag.love{color:#e8a0b0;border-color:rgba(232,160,176,.35);background:rgba(139,26,58,.1);}
+.etag.fear{color:#c9a84c;border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.08);}
+.etag.duty{color:#86e09a;border-color:rgba(134,224,154,.35);background:rgba(26,107,58,.1);}
+.etag.grief{color:#b0b8e0;border-color:rgba(176,184,224,.35);background:rgba(50,60,120,.1);}
+
+@media(max-width:640px){
+  nav{padding:12px 16px;}
+  .wrap{padding:78px 14px 60px;}
+  .edu-pill{float:none;width:100%;margin:0 0 16px;}
+  .hero-svg-wrap{height:180px;}
+  .story{font-size:17px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="featherCanvas"></canvas>
+<div class="flag-stripe"></div>
+<div class="ambient"></div>
+<div class="deco-border"></div>
+<div class="deco-corner tl"></div>
+<div class="deco-corner tr"></div>
+<div class="deco-corner bl"></div>
+<div class="deco-corner br"></div>
+<div class="pts-popup" id="ptsPopup">+0</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen-detail.html?id=13" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+
+<div class="score-badge">
+  <div>
+    <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,.6);">Điểm</div>
+    <div class="score-num" id="scoreNum">0</div>
+  </div>
+  <div>
+    <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,.6);">Danh hiệu</div>
+    <div id="scoreRank" style="font-size:12px;color:#e8a85a;">—</div>
+  </div>
+</div>
+
+<div class="heart-meter">
+  <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(139,26,58,.7);">Trái Tim</span>
+  <div class="hearts" id="hearts">❤️❤️❤️</div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════ SCENE 1 ══════════════ -->
+<div class="scene active" id="s1">
+  <div class="chap">🕊️ Chương 1 · Thiếu Nữ Thành Cổ Loa</div>
+
+  <!-- SVG HERO: Mỵ Châu trong cung điện Cổ Loa -->
+  <div class="hero-svg-wrap">
+    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg1" cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#3a0515" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#080205"/>
+        </radialGradient>
+        <radialGradient id="candleGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8a85a" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <filter id="gsoft"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="ghard"><feGaussianBlur stdDeviation="1.5"/></filter>
+      </defs>
+      <rect width="800" height="260" fill="url(#rg1)"/>
+
+      <!-- Palace pillars -->
+      <rect x="80" y="40" width="14" height="220" rx="3" fill="#1a0810" stroke="#3a1520" stroke-width="1" opacity="0.8"/>
+      <rect x="200" y="40" width="14" height="220" rx="3" fill="#1a0810" stroke="#3a1520" stroke-width="1" opacity="0.8"/>
+      <rect x="586" y="40" width="14" height="220" rx="3" fill="#1a0810" stroke="#3a1520" stroke-width="1" opacity="0.8"/>
+      <rect x="706" y="40" width="14" height="220" rx="3" fill="#1a0810" stroke="#3a1520" stroke-width="1" opacity="0.8"/>
+
+      <!-- Roof beam -->
+      <rect x="70" y="38" width="660" height="10" rx="2" fill="#1a0810" stroke="#8b1a3a" stroke-width="1" opacity="0.7"/>
+      <!-- Roof decorative line -->
+      <path d="M 70,38 Q 400,20 730,38" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.35"/>
+
+      <!-- Candle glow on floor -->
+      <ellipse cx="390" cy="240" rx="120" ry="20" fill="#e8a85a" opacity="0.06" filter="url(#gsoft)"/>
+
+      <!-- Candle left -->
+      <rect x="170" y="180" width="6" height="30" rx="1" fill="#c9a84c" opacity="0.7"/>
+      <circle cx="173" cy="178" r="5" fill="#ffcc44" opacity="0.8" filter="url(#ghard)">
+        <animate attributeName="opacity" values="0.8;1;0.6;0.9;0.8" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="5;6;4.5;5.5;5" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Candle right -->
+      <rect x="624" y="180" width="6" height="30" rx="1" fill="#c9a84c" opacity="0.7"/>
+      <circle cx="627" cy="178" r="5" fill="#ffcc44" opacity="0.8" filter="url(#ghard)">
+        <animate attributeName="opacity" values="0.6;1;0.8;0.7;0.6" dur="2.1s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="5;4.5;6;5.5;5" dur="2.1s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Mỵ Châu silhouette (seated, graceful) -->
+      <g transform="translate(390,80)">
+        <!-- Robe / skirt spread -->
+        <ellipse cx="0" cy="100" rx="45" ry="18" fill="#2a0a15" opacity="0.9"/>
+        <!-- Body -->
+        <rect x="-12" y="40" width="24" height="65" rx="8" fill="#1a0810" opacity="0.95"/>
+        <!-- Head -->
+        <circle cx="0" cy="28" r="20" fill="#1a0810" opacity="0.95"/>
+        <!-- Hair bun / crown -->
+        <ellipse cx="0" cy="10" rx="14" ry="9" fill="#150510" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
+        <!-- Crown ornament -->
+        <polygon points="0,-4 -6,6 6,6" fill="#c9a84c" opacity="0.6"/>
+        <circle cx="0" cy="-5" r="2.5" fill="#e8a85a" opacity="0.8"/>
+        <!-- Sleeves -->
+        <path d="M -12,55 Q -40,65 -50,80" stroke="#2a0a15" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M 12,55 Q 40,65 50,80" stroke="#2a0a15" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <!-- Robe collar accent -->
+        <path d="M -10,42 Q 0,50 10,42" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <!-- Holding feather (goose feather!) -->
+        <ellipse cx="48" cy="72" rx="5" ry="16" fill="#f5f0ea" opacity="0.85" transform="rotate(-20,48,72)"/>
+        <path d="M 48,56 Q 52,64 48,80" stroke="#e0d8c0" stroke-width="1" fill="none" opacity="0.6"/>
+
+        <!-- Gentle aura -->
+        <circle cx="0" cy="50" r="55" fill="#8b1a3a" opacity="0.04" filter="url(#gsoft)"/>
+      </g>
+
+      <!-- Goose feathers floating -->
+      <ellipse cx="140" cy="70" rx="3" ry="9" fill="#f5f0ea" opacity="0.55" transform="rotate(-15,140,70)">
+        <animate attributeName="cy" values="70;140;70" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.55;0.2;0.55" dur="8s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="620" cy="50" rx="3" ry="10" fill="#f5f0ea" opacity="0.45" transform="rotate(12,620,50)">
+        <animate attributeName="cy" values="50;130;50" dur="10s" begin="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.45;0.15;0.45" dur="10s" begin="2s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- Title -->
+      <text x="400" y="48" text-anchor="middle" font-family="serif" font-size="22" fill="#e8a0b0" opacity="0.9" letter-spacing="4">MỴ CHÂU</text>
+      <text x="400" y="68" text-anchor="middle" font-family="serif" font-size="12" fill="rgba(201,168,76,0.55)" letter-spacing="2">Công chúa Âu Lạc · Thành Cổ Loa · ~210 TCN</text>
+    </svg>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">257 TCN</div><div class="tl-event">Dựng nước Âu Lạc</div></div>
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">~250 TCN</div><div class="tl-event">Thành Cổ Loa</div></div>
+    <div class="tl-item"><div class="tl-dot current">3</div><div class="tl-year">~210 TCN</div><div class="tl-event">Trọng Thủy đến</div></div>
+    <div class="tl-item"><div class="tl-dot todo">4</div><div class="tl-year">179 TCN</div><div class="tl-event">Bi kịch</div></div>
+  </div>
+
+  <div class="story reveal">
+    <div class="edu-pill">
+      <span class="edu-tag">👑 Nhân vật</span>
+      <strong>Mỵ Châu</strong> là con gái duy nhất của An Dương Vương. Nàng lớn lên trong thành Cổ Loa vững chắc, được cha yêu thương hết mực. Cuộc đời nàng gắn với <em>chiếc nỏ thần</em> và bí mật quốc gia.
+    </div>
+    Ngươi là <strong>Mỵ Châu</strong> — công chúa duy nhất của nước Âu Lạc. Từ nhỏ ngươi lớn lên trong những vòng thành Cổ Loa kiên cố. Cha ngươi — An Dương Vương — nắm giữ <em>nỏ thần Kim Quy</em> bách phát bách trúng, không kẻ thù nào dám bén mảng.
+  </div>
+
+  <div class="story reveal">Một buổi sáng xuân, Triệu Đà — vua phương Bắc từng nhiều lần bại trận trước nỏ thần — sai sứ giả mang lễ vật đến thành Cổ Loa...</div>
+
+  <div class="dlg reveal">
+    <div class="dlg-who">Sứ giả Triệu Đà — dâng thư</div>
+    "Triệu vương ngưỡng mộ danh tiếng An Dương Vương đã lâu. Nay muốn kết thông gia — con trai ta là Trọng Thủy muốn xin hỏi cưới công chúa Mỵ Châu. Hai nước cùng yên — muôn dân hạnh phúc..."
+  </div>
+
+  <div class="emotion-bar">
+    <span class="etag duty">👑 Bổn phận con gái</span>
+    <span class="etag fear">⚠️ Linh cảm lo âu</span>
+    <span class="etag love">🕊️ Tò mò về tình yêu</span>
+  </div>
+
+  <div class="kc reveal">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Tại sao Triệu Đà không tiếp tục dùng sức mạnh quân sự tấn công Âu Lạc mà chuyển sang "hôn nhân chính trị"?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">A. Vì Triệu Đà thực sự muốn hòa bình</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc1')">B. Vì quân Triệu Đà bị đánh bại nhiều lần bởi nỏ thần — cần cách khác để phá hủy bí mật</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">C. Vì Triệu Đà không đủ quân</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc1')">D. Vì thần Kim Quy ngăn cản</button>
+    </div>
+    <div class="kc-fb" id="kc1-fb"></div>
+  </div>
+
+  <div class="choices-label">💭 Khi cha hỏi ý kiến, Mỵ Châu nói...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s1A',8)">
+      <span class="c-letter">A</span>
+      <div>Xin cha từ chối — con không muốn kết hôn với con trai kẻ từng xâm lược nước mình.<div class="c-sub">Cảnh giác và dũng cảm, nhưng đây không phải điều đã xảy ra...</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s1B',5)">
+      <span class="c-letter">B</span>
+      <div>Con xin tùy cha quyết định — đây là chuyện quốc gia đại sự, cha biết hơn con.<div class="c-sub">Thuận theo — nhưng im lặng có phải là khôn ngoan?</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s1C',12)">
+      <span class="c-letter">C</span>
+      <div>Con bằng lòng, nhưng xin cha đặt một điều kiện: Trọng Thủy không được tiếp cận nỏ thần.<div class="c-sub">Sáng suốt nhất — nhưng liệu điều kiện có được giữ không?</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- S1A -->
+<div class="scene" id="s1A">
+  <div class="chap">📍 Lựa chọn A · Cảnh Giác</div>
+  <div class="outcome neutral">
+    <span class="outcome-icon">💭</span>
+    <strong>Mỵ Châu nói ra tiếng lòng!</strong> Nhưng An Dương Vương đã tin rằng nỏ thần đủ bảo vệ đất nước — ông đồng ý kết thông gia dù con gái phản đối. Đây là quyết định của vua cha, không phải của nàng.
+  </div>
+  <div class="story reveal">Cha ngươi ngồi im, gật đầu nhẹ: <em>"Con gái, cha hiểu lòng con. Nhưng nỏ thần Kim Quy trong tay ta — không kẻ thù nào dám làm gì. Kết thông gia sẽ giúp hai nước tránh chiến tranh..."</em> Mỵ Châu cúi đầu. Lòng nàng nặng trĩu.</div>
+  <div class="choices-label">⚡ Tiếp tục...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s2',0)"><span class="c-letter">→</span><div>Mùa xuân — Trọng Thủy đến Thành Cổ Loa...</div></button></div>
+</div>
+
+<!-- S1B -->
+<div class="scene" id="s1B">
+  <div class="chap">📍 Lựa chọn B · Tuân Theo</div>
+  <div class="outcome bad">
+    <span class="outcome-icon">😔</span>
+    Im lặng không phải đức hạnh trong trường hợp này. <strong>Mỵ Châu đã không nói lên linh cảm của mình</strong> — và điều đó sẽ trở thành một trong những hối tiếc lớn nhất của nàng.
+  </div>
+  <div class="choices-label">⚡ Vâng lời cha...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s2',0)"><span class="c-letter">→</span><div>Mùa xuân — Trọng Thủy đến Thành Cổ Loa...</div></button></div>
+</div>
+
+<!-- S1C -->
+<div class="scene" id="s1C">
+  <div class="chap">⭐ Lựa chọn C · Khôn Ngoan</div>
+  <div class="outcome good">
+    <span class="outcome-icon">🌸</span>
+    <strong>Điều kiện đặt ra — nhưng...</strong> An Dương Vương gật đầu. Nỏ thần sẽ được cất giữ kỹ. Mỵ Châu hiểu rằng tình cảm và bí mật quốc gia là hai điều riêng biệt.
+  </div>
+  <div class="fact">
+    <span class="fact-tag">💡 Nếu lịch sử khác đi...</span>
+    Nếu Mỵ Châu đặt điều kiện và được cha chấp thuận — có thể nỏ thần không bị lộ bí mật. Nhưng trong thực tế, tình yêu đã khiến nàng quên đi ranh giới đó.
+  </div>
+  <div class="choices-label">⚡ Trọng Thủy đến...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s2',0)"><span class="c-letter">→</span><div>Mùa xuân — Trọng Thủy đến Thành Cổ Loa...</div></button></div>
+</div>
+
+<!-- ══════════════ SCENE 2 ══════════════ -->
+<div class="scene" id="s2">
+  <div class="chap">🌸 Chương 2 · Trọng Thủy Đến Thành Cổ Loa</div>
+
+  <!-- SVG HERO: Trọng Thủy và Mỵ Châu gặp nhau -->
+  <div class="hero-svg-wrap">
+    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg2" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#1a0520" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#080205"/>
+        </radialGradient>
+        <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+      </defs>
+      <rect width="800" height="260" fill="url(#rg2)"/>
+
+      <!-- Cherry blossom branches -->
+      <path d="M 0,80 Q 80,50 150,80 Q 200,60 240,90" stroke="#3a1020" stroke-width="3" fill="none" opacity="0.6"/>
+      <path d="M 800,60 Q 720,40 660,70 Q 610,50 570,80" stroke="#3a1020" stroke-width="3" fill="none" opacity="0.6"/>
+      <!-- Blossoms on branch left -->
+      <circle cx="90" cy="55" r="6" fill="#c4455e" opacity="0.5"/>
+      <circle cx="115" cy="45" r="5" fill="#e8a0b0" opacity="0.55"/>
+      <circle cx="150" cy="60" r="7" fill="#c4455e" opacity="0.45"/>
+      <circle cx="170" cy="52" r="4" fill="#e8a0b0" opacity="0.5"/>
+      <!-- Blossoms on branch right -->
+      <circle cx="710" cy="43" r="6" fill="#c4455e" opacity="0.5"/>
+      <circle cx="685" cy="55" r="5" fill="#e8a0b0" opacity="0.55"/>
+      <circle cx="650" cy="48" r="7" fill="#c4455e" opacity="0.45"/>
+      <circle cx="630" cy="62" r="4" fill="#e8a0b0" opacity="0.5"/>
+
+      <!-- Falling petals -->
+      <circle cx="250" cy="50" r="4" fill="#e8a0b0" opacity="0.6">
+        <animate attributeName="cy" values="50;200;50" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="cx" values="250;265;250" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="520" cy="30" r="3" fill="#c4455e" opacity="0.5">
+        <animate attributeName="cy" values="30;210;30" dur="9s" begin="2s" repeatCount="indefinite"/>
+        <animate attributeName="cx" values="520;535;520" dur="9s" begin="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.15;0.5" dur="9s" begin="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="400" cy="20" r="3.5" fill="#e8a0b0" opacity="0.55">
+        <animate attributeName="cy" values="20;220;20" dur="8s" begin="4s" repeatCount="indefinite"/>
+        <animate attributeName="cx" values="400;415;400" dur="8s" begin="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.55;0.1;0.55" dur="8s" begin="4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Garden path -->
+      <path d="M 200,260 Q 380,220 600,260" stroke="#1a0810" stroke-width="30" fill="none" opacity="0.4"/>
+      <!-- Stone tiles -->
+      <rect x="310" y="240" width="30" height="15" rx="3" fill="#150810" opacity="0.5"/>
+      <rect x="355" y="242" width="28" height="14" rx="3" fill="#150810" opacity="0.5"/>
+      <rect x="397" y="240" width="30" height="15" rx="3" fill="#150810" opacity="0.5"/>
+      <rect x="440" y="241" width="28" height="14" rx="3" fill="#150810" opacity="0.5"/>
+
+      <!-- Mỵ Châu (left) -->
+      <g transform="translate(310,80)">
+        <ellipse cx="0" cy="110" rx="38" ry="15" fill="#2a0815" opacity="0.8"/>
+        <rect x="-11" y="48" width="22" height="65" rx="8" fill="#1a0810"/>
+        <circle cx="0" cy="32" r="19" fill="#1a0810"/>
+        <ellipse cx="0" cy="15" rx="13" ry="8" fill="#150510" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
+        <polygon points="0,5 -5,14 5,14" fill="#c9a84c" opacity="0.7"/>
+        <path d="M -11,55 Q -35,68 -42,85" stroke="#2a0815" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <path d="M 11,55 Q 30,68 36,85" stroke="#2a0815" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <!-- Rose pink collar -->
+        <path d="M -9,50 Q 0,58 9,50" stroke="#c4455e" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <!-- Glowing heart -->
+        <circle cx="0" cy="80" r="30" fill="#8b1a3a" opacity="0.05" filter="url(#blur3)">
+          <animate attributeName="opacity" values="0.05;0.12;0.05" dur="3s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Trọng Thủy (right) — slightly different, more angular -->
+      <g transform="translate(490,85)">
+        <ellipse cx="0" cy="105" rx="38" ry="15" fill="#0a1520" opacity="0.8"/>
+        <rect x="-11" y="48" width="22" height="62" rx="7" fill="#0d1520"/>
+        <circle cx="0" cy="32" r="18" fill="#0d1520"/>
+        <ellipse cx="0" cy="17" rx="12" ry="7" fill="#08100a" stroke="#1a4a6b" stroke-width="1" opacity="0.9"/>
+        <path d="M -11,54 Q -33,65 -40,82" stroke="#0a1520" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <path d="M 11,54 Q 32,65 38,82" stroke="#0a1520" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <!-- Blue collar (northern style) -->
+        <path d="M -9,50 Q 0,57 9,50" stroke="#1a4a6b" stroke-width="1.5" fill="none" opacity="0.6"/>
+      </g>
+
+      <!-- Connection glow between them -->
+      <path d="M 330,130 Q 400,115 470,130" stroke="#c4455e" stroke-width="1" fill="none" opacity="0.3" stroke-dasharray="4,4">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- ??? shadow/question over Trọng Thủy's heart -->
+      <text x="490" y="120" text-anchor="middle" font-size="18" fill="#1a4a6b" opacity="0.25">?</text>
+
+      <text x="400" y="48" text-anchor="middle" font-family="serif" font-size="18" fill="#e8a0b0" opacity="0.85" letter-spacing="3">CUỘC GẶP GỠ ĐẦU TIÊN</text>
+      <text x="400" y="66" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(201,168,76,0.45)" letter-spacing="2">Thành Cổ Loa · Mùa Xuân</text>
+    </svg>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">257 TCN</div><div class="tl-event">Dựng nước</div></div>
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">~250 TCN</div><div class="tl-event">Thành Cổ Loa</div></div>
+    <div class="tl-item"><div class="tl-dot current">3</div><div class="tl-year">~210 TCN</div><div class="tl-event">Tình yêu & Nỏ thần</div></div>
+    <div class="tl-item"><div class="tl-dot todo">4</div><div class="tl-year">179 TCN</div><div class="tl-event">Bi kịch</div></div>
+  </div>
+
+  <div class="story reveal">
+    <div class="edu-pill">
+      <span class="edu-tag">🔍 Phân tích</span>
+      Trọng Thủy được cha sai đến với <strong>nhiệm vụ bí mật</strong>: tìm hiểu và đánh cắp bí mật nỏ thần Kim Quy. Nhưng có thể... chính anh cũng không ngờ mình sẽ thực sự yêu Mỵ Châu.
+    </div>
+    Trọng Thủy đến Thành Cổ Loa làm lễ thành hôn với ngươi. Chàng điển trai, lịch thiệp, nói chuyện uyên bác. Những ngày đầu, ngươi dè dặt và giữ khoảng cách. Nhưng dần dần...
+  </div>
+
+  <div class="story reveal">Một buổi chiều dạo trong vườn thượng uyển, Trọng Thủy hỏi nhẹ:</div>
+
+  <div class="dlg reveal">
+    <div class="dlg-who">Trọng Thủy — giọng thì thầm</div>
+    "Nàng có vẻ buồn... Cha nàng thường canh giữ kho vũ khí rất nghiêm. Nàng có... được vào đó không? Tôi chỉ tò mò — nghe nói có nỏ thần kỳ diệu lắm..."
+  </div>
+
+  <div class="emotion-bar">
+    <span class="etag love">💕 Tim đập nhanh hơn</span>
+    <span class="etag fear">⚠️ Câu hỏi lạ...</span>
+  </div>
+
+  <div class="kc reveal">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Nỏ thần của An Dương Vương đặc biệt như thế nào so với nỏ thông thường?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">A. Tự bắn mà không cần người giữ</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc2')">B. Bắn một lần được hàng trăm mũi tên (Nỏ Liên Châu), bách phát bách trúng</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">C. Mũi tên có thể tự trở về sau khi bắn</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc2')">D. Chỉ có An Dương Vương mới bắn được</button>
+    </div>
+    <div class="kc-fb" id="kc2-fb"></div>
+  </div>
+
+  <div class="choices-label">💭 Trước câu hỏi của Trọng Thủy, Mỵ Châu...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s2A',20)">
+      <span class="c-letter">A</span>
+      <div>Lảng sang chủ đề khác, không trả lời — bổn phận với đất nước quan trọng hơn tình cảm riêng tư.<div class="c-sub">Sáng suốt và đúng đắn!</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s2B',5)">
+      <span class="c-letter">B</span>
+      <div>Thành thật vì tin tưởng — nàng dẫn Trọng Thủy xem nỏ thần và giải thích cơ chế lẫy nỏ.<div class="c-sub">Đây là sai lầm đã xảy ra trong lịch sử...</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s2C',12)">
+      <span class="c-letter">C</span>
+      <div>Hỏi lại: "Tại sao chàng muốn biết?" — tìm hiểu động cơ trước khi quyết định.<div class="c-sub">Khôn ngoan — nhưng tình yêu có thể làm mờ phán đoán...</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- S2A -->
+<div class="scene" id="s2A">
+  <div class="chap">⭐ Lựa chọn A · Trách Nhiệm</div>
+  <div class="outcome good">
+    <span class="outcome-icon">🛡️</span>
+    <strong>Mỵ Châu đặt đất nước lên trên!</strong> Nàng mỉm cười nhẹ: <em>"Chuyện vũ khí là chuyện của cha thiếp — thiếp không được phép bàn đến. Nào, chàng có muốn thăm vườn hoa không?"</em>
+  </div>
+  <div class="fact">
+    <span class="fact-tag">💡 Nếu lịch sử khác đi...</span>
+    Đây là điều Mỵ Châu lẽ ra phải làm. Bí mật quốc gia không thể chia sẻ — dù với người thân yêu nhất.
+    <div style="margin-top:8px;">
+      <span class="trivia-chip">🏹 Nỏ thần được bảo vệ</span>
+      <span class="trivia-chip">🌸 Tình yêu trong sáng</span>
+    </div>
+  </div>
+  <div class="choices-label">⚡ Nhưng Trọng Thủy tiếp tục tìm cách...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s3',0)"><span class="c-letter">→</span><div>Nhiều tháng sau — Trọng Thủy đã bí mật quan sát kho vũ khí suốt thời gian đó...</div></button></div>
+</div>
+
+<!-- S2B -->
+<div class="scene" id="s2B">
+  <div class="chap">💔 Lựa chọn B · Trao Trọn Tin Tưởng</div>
+  <div class="outcome bad">
+    <span class="outcome-icon">😢</span>
+    <strong>Đây là khoảnh khắc định mệnh.</strong> Mỵ Châu dẫn Trọng Thủy vào kho vũ khí trong một đêm khuya. Nàng không biết rằng đêm ấy, Trọng Thủy đã cẩn thận quan sát cơ cấu chiếc lẫy nỏ bằng móng vuốt Kim Quy — bí mật của cả nước Âu Lạc.
+  </div>
+  <div class="story reveal">Đêm hôm sau, Trọng Thủy mò mẫm vào kho vũ khí một mình — lấy chiếc lẫy nỏ thần ra, tỉ mỉ chế ra một chiếc lẫy giả giống hệt, rồi đổi lại...</div>
+  <div class="choices-label">⚡ Bí mật nỏ thần đã bị lộ...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s3',0)"><span class="c-letter">→</span><div>Năm 179 TCN — Triệu Đà biết bí mật, tổng tấn công!</div></button></div>
+</div>
+
+<!-- S2C -->
+<div class="scene" id="s2C">
+  <div class="chap">📍 Lựa chọn C · Dò Hỏi</div>
+  <div class="outcome neutral">
+    <span class="outcome-icon">🤔</span>
+    Trọng Thủy cười nhẹ: <em>"Chỉ tò mò thôi... nghe nói thần kỳ lắm."</em> Mỵ Châu nghi ngờ nhưng tình cảm đang lớn dần trong lòng nàng. Dần dần, trong nhiều tháng, nàng vô tình tiết lộ đủ thứ về nơi cất giữ nỏ thần.
+  </div>
+  <div class="fact">
+    <span class="fact-tag">💡 Bài học</span>
+    Kẻ thù không cần hỏi thẳng — chỉ cần kiên nhẫn. Từng mảnh thông tin nhỏ, theo thời gian, có thể tạo thành bức tranh đầy đủ.
+  </div>
+  <div class="choices-label">⚡ Bí mật dần bị lộ...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s3',0)"><span class="c-letter">→</span><div>Trọng Thủy đã biết đủ để đánh tráo lẫy nỏ...</div></button></div>
+</div>
+
+<!-- ══════════════ SCENE 3 ══════════════ -->
+<div class="scene" id="s3">
+  <div class="chap">🌧️ Chương 3 · Đêm Biệt Ly</div>
+
+  <!-- SVG HERO: Chia tay trong đêm mưa -->
+  <div class="hero-svg-wrap">
+    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg3" cx="30%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#05080f" stop-opacity="0.98"/>
+          <stop offset="100%" stop-color="#080205"/>
+        </radialGradient>
+        <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+      </defs>
+      <rect width="800" height="260" fill="url(#rg3)"/>
+
+      <!-- Rain lines -->
+      <g opacity="0.3">
+        <line x1="50" y1="0" x2="40" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.4s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.4s" repeatCount="indefinite"/>
+        </line>
+        <line x1="150" y1="0" x2="140" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.6s" begin="0.3s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.6s" begin="0.3s" repeatCount="indefinite"/>
+        </line>
+        <line x1="280" y1="0" x2="270" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.3s" begin="0.6s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.3s" begin="0.6s" repeatCount="indefinite"/>
+        </line>
+        <line x1="420" y1="0" x2="410" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.5s" begin="0.1s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.5s" begin="0.1s" repeatCount="indefinite"/>
+        </line>
+        <line x1="560" y1="0" x2="550" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+        </line>
+        <line x1="680" y1="0" x2="670" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.7s" begin="0.4s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.7s" begin="0.4s" repeatCount="indefinite"/>
+        </line>
+        <line x1="750" y1="0" x2="740" y2="80" stroke="#b0c8e0" stroke-width="0.8">
+          <animate attributeName="y1" values="0;260;0" dur="1.4s" begin="1s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="80;340;80" dur="1.4s" begin="1s" repeatCount="indefinite"/>
+        </line>
+      </g>
+
+      <!-- Gate of Cổ Loa -->
+      <rect x="300" y="80" width="200" height="140" rx="4" fill="#0a0508" stroke="#2a1015" stroke-width="2" opacity="0.9"/>
+      <path d="M 300,80 Q 400,50 500,80" fill="#0a0508" stroke="#2a1015" stroke-width="2"/>
+      <!-- Gate arch opening -->
+      <path d="M 340,220 L 340,130 Q 400,105 460,130 L 460,220 Z" fill="#040103"/>
+      <!-- Torch at gate -->
+      <rect x="324" y="120" width="5" height="20" fill="#8b1a3a" opacity="0.7"/>
+      <circle cx="326" cy="118" r="5" fill="#e8a85a" opacity="0.6" filter="url(#blur4)">
+        <animate attributeName="opacity" values="0.6;1;0.4;0.8;0.6" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <rect x="471" y="120" width="5" height="20" fill="#8b1a3a" opacity="0.7"/>
+      <circle cx="473" cy="118" r="5" fill="#e8a85a" opacity="0.6" filter="url(#blur4)">
+        <animate attributeName="opacity" values="0.4;0.9;0.7;1;0.4" dur="2.4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Two figures in gate, saying goodbye -->
+      <!-- Mỵ Châu -->
+      <g transform="translate(360,140)">
+        <ellipse cx="0" cy="75" rx="25" ry="10" fill="#1a0810" opacity="0.8"/>
+        <rect x="-9" y="30" width="18" height="48" rx="6" fill="#150810"/>
+        <circle cx="0" cy="18" r="15" fill="#150810"/>
+        <!-- Reaching hand gesture -->
+        <path d="M 9,45 Q 28,40 35,35" stroke="#150810" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <!-- Falling tear / white dot -->
+        <circle cx="4" cy="22" r="1.5" fill="#b0c8e0" opacity="0.8">
+          <animate attributeName="cy" values="22;32;22" dur="1.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0;0.8" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <!-- Trọng Thủy (turning away, walking) -->
+      <g transform="translate(430,140)">
+        <ellipse cx="0" cy="75" rx="25" ry="10" fill="#080f1a" opacity="0.8"/>
+        <rect x="-9" y="30" width="18" height="48" rx="6" fill="#080f1a"/>
+        <circle cx="0" cy="18" r="14" fill="#080f1a"/>
+        <!-- Back-turned posture hint -->
+        <path d="M -9,45 Q -28,50 -34,60" stroke="#080f1a" stroke-width="8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <text x="400" y="38" text-anchor="middle" font-family="serif" font-size="18" fill="#b0c8e0" opacity="0.7" letter-spacing="3">ĐÊM BIỆT LY</text>
+      <text x="400" y="57" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(201,168,76,0.4)" letter-spacing="2">Trọng Thủy trở về phương Bắc • Mùa đông 179 TCN</text>
+    </svg>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">257 TCN</div><div class="tl-event">Dựng nước</div></div>
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">~250 TCN</div><div class="tl-event">Thành Cổ Loa</div></div>
+    <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-year">~210 TCN</div><div class="tl-event">Tình yêu & Nỏ thần</div></div>
+    <div class="tl-item"><div class="tl-dot current">4</div><div class="tl-year">179 TCN</div><div class="tl-event">Bi kịch</div></div>
+  </div>
+
+  <div class="story reveal">
+    Một ngày đông lạnh, Trọng Thủy nói với Mỵ Châu rằng chàng phải về thăm cha già đang bệnh. <em>"Ta sẽ trở lại..."</em> — giọng chàng trầm và xa vắng. Điều nàng không biết là trong đêm đó, chàng đã đánh tráo lẫy nỏ thần bằng chiếc lẫy giả.
+  </div>
+
+  <div class="dlg reveal">
+    <div class="dlg-who">Trọng Thủy — lúc chia tay</div>
+    "Nếu sau này tình hình hỗn loạn, nàng hãy để lại dấu vết cho ta tìm. Ta sẽ đến tìm nàng bất kể ở đâu..."
+  </div>
+
+  <div class="story reveal">Mỵ Châu nhìn theo bóng ngựa khuất dần trong đêm tối. Lòng nàng ấm áp vì lời hứa đó. Nàng nhìn xuống chiếc áo lông ngỗng đang khoác trên vai...</div>
+
+  <div class="kc reveal">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Câu nói "để lại dấu vết cho ta tìm" của Trọng Thủy — về sau Mỵ Châu đã làm gì theo lời đó?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">A. Gửi thư mật cho Trọng Thủy</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">B. Chôn đồ vật dọc đường</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc3')">C. Rắc lông ngỗng từ chiếc áo dọc đường chạy trốn</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc3')">D. Vẽ bản đồ đường đi</button>
+    </div>
+    <div class="kc-fb" id="kc3-fb"></div>
+  </div>
+
+  <div class="choices-label">💭 Trước khi Trọng Thủy đi, Mỵ Châu nên...</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s3A',20)">
+      <span class="c-letter">A</span>
+      <div>Nhớ lại câu hỏi lạ về nỏ thần ngày xưa — hỏi thẳng Trọng Thủy về mục đích thực sự của chàng.<div class="c-sub">Dũng cảm đối mặt với sự thật!</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s3B',10)">
+      <span class="c-letter">B</span>
+      <div>Tin tưởng hoàn toàn — đây là chồng mình, người đã sống cùng bao năm qua.<div class="c-sub">Tình yêu chân thành — nhưng đôi khi quá tin cũng nguy hiểm...</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s3C',15)">
+      <span class="c-letter">C</span>
+      <div>Kiểm tra lại nỏ thần ngay sau khi Trọng Thủy rời đi — chắc chắn không có gì bất thường.<div class="c-sub">Cẩn thận là hơn...</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- S3A -->
+<div class="scene" id="s3A">
+  <div class="chap">⭐ Lựa chọn A · Dũng Cảm Đối Mặt</div>
+  <div class="outcome good">
+    <span class="outcome-icon">💪</span>
+    <strong>Mỵ Châu hỏi thẳng:</strong> <em>"Chàng... năm xưa hỏi về nỏ thần — chàng muốn gì thật sự?"</em> Khoảnh khắc im lặng dài. Trọng Thủy cúi đầu. Không trả lời. Và Mỵ Châu nhận ra sự thật.
+  </div>
+  <div class="story reveal">Nàng chạy vào báo cha ngay đêm đó. An Dương Vương kiểm tra nỏ thần — và phát hiện lẫy nỏ đã bị đánh tráo. Nhưng đã quá muộn — Triệu Đà đã biết bí mật...</div>
+  <div class="choices-label">⚡ Số phận đã an bài...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s4',0)"><span class="c-letter">→</span><div>Năm 179 TCN — Quân Triệu Đà tràn vào Âu Lạc...</div></button></div>
+</div>
+
+<!-- S3B -->
+<div class="scene" id="s3B">
+  <div class="chap">💔 Lựa chọn B · Tin Tưởng Đến Cùng</div>
+  <div class="outcome bad">
+    <span class="outcome-icon">🌧️</span>
+    Mỵ Châu tin. Nàng tin bằng cả trái tim. Và đó chính là bi kịch. <strong>Tình yêu đôi khi làm mờ đi phán đoán — ngay cả khi dấu hiệu đã rõ ràng.</strong>
+  </div>
+  <div class="choices-label">⚡ Năm 179 TCN đến...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s4',0)"><span class="c-letter">→</span><div>Quân Triệu Đà tấn công Âu Lạc!</div></button></div>
+</div>
+
+<!-- S3C -->
+<div class="scene" id="s3C">
+  <div class="chap">📍 Lựa chọn C · Kiểm Tra Nỏ Thần</div>
+  <div class="outcome neutral">
+    <span class="outcome-icon">🏹</span>
+    Mỵ Châu vào kho vũ khí — <strong>nhưng nàng không biết cách nhận ra lẫy giả</strong>. Chiếc lẫy mới trông giống hệt chiếc lẫy thật. Nàng ra về yên tâm... mà không hay biết.
+  </div>
+  <div class="fact">
+    <span class="fact-tag">💡 Bài học kỹ thuật</span>
+    Đây là sự tinh vi của mưu kế Trọng Thủy — chiếc lẫy giả được chế tác rất giống thật. Chỉ khi thực sự bắn mới biết nỏ thần đã mất linh.
+  </div>
+  <div class="choices-label">⚡ Số phận tiếp tục...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s4',0)"><span class="c-letter">→</span><div>Năm 179 TCN — Quân Triệu Đà tổng tấn công!</div></button></div>
+</div>
+
+<!-- ══════════════ SCENE 4 ══════════════ -->
+<div class="scene" id="s4">
+  <div class="chap">💔 Chương 4 · Đường Trốn Và Lông Ngỗng</div>
+
+  <!-- SVG HERO: Mỵ Châu rắc lông ngỗng trên đường chạy trốn -->
+  <div class="hero-svg-wrap">
+    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg4" cx="50%" cy="80%" r="60%">
+          <stop offset="0%" stop-color="#0a0205" stop-opacity="0.97"/>
+          <stop offset="100%" stop-color="#050105"/>
+        </radialGradient>
+        <filter id="bsoft"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <rect width="800" height="260" fill="url(#rg4)"/>
+
+      <!-- Stars few -->
+      <circle cx="80" cy="30" r="1" fill="#fff" opacity="0.4"><animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="220" cy="20" r="1.2" fill="#fff" opacity="0.3"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite"/></circle>
+      <circle cx="700" cy="25" r="1" fill="#fff" opacity="0.5"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.5s" repeatCount="indefinite"/></circle>
+
+      <!-- Road (escape route) -->
+      <path d="M -20,220 Q 200,200 400,210 Q 600,200 820,215" stroke="#120808" stroke-width="50" fill="none"/>
+      <path d="M -20,220 Q 200,200 400,210 Q 600,200 820,215" stroke="#1a0a0a" stroke-width="2" fill="none" opacity="0.4"/>
+
+      <!-- Flames of burning Cổ Loa in background -->
+      <circle cx="100" cy="100" r="40" fill="#8b1a3a" opacity="0.08" filter="url(#bsoft)">
+        <animate attributeName="r" values="40;55;40" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.08;0.15;0.08" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="120" cy="80" r="25" fill="#c4455e" opacity="0.1" filter="url(#bsoft)">
+        <animate attributeName="r" values="25;35;25" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Smoke wisps -->
+      <path d="M 80,120 Q 95,100 110,95" stroke="#2a1515" stroke-width="3" fill="none" opacity="0.4" stroke-linecap="round"/>
+      <path d="M 100,110 Q 108,88 120,80" stroke="#2a1515" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+
+      <!-- Falling feathers — trail left by Mỵ Châu -->
+      <ellipse cx="200" cy="200" rx="4" ry="13" fill="#f5f0ea" opacity="0.8" transform="rotate(-10,200,200)"/>
+      <ellipse cx="290" cy="195" rx="3.5" ry="11" fill="#f5f0ea" opacity="0.7" transform="rotate(8,290,195)"/>
+      <ellipse cx="380" cy="198" rx="4" ry="12" fill="#f5f0ea" opacity="0.75" transform="rotate(-5,380,198)"/>
+      <ellipse cx="470" cy="193" rx="3" ry="10" fill="#f5f0ea" opacity="0.65" transform="rotate(12,470,193)"/>
+      <ellipse cx="560" cy="196" rx="4" ry="13" fill="#f5f0ea" opacity="0.7" transform="rotate(-8,560,196)"/>
+      <ellipse cx="640" cy="192" rx="3.5" ry="11" fill="#f5f0ea" opacity="0.6" transform="rotate(6,640,192)"/>
+
+      <!-- Horse + two figures (An Dương Vương + Mỵ Châu) riding -->
+      <g transform="translate(340,160)">
+        <!-- Horse body -->
+        <ellipse cx="0" cy="0" rx="50" ry="22" fill="#0d0505"/>
+        <ellipse cx="45" cy="-15" rx="18" ry="14" fill="#0d0505" transform="rotate(-25,45,-15)"/>
+        <!-- Legs running -->
+        <line x1="-30" y1="18" x2="-40" y2="48" stroke="#0d0505" stroke-width="5">
+          <animate attributeName="x2" values="-40;-30;-44;-40" dur="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="48;42;50;48" dur="0.5s" repeatCount="indefinite"/>
+        </line>
+        <line x1="-5" y1="20" x2="-5" y2="50" stroke="#0d0505" stroke-width="5">
+          <animate attributeName="x2" values="-5;2;-8;-5" dur="0.5s" begin="0.12s" repeatCount="indefinite"/>
+        </line>
+        <line x1="20" y1="19" x2="28" y2="48" stroke="#0d0505" stroke-width="5">
+          <animate attributeName="x2" values="28;35;22;28" dur="0.5s" begin="0.25s" repeatCount="indefinite"/>
+        </line>
+        <!-- Mỵ Châu on horse -->
+        <circle cx="0" cy="-32" r="13" fill="#150810"/>
+        <rect x="-9" y="-30" width="18" height="30" rx="5" fill="#1a0810"/>
+        <!-- Hand dropping feather -->
+        <path d="M 9,-20 Q 22,-15 28,-8" stroke="#1a0810" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Feather in hand -->
+        <ellipse cx="30" cy="-6" rx="3" ry="9" fill="#f5f0ea" opacity="0.85" transform="rotate(-30,30,-6)">
+          <animate attributeName="cy" values="-6;20;-6" dur="0.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.85;0;0.85" dur="0.8s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+
+      <!-- Kim Quy emerges from water ahead -->
+      <ellipse cx="650" cy="215" rx="30" ry="12" fill="#0a2010" opacity="0.6"/>
+      <ellipse cx="650" cy="208" rx="16" ry="10" fill="#1a6b3a" opacity="0.5"/>
+      <circle cx="650" cy="202" r="8" fill="#2ea855" opacity="0.35" filter="url(#bsoft)">
+        <animate attributeName="opacity" values="0.35;0.7;0.35" dur="2s" repeatCount="indefinite"/>
+      </circle>
+
+      <text x="400" y="38" text-anchor="middle" font-family="serif" font-size="16" fill="#e8a0b0" opacity="0.75" letter-spacing="3">ĐƯỜNG THÁO CHẠY</text>
+      <text x="400" y="57" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(245,240,234,0.35)" letter-spacing="2">Lông ngỗng rắc theo đường — vô tình hay tội lỗi?</text>
+    </svg>
+  </div>
+
+  <div class="story reveal">
+    <div class="edu-pill">
+      <span class="edu-tag">⚔️ Thế trận sụp đổ</span>
+      Năm 179 TCN, Triệu Đà tổng tấn công. An Dương Vương dùng nỏ thần bắn — nhưng mũi tên không còn thần lực. Thành Cổ Loa thất thủ trong một đêm. Nước Âu Lạc tồn tại <strong>80 năm</strong> (257–179 TCN) chính thức sụp đổ.
+    </div>
+    Cha ngươi ôm ngươi lên lưng ngựa, tháo chạy về phương Nam. Tiếng vó ngựa kẻ thù vang theo phía sau. Ngươi nhớ lời Trọng Thủy: <em>"Hãy để lại dấu vết cho ta tìm..."</em>
+  </div>
+
+  <div class="story reveal">Tay ngươi run run chạm vào chiếc áo lông ngỗng. Và ngươi bắt đầu rắc từng chiếc lông xuống đường...</div>
+
+  <div class="dlg reveal">
+    <div class="dlg-who">Thần Kim Quy — vọt lên từ mặt nước</div>
+    "Kẻ thù đang ngồi sau lưng nhà ngươi đó! An Dương Vương — người ngươi đang che chở chính là nguồn cơn của đại họa!"
+  </div>
+
+  <div class="kc reveal">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Sau khi nghe lời thần Kim Quy, An Dương Vương đã làm gì với Mỵ Châu?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">A. Giam nàng lại để Trọng Thủy không tìm được</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">B. Tha thứ vì nàng không cố ý</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc4')">C. Rút kiếm giết Mỵ Châu, rồi theo thần Kim Quy xuống biển</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc4')">D. Để nàng ở lại gặp Trọng Thủy</button>
+    </div>
+    <div class="kc-fb" id="kc4-fb"></div>
+  </div>
+
+  <div class="choices-label">💭 Là Mỵ Châu — trong khoảnh khắc cuối cùng đó, nàng muốn nói điều gì với cha?</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('s4A',15)">
+      <span class="c-letter">A</span>
+      <div>"Con xin cha tha lỗi — con đã vô tình phản bội đất nước. Con không biết mình đã làm hại cha và nước Âu Lạc..."<div class="c-sub">Nhận lỗi trong nỗi đau</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s4B',20)">
+      <span class="c-letter">B</span>
+      <div>"Con yêu chàng thật — nhưng không bao giờ muốn hại cha. Tình yêu và bổn phận không thể cùng tồn tại trong một lựa chọn như thế này..."<div class="c-sub">Bi kịch không có lỗi lầm đơn giản</div></div>
+    </button>
+    <button class="c-btn" onclick="go('s4C',10)">
+      <span class="c-letter">C</span>
+      <div>"Trọng Thủy đã lừa con — con chỉ là nạn nhân của mưu kế ấy, không phải kẻ phản bội!"<div class="c-sub">Tự bào chữa — nhưng hậu quả vẫn như nhau</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- S4A -->
+<div class="scene" id="s4A">
+  <div class="chap">🌸 Lựa chọn A · Nhận Lỗi</div>
+  <div class="outcome neutral">
+    <span class="outcome-icon">🌸</span>
+    <em>"Thôi con ơi — cha biết con không cố ý. Nhưng nước đã mất rồi..."</em> An Dương Vương nhìn con lần cuối với ánh mắt đau đớn và thương yêu lẫn lộn.
+  </div>
+  <div class="choices-label">⚡ Kết thúc bi thương...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s5',0)"><span class="c-letter">→</span><div>Xem kết cục và ý nghĩa lịch sử...</div></button></div>
+</div>
+
+<!-- S4B -->
+<div class="scene" id="s4B">
+  <div class="chap">⭐ Lựa chọn B · Bi Kịch Không Lối Thoát</div>
+  <div class="outcome good">
+    <span class="outcome-icon">💔</span>
+    Đây chính là trái tim của câu chuyện. <strong>Mỵ Châu không phải ác nhân đơn thuần</strong> — nàng bị kẹp giữa tình yêu và bổn phận, và không thể cứu vãn cả hai. Bi kịch sâu sắc nhất là khi con người tốt bụng bị đặt vào hoàn cảnh không thể giữ trọn vẹn.
+  </div>
+  <div class="fact">
+    <span class="fact-tag">🌟 Góc nhìn học giả</span>
+    Nhiều nhà nghiên cứu lịch sử Việt Nam cho rằng câu chuyện Mỵ Châu không đơn thuần là tội lỗi hay vô tội — mà là <strong>bài học về sự phức tạp của con người khi đối diện với xung đột giữa tình yêu và trách nhiệm quốc gia.</strong>
+  </div>
+  <div class="choices-label">⚡ Xem ý nghĩa lịch sử...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s5',0)"><span class="c-letter">→</span><div>Kết cục và huyền thoại ngọc trai...</div></button></div>
+</div>
+
+<!-- S4C -->
+<div class="scene" id="s4C">
+  <div class="chap">📍 Lựa chọn C · Tự Bào Chữa</div>
+  <div class="outcome bad">
+    <span class="outcome-icon">💭</span>
+    Dù Mỵ Châu là nạn nhân của âm mưu — <strong>hậu quả vẫn xảy ra như nhau</strong>. Lịch sử không xét xử dựa trên ý định, mà dựa trên kết quả. Đây là bài học khắc nghiệt nhất mà câu chuyện muốn nói.
+  </div>
+  <div class="choices-label">⚡ Suy ngẫm về bài học...</div>
+  <div class="choices"><button class="c-btn" onclick="go('s5',0)"><span class="c-letter">→</span><div>Kết cục và huyền thoại ngọc trai...</div></button></div>
+</div>
+
+<!-- ══════════════ SCENE 5 · KẾT THÚC ══════════════ -->
+<div class="scene" id="s5">
+  <div class="chap">🌊 Chương 5 · Huyền Thoại Ngọc Trai</div>
+
+  <!-- SVG HERO: Ngọc trai và giếng Cổ Loa -->
+  <div class="hero-svg-wrap">
+    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg5" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#0a0215" stop-opacity="0.96"/>
+          <stop offset="100%" stop-color="#040108"/>
+        </radialGradient>
+        <radialGradient id="seaGlow" cx="50%" cy="60%" r="50%">
+          <stop offset="0%" stop-color="#1a4a6b" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="pearlGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8d0e0" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#c0a0c0" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#8b1a3a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="bsoftHero"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="pearlFilter"><feGaussianBlur stdDeviation="2"/></filter>
+      </defs>
+      <rect width="800" height="260" fill="url(#rg5)"/>
+      <rect width="800" height="260" fill="url(#seaGlow)"/>
+
+      <!-- Sea waves -->
+      <path d="M 0,190 Q 100,180 200,190 Q 300,180 400,190 Q 500,180 600,190 Q 700,180 800,190 L 800,260 L 0,260 Z" fill="#0a1520" opacity="0.7"/>
+      <path d="M 0,200 Q 100,192 200,200 Q 300,192 400,200 Q 500,192 600,200 Q 700,192 800,200" stroke="#1a4a6b" stroke-width="1.5" fill="none" opacity="0.4">
+        <animate attributeName="d" values="M 0,200 Q 100,192 200,200 Q 300,192 400,200 Q 500,192 600,200 Q 700,192 800,200;M 0,202 Q 100,194 200,202 Q 300,194 400,202 Q 500,194 600,202 Q 700,194 800,202;M 0,200 Q 100,192 200,200 Q 300,192 400,200 Q 500,192 600,200 Q 700,192 800,200" dur="4s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Pearl clusters floating in sea -->
+      <circle cx="200" cy="200" r="8" fill="url(#pearlGlow)" opacity="0.85">
+        <animate attributeName="cy" values="200;195;200" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="350" cy="205" r="6" fill="url(#pearlGlow)" opacity="0.75">
+        <animate attributeName="cy" values="205;200;205" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="500" cy="198" r="9" fill="url(#pearlGlow)" opacity="0.8">
+        <animate attributeName="cy" values="198;193;198" dur="4s" begin="1s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="640" cy="202" r="7" fill="url(#pearlGlow)" opacity="0.7">
+        <animate attributeName="cy" values="202;197;202" dur="3.2s" begin="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Smaller pearls -->
+      <circle cx="150" cy="208" r="4" fill="url(#pearlGlow)" opacity="0.6"><animate attributeName="cy" values="208;203;208" dur="2.8s" begin="0.3s" repeatCount="indefinite"/></circle>
+      <circle cx="280" cy="210" r="3.5" fill="url(#pearlGlow)" opacity="0.55"><animate attributeName="cy" values="210;205;210" dur="3.6s" begin="2s" repeatCount="indefinite"/></circle>
+      <circle cx="430" cy="206" r="4.5" fill="url(#pearlGlow)" opacity="0.65"><animate attributeName="cy" values="206;200;206" dur="4.2s" begin="0.8s" repeatCount="indefinite"/></circle>
+      <circle cx="580" cy="210" r="3" fill="url(#pearlGlow)" opacity="0.5"><animate attributeName="cy" values="210;205;210" dur="3.1s" begin="2.5s" repeatCount="indefinite"/></circle>
+
+      <!-- Blood trail becoming pearls (metaphor) -->
+      <path d="M 400,180 Q 400,200 400,220" stroke="#8b1a3a" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="3,5"/>
+
+      <!-- Trọng Thủy at a well (remorse) -->
+      <g transform="translate(400,80)">
+        <!-- Well structure -->
+        <rect x="-25" y="50" width="50" height="30" rx="3" fill="#0a0508" stroke="#2a1015" stroke-width="1.5" opacity="0.8"/>
+        <ellipse cx="0" cy="50" rx="28" ry="10" fill="#0a0508" stroke="#2a1015" stroke-width="1.5" opacity="0.8"/>
+        <!-- Water in well -->
+        <ellipse cx="0" cy="80" rx="20" ry="7" fill="#0a1520" opacity="0.6"/>
+        <!-- Reflection glow (Mỵ Châu's ghost) -->
+        <ellipse cx="0" cy="82" rx="8" ry="5" fill="#e8a0b0" opacity="0.15" filter="url(#bsoftHero)">
+          <animate attributeName="opacity" values="0.15;0.35;0.15" dur="4s" repeatCount="indefinite"/>
+        </ellipse>
+        <!-- Trọng Thủy figure hunched over -->
+        <circle cx="0" cy="20" r="12" fill="#080f1a"/>
+        <rect x="-8" y="28" width="16" height="25" rx="5" fill="#080f1a"/>
+        <path d="M -8,36 Q -20,38 -25,50" stroke="#080f1a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M 8,36 Q 20,38 25,50" stroke="#080f1a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Teardrops -->
+        <circle cx="-3" cy="24" r="1.5" fill="#b0c8e0" opacity="0.7">
+          <animate attributeName="cy" values="24;38;24" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.7;0;0.7" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="3" cy="26" r="1.5" fill="#b0c8e0" opacity="0.7">
+          <animate attributeName="cy" values="26;40;26" dur="2.3s" begin="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.7;0;0.7" dur="2.3s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <text x="400" y="36" text-anchor="middle" font-family="serif" font-size="18" fill="#e8a0b0" opacity="0.8" letter-spacing="3">HUYỀN THOẠI NGỌC TRAI</text>
+      <text x="400" y="56" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(201,168,76,0.45)" letter-spacing="2">Máu Mỵ Châu hóa thành ngọc • Trọng Thủy ân hận nhảy xuống giếng</text>
+    </svg>
+  </div>
+
+  <div class="story reveal">
+    An Dương Vương rút kiếm — khoảnh khắc ngắn ngủi nhất và đau đớn nhất trong lịch sử. Sau đó, ông cầm sừng tê giác của thần Kim Quy, bước xuống biển mà không nhìn lại.
+  </div>
+
+  <div class="legend-moment reveal">
+    <span class="legend-icon">🦪</span>
+    "Máu Mỵ Châu chảy xuống biển — trai sò ăn vào đều hóa thành ngọc trai. Người đời sau muốn ngọc trai sáng trong hơn, lấy nước giếng Cổ Loa mà rửa — giếng nơi Trọng Thủy gieo mình xuống vì ân hận..."
+    <br><br>
+    <span style="font-size:15px;color:rgba(245,240,234,0.55);font-style:normal;font-family:'Crimson Pro',serif;">— Truyền thuyết ngàn năm của người Việt</span>
+  </div>
+
+  <div class="story reveal">Trọng Thủy quay trở lại thành Cổ Loa — tìm Mỵ Châu, chỉ thấy áo lông ngỗng đẫm máu. Sự ân hận và đau đớn khiến chàng lao đầu xuống giếng thành Cổ Loa mà chết. Người đời sau gọi đó là <em>Giếng Ngọc</em>.</div>
+
+  <div class="kc reveal">
+    <span class="kc-tag">🎓 Kiểm tra kiến thức</span>
+    <div class="kc-q">Tại sao câu chuyện Mỵ Châu - Trọng Thủy được coi là bi kịch chứ không đơn thuần là tội ác?</div>
+    <div class="kc-opts">
+      <button class="kc-opt" onclick="ansKC(this,false,'kc5')">A. Vì Mỵ Châu là người tốt nên không sai</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc5')">B. Vì Trọng Thủy đã chịu hình phạt thích đáng</button>
+      <button class="kc-opt" onclick="ansKC(this,true,'kc5')">C. Vì cả hai đều là nạn nhân — của âm mưu, của tình yêu, và của hoàn cảnh lịch sử</button>
+      <button class="kc-opt" onclick="ansKC(this,false,'kc5')">D. Vì kết thúc buồn</button>
+    </div>
+    <div class="kc-fb" id="kc5-fb"></div>
+  </div>
+
+  <div class="choices-label">💭 Bài học nào bạn rút ra từ câu chuyện Mỵ Châu?</div>
+  <div class="choices">
+    <button class="c-btn" onclick="go('final',25)">
+      <span class="c-letter">A</span>
+      <div>Tình yêu là cao quý — nhưng không bao giờ được phép đặt lên trên trách nhiệm với cộng đồng và đất nước.<div class="c-sub">Bài học muôn đời về sự cân bằng!</div></div>
+    </button>
+    <button class="c-btn" onclick="go('final',15)">
+      <span class="c-letter">B</span>
+      <div>Câu chuyện cho thấy sự tàn nhẫn của chính trị — những người vô tội như Mỵ Châu trở thành nạn nhân.<div class="c-sub">Đúng — nhưng thiếu chiều sâu...</div></div>
+    </button>
+    <button class="c-btn" onclick="go('final',10)">
+      <span class="c-letter">C</span>
+      <div>Bài học chính là không tin người lạ.<div class="c-sub">Quá đơn giản hóa câu chuyện...</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ FINAL ══════════════ -->
+<div class="scene" id="final">
+  <div class="final">
+    <div class="final-seal" id="finalSeal">🦪</div>
+    <div class="final-h" id="finalH">Hành Trình Hoàn Thành!</div>
+    <div class="final-pts" id="finalPts">0</div>
+    <div class="final-rank" id="finalRank">—</div>
+    <div class="final-desc" id="finalDesc">...</div>
+
+    <div class="achievements" id="achievements"></div>
+
+    <div class="final-lesson">
+      <span class="fl-tag">📚 Bài học từ Mỵ Châu</span>
+      Câu chuyện Mỵ Châu không phải chỉ về một cô gái yêu lầm người — mà về <strong>những xung đột không có đáp án đơn giản</strong> trong cuộc sống.<br><br>
+      <strong>1. Tình yêu không thể bào chữa cho hậu quả:</strong> Dù Mỵ Châu không cố ý, đất nước vẫn mất. Trách nhiệm không tùy thuộc vào ý định.<br><br>
+      <strong>2. Bí mật quốc gia là thiêng liêng:</strong> Dù với người thân yêu nhất — một số điều không thể chia sẻ. Đây là ranh giới giữa tình cảm cá nhân và trách nhiệm cộng đồng.<br><br>
+      <strong>3. Mỵ Châu không phải ác nhân:</strong> Nàng là biểu tượng của bi kịch con người — đặt trong hoàn cảnh không thể giữ trọn vẹn cả tình yêu lẫn bổn phận.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-restart" onclick="restart()">🔄 Chơi lại</button>
+      <a href="cau-chuyen.html" class="btn-home">📖 Câu chuyện khác</a>
+      <a href="cau-chuyen-detail.html?id=13" class="btn-home" style="background:rgba(26,107,58,.5);border-color:rgba(26,107,58,.4);">🏯 An Dương Vương</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .wrap -->
+
+<script>
+// ─── FEATHER CANVAS ─────────────────────────────────────────
+const fc = document.getElementById('featherCanvas');
+const fctx = fc.getContext('2d');
+let feathers = [];
+
+function resizeFC() { fc.width = window.innerWidth; fc.height = window.innerHeight; }
+resizeFC(); window.addEventListener('resize', resizeFC);
+
+function spawnFeather() {
+  feathers.push({
+    x: Math.random() * window.innerWidth,
+    y: -20,
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: 0.4 + Math.random() * 0.6,
+    angle: Math.random() * Math.PI * 2,
+    va: (Math.random() - 0.5) * 0.02,
+    len: 10 + Math.random() * 8,
+    alpha: 0.3 + Math.random() * 0.4
+  });
+}
+
+function drawFeathers() {
+  fctx.clearRect(0, 0, fc.width, fc.height);
+  feathers = feathers.filter(f => f.y < fc.height + 30 && f.alpha > 0.01);
+  feathers.forEach(f => {
+    f.x += f.vx + Math.sin(f.y * 0.01) * 0.3;
+    f.y += f.vy;
+    f.angle += f.va;
+    f.alpha *= 0.9998;
+    fctx.save();
+    fctx.globalAlpha = f.alpha;
+    fctx.translate(f.x, f.y);
+    fctx.rotate(f.angle);
+    fctx.beginPath();
+    fctx.ellipse(0, 0, 3, f.len, 0, 0, Math.PI * 2);
+    fctx.fillStyle = '#f5f0ea';
+    fctx.fill();
+    // Central quill
+    fctx.beginPath();
+    fctx.moveTo(0, -f.len);
+    fctx.lineTo(0, f.len);
+    fctx.strokeStyle = 'rgba(200,190,170,0.5)';
+    fctx.lineWidth = 0.5;
+    fctx.stroke();
+    fctx.restore();
+  });
+  requestAnimationFrame(drawFeathers);
+}
+setInterval(spawnFeather, 1200);
+drawFeathers();
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────
+const revObs = new IntersectionObserver(e => {
+  e.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+function initReveal() { document.querySelectorAll('.reveal').forEach(el => revObs.observe(el)); }
+initReveal();
+
+// ─── AUDIO ────────────────────────────────────────────────────
+let actx = null;
+function getActx() {
+  if (!actx) try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  return actx;
+}
+function playTone(freq, type, dur, vol) {
+  const ctx = getActx(); if (!ctx) return;
+  const osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = type || 'sine'; osc.frequency.value = freq;
+  gain.gain.setValueAtTime(vol || 0.07, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (dur || 0.4));
+  osc.start(); osc.stop(ctx.currentTime + (dur || 0.4));
+}
+function playCorrect() { playTone(660, 'sine', 0.15, 0.09); setTimeout(() => playTone(880, 'sine', 0.2, 0.09), 120); }
+function playWrong() { playTone(220, 'sine', 0.3, 0.05); }
+
+// ─── STATE ────────────────────────────────────────────────────
+let pts = 0, totalCorrect = 0, totalKC = 0, heartCount = 3;
+let kcAnswered = {};
+
+function updateScore() {
+  const el = document.getElementById('scoreNum');
+  el.textContent = pts;
+  el.classList.add('bump');
+  setTimeout(() => el.classList.remove('bump'), 300);
+  document.getElementById('scoreRank').textContent = getRank(pts).label;
+}
+function getRank(p) {
+  if (p >= 90) return { label: '🦪 Công Chúa Huyền Thoại', emoji: '🦪', desc: 'Xuất sắc! Bạn hiểu sâu sắc bi kịch của Mỵ Châu — không chỉ là tình yêu hay tội lỗi, mà là câu chuyện về con người đặt trước những lựa chọn không có đáp án đơn giản.' };
+  if (p >= 55) return { label: '🌸 Người Hiểu Chuyện', emoji: '🕊️', desc: 'Bạn đã nắm được những bài học quan trọng từ câu chuyện Mỵ Châu. Tình yêu và trách nhiệm — hai điều đôi khi không thể cùng tồn tại.' };
+  return { label: '📜 Người Học Sử', emoji: '📜', desc: 'Bạn đã khám phá câu chuyện Mỵ Châu. Hãy thử lại để hiểu sâu hơn bi kịch của nàng công chúa Âu Lạc!' };
+}
+
+function updateHearts() {
+  const h = document.getElementById('hearts');
+  h.textContent = '❤️'.repeat(heartCount) + '🖤'.repeat(Math.max(0, 3 - heartCount));
+}
+
+function showPtsPopup(txt) {
+  const p = document.getElementById('ptsPopup');
+  p.textContent = txt; p.className = 'pts-popup';
+  void p.offsetWidth; p.className = 'pts-popup show';
+}
+
+// ─── PROGRESS MAP ─────────────────────────────────────────────
+const prog = { s1:5, s1A:14, s1B:10, s1C:16, s2:28, s2A:38, s2B:32, s2C:35, s3:52, s3A:60, s3B:55, s3C:58, s4:72, s4A:80, s4B:82, s4C:78, s5:90, final:100 };
+
+function go(id, addPts) {
+  if (addPts > 0) showPtsPopup('+' + addPts);
+  pts += (addPts || 0);
+  updateScore();
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { el.querySelectorAll('.reveal').forEach(r => revObs.observe(r)); }, 100);
+  }
+  document.getElementById('prog').style.width = (prog[id] || 0) + '%';
+  if (id === 'final') showFinal();
+}
+
+// ─── KC ───────────────────────────────────────────────────────
+const kcFeedbacks = {
+  kc1: {
+    ok: 'Đúng! Triệu Đà đã nhiều lần thất bại trước nỏ thần. Hiểu rằng không thể thắng bằng sức, ông chuyển sang mưu kế tinh vi hơn — "hôn nhân chính trị".',
+    no: 'Đáp án đúng là B. Triệu Đà không đủ sức đánh thẳng vì nỏ thần — nên dùng con trai làm "gián điệp" cài vào bằng cái bẫy tình cảm.'
+  },
+  kc2: {
+    ok: 'Đúng! Nỏ Liên Châu có thể bắn hàng trăm mũi tên một lần — "bách phát bách trúng". Lẫy nỏ làm từ móng vuốt thần Kim Quy là bí mật cốt lõi.',
+    no: 'Đáp án đúng là B. Nỏ Liên Châu bắn một lần được hàng trăm mũi tên — sức mạnh khiến quân Triệu Đà nhiều lần thảm bại.'
+  },
+  kc3: {
+    ok: 'Đúng! Mỵ Châu rắc lông ngỗng từ chiếc áo dọc đường chạy trốn — tin rằng làm vậy để Trọng Thủy tìm đến cứu nàng. Nhưng vô tình đã dẫn đường cho quân địch.',
+    no: 'Đáp án đúng là C. Mỵ Châu rắc lông ngỗng — hành động xuất phát từ tình yêu nhưng lại hủy hoại tất cả. Đây là biểu tượng đau lòng nhất trong câu chuyện.'
+  },
+  kc4: {
+    ok: 'Đúng! An Dương Vương rút kiếm giết Mỵ Châu — lòng đau như cắt — rồi theo thần Kim Quy xuống biển. Đây là kết thúc bi thương nhất của một vị vua.',
+    no: 'Đáp án đúng là C. An Dương Vương phải tự tay giết con gái rồi xuống biển — đây là bi kịch của cả hai cha con, không ai thực sự có lỗi hoàn toàn.'
+  },
+  kc5: {
+    ok: 'Đúng! Đây chính là tầng sâu nhất của câu chuyện. Cả Mỵ Châu và Trọng Thủy đều bị bẫy — bởi chính trị, bởi gia đình, bởi tình yêu. Không có nhân vật đơn thuần là ác.',
+    no: 'Đáp án đúng là C. Bi kịch Mỵ Châu phức tạp hơn thiện-ác đơn giản — cả hai nhân vật đều bị hoàn cảnh và tình cảm trói buộc vào kết cục đau thương.'
+  }
+};
+
+function ansKC(btn, correct, id) {
+  if (kcAnswered[id]) return;
+  kcAnswered[id] = true; totalKC++;
+  const container = btn.parentElement;
+  container.querySelectorAll('.kc-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById(id + '-fb');
+  if (correct) {
+    btn.classList.add('correct');
+    pts += 5; totalCorrect++; updateScore(); showPtsPopup('+5');
+    fb.textContent = '✅ Chính xác! +5 điểm. ' + kcFeedbacks[id].ok;
+    fb.className = 'kc-fb show ok';
+    playCorrect();
+  } else {
+    btn.classList.add('wrong');
+    container.querySelectorAll('.kc-opt').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf('true') > -1) b.classList.add('correct');
+    });
+    fb.textContent = '❌ Chưa đúng. ' + kcFeedbacks[id].no;
+    fb.className = 'kc-fb show no';
+    heartCount = Math.max(0, heartCount - 1);
+    updateHearts();
+    playWrong();
+  }
+}
+
+// ─── ACHIEVEMENTS ─────────────────────────────────────────────
+const allAch = [
+  { icon: '📜', name: 'Sử Gia', cond: () => totalCorrect >= 3 },
+  { icon: '💔', name: 'Bi Kịch', cond: () => pts >= 60 },
+  { icon: '🦪', name: 'Ngọc Trai', cond: () => pts >= 90 },
+  { icon: '❤️', name: 'Trọn Vẹn', cond: () => heartCount >= 3 },
+  { icon: '🌸', name: 'Công Chúa', cond: () => totalCorrect === 5 },
+];
+
+function buildAchievements() {
+  const wrap = document.getElementById('achievements');
+  if (!wrap) return; wrap.innerHTML = '';
+  allAch.forEach((a, i) => {
+    const locked = !a.cond();
+    const div = document.createElement('div');
+    div.className = 'ach-card' + (locked ? ' locked' : '');
+    div.style.animationDelay = (i * 0.1) + 's';
+    div.innerHTML = `<span class="ach-icon">${a.icon}</span><div class="ach-name">${locked ? '???' : a.name}</div>`;
+    wrap.appendChild(div);
+  });
+}
+
+function showFinal() {
+  const rank = getRank(pts);
+  document.getElementById('finalSeal').textContent = rank.emoji;
+  const titles = { '🦪 Công Chúa Huyền Thoại': '🦪 Công Chúa Huyền Thoại Âu Lạc!', '🌸 Người Hiểu Chuyện': '🌸 Người Thấu Hiểu Bi Kịch!', '📜 Người Học Sử': '📜 Người Học Sử Nhiệt Huyết!' };
+  document.getElementById('finalH').textContent = titles[rank.label] || rank.label;
+  document.getElementById('finalPts').textContent = pts + ' điểm';
+  document.getElementById('finalRank').textContent = rank.label;
+  document.getElementById('finalDesc').textContent = rank.desc;
+  buildAchievements();
+}
+
+function restart() {
+  pts = 0; totalCorrect = 0; totalKC = 0; heartCount = 3;
+  kcAnswered = {};
+  updateScore(); updateHearts();
+  document.getElementById('prog').style.width = '0%';
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('s1').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

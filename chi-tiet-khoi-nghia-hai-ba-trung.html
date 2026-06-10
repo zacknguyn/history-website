@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khởi Nghĩa Hai Bà Trưng | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.82) 45%, rgba(0,0,0,0.25) 100%),
+                        url('images/2batrung-hero.jpg') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+            background-color: #1a0808;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        .inline-img-right {
+            float: right; width: 250px;
+            margin: 0 0 16px 22px;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-right img { width: 100%; display: block; }
+        .inline-img-left {
+            float: left; width: 250px;
+            margin: 0 22px 16px 0;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-left img { width: 100%; display: block; }
+        .img-cap { background: #f8f4ea; font-size: 11px; color: #888; text-align: center; padding: 6px 8px; font-style: italic; }
+        .img-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); border: 2px solid #ede7d3; }
+        .img-banner img { width: 100%; display: block; max-height: 280px; object-fit: cover; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8); border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 2px solid white; box-shadow: 0 0 0 2px var(--gold); }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-dot.green { background: #2a8a2a; box-shadow: 0 0 0 2px #2a8a2a; }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+        .trait-pink  { background: #fce4ec; color: #880e4f; }
+
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .stat-card { background: linear-gradient(135deg, #fffdf7, #f8f4ea); border: 1px solid #ede7d3; border-radius: 14px; padding: 20px 16px; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--main); display: block; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+
+        .cause-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .cause-card { border-radius: 12px; padding: 18px 16px; }
+        .cause-card.economy { background: #f0f7e6; border: 2px solid #8fb86a; }
+        .cause-card.politics { background: #fdf3d0; border: 2px solid var(--gold); }
+        .cause-card.military  { background: #fdeaea; border: 2px solid #c0392b; }
+        .cause-card.culture  { background: #fce4ec; border: 2px solid #e879a0; }
+        .cause-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+        .cause-card.economy .cause-title { color: #2a6e1a; }
+        .cause-card.politics .cause-title { color: #8a6800; }
+        .cause-card.military .cause-title { color: #8b0000; }
+        .cause-card.culture .cause-title { color: #880e4f; }
+        .cause-text { font-size: 12px; color: #555; line-height: 1.6; }
+
+        .lesson-box { background: linear-gradient(135deg, #1e1206, #3a2010); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .legacy-box { background: linear-gradient(135deg, #200a15, #4a1a2a); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .legacy-box .lesson-title { color: #ffb3cc; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 44%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .heritage-card { margin-bottom: 16px; border: 1px solid #ede7d3; border-radius: 12px; overflow: hidden; background: #fffdf7; transition: 0.2s; }
+        .heritage-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .heritage-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .heritage-content { padding: 12px; }
+        .heritage-content strong { display: block; font-size: 13px; color: #222; margin-bottom: 6px; }
+        .heritage-content p { font-size: 12px; color: #666; line-height: 1.6; margin: 0; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">⚔️ SỰ KIỆN LỊCH SỬ</div>
+        <h1>KHỞI NGHĨA<br>HAI BÀ TRƯNG</h1>
+        <p class="subtitle">Ngọn lửa bất khuất đầu tiên — hai người phụ nữ Việt đã dẫn đầu cả dân tộc đứng lên đập tan ách đô hộ phương Bắc, dựng nền độc lập năm 40 sau Công Nguyên</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 40 – 43 SCN</span>
+            <span class="hero-tag">📍 Mê Linh, Vĩnh Phúc</span>
+            <span class="hero-tag">👸 Trưng Trắc & Trưng Nhị</span>
+            <span class="hero-tag">🏛️ Chống ách đô hộ Đông Hán</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="bac-thuoc.html">Bắc Thuộc</a>
+    <span>›</span>
+    Khởi nghĩa Hai Bà Trưng
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- GIỚI THIỆU -->
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="clearfix">
+                <div class="inline-img-right">
+                    <img src="images/khoinghia2batrung.jpg" alt="Khởi nghĩa Hai Bà Trưng" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Hai Bà Trưng phất cờ khởi nghĩa năm 40 SCN</div>
+                </div>
+                <p>
+                    Khởi nghĩa Hai Bà Trưng là cuộc nổi dậy vũ trang đầu tiên trong lịch sử Việt Nam chống lại ách đô hộ của phương Bắc, nổ ra vào năm <span class="hl">40 sau Công Nguyên</span>. Hai chị em <span class="hl">Trưng Trắc</span> và <span class="hl">Trưng Nhị</span> — con gái Lạc tướng huyện Mê Linh — đã phất cờ khởi nghĩa, tập hợp hào kiệt khắp nơi đánh đuổi quân Đông Hán ra khỏi bờ cõi.
+                </p>
+                <p>
+                    Điều đặc biệt nhất của cuộc khởi nghĩa này là <span class="hl">vai trò lãnh đạo của người phụ nữ</span> — không chỉ hai chị em họ Trưng mà còn hàng chục nữ tướng tài ba xông pha trận mạc. Đây là hiện tượng độc đáo bậc nhất lịch sử Đông Nam Á thời cổ đại, phản ánh địa vị cao của phụ nữ trong xã hội Lạc Việt.
+                </p>
+                <p>
+                    Tuy thắng lợi chỉ kéo dài <span class="hl">3 năm</span> (40–43 SCN) trước khi bị tướng Mã Viện của nhà Hán tái chiếm, cuộc khởi nghĩa đã để lại dấu ấn bất diệt: ngọn lửa <span class="hl">ý chí tự chủ</span> không thể bị dập tắt, và tinh thần Hai Bà Trưng trở thành biểu tượng muôn đời của dân tộc Việt.
+                </p>
+            </div>
+            <div class="trait-tags">
+                <span class="trait-tag trait-pink">👸 Nữ lãnh đạo đầu tiên</span>
+                <span class="trait-tag trait-red">⚔️ Khởi nghĩa chống Đông Hán</span>
+                <span class="trait-tag trait-gold">🏛️ Độc lập đầu tiên</span>
+                <span class="trait-tag trait-green">🌿 Xuất phát từ Mê Linh</span>
+            </div>
+        </div>
+
+        <!-- SỐ LIỆU NỔI BẬT -->
+        <div class="content-box">
+            <h2>📊 DẤU MỐC & CON SỐ</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">40</span>
+                    <span class="stat-label">Năm phát động khởi nghĩa (SCN)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">65+</span>
+                    <span class="stat-label">Thành trì giành lại từ tay nhà Hán</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Năm độc lập (40–43 SCN)</span>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">36</span>
+                    <span class="stat-label">Nữ tướng tham gia khởi nghĩa (theo truyền thuyết)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Năm Bắc thuộc trước đó (179 TCN – 40 SCN)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">43</span>
+                    <span class="stat-label">Năm Mã Viện tái chiếm, Hai Bà tuẫn tiết</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NGUYÊN NHÂN -->
+        <div class="content-box">
+            <h2>⚡ NGUYÊN NHÂN KHỞI NGHĨA</h2>
+            <p>Cuộc khởi nghĩa bùng nổ từ sự kết hợp giữa nỗi căm phẫn cá nhân sâu sắc của Trưng Trắc và mâu thuẫn dân tộc tích tụ hàng thế kỷ dưới ách đô hộ tàn bạo của nhà Đông Hán.</p>
+            <div class="cause-grid">
+                <div class="cause-card culture">
+                    <div class="cause-title">💔 Cái chết của Thi Sách</div>
+                    <div class="cause-text">Thi Sách — chồng của Trưng Trắc, con trai Lạc tướng huyện Chu Diên — bị thái thú Tô Định giết hại vì dám chống đối. Nỗi căm thù cá nhân của Trưng Trắc trở thành ngọn lửa khởi phát cho cả cuộc khởi nghĩa.</div>
+                </div>
+                <div class="cause-card politics">
+                    <div class="cause-title">🏛️ Chính sách cai trị hà khắc</div>
+                    <div class="cause-text">Thái thú Tô Định nổi tiếng tàn bạo, tham lam, bóc lột nhân dân không thương tiếc. Chính sách đồng hóa văn hóa và đàn áp tầng lớp Lạc tướng bản địa đẩy mâu thuẫn lên đỉnh điểm.</div>
+                </div>
+                <div class="cause-card economy">
+                    <div class="cause-title">💰 Thuế má và cống nạp nặng nề</div>
+                    <div class="cause-text">Nhà Đông Hán áp đặt chế độ thuế và cống nạp khắc nghiệt. Sản vật quý, lúa gạo, lao dịch bị vơ vét. Cuộc sống nhân dân kiệt quệ, oán thán chất chứa qua nhiều thế hệ.</div>
+                </div>
+                <div class="cause-card military">
+                    <div class="cause-title">⚔️ Tinh thần dân tộc bùng cháy</div>
+                    <div class="cause-text">Dù bị đô hộ hơn 200 năm, tầng lớp Lạc tướng — thủ lĩnh địa phương người Việt — vẫn giữ được lực lượng và uy tín. Truyền thống thượng võ và địa vị cao của phụ nữ Lạc Việt tạo điều kiện đặc biệt để Hai Bà phát huy vai trò lãnh đạo.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Trước năm 40 SCN</div>
+                    <div class="tl-title">Tô Định giết Thi Sách — ngòi nổ bùng phát</div>
+                    <div class="tl-text">Thái thú Tô Định giết Thi Sách — chồng của Trưng Trắc — vì lo ngại sự chống đối của tầng lớp Lạc tướng. Hành động này trở thành giọt nước tràn ly, thổi bùng ngọn lửa căm phẫn của Trưng Trắc và toàn thể dân Lạc Việt.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Mùa xuân năm 40 SCN</div>
+                    <div class="tl-title">Phất cờ khởi nghĩa tại Mê Linh</div>
+                    <div class="tl-text">Trưng Trắc và Trưng Nhị chính thức phát động khởi nghĩa tại vùng đất Mê Linh (nay thuộc Vĩnh Phúc). Lời kêu gọi lan nhanh, hào kiệt bốn phương hưởng ứng, trong đó có hàng chục nữ tướng tài ba từ khắp các vùng Giao Chỉ, Cửu Chân, Nhật Nam.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">40 SCN — Thắng lợi vang dội</div>
+                    <div class="tl-title">Đánh tan quân Hán, thu phục hơn 65 thành</div>
+                    <div class="tl-text">Nghĩa quân nhanh chóng đánh tan lực lượng của Tô Định, buộc hắn phải bỏ trốn về phương Bắc. Trong thời gian ngắn, Hai Bà thu phục hơn 65 thành trì từ Giao Chỉ đến Cửu Chân và Nhật Nam — phạm vi lãnh thổ rộng lớn chưa từng có.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">40 SCN — Trưng Trắc lên ngôi</div>
+                    <div class="tl-title">Trưng Vương xưng vương, đóng đô tại Mê Linh</div>
+                    <div class="tl-text">Trưng Trắc lên ngôi vua — được gọi là <strong>Trưng Vương</strong> (hoặc Trưng Nữ Vương) — đóng đô tại Mê Linh. Đây là lần đầu tiên trong lịch sử Việt Nam, một người phụ nữ nắm quyền lãnh đạo quốc gia. Trưng Nhị giữ vai trò phó tướng.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">42 SCN</div>
+                    <div class="tl-title">Mã Viện đem đại quân phản công</div>
+                    <div class="tl-text">Vua Hán Quang Vũ cử danh tướng <strong>Mã Viện</strong> — "Phục Ba tướng quân" — đem hơn 2 vạn quân tinh nhuệ cùng thủy bộ sang tái chiếm. Đây là lực lượng hùng mạnh nhất Đông Hán lúc bấy giờ, vượt xa sức chống cự của nghĩa quân.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">42 – 43 SCN</div>
+                    <div class="tl-title">Kháng cự quyết liệt — các trận Lãng Bạc, Cấm Khê</div>
+                    <div class="tl-text">Hai Bà và nghĩa quân chiến đấu dũng cảm qua nhiều trận đánh ở hồ Lãng Bạc rồi rút về Cấm Khê (Hà Nội). Dù thua về quân số và vũ khí, nghĩa quân kiên cường kháng chiến suốt hơn một năm, không chịu đầu hàng.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">Tháng 3 năm 43 SCN</div>
+                    <div class="tl-title">Hai Bà tuẫn tiết — khí phách bất khuất đến cùng</div>
+                    <div class="tl-text">Thất bại trước sức mạnh áp đảo của Mã Viện, Hai Bà Trưng không chịu đầu hàng. Theo truyền thuyết, hai bà gieo mình xuống sông Hát (Hát Giang) tuẫn tiết để giữ tròn khí tiết. Mã Viện tái lập ách đô hộ — nhưng không thể xóa bỏ tên tuổi Hai Bà khỏi lòng dân tộc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÀNH TỰU -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU & DẤU ẤN</h2>
+            <p>Dù ngắn ngủi, cuộc khởi nghĩa Hai Bà Trưng để lại những dấu ấn lịch sử vượt thời gian — cả về tư tưởng, về tinh thần dân tộc lẫn hình ảnh người phụ nữ Việt trong lịch sử.</p>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">👸</span>
+                    <div class="achieve-title">Nữ lãnh tụ đầu tiên của Việt Nam</div>
+                    <div class="achieve-text">Trưng Trắc là người phụ nữ đầu tiên trong lịch sử Việt Nam lên ngôi lãnh đạo quốc gia. Cùng với hàng chục nữ tướng tham chiến, cuộc khởi nghĩa khẳng định địa vị nổi bật của phụ nữ trong xã hội Lạc Việt — hiện tượng hiếm có ở châu Á thời bấy giờ.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🗺️</span>
+                    <div class="achieve-title">Giải phóng lãnh thổ rộng lớn</div>
+                    <div class="achieve-text">Chỉ trong thời gian ngắn, nghĩa quân thu phục hơn 65 thành trì, trải dài từ Giao Chỉ qua Cửu Chân đến Nhật Nam. Phạm vi lãnh thổ giải phóng tương đương toàn bộ miền Bắc và Bắc Trung Bộ Việt Nam ngày nay.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🔥</span>
+                    <div class="achieve-title">Ngọn lửa truyền cảm hứng muôn đời</div>
+                    <div class="achieve-text">Tinh thần Hai Bà Trưng trở thành ngọn đuốc soi đường cho mọi cuộc khởi nghĩa sau này — Bà Triệu (248), Lý Nam Đế (542), Triệu Quang Phục, và đến tận thời hiện đại. Tên hai bà được thờ phụng tại hàng trăm đền, đình trên khắp cả nước.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">⚔️</span>
+                    <div class="achieve-title">Chứng minh khả năng tổ chức quân sự</div>
+                    <div class="achieve-text">Từ một cuộc khởi nghĩa địa phương, Hai Bà đã xây dựng lực lượng đủ mạnh để đánh tan quân đội đô hộ và kiểm soát toàn bộ lãnh thổ Giao Châu. Đây là bằng chứng cho thấy người Việt hoàn toàn có năng lực tổ chức nhà nước độc lập.</div>
+                </div>
+            </div>
+
+            <div class="img-banner" style="margin-top:4px;">
+                <img src="images/hadong2batrung.jpg" alt="Tranh Đông Hồ Hai Bà Trưng" onerror="this.parentElement.style.display='none'">
+                <div class="img-cap">Hình tượng Hai Bà Trưng trong tranh dân gian và nghệ thuật Việt Nam</div>
+            </div>
+
+            <div class="quote-block" style="margin-top:4px;">
+                <p>"Một trang sử vẻ vang nhất trong lịch sử Việt Nam là trang sử Hai Bà Trưng. Phụ nữ Việt Nam bắt đầu giữ địa vị cao quý như vậy từ ngàn xưa."</p>
+                <span class="quote-source">— Chủ tịch Hồ Chí Minh</span>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA LỊCH SỬ</h2>
+            <p>
+                Cuộc khởi nghĩa Hai Bà Trưng tuy chỉ thành công trong 3 năm ngắn ngủi, nhưng ý nghĩa lịch sử của nó vượt xa mọi sự kiện quân sự. Đây là <span class="hl">lời tuyên ngôn đầu tiên bằng máu và lửa</span> rằng người Việt sẵn sàng hy sinh tất cả để giành và giữ nền độc lập.
+            </p>
+            <p>
+                Đặc biệt hơn, khi toàn bộ thế giới cổ đại gần như không có trường hợp phụ nữ lãnh đạo quân đội và quốc gia, người Việt đã có <span class="hl">Trưng Nữ Vương</span> — vị nữ vương đầu tiên của Đông Nam Á. Điều này nói lên bản sắc văn minh riêng biệt và vị thế đặc biệt của người phụ nữ trong xã hội Lạc Việt.
+            </p>
+            <div class="quote-block">
+                <p>"Giặc đến nhà đàn bà cũng đánh — câu nói ấy của dân tộc Việt bắt đầu được viết bằng máu từ năm 40, khi Trưng Trắc và Trưng Nhị dẫn đầu cả một dân tộc vùng dậy trên lưng voi xông thẳng vào mặt quân Hán."</p>
+                <span class="quote-source">— Nhận định lịch sử Việt Nam</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🔥 Bài học từ khởi nghĩa Hai Bà Trưng</div>
+                <div class="lesson-text">Hai Bà dạy dân tộc Việt rằng: không có áp bức nào là mãi mãi, và không có giới hạn nào cho ý chí con người khi họ chiến đấu vì tự do. Dù thất bại, khí phách tuẫn tiết không đầu hàng của Hai Bà còn hùng hồn hơn cả chiến thắng.</div>
+            </div>
+            <div class="legacy-box" style="margin-top:14px;">
+                <div class="lesson-title">🌸 Di sản của người phụ nữ Việt</div>
+                <div class="lesson-text">Từ Hai Bà Trưng, hình ảnh người phụ nữ Việt Nam — kiên cường, bất khuất, sẵn sàng gánh vác việc nước — trở thành bản sắc văn hóa đặc trưng. Tinh thần ấy kế tiếp qua Bà Triệu, đến thời hiện đại qua hàng vạn nữ anh hùng trong hai cuộc kháng chiến chống Pháp và Mỹ.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Sự kiện</td><td>Khởi nghĩa Hai Bà Trưng</td></tr>
+                <tr><td>Thời gian</td><td>40 – 43 SCN</td></tr>
+                <tr><td>Lãnh đạo</td><td>Trưng Trắc & Trưng Nhị</td></tr>
+                <tr><td>Xuất phát</td><td>Mê Linh (Vĩnh Phúc)</td></tr>
+                <tr><td>Đối tượng</td><td>Quân đô hộ Đông Hán</td></tr>
+                <tr><td>Thái thú bị đánh</td><td>Tô Định</td></tr>
+                <tr><td>Kết quả ban đầu</td><td>Thắng lợi, giải phóng 65+ thành</td></tr>
+                <tr><td>Thủ đô</td><td>Mê Linh</td></tr>
+                <tr><td>Kết cục</td><td>Thất bại trước Mã Viện (43 SCN)</td></tr>
+                <tr><td>Di sản</td><td>Biểu tượng bất tử dân tộc</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+
+            <div class="heritage-card">
+                <img src="images/den2batrung.jfif" alt="Đền Hai Bà Trưng Hà Nội" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Đền Hai Bà Trưng — Hà Nội</strong>
+                    <p>Tọa lạc tại quận Hai Bà Trưng, Hà Nội. Được xây dựng từ thế kỷ VI, là nơi thờ phụng chính của Trưng Trắc và Trưng Nhị. Lễ hội ngày 6 tháng Hai âm lịch hàng năm thu hút hàng vạn người.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/den2batrungml.jpg" alt="Đền Hai Bà Trưng Mê Linh" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Đền Hai Bà Trưng — Mê Linh, Hà Nội</strong>
+                    <p>Nằm tại quê hương Hai Bà ở huyện Mê Linh. Được xếp hạng Di tích lịch sử Quốc gia đặc biệt. Đây là nơi xuất phát của cuộc khởi nghĩa năm 40 SCN, thu hút khách hành hương từ khắp cả nước.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/songhatgiang.jpg" alt="Sông Hát Giang" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Sông Hát (Hát Giang) — Hà Nam</strong>
+                    <p>Theo truyền thuyết, đây là nơi Hai Bà Trưng tuẫn tiết năm 43 SCN sau khi thất bại trước quân Mã Viện. Dọc bờ sông có nhiều đền miếu thờ Hai Bà và các nữ tướng.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/tuong2batrung.PNG" alt="Tượng đài Hai Bà Trưng" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Tượng đài Hai Bà Trưng</strong>
+                    <p>Nhiều tỉnh thành Việt Nam có tượng đài, đường phố, trường học mang tên Hai Bà Trưng. Hình ảnh Hai Bà cưỡi voi dẫn quân đã trở thành biểu tượng văn hóa bất tử của dân tộc.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="chi-tiet-trung-trac.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #8b1a3a;">👸</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Trưng Trắc</div>
+                    <div class="char-mini-desc">Trưng Nữ Vương — người lãnh đạo khởi nghĩa</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-trung-nhi.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #a0305a;">👸</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Trưng Nhị</div>
+                    <div class="char-mini-desc">Em gái — nữ tướng phó chủ soái</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #8a2a2a;">🗡️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Tô Định</div>
+                    <div class="char-mini-desc">Thái thú tàn bạo — kẻ châm ngòi khởi nghĩa</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #3a4a6a;">⚔️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Mã Viện</div>
+                    <div class="char-mini-desc">Phục Ba tướng quân — đàn áp khởi nghĩa</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>✨ SỰ THẬT THÚ VỊ</h3>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🐘</div>
+                <div class="legacy-text">
+                    <strong>Cưỡi voi ra trận</strong>
+                    Hai Bà và các nữ tướng nổi tiếng với hình ảnh cưỡi voi chiến — phương thức tác chiến đặc trưng của người Lạc Việt thời bấy giờ.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">👩‍⚔️</div>
+                <div class="legacy-text">
+                    <strong>36 nữ tướng</strong>
+                    Theo truyền thuyết, có tới 36 nữ tướng tham gia khởi nghĩa — trong đó có Lê Chân, Thiều Hoa, Bát Nàn… được thờ phụng khắp đồng bằng Bắc Bộ.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🌺</div>
+                <div class="legacy-text">
+                    <strong>Ngày giỗ Hai Bà</strong>
+                    Ngày 6 tháng Hai âm lịch hàng năm là ngày giỗ Hai Bà Trưng — lễ hội lớn tại nhiều địa phương từ Hà Nội đến Vĩnh Phúc, Hà Nam.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">📜</div>
+                <div class="legacy-text">
+                    <strong>Được sử Trung Hoa ghi nhận</strong>
+                    Ngay cả sử sách nhà Hán cũng phải ghi nhận cuộc khởi nghĩa này — bằng chứng cho thấy quy mô và ảnh hưởng của sự kiện vượt ra ngoài biên giới Việt Nam.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🏫</div>
+                <div class="legacy-text">
+                    <strong>Tên gọi bất tử</strong>
+                    Tên Hai Bà Trưng được đặt cho quận, đường phố, trường học ở hầu hết tỉnh thành Việt Nam — di sản sống mãi trong đời sống hàng ngày.
+                </div>
+            </div>
+        </div>
+
+        <a href="bac-thuoc.html" class="btn-back">← Quay lại Bắc Thuộc</a>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

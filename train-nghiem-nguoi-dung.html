@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trải Nghiệm Người Dùng – Lịch Sử Việt Nam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0a05;
+      --surface: #17120a;
+      --card: #1f1709;
+      --border: #3a2c14;
+      --gold: #c9922a;
+      --gold-light: #e8b84b;
+      --gold-dim: #7a5518;
+      --text: #f0e6d0;
+      --text-muted: #9a8668;
+      --red: #b03a2e;
+      --green: #2e7d4f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(201,146,42,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(176,58,46,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--border);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,10,5,0.9);
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+    }
+    .logo span { color: var(--text-muted); font-weight: 400; font-size: 13px; display: block; }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 6px 16px 6px 8px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .user-badge:hover { border-color: var(--gold-dim); }
+    .user-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--red));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+    }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(201,146,42,0.12);
+      border: 1px solid rgba(201,146,42,0.3);
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .hero h1 em { color: var(--gold-light); font-style: normal; }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      position: relative; z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 600px;
+      margin: 30px auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .stat-item {
+      flex: 1;
+      padding: 18px 20px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap {
+      position: relative; z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ── WRITE REVIEW CARD ── */
+    .write-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .write-card-header {
+      padding: 22px 28px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .write-card-header .icon {
+      width: 36px; height: 36px;
+      background: rgba(201,146,42,0.15);
+      border: 1px solid rgba(201,146,42,0.25);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .write-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .write-card-header p { font-size: 12px; color: var(--text-muted); }
+
+    .write-card-body { padding: 24px 28px; }
+
+    /* Login prompt */
+    .login-prompt {
+      background: rgba(201,146,42,0.06);
+      border: 1px solid rgba(201,146,42,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .login-prompt a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .login-prompt a:hover { text-decoration: underline; }
+
+    /* Rating selector */
+    .rating-section { margin-bottom: 20px; }
+    .rating-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+    .stars-input {
+      display: flex;
+      gap: 8px;
+    }
+    .star-btn {
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--border);
+      transition: color 0.15s, transform 0.15s;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+    }
+    .star-btn:hover, .star-btn.active { color: var(--gold-light); transform: scale(1.15); }
+
+    /* Category chips */
+    .category-section { margin-bottom: 20px; }
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chip {
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .chip:hover { border-color: var(--gold-dim); color: var(--text); }
+    .chip.selected {
+      background: rgba(201,146,42,0.15);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* Textarea */
+    .comment-section { margin-bottom: 20px; }
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 14px;
+      padding: 14px 16px;
+      resize: vertical;
+      min-height: 110px;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-top: 10px;
+    }
+    textarea::placeholder { color: var(--text-muted); }
+    textarea:focus { border-color: var(--gold-dim); }
+
+    .char-count {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Submit btn */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold), #a87420);
+      border: none;
+      border-radius: 12px;
+      color: #0d0a05;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.5px;
+    }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+    .sidebar-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .sidebar-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Big rating display */
+    .big-rating {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .big-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .big-stars { font-size: 20px; color: var(--gold-light); margin: 6px 0; }
+    .big-sub { font-size: 12px; color: var(--text-muted); }
+
+    /* Rating bars */
+    .rating-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .rb-label { font-size: 12px; color: var(--text-muted); width: 14px; text-align: right; }
+    .rb-track {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .rb-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 3px;
+      transition: width 0.8s ease;
+    }
+    .rb-count { font-size: 11px; color: var(--text-muted); width: 24px; }
+
+    /* Category breakdown */
+    .cat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(58,44,20,0.5);
+    }
+    .cat-row:last-child { border-bottom: none; }
+    .cat-name { font-size: 13px; color: var(--text); }
+    .cat-mini-stars { font-size: 12px; color: var(--gold-light); }
+
+    /* ── REVIEWS LIST ── */
+    .reviews-section {
+      position: relative; z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+    .reviews-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .reviews-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .filter-tab {
+      padding: 6px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-tab.active, .filter-tab:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold-light);
+    }
+
+    /* Review card */
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+      animation: fadeUp 0.4s ease both;
+    }
+    .review-card:hover { border-color: var(--gold-dim); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .review-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .reviewer-av {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .reviewer-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .reviewer-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .review-stars { font-size: 16px; color: var(--gold-light); }
+
+    .review-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #d4c4a8;
+      margin-bottom: 14px;
+    }
+
+    .review-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .review-tag {
+      background: rgba(201,146,42,0.1);
+      border: 1px solid rgba(201,146,42,0.2);
+      color: var(--gold-dim);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    .review-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .helpful-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 12px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .helpful-btn:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold-light);
+    }
+    .helpful-btn.voted {
+      background: rgba(201,146,42,0.1);
+      border-color: var(--gold-dim);
+      color: var(--gold-light);
+    }
+    .verified-badge {
+      font-size: 11px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--card);
+      border: 1px solid var(--gold-dim);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      z-index: 999;
+      transition: transform 0.3s ease;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Divider */
+    .divider {
+      position: relative; z-index: 1;
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 20px;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .modal p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .modal-btns { display: flex; gap: 10px; }
+    .btn-outline {
+      flex: 1;
+      padding: 12px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--gold-dim); }
+    .btn-gold {
+      flex: 1;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--gold), #a87420);
+      border: none;
+      border-radius: 10px;
+      color: #0d0a05;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-gold:hover { opacity: 0.88; }
+
+    @media (max-width: 680px) {
+      .main-wrap { grid-template-columns: 1fr; }
+      header { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div style="display:flex; align-items:center; gap:15px;">
+    <a href="index.html" style="text-decoration:none; color:var(--gold-light); font-size:18px;" title="Quay lại trang chủ">
+      ← Quay lại
+    </a>
+    <div class="logo">
+      ⚔ Lịch Sử Việt Nam
+      <span>Khám phá – Học hỏi – Tự hào</span>
+    </div>
+  </div>
+  <div class="user-badge" id="userBadge">
+    <div class="user-avatar" id="avatarInit">?</div>
+    <span class="user-name" id="headerUserName">Đăng nhập</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">✦ Phản hồi cộng đồng</div>
+  <h1>Trải Nghiệm <em>Người Dùng</em></h1>
+  <p>Chia sẻ cảm nhận của bạn để giúp chúng tôi cải thiện website lịch sử tốt hơn mỗi ngày.</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num" id="statTotal">0</div>
+    <div class="stat-label">Đánh giá</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" id="statAvg">–</div>
+    <div class="stat-label">Điểm TB</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" id="statFive">0%</div>
+    <div class="stat-label">5 sao</div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-wrap">
+
+  <!-- LEFT: WRITE REVIEW -->
+  <div class="write-card">
+    <div class="write-card-header">
+      <div class="icon">✍</div>
+      <div>
+        <h2>Viết đánh giá của bạn</h2>
+        <p>Cảm nhận thật của bạn rất có giá trị</p>
+      </div>
+    </div>
+    <div class="write-card-body">
+
+      <!-- Login hint -->
+      <div class="login-prompt" id="loginHint">
+        🔒 Bạn chưa đăng nhập.
+        <a href="login-signup.html">Đăng nhập ngay</a> để đánh giá.
+      </div>
+
+      <!-- Rating -->
+      <div class="rating-section">
+        <div class="rating-label">Mức độ hài lòng</div>
+        <div class="stars-input" id="starsInput">
+          <button class="star-btn" data-val="1">★</button>
+          <button class="star-btn" data-val="2">★</button>
+          <button class="star-btn" data-val="3">★</button>
+          <button class="star-btn" data-val="4">★</button>
+          <button class="star-btn" data-val="5">★</button>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="category-section">
+        <div class="rating-label">Chủ đề đánh giá</div>
+        <div class="chips-wrap" id="chipsWrap">
+          <div class="chip" data-cat="Giao diện">🎨 Giao diện</div>
+          <div class="chip" data-cat="Nội dung">📜 Nội dung</div>
+          <div class="chip" data-cat="Game & Quiz">🎮 Game & Quiz</div>
+          <div class="chip" data-cat="Chatbot">🤖 Chatbot</div>
+          <div class="chip" data-cat="Tốc độ">⚡ Tốc độ</div>
+          <div class="chip" data-cat="Dễ dùng">👆 Dễ dùng</div>
+        </div>
+      </div>
+
+      <!-- Comment -->
+      <div class="comment-section">
+        <div class="rating-label">Nhận xét chi tiết</div>
+        <textarea id="commentBox" placeholder="Bạn cảm thấy thế nào về website? Nội dung lịch sử có hữu ích không? Có điều gì bạn muốn cải thiện?" maxlength="500"></textarea>
+        <div class="char-count"><span id="charCount">0</span>/500</div>
+      </div>
+
+      <button class="btn-submit" id="submitBtn">Gửi đánh giá ✦</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Overall score -->
+    <div class="sidebar-card">
+      <h3>📊 Tổng quan đánh giá</h3>
+      <div class="big-rating">
+        <div class="big-num" id="bigNum">–</div>
+        <div class="big-stars" id="bigStars">☆☆☆☆☆</div>
+        <div class="big-sub" id="bigSub">Chưa có đánh giá</div>
+      </div>
+      <div id="ratingBars">
+        <div class="rating-bar-row"><div class="rb-label">5</div><div class="rb-track"><div class="rb-fill" id="bar5" style="width:0%"></div></div><div class="rb-count" id="cnt5">0</div></div>
+        <div class="rating-bar-row"><div class="rb-label">4</div><div class="rb-track"><div class="rb-fill" id="bar4" style="width:0%"></div></div><div class="rb-count" id="cnt4">0</div></div>
+        <div class="rating-bar-row"><div class="rb-label">3</div><div class="rb-track"><div class="rb-fill" id="bar3" style="width:0%"></div></div><div class="rb-count" id="cnt3">0</div></div>
+        <div class="rating-bar-row"><div class="rb-label">2</div><div class="rb-track"><div class="rb-fill" id="bar2" style="width:0%"></div></div><div class="rb-count" id="cnt2">0</div></div>
+        <div class="rating-bar-row"><div class="rb-label">1</div><div class="rb-track"><div class="rb-fill" id="bar1" style="width:0%"></div></div><div class="rb-count" id="cnt1">0</div></div>
+      </div>
+    </div>
+
+    <!-- Category breakdown -->
+    <div class="sidebar-card">
+      <h3>🏷 Chủ đề phổ biến</h3>
+      <div id="catBreakdown">
+        <div class="cat-row"><span class="cat-name">🎨 Giao diện</span><span class="cat-mini-stars">★★☆☆☆</span></div>
+        <div class="cat-row"><span class="cat-name">⚡ Tốc độ</span><span class="cat-mini-stars">★★☆☆☆</span></div>
+        <div class="cat-row"><span class="cat-name">👆 Dễ dùng</span><span class="cat-mini-stars">★★☆☆☆</span></div>
+        <div class="cat-row"><span class="cat-name">📜 Nội dung</span><span class="cat-mini-stars">★★☆☆☆</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<hr class="divider"/>
+
+<!-- REVIEWS LIST -->
+<section class="reviews-section">
+  <div class="reviews-header">
+    <h2>Bình luận cộng đồng</h2>
+    <div class="filter-tabs">
+      <div class="filter-tab active" data-filter="all">Tất cả</div>
+      <div class="filter-tab" data-filter="5">5 ★</div>
+      <div class="filter-tab" data-filter="4">4 ★</div>
+      <div class="filter-tab" data-filter="3">≤ 3 ★</div>
+    </div>
+  </div>
+  <div id="reviewsList"></div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL: need login -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <h3>Cần đăng nhập</h3>
+    <p>Bạn cần đăng nhập để gửi đánh giá. Tham gia cùng cộng đồng lịch sử ngay!</p>
+    <div class="modal-btns">
+      <button class="btn-outline" onclick="closeModal()">Để sau</button>
+      <button class="btn-gold" onclick="localStorage.setItem('redirectAfterLogin', 'train-nghiem-nguoi-dung.html'); window.location.href='login-signup.html'">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+let currentRating = 0;
+let selectedCats = [];
+let currentFilter = 'all';
+const API = 'http://localhost:3000';
+
+function getToken() {
+    const u = localStorage.getItem('history_user');
+    return u ? JSON.parse(u).token : null;
+}
+
+// Seed data - Đánh giá 2 sao (Phân hồi xây dựng)
+
+
+// ── SIMULATED LOGIN ──
+// Lấy user từ localStorage (do login-signup.html lưu)
+function getCurrentUser() {
+  const u = localStorage.getItem('history_user');
+  return u ? JSON.parse(u) : null;
+}
+
+function setupHeader() {
+  const user = getCurrentUser();
+  const av = document.getElementById('avatarInit');
+  const nm = document.getElementById('headerUserName');
+  const hint = document.getElementById('loginHint');
+  if (user) {
+    av.textContent = (user.name || user.email || 'U')[0].toUpperCase();
+    nm.textContent = user.name || user.email;
+    hint.style.display = 'none';
+    document.getElementById('submitBtn').disabled = false;
+  } else {
+    av.textContent = '?';
+    nm.textContent = 'Đăng nhập';
+    hint.style.display = 'flex';
+  }
+}
+let reviews = [];
+// ── STARS ──
+document.querySelectorAll('.star-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', () => highlightStars(+btn.dataset.val));
+  btn.addEventListener('mouseleave', () => highlightStars(currentRating));
+  btn.addEventListener('click', () => {
+    currentRating = +btn.dataset.val;
+    highlightStars(currentRating);
+  });
+});
+
+function highlightStars(n) {
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', +b.dataset.val <= n);
+  });
+}
+
+// ── CHIPS ──
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.classList.toggle('selected');
+    const cat = chip.dataset.cat;
+    if (chip.classList.contains('selected')) selectedCats.push(cat);
+    else selectedCats = selectedCats.filter(c => c !== cat);
+  });
+});
+
+// ── CHAR COUNT ──
+const commentBox = document.getElementById('commentBox');
+commentBox.addEventListener('input', () => {
+  document.getElementById('charCount').textContent = commentBox.value.length;
+});
+
+
+// Load reviews từ database khi trang mở
+async function loadReviews() {
+    try {
+        const res = await fetch(`${API}/api/reviews`);
+        const data = await res.json();
+        if (data.success) {
+            // Map sang format hiện tại
+            reviews = data.data.map(r => ({
+                id: r.id,
+                name: r.name,
+                initials: r.initial,
+                color: randomColor(),
+                rating: r.rating,
+                cats: r.categories ? r.categories.split(',') : [],
+                text: r.comment,
+                date: new Date(r.created_at).toLocaleDateString('vi-VN'),
+                helpful: r.helpful,
+                voted: false,
+                verified: true
+            }));
+            updateStats();
+            renderReviews();
+        }
+    } catch (err) {
+        console.error('Lỗi load reviews:', err);
+    }
+}
+
+// Sửa hàm submit để gọi API
+document.getElementById('submitBtn').addEventListener('click', async () => {
+    const user = getCurrentUser();
+    if (!user) { document.getElementById('loginModal').classList.add('open'); return; }
+    if (currentRating === 0) { showToast('⭐ Vui lòng chọn số sao!'); return; }
+    const text = commentBox.value.trim();
+    if (text.length < 10) { showToast('✏️ Nhận xét cần ít nhất 10 ký tự!'); return; }
+
+    try {
+        const res = await fetch(`${API}/api/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                token: getToken(),
+                rating: currentRating,
+                categories: selectedCats,
+                comment: text
+            })
+        });
+        const data = await res.json();
+        if (data.success) {
+            await loadReviews(); // Reload từ database
+            resetForm();
+            showToast('✅ Đã gửi đánh giá thành công!');
+        } else {
+            showToast(data.message);
+        }
+    } catch (err) {
+        showToast('❌ Lỗi kết nối server!');
+    }
+});
+function resetForm() {
+  currentRating = 0;
+  highlightStars(0);
+  selectedCats = [];
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  commentBox.value = '';
+  document.getElementById('charCount').textContent = '0';
+}
+
+// ── STATS ──
+function updateStats() {
+  const total = reviews.length;
+  const avg = total ? (reviews.reduce((s,r) => s+r.rating, 0) / total).toFixed(1) : null;
+  const fiveCount = reviews.filter(r => r.rating === 5).length;
+  const fivePct = total ? Math.round(fiveCount/total*100) : 0;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statAvg').textContent = avg || '–';
+  document.getElementById('statFive').textContent = total ? fivePct + '%' : '0%';
+
+  if (avg) {
+    document.getElementById('bigNum').textContent = avg;
+    document.getElementById('bigStars').textContent = starString(Math.round(+avg));
+    document.getElementById('bigSub').textContent = `${total} lượt đánh giá`;
+  }
+
+  [1,2,3,4,5].forEach(n => {
+    const cnt = reviews.filter(r => r.rating === n).length;
+    const pct = total ? (cnt/total*100).toFixed(1) : 0;
+    document.getElementById('bar'+n).style.width = pct + '%';
+    document.getElementById('cnt'+n).textContent = cnt;
+  });
+}
+
+// ── RENDER REVIEWS ──
+function renderReviews() {
+  const list = document.getElementById('reviewsList');
+  const filtered = currentFilter === 'all' ? reviews
+    : currentFilter === '3' ? reviews.filter(r => r.rating <= 3)
+    : reviews.filter(r => r.rating === +currentFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted)">Chưa có đánh giá nào trong mục này.</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map((r, i) => `
+    <div class="review-card" style="animation-delay:${i*0.06}s">
+      <div class="review-top">
+        <div class="reviewer">
+          <div class="reviewer-av" style="background:${r.color}">${r.initials}</div>
+          <div>
+            <div class="reviewer-name">${r.name}</div>
+            <div class="reviewer-meta">${r.date}</div>
+          </div>
+        </div>
+        <div class="review-stars">${starString(r.rating)}</div>
+      </div>
+      ${r.cats.length ? `<div class="review-tags">${r.cats.map(c=>`<span class="review-tag">${c}</span>`).join('')}</div>` : ''}
+      <p class="review-text">${escHtml(r.text)}</p>
+      <div class="review-footer">
+        <button class="helpful-btn ${r.voted?'voted':''}" onclick="voteHelpful(${r.id})">
+          👍 Hữu ích <strong>${r.helpful}</strong>
+        </button>
+        ${r.verified ? `<span class="verified-badge">✔ Đã xác minh</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function voteHelpful(id) {
+  const user = getCurrentUser();
+  if (!user) { document.getElementById('loginModal').classList.add('open'); return; }
+  const r = reviews.find(x => x.id === id);
+  if (r) {
+    r.voted = !r.voted;
+    r.helpful += r.voted ? 1 : -1;
+    renderReviews();
+  }
+}
+
+// ── FILTER TABS ──
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.filter;
+    renderReviews();
+  });
+});
+
+// ── HELPERS ──
+function starString(n) {
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function randomColor() {
+  const colors = ['#8b4513','#6b3fa0','#1a6b4a','#b03a2e','#2b5797','#7a5518','#3d6b5a'];
+  return colors[Math.floor(Math.random()*colors.length)];
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+function closeModal() {
+  document.getElementById('loginModal').classList.remove('open');
+}
+function closeModal() {
+  document.getElementById('loginModal').classList.remove('open');
+}
+document.getElementById('loginModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ── INIT ──
+setupHeader();
+loadReviews(); // ← chỉ cần dòng này
+</script>
+</body>
+</html>

@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Câu Chuyện Lịch Sử - Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --main:#8B0000;
+  --gold:#f4c542;
+  --cream:#fff8e7;
+  --dark:#2c1b12;
+}
+
+/* HERO ẢNH LỚN */
+.detail-hero {
+  width: 100%;
+  height: 750px;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;   /* ưu tiên phần trên ảnh */
+  filter: brightness(1.05) contrast(1.1) saturate(1.15);  /* sáng, sắc hơn */
+  transition: transform 0.8s ease;
+}
+
+.detail-hero:hover img {
+  transform: scale(1.03);   /* hiệu ứng zoom nhẹ khi hover */
+}
+
+.detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.1) 40%,
+    rgba(44,27,18,0.75) 80%,
+    rgba(44,27,18,0.92) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 50px 100px;
+}
+
+.detail-hero-text .era-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.detail-hero-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: white;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  max-width: 800px;
+}
+
+.detail-hero-text .meta {
+  display: flex;
+  gap: 20px;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+}
+
+/* NỘI DUNG */
+.detail-content {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 60px 20px 100px;
+}
+
+/* ĐOẠN MỞ ĐẦU */
+.lead-text {
+  font-size: 20px;
+  color: var(--dark);
+  line-height: 1.9;
+  font-weight: 500;
+  border-left: 4px solid var(--main);
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+/* ĐOẠN VĂN */
+.story-paragraph {
+  font-size: 17px;
+  color: #333;
+  line-height: 2;
+  margin-bottom: 28px;
+  opacity: 1;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.story-paragraph.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ẢNH GIỮA BÀI */
+.story-img-mid {
+  width: 100%;
+  border-radius: 16px;
+  margin: 36px 0;
+  object-fit: cover;
+  height: 320px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.story-img-mid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* QUOTE NỔI BẬT */
+.story-quote {
+  background: #fff3cd;
+  border-left: 5px solid var(--gold);
+  padding: 24px 30px;
+  border-radius: 0 12px 12px 0;
+  margin: 36px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--dark);
+  font-style: italic;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.story-quote.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.story-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #b85c00;
+  font-style: normal;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* TIÊU ĐỀ PHẦN */
+.story-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--main);
+  margin: 48px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f4c54240;
+}
+
+/* KẾT THÚC */
+.story-end {
+  text-align: center;
+  padding: 50px 20px;
+  background: linear-gradient(rgba(255,248,231,0), rgba(255,248,231,1));
+}
+
+.story-end h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.story-end p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.btn-back {
+  padding: 14px 32px;
+  background: var(--main);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.3s;
+  margin: 0 8px;
+}
+
+.btn-back:hover {
+  background: var(--gold);
+  color: black;
+}
+
+.btn-next {
+  padding: 14px 32px;
+  background: white;
+  color: var(--main);
+  border: 2px solid var(--main);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.3s;
+  margin: 0 8px;
+}
+
+.btn-next:hover {
+  background: var(--main);
+  color: white;
+}
+
+/* PROGRESS BAR */
+.reading-progress {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  height: 3px;
+  background: var(--main);
+  z-index: 999;
+  transition: width 0.1s;
+}
+
+/* RESPONSIVE */
+/* INTERACTIVE GAME SECTION */
+.game-section { margin-top: 60px; border-top: 2px solid #f4c54240; padding-top: 48px; }
+.game-section-label { font-size: 13px; color: #b85c00; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; }
+.game-section h2 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--main); margin-bottom: 24px; }
+.game-scene { display: none; animation: fadeIn 0.6s ease; }
+.game-scene.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.game-text { font-size: 17px; color: #333; line-height: 2; margin-bottom: 16px; }
+.game-dialogue { background: #fff8e7; border-left: 4px solid #f4c542; border-radius: 0 10px 10px 0; padding: 14px 20px; margin: 16px 0; font-style: italic; color: var(--dark); font-size: 17px; }
+.game-choices { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.game-choice { background: white; border: 1.5px solid #ddd; border-radius: 10px; padding: 14px 20px; font-size: 16px; font-family: 'Poppins', sans-serif; cursor: pointer; text-align: left; transition: 0.25s; display: flex; gap: 12px; align-items: flex-start; }
+.game-choice:hover { border-color: var(--main); background: #fff8e7; transform: translateX(4px); }
+.game-choice-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: #8B000015; border: 1px solid var(--main); color: var(--main); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.game-outcome { padding: 18px 22px; border-radius: 12px; margin: 16px 0; font-size: 16px; line-height: 1.8; }
+.game-outcome.bad { background: #fff0f0; border: 1px solid #ffcccc; }
+.game-outcome.good { background: #f0fff4; border: 1px solid #b2dfdb; }
+.game-continue { margin-top: 24px; padding: 13px 28px; background: var(--main); color: white; border: none; border-radius: 10px; font-size: 16px; font-family: 'Poppins', sans-serif; cursor: pointer; transition: 0.3s; }
+.game-continue:hover { background: #6b0000; }
+.game-result { text-align: center; padding: 32px 16px; background: #fff8e7; border-radius: 16px; border: 1px solid #f4c542; }
+.game-result h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--dark); margin-bottom: 10px; }
+.game-restart { margin-top: 16px; padding: 12px 28px; background: transparent; border: 1.5px solid var(--main); color: var(--main); border-radius: 10px; font-size: 15px; font-family: 'Poppins', sans-serif; cursor: pointer; transition: 0.3s; }
+.game-restart:hover { background: var(--main); color: white; }
+@media(max-width: 768px) {
+  .detail-hero { height: 350px; }
+  .detail-hero-overlay { padding: 30px 20px; }
+  .detail-hero-text h1 { font-size: 28px; }
+  .detail-content { padding: 40px 16px 80px; }
+  .lead-text { font-size: 17px; }
+  .story-paragraph { font-size: 15px; }
+}
+/* VIDEO SECTION FOR DETAIL PAGE */
+.story-video-section {
+  max-width: 820px;
+  margin: 60px auto 40px;
+  padding: 0 20px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.story-video-label {
+  font-size: 13px;
+  color: #b85c00;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.story-video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #1a1a2e;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(139, 0, 0, 0.2);
+  border: 1px solid rgba(139, 0, 0, 0.3);
+}
+
+.story-video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="reading-progress" id="progressBar"></div>
+
+<!-- NAVBAR -->
+
+  <nav>
+    <div class="logo">SỬ VIỆT</div>
+    <ul>
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="cau-chuyen.html" style="color:var(--gold)">Câu chuyện</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="">Nhân vật</a></li>
+    </ul>
+  </nav>
+
+
+<!-- NỘI DUNG ĐỘNG theo ?id= -->
+
+<div id="storyContainer"></div>
+
+
+<!-- CHATBOX AI NỔI -->
+<div id="chat-fab" onclick="toggleChat()" style="position:fixed;bottom:30px;right:30px;z-index:9999;width:60px;height:60px;border-radius:50%;background:#2c1a0e;border:2px solid #c9a84c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(0,0,0,0.4)">🏯</div>
+<div id="chat-panel" style="display:none;position:fixed;bottom:20px;right:30px;z-index:9998;width:620px;height:75vh;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.5)">
+  <iframe src="chatbox.html" style="width:100%;height:100%;border:none"></iframe>
+</div>
+
+<script>
+function toggleChat(){
+  const p = document.getElementById('chat-panel');
+  p.style.display = p.style.display==='none' ? 'block' : 'none';
+}
+
+// DỮ LIỆU CÂU CHUYỆN
+const stories = {
+  1: {
+    era: "Năm 938",
+    title: "Trận Bạch Đằng — Ngô Quyền Phá Quân Nam Hán",
+    heroImg: "images/bachdang2.jpg",
+    meta: ["⚔️ Trận chiến hào hùng", "📍 Sông Bạch Đằng", "🕐 5 phút đọc"],
+    lead: "Năm 938, trên dòng sông Bạch Đằng huyền thoại, một trong những chiến thắng vĩ đại nhất lịch sử Việt Nam đã diễn ra — chấm dứt hơn 1000 năm Bắc thuộc.",
+    sections: [
+      {
+        title: "Bối Cảnh Lịch Sử",
+        paragraphs: [
+          "Sau khi nhà Đường sụp đổ, phương Nam rơi vào tay nhà Nam Hán. Đất Giao Châu — tên gọi của Việt Nam thời Bắc thuộc — tiếp tục bị áp bức dưới ách đô hộ của ngoại bang.",
+          "Ngô Quyền, một tướng tài người Đường Lâm (Hà Nội ngày nay), đã nổi lên lãnh đạo người Việt chống lại ách thống trị. Khi nghe tin quân Nam Hán do Lưu Hoằng Tháo chỉ huy đang kéo vào xâm lược, ông lập tức chuẩn bị kế hoạch phòng thủ táo bạo."
+        ]
+      },
+      {
+        title: "Kế Sách Cọc Ngầm Thiên Tài",
+        img: "images/ngo-quyen.jpg",
+        paragraphs: [
+          "Ngô Quyền quan sát kỹ địa thế sông Bạch Đằng — một con sông rộng lớn đổ ra biển, có chế độ thủy triều lên xuống rõ ràng. Ông nghĩ ra một kế sách thiên tài: đóng những cọc gỗ lớn đầu nhọn bịt sắt xuống lòng sông, sao cho khi nước triều lên, cọc bị che khuất dưới mặt nước.",
+          "Hàng ngàn cọc gỗ được đóng xuống lòng sông trong bí mật. Quân thủy của Ngô Quyền giả vờ thua trận, nhử thuyền chiến Nam Hán vào sâu trong sông khi thủy triều đang lên cao."
+        ],
+        quote: {
+          text: "\"Lưu Hoằng Tháo là người tuổi trẻ, hăng hái, ta không thể địch được với chúng bằng sức mạnh, chỉ có thể dùng mưu kế mà thắng.\"",
+          cite: "— Ngô Quyền trước trận đánh"
+        }
+      },
+      {
+        title: "Chiến Thắng Lịch Sử",
+        img: "images/game-hd-bach-dang.jpg",
+        paragraphs: [
+
+          "Khi đoàn thuyền chiến Nam Hán tiến vào, thủy triều bắt đầu rút xuống. Những mũi cọc sắc bén nhô lên, đâm thủng hàng loạt thuyền địch. Quân Nam Hán hoảng loạn, không thể tiến cũng không thể lui.",
+          "Lúc đó, quân của Ngô Quyền từ hai bờ đổ xuống, đánh mạnh vào đội hình địch đang hỗn loạn. Lưu Hoằng Tháo bị giết tại trận. Toàn bộ thủy quân Nam Hán bị tiêu diệt.",
+          "Chiến thắng Bạch Đằng năm 938 đã chấm dứt hơn 1000 năm Bắc thuộc, mở ra kỷ nguyên độc lập tự chủ lâu dài cho dân tộc Việt Nam. Ngô Quyền lên ngôi vua, đặt nền móng cho các triều đại độc lập sau này."
+        ]
+      }
+    ],
+    nextId: 2,
+    nextTitle: "Hưng Đạo Vương chống Nguyên Mông"
+  },
+
+  2: {
+    era: "Năm 1288",
+    title: "Hưng Đạo Vương — Ba Lần Đánh Bại Quân Nguyên Mông",
+    heroImg: "images/tranhungdao2.jpg",
+    meta: ["🛡️ Anh hùng dân tộc", "📍 Đại Việt", "🕐 7 phút đọc"],
+    lead: "Đế chế Nguyên Mông hùng mạnh nhất thế giới đã chinh phục hàng chục quốc gia — nhưng lại thất bại ba lần liên tiếp trước quân dân Đại Việt.",
+    sections: [
+      {
+        title: "Quân Nguyên Mông — Nỗi Kinh Hoàng Của Thế Giới",
+        paragraphs: [
+          "Vào thế kỷ 13, đế chế Nguyên Mông của Hốt Tất Liệt đã chinh phục gần như toàn bộ châu Á và một phần châu Âu. Ba Lan, Hungary, Trung Quốc, Triều Tiên... đều khuất phục. Thế giới run sợ trước vó ngựa Nguyên Mông.",
+          "Năm 1258, quân Nguyên Mông lần đầu tiến vào Đại Việt. Dù quân số vượt trội, họ vấp phải sức kháng cự quyết liệt và bệnh dịch nhiệt đới, buộc phải rút lui."
+        ]
+      },
+      {
+        title: "Hưng Đạo Vương Trần Quốc Tuấn",
+        img: "images/tran-hung-dao.jpg",
+        paragraphs: [
+          "Trần Quốc Tuấn — được phong là Hưng Đạo Đại Vương — là vị tướng thiên tài của nhà Trần. Ông không chỉ giỏi về quân sự mà còn là người có đức độ, được lòng tướng sĩ và nhân dân.",
+          "Năm 1284, khi quân Nguyên Mông lần thứ hai ồ ạt tấn công với 50 vạn quân, triều đình nhà Trần họp Hội nghị Diên Hồng — hỏi ý kiến toàn dân. Câu trả lời vang lên đồng thanh: \"ĐÁNH!\""
+        ],
+        quote: {
+          text: "\"Nếu bệ hạ muốn hàng, xin hãy chém đầu thần trước.\"",
+          cite: "— Trần Hưng Đạo tâu vua Trần Nhân Tông"
+        }
+      },
+      {
+        title: "Chiến Thắng Bạch Đằng 1288",
+        paragraphs: [
+          "Lần thứ ba năm 1287, Hốt Tất Liệt sai 30 vạn quân tràn vào Đại Việt. Hưng Đạo Vương áp dụng chiến thuật \"vườn không nhà trống\" — rút lui chiến lược, không để địch cướp lương thực.",
+          "Đoán biết địch sẽ rút quân theo đường sông Bạch Đằng, Hưng Đạo Vương lại dùng kế cọc ngầm — học từ Ngô Quyền 350 năm trước. Toàn bộ đoàn thuyền lương của giặc bị tiêu diệt. Tướng giặc Ô Mã Nhi bị bắt sống.",
+          "Ba lần xâm lược, ba lần thất bại — đế chế Nguyên Mông chưa từng nếm mùi thất bại như vậy trước bất kỳ quốc gia nào. Hưng Đạo Vương Trần Quốc Tuấn được tôn là Đức Thánh Trần, thờ phụng đến ngày nay."
+        ]
+      }
+    ],
+    game: {
+  title: "Bạn Là Hưng Đạo Vương — 1284",
+  scenes: [
+    { 
+      id: 's1',
+      quiz: {
+        question: "Năm 1285, quân Nguyên Mông xâm lược Đại Việt có bao nhiêu?",
+        options: ["30 vạn", "40 vạn", "50 vạn", "60 vạn"],
+        correct: 2,
+        image: "bachdang-river.jpg"
+      },
+      text: ["50 vạn quân Nguyên Mông đang tiến vào. Vua hỏi kế sách của bạn."],
+      choices: [
+        { label: "Dốc toàn lực đánh thẳng tại biên giới", next: 's_bad1', points: 5, image: "mai-phuc-2-bor.jpg", explanation: "⚠️ Quân địch đông gấp bội, vũ khí tối tân — đánh trực tiếp rất nguy hiểm" },
+        { label: "Áp dụng vườn không nhà trống, rút lui chiến lược", next: 's_good1', points: 20, image: "coc-gom-nguoi.jpg", explanation: "✨ Chiến lược thiên tài! Rút lui để địch suy yếu rồi phản công" },
+        { label: "Xin hàng để bảo toàn dân", next: 's_bad2', points: 0, image: "luu-hoang-thao.jpg", explanation: "❌ Hưng Đạo Vương không bao giờ đầu hàng!" }
+      ]
+    },
+    { 
+      id: 's_bad1', 
+      outcome: {
+        type:'bad', 
+        text:'⚠️ Quân ta tổn thất nặng — địch đông gấp bội, không thể cản trực tiếp!',
+        image: 'thuyen-chien-dam.jpg',
+        detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+          <strong>🔍 Tại sao sai:</strong> Quân Nguyên Mông đông 50 vạn, quân ta ít hơn nhiều. Đánh trực tiếp là tự sát.<br>
+          <strong>💡 Cách đúng:</strong> Dùng kế "vườn không nhà trống" — rút lui để địch đói, bệnh rồi phản công.
+        </div>`
+      }, 
+      choices: [{ label: "Thay đổi chiến thuật — rút lui ngay!", next: 's_good1', points: 10 }] 
+    },
+    { 
+      id: 's_bad2', 
+      outcome: {
+        type:'bad', 
+        text:'❌ Hưng Đạo Vương không bao giờ đầu hàng! "Xin hãy chém đầu thần trước!"',
+        detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+          <strong>💡 Lịch sử ghi lại:</strong> Khi vua hỏi có nên hàng không, Hưng Đạo Vương đã trả lời bằng câu nói bất hủ này.
+        </div>`
+      }, 
+      choices: [{ label: "Quyết chiến — dùng vườn không nhà trống", next: 's_good1', points: 10 }] 
+    },
+    { 
+      id: 's_good1', 
+      outcome: {
+        type:'good', 
+        text:'✨ Thăng Long bỏ trống! Địch vào thành không có lương thực, bệnh dịch hoành hành.',
+        detailed: `<div style="margin:10px 0;padding:12px;background:#d4edda;border-radius:8px;font-size:14px;">
+          <strong>🏆 Đúng rồi!</strong> Đây chính xác là kế sách Hưng Đạo Vương dùng — để địch tự suy yếu trước khi phản công.
+        </div>`
+      }, 
+      choices: [
+        { label: "Đợi địch suy yếu rồi mới phản công", next: 's_win', points: 20, explanation: "⏳ Kiên nhẫn là chìa khóa chiến thắng" },
+        { label: "Phản công ngay khi địch vừa vào thành", next: 's_bad3', points: 5, explanation: "⚠️ Địch vẫn còn đang mạnh!" }
+      ]
+    },
+    { 
+      id: 's_bad3', 
+      outcome: {
+        type:'bad', 
+        text:'⚠️ Địch vẫn còn sức mạnh! Phải kiên nhẫn hơn.',
+        detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+          <strong>💡 Bài học:</strong> Hưng Đạo Vương rất kiên nhẫn — ông chờ đúng thời điểm địch suy yếu nhất mới ra đòn.
+        </div>`
+      }, 
+      choices: [{ label: "Lui lại — chờ thời cơ chín muồi", next: 's_win', points: 10 }] 
+    },
+    { 
+      id: 's_win', 
+      text: ["Thoát Hoan rút quân qua sông Bạch Đằng — cọc gỗ đã sẵn sàng!", "Thủy triều rút, cọc nhô lên — thuyền giặc vỡ tan! Ô Mã Nhi bị bắt sống."], 
+      isEnd: true, 
+      endTitle: "🏆 Đại Thắng Bạch Đằng 1288!", 
+      endDesc: "Bạn đã dẫn dắt Hưng Đạo Vương đến chiến thắng lịch sử — đánh bại đế chế mạnh nhất thế giới!" 
+    }
+  ]
+},
+    nextId: 3,
+    nextTitle: "Quang Trung đại phá quân Thanh"
+  },
+
+  3: {
+    era: "Năm 1789",
+    title: "Quang Trung — Đại Phá 29 Vạn Quân Thanh",
+    heroImg: "images/quangtrung2.jpg",
+    meta: ["🔥 Đại thắng mùa xuân", "📍 Thăng Long", "🕐 8 phút đọc"],
+    lead: "Mùa xuân Kỷ Dậu 1789 — chỉ trong 5 ngày thần tốc, vua Quang Trung đã quét sạch 29 vạn quân Thanh ra khỏi bờ cõi Đại Việt. Một kỳ tích chưa từng có trong lịch sử.",
+    sections: [
+      {
+        title: "Nguyễn Huệ — Người Anh Hùng Áo Vải",
+        paragraphs: [
+          "Nguyễn Huệ sinh năm 1753 trong một gia đình bình dân ở ấp Kiên Thành, huyện Hoài Nhơn, Bình Định. Từ nhỏ, ông đã nổi tiếng thông minh, dũng cảm và có tài thao lược hơn người.",
+          "Cùng hai anh em Nguyễn Nhạc và Nguyễn Lữ trong phong trào Tây Sơn, ông đã lật đổ chúa Nguyễn ở phương Nam năm 1777, đánh bại chúa Trịnh ở phương Bắc năm 1786, thống nhất đất nước sau hàng trăm năm chia cắt.",
+          "Khi vua Lê Chiêu Thống hèn nhát cầu viện nhà Thanh, 29 vạn quân Thanh do Tôn Sĩ Nghị chỉ huy tràn vào chiếm Thăng Long tháng 12/1788. Nguyễn Huệ lên ngôi Hoàng đế tại Phú Xuân, lấy hiệu là Quang Trung, lập tức thống lĩnh đại quân ra Bắc diệt giặc."
+        ]
+      },
+      {
+        title: "Hành Quân Thần Tốc — Kỳ Tích Lịch Sử",
+        img: "images/quangtrung.jfif",
+        paragraphs: [
+          "Từ Phú Xuân (Huế), Quang Trung hành quân ra Bắc với tốc độ chưa từng có — mỗi ngày đi hàng chục dặm, vượt hàng trăm km chỉ trong vài ngày. Ông vừa hành quân vừa tuyển thêm quân, vừa huấn luyện chiến sĩ ngay trên đường đi.",
+          "Đặc biệt, Quang Trung dùng chiến thuật cáng — hai người khiêng một võng, thay nhau nghỉ — để quân sĩ vừa đi vừa ngủ, tiết kiệm tối đa thời gian. Đây là một trong những sáng tạo quân sự độc đáo nhất lịch sử.",
+          "Đêm 30 tháng Chạp — đêm Giao thừa năm Mậu Thân — Quang Trung bất ngờ tấn công khi quân Thanh đang ăn Tết, say sưa không đề phòng. Kế hoạch hoàn hảo: đánh khi địch chủ quan nhất!"
+        ],
+        quote: {
+          text: "\"Đánh cho để dài tóc. Đánh cho để đen răng. Đánh cho nó chích luân bất phản. Đánh cho nó phiến giáp bất hoàn.\"",
+          cite: "— Lời hịch của vua Quang Trung trước trận đánh"
+        }
+      },
+      {
+        title: "5 Ngày Đêm Thần Tốc",
+        img: "images/daiphaquanthanh.png",
+        paragraphs: [
+          "Đêm 30 tháng Chạp: Quân Tây Sơn tấn công đồn Gián Khẩu, mở màn chiến dịch. Địch hoàn toàn bất ngờ.",
+          "Mùng 3 Tết: Hạ đồn Hà Hồi chỉ trong một đêm — không tốn một mũi tên nhờ chiến thuật uy hiếp tâm lý xuất sắc.",
+          "Mùng 5 Tết Kỷ Dậu: Quân Tây Sơn đánh vào đồn Đống Đa — cứ điểm mạnh nhất của giặc ở cửa ngõ Thăng Long. Tướng giặc Sầm Nghi Đống tử trận, quân Thanh vỡ trận tháo chạy.",
+          "Tôn Sĩ Nghị hoảng loạn bỏ cả ấn tín chạy trốn qua cầu phao sông Hồng. Cầu phao gãy, hàng vạn quân Thanh chết đuối. Chỉ 5 ngày sau khi xuất quân từ Tam Điệp, Quang Trung đã giải phóng hoàn toàn Thăng Long."
+        ]
+      },
+      {
+        title: "Ý Nghĩa Lịch Sử",
+        paragraphs: [
+          "Chiến thắng mùa xuân Kỷ Dậu 1789 là một trong những trang sử hào hùng nhất của dân tộc Việt Nam. Quang Trung đánh bại đội quân đông gấp nhiều lần chỉ trong 5 ngày — một kỳ tích chưa từng có trong lịch sử quân sự thế giới.",
+          "Vua Càn Long nhà Thanh phải công nhận thất bại và thiết lập quan hệ ngoại giao bình thường với Đại Việt. Quang Trung còn có tầm nhìn xa: ông dự định lấy lại đất Lưỡng Quảng và cải cách đất nước toàn diện.",
+          "Tiếc thay, năm 1792 Quang Trung đột ngột băng hà khi mới 39 tuổi — để lại bao hoài bão chưa thực hiện. Nhưng chiến thắng Kỷ Dậu mãi mãi là biểu tượng của tinh thần quật cường và tài thao lược thiên tài của dân tộc Việt Nam."
+        ]
+      }
+    ],
+    game: {
+      title: "Bạn Là Vua Quang Trung — 1788",
+      scenes: [
+        {
+          id: 's1',
+          quiz: {
+            question: "Quang Trung đại phá quân Thanh vào năm nào và ngày nào?",
+            options: ["Mùng 5 Tết Mậu Thân 1788", "Mùng 5 Tết Kỷ Dậu 1789", "Mùng 1 Tết Canh Tuất 1790", "Ngày 30 tháng Chạp 1788"],
+            correct: 1,
+            image: "daiphaquanthanh.png"
+          },
+          text: ["Tháng 12/1788 — 29 vạn quân Thanh đã chiếm Thăng Long. Quân ta ít hơn nhiều. Các tướng sĩ lo lắng nhìn bạn — vua Quang Trung — chờ quyết định."],
+          choices: [
+            { label: "Hành quân thần tốc ra Bắc ngay, đánh bất ngờ đêm Giao thừa", next: 's_good1', points: 20, explanation: "✨ Đây chính xác là quyết định thiên tài của Quang Trung!" },
+            { label: "Chờ mùa xuân, tập hợp thêm quân rồi mới đánh", next: 's_bad1', points: 5, explanation: "⚠️ Chờ đợi sẽ cho địch thêm thời gian củng cố phòng thủ" },
+            { label: "Đàm phán với nhà Thanh, xin hoà hoãn", next: 's_bad2', points: 0, explanation: "❌ Quang Trung không bao giờ khuất phục trước kẻ xâm lược!" }
+          ]
+        },
+        {
+          id: 's_bad1',
+          outcome: {
+            type: 'bad',
+            text: '⚠️ Chờ đợi là sai lầm! Địch đang củng cố phòng thủ, tuyển thêm quân. Thời cơ vàng đang qua đi từng ngày!',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+              <strong>💡 Bài học:</strong> Quang Trung hiểu rằng yếu tố bất ngờ là vũ khí mạnh nhất. Càng chờ, địch càng mạnh — phải hành động ngay!
+            </div>`
+          },
+          choices: [{ label: "Quyết đoán — hành quân ngay lập tức!", next: 's_good1', points: 10 }]
+        },
+        {
+          id: 's_bad2',
+          outcome: {
+            type: 'bad',
+            text: '❌ Quang Trung không bao giờ cầu hòa khi đất nước bị xâm lược! "Đánh cho nó phiến giáp bất hoàn!"',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+              <strong>💡 Lịch sử:</strong> Quang Trung chọn con đường đánh thẳng, đánh nhanh — không một phút do dự trước kẻ thù xâm lược.
+            </div>`
+          },
+          choices: [{ label: "Đứng dậy — cầm gươm ra trận!", next: 's_good1', points: 10 }]
+        },
+        {
+          id: 's_good1',
+          outcome: {
+            type: 'good',
+            text: '✨ Xuất sắc! Quân ta hành quân thần tốc, dùng chiến thuật cáng để quân vừa đi vừa nghỉ. Địch hoàn toàn không hay biết!',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#d4edda;border-radius:8px;font-size:14px;">
+              <strong>🏆 Đúng rồi!</strong> Quang Trung hành quân từ Huế ra Thăng Long — hàng trăm km — chỉ trong vài ngày. Tốc độ kinh hoàng khiến địch không kịp phản ứng!
+            </div>`
+          },
+          choices: [
+            { label: "Tấn công đêm Giao thừa khi địch đang ăn Tết", next: 's_good2', points: 20, explanation: "🎯 Đánh khi địch chủ quan nhất — thiên tài quân sự!" },
+            { label: "Chờ sáng mùng 1 Tết rồi tấn công chính diện", next: 's_bad3', points: 8, explanation: "⚠️ Mất yếu tố bất ngờ quan trọng nhất" }
+          ]
+        },
+        {
+          id: 's_bad3',
+          outcome: {
+            type: 'bad',
+            text: '⚠️ Mất yếu tố bất ngờ! Địch đã kịp phòng thủ, tổn thất của ta tăng lên nhiều.',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+              <strong>💡 Chiến lược:</strong> Quang Trung chọn đêm Giao thừa — lúc địch say sưa nhất, mất cảnh giác nhất. Đây là đỉnh cao của nghệ thuật quân sự!
+            </div>`
+          },
+          choices: [{ label: "Thay đổi — tấn công ngay đêm nay!", next: 's_good2', points: 10 }]
+        },
+        {
+          id: 's_good2',
+          outcome: {
+            type: 'good',
+            text: '🔥 Đêm Giao thừa — quân Tây Sơn như vũ bão! Đồn Gián Khẩu thất thủ, đồn Hà Hồi đầu hàng không kháng cự. Tiến thẳng Đống Đa!',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#d4edda;border-radius:8px;font-size:14px;">
+              <strong>🏆 Kỳ tích!</strong> Đồn Hà Hồi hạ chỉ trong một đêm mà không tốn một mũi tên — nhờ chiến thuật uy hiếp tâm lý của Quang Trung.
+            </div>`
+          },
+          choices: [
+            { label: "Tấn công thẳng đồn Đống Đa — đập tan cứ điểm chính", next: 's_win', points: 25, explanation: "⚔️ Đánh vào tim địch — táo bạo và quyết đoán!" },
+            { label: "Bao vây đồn Đống Đa, chờ địch tự sụp đổ", next: 's_bad4', points: 8, explanation: "⏳ Mất thời gian quý báu" }
+          ]
+        },
+        {
+          id: 's_bad4',
+          outcome: {
+            type: 'bad',
+            text: '⚠️ Bao vây lâu dài cho địch thời gian điều quân tiếp viện! Quang Trung không chọn cách này.',
+            detailed: `<div style="margin:10px 0;padding:12px;background:#fff3cd;border-radius:8px;font-size:14px;">
+              <strong>💡 Phong cách Quang Trung:</strong> Đánh nhanh, đánh mạnh, đánh dứt điểm — không cho địch thời gian thở!
+            </div>`
+          },
+          choices: [{ label: "Xông thẳng vào — đánh dứt điểm!", next: 's_win', points: 12 }]
+        },
+        {
+          id: 's_win',
+          text: [
+            "Sáng mùng 5 Tết — quân Tây Sơn xông thẳng vào đồn Đống Đa! Tướng giặc Sầm Nghi Đống tử trận, quân Thanh vỡ trận!",
+            "Tôn Sĩ Nghị hoảng loạn bỏ cả ấn tín, tháo chạy qua cầu phao sông Hồng. Cầu gãy — hàng vạn quân Thanh chết đuối!",
+            "Chỉ 5 ngày — Thăng Long hoàn toàn giải phóng! Quân Thanh đại bại!"
+          ],
+          isEnd: true,
+          endTitle: "🔥 Đại Thắng Mùa Xuân Kỷ Dậu 1789!",
+          endDesc: "Bạn đã chỉ huy Quang Trung đánh tan 29 vạn quân Thanh chỉ trong 5 ngày — một trong những chiến thắng vĩ đại nhất lịch sử nhân loại!"
+        }
+      ]
+    },
+    nextId: 4,
+    nextTitle: "Hai Bà Trưng khởi nghĩa"
+  },
+
+  4: {
+    era: "Năm 40",
+    title: "Hai Bà Trưng — Khởi Nghĩa Chống Ách Đô Hộ",
+    heroImg: "images/haibatrung2.jpg",
+    meta: ["👸 Nữ anh hùng", "📍 Mê Linh", "🕐 5 phút đọc"],
+    lead: "Năm 40 sau Công nguyên, hai chị em Trưng Trắc và Trưng Nhị phất cờ khởi nghĩa, trở thành biểu tượng bất diệt của tinh thần yêu nước Việt Nam.",
+    sections: [
+      {
+        title: "Ngọn Lửa Căm Hờn",
+        paragraphs: [
+          "Dưới ách đô hộ của nhà Hán, người Việt bị bóc lột nặng nề. Tô Định — thái thú tàn bạo — ra sức vơ vét của cải, đàn áp dã man người dân Giao Chỉ.",
+          "Trưng Trắc, con gái lạc tướng Mê Linh, có chồng là Thi Sách — một hào kiệt yêu nước. Khi Tô Định giết chết Thi Sách để dập tắt mầm mống nổi dậy, ngọn lửa căm hờn trong lòng Trưng Trắc bùng cháy."
+        ]
+      },
+      {
+        title: "Phất Cờ Khởi Nghĩa",
+        img: "images/phatco.jpg",
+        paragraphs: [
+          "Năm 40, Trưng Trắc cùng em gái Trưng Nhị tập hợp nghĩa quân, phất cờ khởi nghĩa tại Hát Môn (Hà Nội ngày nay). Hàng chục nữ tướng từ khắp nơi kéo về tụ nghĩa.",
+          "Nghĩa quân như nước vỡ bờ, đánh chiếm 65 thành trì. Tô Định hoảng sợ bỏ chạy về Trung Quốc. Trưng Trắc lên ngôi vương, đóng đô ở Mê Linh, xưng là Trưng Vương."
+        ],
+        quote: {
+          text: "\"Một xin rửa sạch nước thù. Hai xin đem lại nghiệp xưa họ Hùng. Ba kẻo oan ức lòng chồng. Bốn xin vẹn vẹn sở công lênh này.\"",
+          cite: "— Lời thề của Trưng Trắc"
+        }
+      },
+      {
+        title: "Biểu Tượng Muôn Đời",
+        img: "images/haibatrung.jpg",
+        paragraphs: [
+          "Nền độc lập kéo dài được hơn 3 năm. Năm 43, nhà Hán sai danh tướng Mã Viện đem 2 vạn quân sang đánh. Sau nhiều trận kịch chiến, Hai Bà Trưng anh dũng hy sinh.",
+          "Dù thất bại, Hai Bà Trưng đã trở thành biểu tượng bất diệt của tinh thần yêu nước và ý chí quật cường của phụ nữ Việt Nam. Ngày giỗ Hai Bà (mùng 6 tháng 2 âm lịch) được tổ chức long trọng hàng năm."
+        ]
+      }
+    ],
+    nextId: 5,
+nextTitle: "Lê Lợi — 10 Năm Kháng Chiến"
+  },
+
+  5: {
+    era: "1418 - 1427",
+    title: "Lê Lợi — 10 Năm Kháng Chiến Chống Quân Minh",
+    heroImg: "images/leloi2.jpg",
+    meta: ["⚔️ Khởi nghĩa Lam Sơn", "📍 Lam Sơn - Thanh Hóa", "🕐 8 phút đọc"],
+    lead: "Từ núi rừng Lam Sơn, người anh hùng áo vải Lê Lợi đã lãnh đạo cuộc kháng chiến 10 năm gian khổ, đánh đuổi quân Minh giành lại độc lập.",
+    sections: [
+      {
+        title: "Gươm Thần Hồ Hoàn Kiếm",
+        paragraphs: [
+          "Tương truyền, khi đang đánh cá trên hồ Lục Thủy, Lê Lợi kéo được một lưỡi gươm thần. Sau đó lại nhặt được chuôi gươm. Từ khi có gươm thần, nghĩa quân Lam Sơn đánh đâu thắng đó.",
+          "Năm 1418, Lê Lợi chính thức phát động khởi nghĩa Lam Sơn. Những ngày đầu vô cùng gian khổ — có lúc nghĩa quân phải ăn rau rừng, uống nước suối để sống qua ngày."
+        ]
+      },
+      {
+        title: "10 Năm Gian Khổ",
+        img: "images/le-loi.PNG",
+        paragraphs: [
+          "Quân Minh đông gấp nhiều lần, vũ khí tối tân hơn. Nghĩa quân Lam Sơn phải áp dụng chiến thuật du kích — đánh rồi rút, không giao chiến trực tiếp khi bất lợi.",
+          "Nhiều lần bị vây hãm, các tướng sĩ phải hy sinh để bảo vệ Lê Lợi. Lê Lai đã giả làm Lê Lợi, mặc áo bào của chủ tướng ra chiến đấu và hy sinh, đánh lừa quân Minh để Lê Lợi thoát vây."
+        ],
+        quote: {
+          text: "\"Nhân nghĩa chi cử, yếu tại an dân. Điếu phạt chi sư, mạc tiên khứ bạo.\"",
+          cite: "— Bình Ngô đại cáo, Nguyễn Trãi"
+        }
+      },
+      {
+        title: "Đại Thắng, Giải Phóng Đất Nước",
+        img: "images/LeLoi.jpg",
+        paragraphs: [
+          "Từ năm 1424, nghĩa quân Lam Sơn chuyển sang thế tấn công. Được sự giúp sức của quân sư Nguyễn Trãi, Lê Lợi liên tiếp giành chiến thắng, giải phóng từng vùng đất.",
+          "Năm 1427, quân Minh bị vây hãm ở Đông Quan (Hà Nội). Lê Lợi cho phép chúng rút quân về nước trong danh dự — một quyết định thể hiện tầm nhìn chính trị và lòng nhân ái của người anh hùng.",
+          "Năm 1428, Lê Lợi lên ngôi vua, lập ra nhà Lê — triều đại tồn tại lâu nhất trong lịch sử Việt Nam. Gươm thần được trả lại cho Rùa Vàng ở hồ Hoàn Kiếm — tên hồ còn lưu giữ đến ngày nay."
+        ]
+      }
+    ],
+    nextId: 6,
+    nextTitle: "Đinh Bộ Lĩnh dẹp loạn 12 sứ quân"
+  },
+
+  6: {
+    era: "Năm 968",
+    title: "Đinh Bộ Lĩnh — Dẹp Loạn 12 Sứ Quân",
+    heroImg: "images/dinhbolinh2.jpg",
+    meta: ["👑 Thống nhất đất nước", "📍 Hoa Lư - Ninh Bình", "🕐 6 phút đọc"],
+    lead: "Từ cậu bé chăn trâu đất Hoa Lư, Đinh Bộ Lĩnh trở thành vị vua thống nhất giang sơn, chấm dứt thời kỳ loạn 12 sứ quân.",
+    sections: [
+      {
+        title: "Tuổi Thơ Của Vị Vua Tương Lai",
+        paragraphs: [
+          "Đinh Bộ Lĩnh sinh tại Hoa Lư, Ninh Bình. Thuở nhỏ, ông thường cùng các bạn chăn trâu bày trò trận giả. Cậu bé Bộ Lĩnh luôn được chọn làm \"chỉ huy\", dùng bông lau làm cờ hiệu.",
+          "Sau khi Ngô Quyền mất năm 944, đất nước rơi vào cảnh loạn lạc. 12 thủ lĩnh địa phương nổi lên chiếm đất, đánh nhau liên miên — lịch sử gọi là \"Loạn 12 sứ quân\"."
+        ]
+      },
+      {
+        title: "Dẹp Loạn Thống Nhất",
+        img: "images/dbldeploan.jpg",
+        paragraphs: [
+          "Được sự ủng hộ của nhân dân vùng Hoa Lư, Đinh Bộ Lĩnh chiêu mộ nghĩa quân, lần lượt đánh dẹp từng sứ quân. Ông vừa dùng sức mạnh quân sự vừa dùng ngoại giao và ân đức để thu phục lòng người.",
+          "Chỉ trong vài năm, tất cả 12 sứ quân đều quy phục hoặc bị tiêu diệt. Đất nước được thống nhất lần đầu tiên sau nhiều thập kỷ hỗn loạn."
+        ],
+        quote: {
+          text: "\"Đinh Tiên Hoàng dẹp loạn 12 sứ quân, thống nhất đất nước, đặt tên nước là Đại Cồ Việt — nhà nước phong kiến độc lập đầu tiên của người Việt.\"",
+          cite: "— Đại Việt sử ký toàn thư"
+        }
+      },
+      {
+        title: "Lập Quốc Đại Cồ Việt",
+        img: "images/dbllapdaiquoc.jpg",
+        paragraphs: [
+          "Năm 968, Đinh Bộ Lĩnh lên ngôi Hoàng đế, đặt tên nước là Đại Cồ Việt, đóng đô tại Hoa Lư. Đây là nhà nước phong kiến độc lập đầu tiên của người Việt sau hàng trăm năm.",
+          "Ông đặt ra các quy định luật pháp nghiêm khắc để duy trì trật tự, xây dựng quân đội hùng mạnh bảo vệ đất nước. Công lao dẹp loạn và thống nhất giang sơn của Đinh Tiên Hoàng được lịch sử ghi nhận mãi mãi."
+        ]
+      }
+    ],
+    nextId: 7,
+    nextTitle: "Hồ Chí Minh — Tuyên Ngôn Độc Lập"
+  },
+  7: {
+    era: "Năm 1945",
+    title: "Hồ Chí Minh — Tuyên Ngôn Độc Lập 2/9/1945",
+    heroImg: "images/hochiminh2.jpg",
+    meta: ["🇻🇳 Độc lập dân tộc", "📍 Ba Đình - Hà Nội", "🕐 6 phút đọc"],
+    lead: "Ngày 2/9/1945, tại Quảng trường Ba Đình lịch sử, Chủ tịch Hồ Chí Minh đọc Tuyên ngôn độc lập — khai sinh nước Việt Nam Dân chủ Cộng hòa.",
+    sections: [
+      {
+        title: "30 Năm Tìm Đường Cứu Nước",
+        paragraphs: [
+          "Năm 1911, người thanh niên Nguyễn Tất Thành xuống con tàu Latouche-Tréville tại cảng Sài Gòn, bắt đầu hành trình 30 năm bôn ba tìm đường cứu nước.",
+          "Qua Pháp, Liên Xô, Trung Quốc, Thái Lan... ông học hỏi, hoạt động cách mạng, tìm con đường giải phóng dân tộc khỏi ách thực dân."
+        ]
+      },
+      {
+        title: "Cách Mạng Tháng Tám 1945",
+        img: "images/hcm-thang8.jpg",
+        paragraphs: [
+          "Tháng 8/1945, thời cơ đến khi Nhật đầu hàng Đồng minh. Hồ Chí Minh phát lệnh Tổng khởi nghĩa. Chỉ trong vài ngày, chính quyền cách mạng được thành lập trên cả nước.",
+          "Vua Bảo Đại thoái vị, trao ấn kiếm cho đại diện chính phủ lâm thời — chấm dứt chế độ phong kiến hàng ngàn năm của Việt Nam."
+        ],
+        quote: {
+          text: "\"Không có gì quý hơn độc lập, tự do.\"",
+          cite: "— Chủ tịch Hồ Chí Minh"
+        }
+      },
+      {
+        title: "Tuyên Ngôn Độc Lập 2/9/1945",
+        img: "images/hcm-avatar.jpg",
+        paragraphs: [
+          "Ngày 2/9/1945, hàng chục vạn người dân Hà Nội tập trung tại Quảng trường Ba Đình. Chủ tịch Hồ Chí Minh đọc Tuyên ngôn độc lập, khai sinh nước Việt Nam Dân chủ Cộng hòa.",
+          "Mở đầu Tuyên ngôn, Người trích dẫn Tuyên ngôn độc lập Mỹ 1776 và Tuyên ngôn nhân quyền Pháp 1789 — khẳng định quyền độc lập của dân tộc Việt Nam trước toàn thế giới.",
+          "Đây là một trong những khoảnh khắc lịch sử vĩ đại nhất của dân tộc Việt Nam — mở ra kỷ nguyên độc lập, tự do sau gần 100 năm dưới ách thực dân."
+        ]
+      }
+    ],
+    nextId: 8,
+    nextTitle: "Võ Nguyên Giáp — Điện Biên Phủ"
+  },
+  8: {
+    era: "Năm 1954",
+    title: "Võ Nguyên Giáp — Chiến Thắng Điện Biên Phủ",
+    heroImg: "images/vonguyengiap2.jpg",
+    meta: ["⭐ Đại tướng huyền thoại", "📍 Điện Biên Phủ", "🕐 7 phút đọc"],
+    lead: "Trận Điện Biên Phủ 1954 — chiến thắng quân sự vĩ đại nhất thế kỷ 20, chấm dứt 80 năm đô hộ của thực dân Pháp tại Việt Nam.",
+    sections: [
+      {
+        title: "Pháp Xây Dựng Pháo Đài Bất Khả Xâm Phạm",
+        paragraphs: [
+          "Cuối 1953, Pháp tập trung 16.000 quân tinh nhuệ tại Điện Biên Phủ — một lòng chảo giữa núi rừng Tây Bắc — xây dựng hệ thống cứ điểm kiên cố, tự tin đây là pháo đài bất khả xâm phạm.",
+          "Tướng Navarre tuyên bố: \"Điện Biên Phủ là cái bẫy để nghiền nát Việt Minh\". Thế giới chờ đợi quân Pháp nghiền nát đối thủ."
+        ]
+      },
+      {
+        title: "Quyết Định Thiên Tài",
+        img: "images/VoNguyenGiap.jpg",
+        paragraphs: [
+          "Đại tướng Võ Nguyên Giáp ban đầu chọn phương án \"đánh nhanh thắng nhanh\". Nhưng sau khi cân nhắc kỹ, ông quyết định thay đổi hoàn toàn: \"đánh chắc tiến chắc\".",
+          "Quyết định này cứu hàng nghìn sinh mạng chiến sĩ và là bước ngoặt dẫn đến đại thắng. Hàng vạn dân công kéo pháo bằng tay qua núi rừng hiểm trở — một kỳ tích chưa từng có."
+        ],
+        quote: {
+          text: "\"Chắc thắng mới đánh, không chắc thắng không đánh.\"",
+          cite: "— Đại tướng Võ Nguyên Giáp"
+        }
+      },
+      {
+        title: "56 Ngày Đêm Lịch Sử",
+        img: "images/56ngaydem.jpg",
+        paragraphs: [
+          "Từ 13/3 đến 7/5/1954, quân và dân Việt Nam chiến đấu 56 ngày đêm liên tục. Từng cứ điểm của Pháp lần lượt thất thủ.",
+          "Chiều 7/5/1954, lá cờ Quyết chiến Quyết thắng tung bay trên nóc hầm tướng De Castries. Toàn bộ 16.000 quân Pháp đầu hàng.",
+          "Chiến thắng Điện Biên Phủ chấm dứt 80 năm đô hộ của thực dân Pháp, buộc Pháp ký Hiệp định Genève, công nhận độc lập của Việt Nam."
+        ]
+      }
+    ],
+    nextId: 9,
+    nextTitle: "Bà Triệu — Nữ Tướng Cưỡi Voi"
+  },
+  9: {
+    era: "Năm 248",
+    title: "Bà Triệu — Nữ Tướng Cưỡi Voi Đánh Giặc",
+    heroImg: "images/ba-trieu.WEBP",
+    meta: ["👸 Nữ anh hùng", "📍 Thanh Hóa", "🕐 5 phút đọc"],
+    lead: "Năm 248, người con gái đất Thanh Hóa với bộ giáp vàng, cưỡi voi xông trận, dõng dạc lãnh đạo nghĩa quân chống lại ách đô hộ tàn bạo của quân Đông Ngô.",
+    sections: [
+      {
+        title: "Người Con Gái Núi Rừng Thanh Hóa",
+        paragraphs: [
+          "Triệu Thị Trinh sinh tại vùng núi Thanh Hóa. Từ nhỏ đã nổi tiếng dũng cảm, khỏe mạnh và có chí khí phi thường.",
+          "Khi anh trai khuyên lấy chồng, bà khảng khái trả lời: \"Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ, chém cá kình ở biển Đông, đánh đuổi quân Ngô, giành lại giang sơn, cởi ách nô lệ, chứ không chịu khom lưng làm tỳ thiếp người ta!\""
+        ]
+      },
+      {
+        title: "Nữ Tướng Uy Dũng",
+        img: "images/nutuong.jpg",
+        paragraphs: [
+          "Năm 248, Bà Triệu cùng anh trai Triệu Quốc Đạt phát động khởi nghĩa. Bà mặc áo giáp vàng, đi guốc ngà, cưỡi voi chiến xông vào trận địa.",
+          "Nghĩa quân đánh thắng nhiều trận, khiến quân Đông Ngô khiếp sợ. Quân giặc truyền nhau: \"Dễ trị hổ dữ hơn đối đầu với Bà Triệu\"."
+        ],
+        quote: {
+          text: "\"Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ, chém cá kình ở biển Đông, đánh đuổi quân Ngô, giành lại giang sơn!\"",
+          cite: "— Triệu Thị Trinh"
+        }
+      },
+      {
+        title: "Biểu Tượng Bất Diệt",
+        img: "images/bieutuong.jpg",
+        paragraphs: [
+          "Sau 6 tháng chiến đấu kiên cường, trước sức mạnh áp đảo của giặc, Bà Triệu anh dũng hy sinh trên núi Tùng (Thanh Hóa) khi mới 23 tuổi.",
+          "Dù thất bại, Bà Triệu đã trở thành biểu tượng bất diệt của tinh thần yêu nước và ý chí quật cường của phụ nữ Việt Nam.",
+          "Nhân dân lập đền thờ bà tại nhiều nơi. Câu nói của bà về khát vọng tự do còn vang vọng mãi đến ngày nay."
+        ]
+      }
+    ],
+   
+nextId: 10,
+    nextTitle: "Lý Thường Kiệt — Nam Quốc Sơn Hà"
+  },
+  10: {
+    era: "Năm 1077",
+    title: "Lý Thường Kiệt — Nam Quốc Sơn Hà",
+    heroImg: "images/lythuongkiet2.jpg",
+    meta: ["⚔️ Trận chiến hào hùng", "📍 Sông Như Nguyệt", "🕐 6 phút đọc"],
+    lead: "Năm 1077, trên phòng tuyến sông Như Nguyệt, Lý Thường Kiệt đọc vang bài thơ thần — lần đầu tiên trong lịch sử khẳng định chủ quyền đất nước bằng thơ.",
+    sections: [
+      {
+        title: "Quân Tống Kéo Sang",
+        img: "images/LyThuongKiet.jpg",
+        paragraphs: [
+          "Năm 1075, nhà Tống sai 30 vạn quân tràn sang xâm lược Đại Việt.",
+          "Lý Thường Kiệt được giao trọng trách bảo vệ đất nước, xây dựng phòng tuyến dọc sông Như Nguyệt."
+        ]
+      },
+      {
+        title: "Bài Thơ Thần Lịch Sử",
+        img: "images/ly-thai-to.png",
+        paragraphs: [
+          "Một đêm, từ đền thờ thần sông vang lên tiếng thơ sang sảng khiến quân sĩ hai bên đều nghe thấy.",
+          "Bài thơ khẳng định đất nước Việt Nam là của người Việt — được coi là Tuyên ngôn độc lập đầu tiên."
+        ],
+        quote: {
+          text: "\"Nam quốc sơn hà Nam đế cư. Tiệt nhiên định phận tại thiên thư.\"",
+          cite: "— Bài thơ thần, tương truyền của Lý Thường Kiệt"
+        }
+      },
+      {
+        title: "Đại Thắng Sông Như Nguyệt",
+        img: "images/songnhunguyet.jpg",
+        paragraphs: [
+          "Quân Tống nhiều lần cố vượt sông nhưng đều bị đẩy lui.",
+          "Quân Tống đại bại, rút về nước. Chiến thắng bảo vệ vững chắc nền độc lập Đại Việt."
+        ]
+      }
+    ],
+  // TÌM ĐOẠN NÀY:
+   nextId: 11,
+    nextTitle: "Võ Thị Sáu — Người Con Gái Đất Đỏ"
+  }
+  ,11: {
+    era: "Năm 1952",
+    title: "Võ Thị Sáu — Người Con Gái Đất Đỏ",
+    heroImg: "images/vothisau2.jpg",
+    meta: ["🌺 Nữ anh hùng", "📍 Côn Đảo", "🕐 5 phút đọc"],
+    lead: "Năm 1952, cô gái 19 tuổi người Đất Đỏ hiên ngang bước ra pháp trường Côn Đảo, cài hoa vào tóc và hát vang bài ca cách mạng — trở thành biểu tượng bất tử của tuổi trẻ Việt Nam.",
+    sections: [
+      {
+        title: "Cô Gái Đất Đỏ",
+        img: "images/VoThiSau.jpg",
+        paragraphs: [
+          "Võ Thị Sáu sinh năm 1933 tại làng Đất Đỏ, tỉnh Bà Rịa — vùng đất giàu truyền thống yêu nước. Cha mẹ cô là những người lao động nghèo, nhưng ngọn lửa yêu nước đã cháy trong cô từ rất sớm.",
+          "Từ năm 14 tuổi, cô đã bí mật tham gia hoạt động cách mạng — dẫn đường cho bộ đội, làm liên lạc, trinh sát cho lực lượng kháng chiến Việt Minh chống thực dân Pháp.",
+          "Năm 1950, sau một trận đánh, Võ Thị Sáu bị giặc Pháp bắt. Dù bị tra tấn dã man trong nhiều tháng, cô không khai nửa lời về đồng đội hay cơ sở cách mạng."
+        ]
+      },
+      {
+        title: "Hiên Ngang Trước Kẻ Thù",
+        img: "images/con-dao-phap-truong.jpg",
+        paragraphs: [
+          "Thực dân Pháp đưa cô ra tòa án binh và kết án tử hình — dù cô chưa đủ 18 tuổi theo chính luật pháp của chúng. Bản án gây phẫn nộ ngay cả trong dư luận Pháp lúc bấy giờ.",
+          "Năm 1952, chúng bí mật đưa cô ra Côn Đảo để hành quyết, sợ nếu xử ở đất liền sẽ gây làn sóng phản đối. Nhà tù Côn Đảo — địa ngục trần gian nơi hàng nghìn chiến sĩ cách mạng bị giam cầm và tra tấn.",
+          "Trên đường ra pháp trường, Võ Thị Sáu bình thản cài hoa vào tóc, cất tiếng hát Tiến quân ca vang vọng giữa đảo xa. Cô hô vang: \"Đả đảo thực dân Pháp! Kháng chiến thắng lợi muôn năm!\" — khiến chính những tên lính hành quyết phải run sợ."
+        ],
+        quote: {
+          text: "\"Yêu nước, thương dân không phải là tội. Tôi không có tội!\"",
+          cite: "— Võ Thị Sáu trước tòa án thực dân"
+        }
+      },
+      {
+        title: "Biểu Tượng Bất Tử",
+        img: "images/den-tho-vo-thi-sau.jpg",
+        paragraphs: [
+          "Võ Thị Sáu hy sinh ngày 23/1/1952 khi mới 19 tuổi. Nhà nước Việt Nam truy tặng cô danh hiệu Anh hùng Lực lượng vũ trang nhân dân — một trong những người trẻ nhất được nhận danh hiệu cao quý này.",
+          "Ngôi mộ của cô tại nghĩa trang Hàng Dương, Côn Đảo trở thành nơi hành hương của hàng triệu người. Người dân tin rằng cô rất linh thiêng — ngày nào mộ cũng đầy hoa tươi, nhang khói không tắt.",
+          "Tên cô được đặt cho hàng trăm trường học, con đường trên khắp Việt Nam. Câu chuyện về cô gái Đất Đỏ 19 tuổi hiên ngang trước họng súng kẻ thù mãi mãi là nguồn cảm hứng bất tận cho các thế hệ trẻ Việt Nam."
+        ]
+      }
+    ],
+ nextId: 12,
+    nextTitle: "Hùng Vương — Dựng Nước Văn Lang"
+  },
+ 12: { 
+  era: "~2879 TCN — 258 TCN",
+  title: "Hùng Vương — Dựng Nước Văn Lang",
+  heroImg: "images/anduong.jpg",
+  meta: ["🐉 Huyền sử dân tộc", "📍 Phong Châu - Phú Thọ", "🕐 7 phút đọc"],
+  lead: "Hơn 4000 năm trước, trên mảnh đất bên dòng sông Hồng, 18 đời Hùng Vương đã dựng nên nhà nước đầu tiên của người Việt — nước Văn Lang, cái nôi của nền văn minh lúa nước rực rỡ.",
+  sections: [
+    {
+      title: "Con Rồng Cháu Tiên — Nguồn Gốc Huyền Thoại",
+      paragraphs: [
+        "Theo truyền thuyết, Lạc Long Quân — con Rồng từ biển cả — kết duyên cùng Âu Cơ — tiên nữ từ núi cao. Họ sinh ra bọc trăm trứng, nở trăm người con — tổ tiên của trăm họ người Việt ngày nay.",
+        "Lạc Long Quân và Âu Cơ chia tay: năm mươi con theo cha xuống biển, năm mươi con theo mẹ lên núi. Người con trưởng theo Âu Cơ lên Phong Châu, được tôn làm Hùng Vương — vị vua đầu tiên của người Việt."
+      ]
+    },
+    {
+      title: "Nước Văn Lang Ra Đời",
+      img: "images/hungvuong1.jpg",
+      paragraphs: [
+        "Hùng Vương đặt tên nước là Văn Lang, đóng đô tại Phong Châu (Phú Thọ ngày nay), chia đất nước thành 15 bộ. Đây là nhà nước đầu tiên trong lịch sử người Việt — ra đời khoảng năm 2879 TCN.",
+        "Bộ máy nhà nước gồm: Hùng Vương (vua), Lạc hầu (quan văn), Lạc tướng (quan võ và tù trưởng địa phương). Nền kinh tế chủ yếu dựa vào trồng lúa nước, đánh cá và chăn nuôi."
+      ],
+      quote: {
+        text: "\"Các Vua Hùng đã có công dựng nước — Bác cháu ta phải cùng nhau giữ lấy nước.\"",
+        cite: "— Chủ tịch Hồ Chí Minh, 1954 tại Đền Hùng"
+      }
+    },
+    {
+      title: "Văn Hóa Đông Sơn — Trống Đồng Huyền Thoại",
+      img: "images/trong-dong.png",
+      paragraphs: [
+        "Thời Hùng Vương gắn liền với nền văn hóa Đông Sơn rực rỡ — mà biểu tượng tiêu biểu là trống đồng. Trống đồng không chỉ là nhạc cụ mà còn là biểu tượng quyền lực, được dùng trong các lễ hội và nghi lễ tôn giáo.",
+        "Trống đồng Ngọc Lũ — được tìm thấy tại Hà Nam — là trống đẹp và nguyên vẹn nhất, được coi là Quốc bảo của Việt Nam. Hoa văn trên mặt trống khắc họa toàn bộ cuộc sống của người Lạc Việt: lễ hội, thuyền chiến, chim Lạc bay."
+      ]
+    },
+    {
+      title: "Bánh Chưng Bánh Giầy — Trí Tuệ Dân Gian",
+      img: "images/vanlang.jfif",
+      paragraphs: [
+        "Hùng Vương thứ 6 muốn tìm người xứng đáng truyền ngôi, ra điều kiện: ai dâng lễ vật ngon nhất sẽ được truyền ngôi báu. Hoàng tử Lang Liêu nghèo nhất, được thần báo mộng làm hai loại bánh từ gạo nếp.",
+        "Bánh chưng hình vuông tượng trưng cho Đất, bánh giầy hình tròn tượng trưng cho Trời — thể hiện triết lý 'Trời tròn Đất vuông' sâu sắc. Hùng Vương truyền ngôi cho Lang Liêu vì hiểu rằng: không có gì quý bằng hạt gạo nuôi sống dân tộc.",
+        "Bánh chưng bánh giầy tồn tại hơn 2000 năm đến ngày nay — là một trong những phong tục lâu đời nhất còn được lưu giữ nguyên vẹn trên thế giới."
+      ]
+    },
+    {
+      title: "Di Sản Ngàn Năm Của Hùng Vương",
+      paragraphs: [
+        "Năm 2012, UNESCO công nhận 'Tín ngưỡng thờ cúng Hùng Vương ở Phú Thọ' là Di sản văn hóa phi vật thể đại diện của nhân loại. Ngày 10/3 Âm lịch hàng năm là Giỗ Tổ Hùng Vương — ngày quốc lễ thiêng liêng nhất.",
+        "Hàng triệu người Việt hành hương về Đền Hùng mỗi năm — từ khắp trong nước và kiều bào nước ngoài — để tưởng nhớ tổ tiên. Câu nói 'Con Rồng Cháu Tiên' và 'đồng bào' (cùng một bọc) nhắc nhở người Việt về nguồn cội chung và tinh thần đoàn kết."
+      ]
+    }
+  ],
+  nextId: 13,
+  nextTitle: "An Dương Vương — Thành Cổ Loa & Nỏ Thần"
+},
+13: {
+  era: "257 TCN — 179 TCN",
+  title: "An Dương Vương — Thành Cổ Loa & Bi Kịch Nỏ Thần",
+  heroImg: "images/adv1.jpg",
+  meta: ["🏯 Dựng nước Âu Lạc", "📍 Cổ Loa - Đông Anh, Hà Nội", "🕐 10 phút đọc"],
+  lead: "Năm 257 TCN, An Dương Vương xây thành Cổ Loa kỳ vĩ, chế nỏ thần bách phát bách trúng — nhưng chính sự tin tưởng mù quáng đã dẫn đến bi kịch mất nước đau thương nhất lịch sử.",
+  sections: [
+    {
+      title: "Dựng Nước Âu Lạc",
+      paragraphs: [
+        "Năm 257 TCN, Thục Phán liên kết các bộ tộc Lạc Việt và Âu Việt, đánh bại vua Hùng Vương thứ 18, lập ra nước Âu Lạc, xưng là An Dương Vương. Đây là nhà nước kế tiếp sau Văn Lang — bước tiến lớn trong lịch sử dựng nước.",
+        "Thách thức đầu tiên và lớn nhất: cần một tòa thành kiên cố để phòng thủ trước mối đe dọa từ phương Bắc. Thần Kim Quy hiện ra mách bảo địa thế vùng Phong Khê — nơi sông núi hội tụ, linh khí tụ lại."
+      ]
+    },
+    {
+      title: "Thành Cổ Loa — Kỳ Công Kiến Trúc",
+      img: "images/ditichcoloa.jpg",
+      // ẢNH GỢI Ý: ảnh aerial/drone nhìn từ trên xuống thành Cổ Loa để thấy hình trôn ốc
+      // Link tham khảo: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Co_Loa_Citadel.jpg/1280px-Co_Loa_Citadel.jpg
+      paragraphs: [
+        "Theo lời thần Kim Quy, An Dương Vương hạ lệnh xây thành theo hình trôn ốc với 9 vòng lũy đất, chu vi hơn 8 km. Giặc ngoại xâm nhiều lần phá đi, Kim Quy giúp xây lại — sau hàng năm trời gian khổ, Thành Cổ Loa mới hoàn thành.",
+        "Thành có 3 vòng hào nước bao quanh, bố trí xoáy trôn ốc cực kỳ khó công phá. Đây là kinh đô đầu tiên của nhà nước phong kiến Việt Nam — kiệt tác kiến trúc quân sự vượt thời đại."
+      ],
+      quote: {
+        text: "\"Thành Cổ Loa 9 vòng lũy không thể bị phá từ bên ngoài — chỉ có thể sụp đổ từ bên trong.\"",
+        cite: "— Bài học lịch sử ngàn năm"
+      }
+    },
+
+    // ═══ SECTION MỚI 1 ═══
+    {
+      title: "Rùa Vàng Và Bí Ẩn Lẫy Nỏ Thần",
+      img: "images/advruavang.jpg",
+      // ẢNH GỢI Ý: tranh vẽ/minh họa cảnh Rùa Vàng nổi lên mặt nước trao vuốt cho An Dương Vương
+      // Link tham khảo: https://baotanglichsu.vn/DataFiles/2019/11/Images/ruavang.jpg
+      paragraphs: [
+        "Trước khi rời đi, thần Kim Quy — hiện thân của thần sông nước — đã tặng An Dương Vương một chiếc móng vuốt vàng óng. Đây không đơn thuần là vật trang sức, mà là linh vật chứa đựng sức mạnh của trời đất.",
+        "Tướng Cao Lỗ — nhà phát minh thiên tài của nước Âu Lạc — đã dùng móng vuốt thiêng mài nhọn làm lẫy nỏ. Chiếc lẫy nhỏ bé đó chính là linh hồn của cả cỗ nỏ: mỗi lần bắn có thể phóng ra hàng trăm mũi tên đồng cùng lúc.",
+        "Các nhà khảo cổ đã khai quật tại Cổ Loa hàng nghìn mũi tên đồng ba cạnh — bằng chứng thực tế về kho vũ khí khổng lồ của quân Âu Lạc. Công nghệ đúc đồng thời kỳ này đạt đỉnh cao của văn hóa Đông Sơn."
+      ]
+    },
+
+    // ═══ SECTION MỚI 2 ═══
+    {
+      title: "Cao Lỗ — Thiên Tài Bị Lãng Quên",
+      img: "images/advcaolo.jpg",
+      // ẢNH GỢI Ý: tranh minh họa Cao Lỗ đang chế tạo nỏ trong xưởng rèn
+      // hoặc ảnh mũi tên đồng ba cạnh khai quật tại Cổ Loa
+      // Link tham khảo: https://baotanglichsu.vn/DataFiles/mui-ten-dong-co-loa.jpg
+      paragraphs: [
+        "Ít ai biết đến Cao Lỗ — vị tướng tài ba đã chế tạo ra nỏ thần và thiết kế hệ thống phòng thủ Cổ Loa. Ông không chỉ là một võ tướng mà còn là nhà kỹ thuật xuất sắc, hiểu biết sâu về cơ học và luyện kim.",
+        "Bi kịch của Cao Lỗ là bị gian thần gièm pha, bị An Dương Vương nghi ngờ và đuổi đi trước khi Trọng Thủy sang ở rể. Nếu Cao Lỗ còn ở lại, bí mật nỏ thần chắc chắn sẽ được bảo vệ chặt chẽ hơn.",
+        "Dân gian tôn thờ Cao Lỗ như một vị thần. Đền thờ Cao Lỗ tại xã Cao Đức, huyện Gia Bình, tỉnh Bắc Ninh vẫn còn đến ngày nay — nơi người dân hương khói tưởng nhớ vị tướng tài bạc mệnh."
+      ]
+    },
+
+    {
+      title: "Nỏ Thần Kim Quy — Vũ Khí Vô Địch",
+      img: "images/no.webp",
+      // ẢNH GỢI Ý: ảnh phục dựng nỏ thần hoặc ảnh mũi tên đồng thật đang trưng bày tại bảo tàng
+      paragraphs: [
+        "Quân Triệu Đà phương Bắc nhiều lần kéo sang xâm lược đều thảm bại. Nỏ thần trở thành bảo vật quốc gia — biểu tượng sức mạnh quân sự không thể xâm phạm của nước Âu Lạc.",
+        "Sử sách chép rằng chỉ cần An Dương Vương giơ nỏ lên, quân địch đã khiếp sợ bỏ chạy mà không cần bắn. Sức mạnh tâm lý của nỏ thần đôi khi còn lớn hơn cả sức mạnh vật chất của nó."
+      ]
+    },
+
+    // ═══ SECTION MỚI 3 ═══
+    {
+      title: "Triệu Đà — Kẻ Thù Thâm Hiểm",
+      img: "images/trieuda.jpg",
+      // ẢNH GỢI Ý: tranh minh họa Triệu Đà hoặc bản đồ nước Nam Việt
+      // Link tham khảo: tìm "Triệu Đà lịch sử" trên Google Images
+      paragraphs: [
+        "Triệu Đà — vốn là quan cai trị người Hán — sau khi nhà Tần sụp đổ đã tự lập ra nước Nam Việt. Tham vọng thôn tính Âu Lạc luôn cháy bỏng trong lòng ông ta.",
+        "Hai lần tấn công trực tiếp bằng quân sự đều thất bại thảm hại trước nỏ thần. Triệu Đà buộc phải thay đổi chiến lược: không thể thắng bằng sức mạnh, phải dùng mưu thâm.",
+        "Kế hoạch thứ ba của Triệu Đà tinh vi đến mức lạnh gáy: gửi con trai Trọng Thủy sang làm rể, sống ngay trong lòng kẻ thù — vừa do thám, vừa tạo nội gián, vừa chờ thời cơ."
+      ]
+    },
+
+    {
+      title: "Bẫy Tình — Âm Mưu Trọng Thủy",
+      img: "images/advbaytinh.jpg",
+      // ẢNH GỢI Ý: tranh minh họa cảnh Mỵ Châu và Trọng Thủy
+      paragraphs: [
+        "Không thể thắng bằng vũ lực, Triệu Đà dùng mưu kế tinh vi: xin kết thông gia, cho con trai Trọng Thủy sang ở rể. An Dương Vương tin tưởng, đồng ý — đây là sai lầm chí mạng.",
+        "Trọng Thủy lấy lòng Mỵ Châu, dần dần dò hỏi bí mật nỏ thần. Mỵ Châu vì tình yêu mù quáng đã cho chồng xem và chạm vào nỏ thần. Trọng Thủy bí mật đánh tráo lẫy nỏ bằng chiếc lẫy giả rồi trốn về báo cho cha."
+      ]
+    },
+
+    // ═══ SECTION MỚI 4 — CÂU HỎI LỊCH SỬ ═══
+    {
+      title: "Trọng Thủy — Kẻ Phản Bội Hay Nạn Nhân?",
+      img: "images/advtrongthuy.jpg",
+      // ẢNH GỢI Ý: tranh thủy mặc hoặc tranh sơn dầu về Trọng Thủy ngồi bên giếng
+      // hoặc ảnh Giếng Ngọc tại di tích Cổ Loa ngày nay
+      paragraphs: [
+        "Lịch sử thường kết tội Trọng Thủy là gián điệp, kẻ phản bội. Nhưng nhìn từ góc độ khác: ông ta là con trai phải tuân lệnh cha, bị đẩy vào một cuộc hôn nhân chính trị không có lựa chọn.",
+        "Điều đáng suy ngẫm: sau khi Mỵ Châu chết, Trọng Thủy ân hận lao xuống giếng tự vẫn. Một kẻ gián điệp lạnh lùng sẽ không làm vậy. Có lẽ tình yêu của ông với Mỵ Châu là thật — dù nhiệm vụ thì không thể từ chối.",
+        "Chiếc giếng ở Cổ Loa nơi Trọng Thủy nhảy xuống được gọi là 'Giếng Ngọc' — vì tương truyền nước giếng này nếu dùng để rửa ngọc trai thì ngọc sẽ sáng hơn. Đó là nước mắt của Trọng Thủy hay của Mỵ Châu, không ai biết."
+      ]
+    },
+
+    {
+      title: "Bi Kịch Mỵ Châu — Trọng Thủy",
+      img: "images/advbikich.jpg",
+      paragraphs: [
+        "Năm 179 TCN, Triệu Đà tổng tấn công. An Dương Vương giơ nỏ thần lên bắn — nhưng không còn linh nghiệm. Thành Cổ Loa thất thủ. Vua ôm Mỵ Châu chạy về phương Nam.",
+        "Mỵ Châu — không biết mình đã bị lừa — vẫn rắc lông ngỗng từ chiếc áo theo đường chạy để Trọng Thủy tìm theo. Thần Kim Quy hiện ra nói: 'Kẻ thù đang ngồi sau lưng nhà ngươi đó!'",
+        "An Dương Vương rút kiếm giết Mỵ Châu rồi cầm sừng tê giác của thần Kim Quy, xuống biển. Máu Mỵ Châu chảy xuống biển, trai sò ăn vào đều hóa ra ngọc trai — truyền thuyết bi thương nhất của người Việt."
+      ]
+    },
+
+    // ═══ SECTION MỚI 5 ═══
+    {
+      title: "Di Tích Cổ Loa Ngày Nay",
+      img: "images/coloa.jpg",
+      // ẢNH GỢI Ý: ảnh thực tế khu di tích Cổ Loa hiện tại — đền thờ, vòng thành đất, hào nước
+      // Link tham khảo: https://media.vneconomy.vn/images/upload/2023/co-loa.jpg
+      paragraphs: [
+        "Khu di tích Cổ Loa tại huyện Đông Anh, Hà Nội ngày nay vẫn còn lưu giữ những dấu tích của kinh thành xưa: ba vòng tường thành đất cao 4-5m, các đoạn hào nước uốn lượn, và đền thờ An Dương Vương uy nghiêm giữa những tán cây cổ thụ.",
+        "Năm 1959, các nhà khảo cổ khai quật tại Cổ Loa đã tìm thấy kho mũi tên đồng khổng lồ với hơn 10.000 mũi tên ba cạnh — bằng chứng hùng hồn về kho vũ khí của quân Âu Lạc. Những mũi tên nhỏ bé đó đang được trưng bày tại Bảo tàng Lịch sử Quốc gia Hà Nội.",
+        "Lễ hội Cổ Loa diễn ra vào ngày 6 tháng Giêng âm lịch hàng năm, thu hút hàng vạn du khách. Người dân nơi đây vẫn gọi An Dương Vương là 'Đức Vua' và tin rằng linh hồn ngài vẫn phù hộ cho mảnh đất Cổ Loa."
+      ]
+    },
+
+    {
+      title: "Bài Học Ngàn Đời",
+      paragraphs: [
+        "Câu chuyện An Dương Vương dạy ba bài học không bao giờ cũ: Một — sức mạnh vũ khí có thể bị phá hủy bằng mưu kế và tình cảm. Hai — bảo vệ bí mật quốc gia là trách nhiệm của cả dân tộc. Ba — không bao giờ tự mãn khi đang nắm trong tay sức mạnh.",
+        "Khu di tích Cổ Loa (huyện Đông Anh, Hà Nội) ngày nay vẫn còn các vòng tường thành đất và hào nước từ thời An Dương Vương — Di tích Quốc gia đặc biệt, kinh thành cổ nhất Việt Nam còn lưu giữ được."
+      ]
+    }
+  ],
+  nextId: 14,
+  nextTitle: "Mỵ Châu — Tình Yêu Hay Phản Bội?"
+},
+  14: {
+    era: "Năm 179 TCN",
+    title: "Mỵ Châu — Tình Yêu Hay Phản Bội?",
+    heroImg: "images/mychauu.jpg",
+    meta: ["🕊️ Bi kịch tình yêu", "📍 Thành Cổ Loa", "🕐 7 phút đọc"],
+    lead: "Mỵ Châu — công chúa nước Âu Lạc — yêu chồng hết lòng nhưng vô tình làm mất nỏ thần, khiến đất nước sụp đổ. Tội lỗi hay bi kịch?",
+    sections: [
+      {
+        title: "Tình Yêu Và Bẫy Chính Trị",
+        paragraphs: [
+          "Triệu Đà nhiều lần thất bại trước nỏ thần của An Dương Vương. Không thể thắng bằng sức mạnh, ông sai con trai Trọng Thủy sang cầu hôn Mỵ Châu với mục đích bí mật: đánh cắp bí mật nỏ thần.",
+          "Mỵ Châu — cô công chúa lớn lên trong thành Cổ Loa kiên cố — không hề hay biết âm mưu đó. Nàng yêu Trọng Thủy thật lòng và tin tưởng chồng hoàn toàn."
+        ]
+      },
+      {
+        title: "Lông Ngỗng Dẫn Đường",
+        img: "images/mychauu.jpg",
+        paragraphs: [
+          "Trọng Thủy bí mật đánh tráo lẫy nỏ thần rồi về phương Bắc. Trước khi đi, chàng dặn: 'Nếu loạn lạc, hãy để lại dấu vết cho ta tìm.' Mỵ Châu ghi nhớ lời đó.",
+          "Khi quân Triệu Đà tấn công, nỏ thần mất linh, thành Cổ Loa thất thủ. Mỵ Châu chạy trốn cùng cha — và rắc lông ngỗng dọc đường, tưởng để Trọng Thủy đến cứu. Nhưng vô tình đã dẫn đường cho quân địch."
+        ],
+        quote: {
+          text: "\"Thiếp là phận gái vô tình, nếu có tội xin hóa thành ngọc để rửa sạch tiếng nhơ.\"",
+          cite: "— Mỵ Châu, trước khi hy sinh"
+        }
+      },
+      {
+        title: "Huyền Thoại Ngọc Trai",
+        paragraphs: [
+          "Thần Kim Quy hiện ra tố cáo: 'Kẻ thù đang ngồi sau lưng ngươi!' An Dương Vương đau lòng rút kiếm giết con gái rồi xuống biển theo thần.",
+          "Tương truyền, máu Mỵ Châu chảy xuống biển hóa thành ngọc trai. Trọng Thủy ân hận, lao xuống giếng thành Cổ Loa mà chết — giếng đó được gọi là Giếng Ngọc.",
+          "Câu chuyện Mỵ Châu không đơn giản là tội lỗi hay vô tội — mà là bi kịch của con người bị kẹp giữa tình yêu và bổn phận với đất nước."
+        ]
+      }
+    ],
+    nextId: 1,
+    nextTitle: "Trận Bạch Đằng 938"
+  }
+};
+// LẤY ID TỪ URL
+function getStoryId() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    return id || 1;
+  } catch(e) {
+    return 1;
+  }
+}
+
+// RENDER CÂU CHUYỆN
+// VIDEO MAPPING CHO TRANG DETAIL
+const videoMapping = {
+  1: 'videos/ngoquyen.mp4',
+  2: 'videos/tranhungdao.mp4',
+  3: 'videos/quangtrung.mp4',
+  4: 'videos/haibatrung.mp4',
+  5: 'videos/leloi.mp4',
+  6: 'videos/Đinh Bộ Lĩnh.mp4',
+  7: 'videos/hochiminh.mp4',
+  8: 'videos/vonguyenvangiap.mp4',
+  9: 'videos/Ba Trieu.mp4',
+  10: 'videos/lythuongkiet.mp4',
+  11: 'videos/vothisau.mp4'
+};
+
+// Load video cho câu chuyện hiện tại
+function loadStoryVideo() {
+  const storyId = getStoryId();
+  const videoSrc = videoMapping[storyId];
+  
+  if (videoSrc) {
+    const videoElement = document.getElementById('detailVideo');
+    if (videoElement) {
+      videoElement.src = videoSrc;
+    }
+  }
+}
+
+// Chạy khi page load
+document.addEventListener('DOMContentLoaded', loadStoryVideo);
+function renderStory() {
+  const id = getStoryId();
+  const s = stories[id];
+  
+
+  document.title = s.title + ' - Sử Việt';
+
+  let html = `
+    <div class="detail-hero">
+      <img src="${s.heroImg}" alt="${s.title}">
+      <div class="detail-hero-overlay">
+        <div class="detail-hero-text">
+          <div class="era-badge">${s.era}</div>
+          <h1>${s.title}</h1>
+          <div class="meta">${s.meta.map(m => `<span>${m}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-content">
+      <p class="lead-text">${s.lead}</p>
+  `;
+
+  s.sections.forEach(sec => {
+    html += `<h2 class="story-section-title">${sec.title}</h2>`;
+    sec.paragraphs.slice(0, Math.floor(sec.paragraphs.length / 2) || 1).forEach(p => {
+      html += `<p class="story-paragraph">${p}</p>`;
+    });
+    if (sec.img) {
+      html += `<img class="story-img-mid" src="${sec.img}" alt="${sec.title}">`;
+    }
+    if (sec.quote) {
+      html += `<blockquote class="story-quote">${sec.quote.text}<cite>${sec.quote.cite}</cite></blockquote>`;
+    }
+    sec.paragraphs.slice(Math.floor(sec.paragraphs.length / 2) || 1).forEach(p => {
+      html += `<p class="story-paragraph">${p}</p>`;
+    });
+  });
+  if (s.game) {
+  html += buildGame(s.game);
+}
+
+// VIDEO SECTION — luôn hiển thị
+const videoSrc = videoMapping[id];
+if (videoSrc) {
+  html += `
+    <div class="story-video-section">
+      <div class="story-video-label">🎬 VIDEO CÂU CHUYỆN</div>
+      <div class="story-video-wrapper">
+        <video controls controlsList="nodownload">
+          <source src="${videoSrc}" type="video/mp4">
+          Trình duyệt không hỗ trợ video.
+        </video>
+      </div>
+    </div>
+  `;
+}
+
+html += `
+  <div class="story-end">
+    <h3>Câu chuyện đã kết thúc</h3>
+    <p>Hãy tiếp tục khám phá những trang sử hào hùng khác!</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;">
+  <button class="btn-back" onclick="window.location.href='cau-chuyen.html'">← Về danh sách</button>
+  <button class="btn-next" onclick="window.location.href='cau-chuyen-detail.html?id=${s.nextId}'">Câu chuyện tiếp: ${s.nextTitle} →</button>
+    ${id === 1 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac.html'">⚔️ Nhập vai Ngô Quyền!</button>` : ''}
+   ${id === 2 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-tran-hung-dao.html'">🛡️ Nhập vai Hưng Đạo Vương!</button>` : ''}
+   ${id === 3 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-quang-trung.html'">🔥 Nhập vai Quang Trung!</button>` : ''}
+   ${id === 4 ? `<button class="btn-next" style="background:#8b5a2b;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-hai-ba-trung.html'">⚔️ Nhập vai Hai Bà Trưng!</button>` : ''}
+   ${id === 5 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-le-loi.html'">⚔️ Nhập vai Lê Lợi!</button>` : ''}
+   ${id === 11 ? `<button class="btn-next" style="background:#880e4f;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-vo-thi-sau.html'">🌺 Nhập vai Võ Thị Sáu!</button>` : ''}
+
+   ${id === 6 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-dinh-bo-linh.html'">👑 Nhập vai Đinh Bộ Lĩnh!</button>` : ''}
+${id === 12 ? `<button class="btn-next" style="background:#8B0000;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-hung-vuong.html'">🐉 Nhập vai Hùng Vương!</button>` : ''}
+${id === 7 ? `<button class="btn-next" style="background:#c62828;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-ho-chi-minh.html'">🇻🇳 Nhập vai Hồ Chí Minh!</button>` : ''}
+${id === 13 ? `<button class="btn-next" style="background:#1a6b3a;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-an-duong-vuong.html'">🏯 Nhập vai An Dương Vương!</button>` : ''}
+${id === 13 ? `<button class="btn-next" style="background:#8B4513;color:white;border:none;" onclick="window.location.href='chi-tiet-an-duong-vuong.html'">👑 Xem hồ sơ nhân vật →</button>` : ''}
+${id === 8 ? `<button class="btn-next" style="background:#1a3a1a;color:white;border:none;" 
+onclick="window.location.href='truyen-tuong-tac-vo-nguyen-giap.html'">⭐ Nhập vai Võ Nguyên Giáp!</button>` : ''}
+${id === 10 ? `<button class="btn-next" style="background:#d4a017;color:#1a1a0e;border:none;font-weight:600;" onclick="window.location.href='truyen-tuong-tac-ly-thuong-kiet.html'">⚔️ Nhập vai Lý Thường Kiệt!</button>` : ''}
+${id === 14 ? `<button class="btn-next" style="background:#8b1a3a;color:white;border:none;" onclick="window.location.href='truyen-tuong-tac-my-chau.html'">🕊️ Nhập vai Mỵ Châu!</button>` : ''}
+  </div>
+</div>
+`;
+
+  document.getElementById('storyContainer').innerHTML = html;
+  initScrollAnimations();
+  renderTimeline(id);
+
+}
+
+// SCROLL ANIMATION
+function initScrollAnimations() {
+  const els = document.querySelectorAll('.story-paragraph, .story-img-mid, .story-quote');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  els.forEach(el => observer.observe(el));
+}
+
+// READING PROGRESS BAR
+// READING PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+});
+
+let gamePoints = 0;
+let gameBadge = '';
+
+function buildGame(g) {
+  gamePoints = 0; gameBadge = '';
+  let html = `<div class="game-section"><div class="game-section-label">⚔️ Thử thách nhập vai</div><h2>${g.title}</h2>`;
+  html += `<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+    <div style="font-size:14px;color:#666;">Điểm:</div>
+    <div id="game-score-display" style="font-size:20px;font-weight:700;color:#8B0000;">0</div>
+    <div id="game-badge-display" style="font-size:13px;padding:4px 12px;background:#fff8e7;border:1px solid #f4c542;border-radius:20px;color:#b85c00;"></div>
+  </div>`;
+
+  g.scenes.forEach(sc => {
+    html += `<div class="game-scene ${sc.id==='s1'?'active':''}" id="gs-${sc.id}">`;
+
+    // QUIZ
+    if (sc.quiz) {
+      html += `<div style="background:#fff8e7;border:2px solid #f4c542;border-radius:12px;padding:20px;margin-bottom:20px;">
+        <div style="font-size:13px;color:#b85c00;font-weight:600;margin-bottom:8px;">📝 Câu hỏi kiến thức</div>
+        ${sc.quiz.image ? `<img src="images/${sc.quiz.image}" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:12px;">` : ''}
+        <p style="font-size:16px;font-weight:600;color:#2c1b12;margin-bottom:12px;">${sc.quiz.question}</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${sc.quiz.options.map((opt,i) => `
+            <button onclick="answerQuiz(this,${i},${sc.quiz.correct},'gs-${sc.id}')"
+              style="padding:10px 16px;background:white;border:1.5px solid #ddd;border-radius:8px;font-size:15px;cursor:pointer;text-align:left;transition:0.2s;">
+              ${String.fromCharCode(65+i)}. ${opt}
+            </button>`).join('')}
+        </div>
+        <div id="quiz-result-${sc.id}" style="margin-top:12px;font-size:14px;display:none;"></div>
+      </div>`;
+    }
+
+    if (sc.text) sc.text.forEach(t => html += `<p class="game-text">${t}</p>`);
+    if (sc.dialogue) html += `<div class="game-dialogue">${sc.dialogue}</div>`;
+
+    // OUTCOME với giải thích chi tiết
+    if (sc.outcome) {
+      html += `<div class="game-outcome ${sc.outcome.type}">
+        ${sc.outcome.image ? `<img src="images/${sc.outcome.image}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
+        ${sc.outcome.text}
+        ${sc.outcome.detailed ? sc.outcome.detailed : ''}
+      </div>`;
+    }
+
+    // CHOICES với ảnh + giải thích
+    if (sc.choices) {
+      html += `<div class="game-choices">`;
+      sc.choices.forEach((c,i) => {
+        html += `<button class="game-choice" onclick="gameChoose('${c.next}',${c.points||10})">
+          ${c.image ? `<img src="images/${c.image}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;">` : ''}
+          <div style="flex:1;">
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <span class="game-choice-letter">${String.fromCharCode(65+i)}</span>
+              <span>${c.label}</span>
+            </div>
+            ${c.explanation ? `<div style="font-size:13px;color:#888;margin-top:6px;font-style:italic;">${c.explanation}</div>` : ''}
+          </div>
+        </button>`;
+      });
+      html += `</div>`;
+    }
+
+    if (sc.next) html += `<button class="game-continue" onclick="gameChoose('${sc.next}',0)">Tiếp tục →</button>`;
+
+    // KẾT THÚC với badge
+    if (sc.isEnd) {
+      html += `<div class="game-result">
+       
+
+<!-- SAU ĐÓ MỚI ĐẾN: <div class="story-end"> -->
+        <p>${sc.endDesc||''}</p>
+        <div id="final-badge" style="font-size:22px;margin:12px 0;"></div>
+        <div id="final-points" style="font-size:18px;font-weight:700;color:#8B0000;margin-bottom:16px;"></div>
+        <button class="game-restart" onclick="gameRestart()">🔄 Chơi lại</button>
+      </div>`;
+    }
+
+    html += `</div>`;
+  });
+  return html + '</div>';
+}
+
+function answerQuiz(btn, chosen, correct, sceneId) {
+  const container = btn.parentElement;
+  const resultEl = document.getElementById('quiz-result-' + sceneId.replace('gs-',''));
+  container.querySelectorAll('button').forEach(b => b.disabled = true);
+  if (chosen === correct) {
+    btn.style.background = '#d4edda'; btn.style.borderColor = '#28a745';
+    gamePoints += 10;
+    resultEl.innerHTML = '✅ Đúng rồi! +10 điểm';
+    resultEl.style.color = '#28a745';
+  } else {
+    btn.style.background = '#f8d7da'; btn.style.borderColor = '#dc3545';
+    container.querySelectorAll('button')[correct].style.background = '#d4edda';
+    container.querySelectorAll('button')[correct].style.borderColor = '#28a745';
+    resultEl.innerHTML = '❌ Sai rồi! Đáp án đúng được tô xanh.';
+    resultEl.style.color = '#dc3545';
+  }
+  resultEl.style.display = 'block';
+  updateScoreDisplay();
+}
+
+function gameChoose(sceneId, pts) {
+  gamePoints += (pts || 10);
+  updateScoreDisplay();
+  document.querySelectorAll('.game-scene').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('gs-' + sceneId);
+  if (el) {
+    el.classList.add('active');
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    // Nếu là màn kết thúc
+    const finalBadge = el.querySelector('#final-badge');
+    if (finalBadge) {
+      if (gamePoints >= 60) { gameBadge = '🏛️ Chiến Lược Gia'; }
+      else if (gamePoints >= 35) { gameBadge = '⚔️ Tướng Quân'; }
+      else { gameBadge = '📚 Học Viên'; }
+      finalBadge.textContent = gameBadge;
+      el.querySelector('#final-points').textContent = `Tổng điểm: ${gamePoints} điểm`;
+    }
+  }
+}
+
+function updateScoreDisplay() {
+  const el = document.getElementById('game-score-display');
+  const badgeEl = document.getElementById('game-badge-display');
+  if (el) el.textContent = gamePoints;
+  if (badgeEl) {
+    if (gamePoints >= 60) badgeEl.textContent = '🏛️ Chiến Lược Gia';
+    else if (gamePoints >= 35) badgeEl.textContent = '⚔️ Tướng Quân';
+    else badgeEl.textContent = '📚 Học Viên';
+  }
+}
+
+function gameRestart() {
+  gamePoints = 0; gameBadge = '';
+  updateScoreDisplay();
+  document.querySelectorAll('.game-scene').forEach(s => s.classList.remove('active'));
+  const first = document.querySelector('.game-scene');
+  if (first) { first.classList.add('active'); first.scrollIntoView({behavior:'smooth'}); }
+}
+
+
+
+const timelineData = {
+  1: [
+    { year: "905", event: "Khúc Thừa Dụ giành quyền tự chủ" },
+    { year: "938", event: "⚔️ Trận Bạch Đằng", highlight: true },
+    { year: "939", event: "Ngô Quyền lên ngôi vua" },
+    { year: "944", event: "Ngô Quyền mất" }
+  ],
+  2: [
+    { year: "1258", event: "Nguyên Mông xâm lược lần 1" },
+    { year: "1284", event: "⚔️ Xâm lược lần 2 — 50 vạn quân", highlight: true },
+    { year: "1285", event: "Hưng Đạo Vương phản công" },
+    { year: "1287", event: "Xâm lược lần 3" },
+    { year: "1288", event: "🏆 Đại thắng Bạch Đằng", highlight: true }
+  ],
+  3: [
+    { year: "1771", event: "Khởi nghĩa Tây Sơn" },
+    { year: "1786", event: "Nguyễn Huệ ra Bắc lần 1" },
+    { year: "1788", event: "Lên ngôi Hoàng đế Quang Trung" },
+    { year: "1789", event: "🏆 Đại phá 29 vạn quân Thanh", highlight: true }
+  ],
+  4: [
+    { year: "39", event: "Tô Định giết Thi Sách" },
+    { year: "40", event: "⚔️ Hai Bà Trưng khởi nghĩa", highlight: true },
+    { year: "40", event: "Trưng Vương lên ngôi" },
+    { year: "43", event: "Mã Viện đem quân sang đánh" }
+  ],
+  5: [
+    { year: "1407", event: "Nhà Minh chiếm Đại Việt" },
+    { year: "1418", event: "⚔️ Lê Lợi khởi nghĩa Lam Sơn", highlight: true },
+    { year: "1424", event: "Chuyển sang tấn công" },
+    { year: "1427", event: "🏆 Giải phóng Đông Quan", highlight: true },
+    { year: "1428", event: "Lê Lợi lên ngôi vua" }
+  ],
+  6: [
+    { year: "944", event: "Ngô Quyền mất — loạn 12 sứ quân" },
+    { year: "950", event: "Đinh Bộ Lĩnh nổi dậy" },
+    { year: "967", event: "⚔️ Dẹp xong 12 sứ quân", highlight: true },
+    { year: "968", event: "🏆 Lập nước Đại Cồ Việt", highlight: true }
+  ],
+  7: [
+    { year: "1911", event: "Nguyễn Tất Thành ra đi tìm đường cứu nước" },
+    { year: "1930", event: "Thành lập Đảng Cộng sản Việt Nam" },
+    { year: "1945", event: "⚔️ Cách mạng Tháng Tám", highlight: true },
+    { year: "2/9/1945", event: "🏆 Tuyên ngôn Độc lập", highlight: true }
+  ],
+  8: [
+    { year: "1946", event: "Toàn quốc kháng chiến" },
+    { year: "1953", event: "Pháp xây pháo đài Điện Biên Phủ" },
+    { year: "13/3/1954", event: "⚔️ Trận Điện Biên Phủ bắt đầu", highlight: true },
+    { year: "7/5/1954", event: "🏆 Pháp đầu hàng", highlight: true }
+  ],
+  9: [
+    { year: "220", event: "Đông Ngô đô hộ Giao Châu" },
+    { year: "248", event: "⚔️ Bà Triệu khởi nghĩa", highlight: true },
+    { year: "248", event: "Bà Triệu anh dũng hy sinh" }
+  ],
+  11: [
+    { year: "1933", event: "Võ Thị Sáu sinh tại Đất Đỏ, Bà Rịa" },
+    { year: "1947", event: "⚔️ Tham gia cách mạng năm 14 tuổi", highlight: true },
+    { year: "1950", event: "Bị thực dân Pháp bắt và tra tấn" },
+    { year: "1951", event: "Bị kết án tử hình — chưa đủ 18 tuổi" },
+    { year: "1952", event: "🌺 Hy sinh anh dũng tại Côn Đảo", highlight: true }
+  ],
+  12: [
+  { year: "~2879 TCN", event: "🐉 Hùng Vương thứ nhất lên ngôi, lập nước Văn Lang", highlight: true },
+  { year: "~1000 TCN", event: "⚔️ Thánh Gióng đánh giặc Ân" },
+  { year: "~700 TCN", event: "🍀 Bánh chưng bánh giầy — Lang Liêu được truyền ngôi", highlight: true },
+  { year: "~258 TCN", event: "Nước Văn Lang sáp nhập vào Âu Lạc" },
+  { year: "2012", event: "🏆 UNESCO công nhận tín ngưỡng thờ cúng Hùng Vương", highlight: true }
+],
+13: [
+  { year: "257 TCN", event: "🏯 Thục Phán lập nước Âu Lạc, xưng An Dương Vương", highlight: true },
+  { year: "~250 TCN", event: "⚙️ Xây thành Cổ Loa 9 vòng lũy hình trôn ốc", highlight: true },
+  { year: "~215 TCN", event: "🏹 Chế Nỏ Liên Châu — Triệu Đà nhiều lần thảm bại" },
+  { year: "~210 TCN", event: "💍 Trọng Thủy sang ở rể — bẫy tình bắt đầu" },
+  { year: "179 TCN", event: "💔 Nỏ thần bị đánh tráo — Âu Lạc thất thủ", highlight: true },
+  { year: "179 TCN", event: "🌊 An Dương Vương xuống biển — bi kịch Mỵ Châu" }
+]
+};
+
+function renderTimeline(id) {
+  const data = timelineData[id];
+  if (!data) return;
+  const container = document.createElement('div');
+  container.style.cssText = `max-width:820px; margin:0 auto 40px; padding:0 20px;`;
+  container.innerHTML = `
+    <div style="background:#fff8e7;border:1px solid #f4c54260;border-radius:16px;padding:24px 28px;">
+      <div style="font-size:13px;color:#b85c00;font-weight:600;letter-spacing:2px;margin-bottom:20px;">⏰ TIMELINE SỰ KIỆN</div>
+      <div style="position:relative;">
+        <div style="position:absolute;left:70px;top:0;bottom:0;width:2px;background:#f4c54260;"></div>
+        ${data.map(item => `
+          <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;">
+            <div style="min-width:60px;text-align:right;font-size:12px;font-weight:600;color:#8B0000;padding-top:3px;">${item.year}</div>
+            <div class="tl-dot" style="width:12px;height:12px;min-width:12px;border-radius:50%;
+              background:${item.highlight ? '#8B0000' : '#f4c542'};
+              border:2px solid ${item.highlight ? '#8B0000' : '#c9a000'};
+              margin-top:4px;transition:transform 0.2s;position:relative;z-index:1;"></div>
+            <div style="font-size:15px;color:${item.highlight ? '#8B0000' : '#444'};
+              font-weight:${item.highlight ? '600' : '400'};padding-top:1px;">${item.event}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  const leadText = document.querySelector('.lead-text');
+  if (leadText) leadText.parentNode.insertBefore(container, leadText);
+}
+
+try {
+  renderStory();
+} catch(e) {
+  document.getElementById('storyContainer').innerHTML =
+    '<div style="padding:50px;color:red;font-size:20px">LỖI: ' + e.message + '</div>';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mỵ Châu | Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #8B0000;
+  --gold: #d4a017;
+  --dark: #1a0f06;
+  --bg: #f5f0e8;
+  --white: #ffffff;
+  --border: #e8dfc8;
+  --text: #333333;
+  --muted: #777777;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+
+/* NAV */
+nav {
+  background:var(--dark);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px; height:56px; position:sticky; top:0; z-index:100;
+}
+.nav-logo { color:var(--gold); font-weight:800; font-size:20px; letter-spacing:1px; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a { color:#ccc; text-decoration:none; font-size:13px; padding:7px 15px; border-radius:7px; transition:.2s; }
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.1); }
+.nav-links .active a { background:var(--gold); color:var(--dark); font-weight:600; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(to right, rgba(15,8,3,.88) 42%, rgba(15,8,3,.4) 75%, rgba(0,0,0,.15) 100%),
+              url('images/mychau.jpg') center/cover no-repeat;
+  min-height:400px; display:flex; align-items:center;
+  padding:56px 56px 50px; color:#fff;
+  border-bottom:3px solid var(--gold);
+  position:relative; overflow:hidden;
+}
+.hero-badge {
+  display:inline-block; background:rgba(212,160,23,.2); border:1px solid var(--gold);
+  color:var(--gold); font-size:11px; font-weight:600; padding:4px 14px; border-radius:20px;
+  margin-bottom:14px; letter-spacing:.8px; text-transform:uppercase;
+}
+.hero h1 { font-size:58px; font-weight:800; line-height:1; margin-bottom:12px; letter-spacing:-.5px; }
+.hero-sub { font-size:15px; color:rgba(255,255,255,.8); max-width:480px; line-height:1.6; margin-bottom:24px; }
+.hero-stats { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px; }
+.hero-stat { display:flex; align-items:center; gap:9px; }
+.hero-stat-icon { width:36px; height:36px; background:rgba(212,160,23,.2); border:1px solid rgba(212,160,23,.5); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.hero-stat-label { font-size:11px; color:rgba(255,255,255,.6); }
+.hero-stat-val { font-size:13px; font-weight:600; color:#fff; }
+.btn-story { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--dark); font-weight:700; font-size:13px; padding:11px 22px; border-radius:9px; text-decoration:none; transition:.2s; }
+.btn-story:hover { background:#e8b820; }
+
+/* BREADCRUMB */
+.breadcrumb { background:#fff; padding:12px 56px; font-size:13px; color:#999; border-bottom:1px solid var(--border); }
+.breadcrumb a { color:var(--red); text-decoration:none; font-weight:500; }
+.breadcrumb a:hover { text-decoration:underline; }
+.breadcrumb span { margin:0 7px; color:#ccc; }
+
+/* LAYOUT */
+.layout { display:grid; grid-template-columns:1fr 310px; gap:24px; padding:26px 56px 40px; max-width:1400px; margin:0 auto; }
+
+/* CARD */
+.card { background:#fff; border-radius:14px; padding:24px 28px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.card-title { color:var(--red); font-size:15px; font-weight:700; padding-bottom:14px; margin-bottom:18px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:8px; }
+.card p { font-size:13.5px; line-height:1.85; color:#444; margin-bottom:12px; }
+.card p:last-child { margin-bottom:0; }
+
+/* KEY STATS ROW */
+.key-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
+.ks-item { text-align:center; padding:14px 10px; background:#fffdf7; border:1px solid var(--border); border-radius:10px; }
+.ks-icon { font-size:22px; margin-bottom:6px; display:block; }
+.ks-val { font-size:13px; font-weight:700; color:var(--red); }
+.ks-label { font-size:11px; color:#999; margin-top:2px; }
+
+/* PHOTO GRID */
+.photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 0; }
+.photo-item img { width:100%; height:110px; object-fit:cover; border-radius:10px; border:1px solid var(--border); display:block; }
+.photo-caption { font-size:12px; font-weight:600; margin-top:6px; color:#222; }
+.photo-sub { font-size:11px; color:#999; }
+
+/* TIMELINE HORIZONTAL */
+.tl-h { position:relative; padding:10px 0 0; }
+.tl-h-track { position:relative; display:flex; justify-content:space-between; padding:0 10px; }
+.tl-h-track::before { content:''; position:absolute; top:22px; left:20px; right:20px; height:2px; background:linear-gradient(to right, var(--gold),#e8d080); }
+.tl-h-item { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.tl-h-dot { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 0 0 2px var(--gold); z-index:1; margin-bottom:10px; flex-shrink:0; }
+.tl-h-dot.red { background:var(--red); box-shadow:0 0 0 2px var(--red); }
+.tl-h-year { font-size:10px; font-weight:700; color:var(--gold); margin-bottom:4px; text-align:center; }
+.tl-h-icon { font-size:24px; margin-bottom:6px; }
+.tl-h-name { font-size:12px; font-weight:700; text-align:center; margin-bottom:4px; }
+.tl-h-desc { font-size:10.5px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
+
+/* ACHIEVE GRID */
+.achieve-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+.ac-item { text-align:center; padding:18px 12px; background:#fffdf7; border:1px solid var(--border); border-radius:12px; }
+.ac-icon { font-size:28px; margin-bottom:10px; display:block; }
+.ac-title { font-size:13px; font-weight:700; margin-bottom:6px; }
+.ac-text { font-size:11.5px; color:#666; line-height:1.55; }
+
+/* TRAIT TAGS */
+.trait-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.trait-tag { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:500; }
+.trait-pink { background:#fce7ef; color:#b5294e; }
+.trait-blue { background:#e6f0fb; color:#1a5fa8; }
+.trait-gold { background:#fdf3d0; color:#8a6800; }
+.trait-red { background:#fdeaea; color:#8b0000; }
+
+/* FUN FACTS */
+.ff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+.ff-item { background:#fffdf7; border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:12px; }
+.ff-icon-wrap { width:44px; height:44px; border-radius:10px; background:#f2ead8; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.ff-text { font-size:12px; color:#555; line-height:1.6; }
+.ff-text strong { color:#222; display:block; margin-bottom:3px; font-size:13px; }
+.ff-highlight { color:var(--red); font-weight:700; }
+
+/* SIDEBAR */
+.sidebar { display:flex; flex-direction:column; gap:18px; }
+.sb { background:#fff; border-radius:14px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.sb-title { font-size:13px; font-weight:700; color:var(--red); padding-bottom:10px; margin-bottom:14px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:7px; }
+.sb-title .sb-icon { width:22px; height:22px; border-radius:6px; background:var(--gold); display:inline-flex; align-items:center; justify-content:center; font-size:12px; color:var(--dark); }
+
+/* INFO TABLE */
+.info-tbl { width:100%; border-collapse:collapse; }
+.info-tbl tr { border-bottom:1px solid #f2ead8; }
+.info-tbl tr:last-child { border-bottom:none; }
+.info-tbl td { padding:8px 0; font-size:12.5px; vertical-align:top; }
+.info-tbl td:first-child { color:#999; width:38%; padding-right:8px; display:flex; align-items:center; gap:6px; }
+.info-tbl td:last-child { font-weight:600; color:#222; }
+
+/* LEGACY */
+.legacy-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #f2ead8; }
+.legacy-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.legacy-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+.legacy-text { font-size:12px; color:#555; line-height:1.6; }
+.legacy-text strong { color:#222; font-size:13px; display:block; margin-bottom:2px; }
+
+/* RELATED CHARS */
+.char-list { display:flex; flex-direction:column; gap:0; }
+.char-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; cursor:pointer; border-radius:8px; }
+.char-row:last-child { border-bottom:none; }
+.char-row:hover { background:#faf5ec; padding-left:6px; }
+.char-name { font-size:13px; font-weight:600; }
+.char-role { font-size:11px; color:#999; }
+.char-arrow { margin-left:auto; color:#ccc; font-size:16px; }
+
+/* EXPLORE MORE */
+.explore-list { display:flex; flex-direction:column; }
+.explore-item { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; }
+.explore-item:last-child { border-bottom:none; }
+.explore-item:hover { color:var(--red); padding-left:4px; }
+.explore-icon { font-size:16px; flex-shrink:0; }
+.explore-name { font-size:13px; font-weight:500; flex:1; }
+.explore-arrow { color:#ccc; font-size:14px; }
+
+/* BTN BACK */
+.btn-back { display:flex; align-items:center; justify-content:center; gap:8px; background:var(--red); color:#fff; font-weight:700; font-size:13px; padding:13px 20px; border-radius:10px; text-decoration:none; transition:.2s; text-align:center; }
+.btn-back:hover { background:#a00000; }
+
+/* FOOTER */
+footer { background:var(--dark); color:#888; padding:22px 56px; font-size:12px; display:flex; justify-content:space-between; align-items:center; }
+footer a { color:#777; text-decoration:none; }
+footer a:hover { color:#aaa; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SỬ VIỆT</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Trang chủ</a></li>
+    <li><a href="index.html">Hành trình lịch sử</a></li>
+    <li><a href="index.html">Câu chuyện</a></li>
+    <li><a href="index.html">Quiz</a></li>
+    <li><a href="index.html">Nhân vật</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">👸 Nhân vật lịch sử</div>
+    <h1>MỴ CHÂU</h1>
+    <p class="hero-sub">Công chúa nước Âu Lạc — người gắn liền với bi kịch<br>mất nước trong truyền thuyết Mỵ Châu – Trọng Thủy.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-icon">👑</div>
+        <div>
+          <div class="hero-stat-label">Thân phận</div>
+          <div class="hero-stat-val">Công chúa Âu Lạc</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">📅</div>
+        <div>
+          <div class="hero-stat-label">Thời kỳ</div>
+          <div class="hero-stat-val">Thế kỷ III–II TCN</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🦢</div>
+        <div>
+          <div class="hero-stat-label">Biểu tượng</div>
+          <div class="hero-stat-val">Lông ngỗng</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🦪</div>
+        <div>
+          <div class="hero-stat-label">Di sản</div>
+          <div class="hero-stat-val">Ngọc trai – Giếng nước</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-story">📖 Xem câu chuyện</a>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Trang chủ</a><span>›</span>
+  <a href="van-lang.html">Văn Lang – Âu Lạc</a><span>›</span>
+  Mỵ Châu
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+  <div class="main-col">
+
+    <!-- TIỂU SỬ -->
+    <div class="card">
+      <div class="card-title">📖 TIỂU SỬ</div>
+      <p>Mỵ Châu là con gái duy nhất của <strong>An Dương Vương</strong> — vị vua sáng lập nước Âu Lạc. Cái tên "Mỵ Châu" mang nghĩa <em>"viên ngọc quý"</em>, phản chiếu sự trân trọng mà vua cha dành cho nàng. Nàng lớn lên trong nhung lụa tại kinh thành Cổ Loa kiên cố, thuần khiết và trong sáng.</p>
+      <p>Khi Triệu Đà cử con trai là <strong>Trọng Thủy</strong> sang xin cưới, An Dương Vương không nhận ra âm mưu thâm hiểm và đồng ý gả con gái. Chính sự tin tưởng tuyệt đối của Mỵ Châu dành cho chồng đã vô tình dẫn đến bi kịch mất nước — bài học muôn đời về cảnh giác trước kẻ thù.</p>
+
+      <div class="key-stats">
+        <div class="ks-item">
+          <span class="ks-icon">👸</span>
+          <div class="ks-val">Công chúa</div>
+          <div class="ks-label">Thân phận cao quý</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">💍</span>
+          <div class="ks-val">Trọng Thủy</div>
+          <div class="ks-label">Phu quân</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🦢</span>
+          <div class="ks-val">Lông ngỗng</div>
+          <div class="ks-label">Biểu tượng bi kịch</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🦪</span>
+          <div class="ks-val">Ngọc trai</div>
+          <div class="ks-label">Di sản tình yêu</div>
+        </div>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img src="images/michau.WEBP" alt="Mỵ Châu"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a3a5a,#9a6a9a);align-items:center;justify-content:center;font-size:32px;">👸</div>
+          <div class="photo-caption">Mỵ Châu</div>
+          <div class="photo-sub">Công chúa Âu Lạc</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/ditichcoloa.jpg" alt="Thành Cổ Loa"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a4a2a,#8a7040);align-items:center;justify-content:center;font-size:32px;">🏯</div>
+          <div class="photo-caption">Thành Cổ Loa</div>
+          <div class="photo-sub">Nơi Mỵ Châu sinh sống</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/tuongdamichau.WEBP" alt="Tượng đá Mỵ Châu"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#4a4a4a,#7a7a7a);align-items:center;justify-content:center;font-size:32px;">🗿</div>
+          <div class="photo-caption">Tượng đá Mỵ Châu</div>
+          <div class="photo-sub">Không có đầu – tại Cổ Loa</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/giengngoc.jpg" alt="Ngọc trai – Giếng nước"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#2a4a5a,#4a7a8a);align-items:center;justify-content:center;font-size:32px;">🦪</div>
+          <div class="photo-caption">Ngọc trai – Giếng nước</div>
+          <div class="photo-sub">Biểu tượng tình yêu bất diệt</div>
+        </div>
+      </div>
+
+      <div class="trait-tags">
+        <span class="trait-tag trait-pink">💝 Chân thành</span>
+        <span class="trait-tag trait-gold">✨ Đôn hậu</span>
+        <span class="trait-tag trait-blue">🕊️ Trong sáng</span>
+        <span class="trait-tag trait-red">💔 Bi kịch</span>
+      </div>
+    </div>
+
+    <!-- DÒNG THỜI GIAN -->
+    <div class="card">
+      <div class="card-title">🗓️ DÒNG THỜI GIAN</div>
+      <div class="tl-h">
+        <div class="tl-h-track">
+          <div class="tl-h-item">
+            <div class="tl-h-year">~210 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">💍</div>
+            <div class="tl-h-name">Hôn nhân với Trọng Thủy</div>
+            <div class="tl-h-desc">Triệu Đà cử con trai xin cưới; An Dương Vương đồng ý mà không biết đây là kế gián điệp.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">Trong thời gian chung sống</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🏹</div>
+            <div class="tl-h-name">Bí mật nỏ thần bị đánh cắp</div>
+            <div class="tl-h-desc">Mỵ Châu tin tưởng chồng, vô tình để lộ nơi giữ nỏ; Trọng Thủy bí mật đổi lẫy giả.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">179 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">⚔️</div>
+            <div class="tl-h-name">Âu Lạc thất thủ</div>
+            <div class="tl-h-desc">Nỏ thần mất linh nghiệm, quân Âu Lạc tan vỡ; cha con chạy trốn về phía nam.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">Trên đường chạy trốn</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🦢</div>
+            <div class="tl-h-name">Rải lông ngỗng chỉ đường</div>
+            <div class="tl-h-desc">Mỵ Châu rải lông từ áo để Trọng Thủy tìm theo, vô tình dẫn giặc truy đuổi cha.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">Bờ biển Nghệ An</div>
+            <div class="tl-h-dot red"></div>
+            <div class="tl-h-icon">💔</div>
+            <div class="tl-h-name">Kết cục bi thương</div>
+            <div class="tl-h-desc">An Dương Vương rút kiếm chém Mỵ Châu; Trọng Thủy đuổi kịp rồi gieo mình xuống giếng.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ý NGHĨA NHÂN VẬT -->
+    <div class="card">
+      <div class="card-title">🏆 Ý NGHĨA NHÂN VẬT</div>
+      <div class="achieve-grid">
+        <div class="ac-item">
+          <span class="ac-icon">💔</span>
+          <div class="ac-title">Bi kịch tình yêu</div>
+          <div class="ac-text">Câu chuyện tình Mỵ Châu – Trọng Thủy là bi kịch tình yêu nổi tiếng nhất lịch sử Việt Nam.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">⚠️</span>
+          <div class="ac-title">Bài học cảnh giác</div>
+          <div class="ac-text">Lời nhắc muôn đời: không để tình cảm riêng làm mờ trách nhiệm với quốc gia.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">🦪</span>
+          <div class="ac-title">Ngọc trai – Giếng nước</div>
+          <div class="ac-text">Truyền thuyết máu hóa ngọc là biểu tượng của tình yêu trong sáng và bất tử.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">🕊️</span>
+          <div class="ac-title">Oan hồn trong sáng</div>
+          <div class="ac-text">Mỵ Châu phản bội vì ngây thơ, không vì cố ý — được dân gian thương cảm và thờ phụng.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ý NGHĨA LỊCH SỬ -->
+    <div class="card" style="background:#fffbf0;border:1px solid #f0d890;">
+      <div class="card-title">⭐ Ý NGHĨA LỊCH SỬ</div>
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <img src="images/ynls_mc.PNG" alt="Ý nghĩa lịch sử Mỵ Châu"
+          style="flex-shrink:0;width:180px;min-height:160px;border-radius:10px;object-fit:cover;"
+          onerror="this.style.display='none'">
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Biểu tượng của sự ngây thơ:</strong> Mỵ Châu đại diện cho những người dân vô tội bị cuốn vào bi kịch lịch sử mà không hay biết hậu quả.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Bài học giữ gìn bí mật quốc gia:</strong> Câu chuyện nỏ thần bị đánh cắp là lời cảnh tỉnh về việc bảo vệ vũ khí và bí mật quân sự trước kẻ thù.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Di sản văn học – nghệ thuật:</strong> Truyền thuyết Mỵ Châu – Trọng Thủy trở thành nguồn cảm hứng bất tận cho thơ, kịch, phim ảnh Việt Nam.</span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:#c87d2f;font-size:16px;margin-top:2px;flex-shrink:0;">★</span>
+            <span><strong>Tình yêu và trách nhiệm:</strong> Câu chuyện đặt ra câu hỏi muôn đời về ranh giới giữa tình yêu cá nhân và nghĩa vụ với đất nước.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SỰ THẬT THÚ VỊ -->
+    <div class="card">
+      <div class="card-title">💡 SỰ THẬT THÚ VỊ</div>
+      <div class="ff-grid">
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🗿</div>
+          <div class="ff-text">
+            <strong>Tượng đá không có đầu</strong>
+            Tại khu di tích Cổ Loa còn lưu giữ tượng đá Mỵ Châu <span class="ff-highlight">không có đầu</span> — theo truyền thuyết là do vua cha chém xuống vì lợi ích quốc gia.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🦪</div>
+          <div class="ff-text">
+            <strong>Ngọc trai huyền diệu</strong>
+            Theo truyền thuyết, máu Mỵ Châu chảy xuống biển, trai ăn vào <span class="ff-highlight">biến thành ngọc</span>. Rửa ngọc bằng nước giếng Trọng Thủy thì sáng rực rỡ.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">🦢</div>
+          <div class="ff-text">
+            <strong>Chiếc áo lông ngỗng</strong>
+            Hình ảnh <span class="ff-highlight">rải lông ngỗng</span> của Mỵ Châu trở thành biểu tượng văn hóa về sự ngây thơ vô tình gây họa — được nhắc đến trong nhiều tác phẩm văn học.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main-col -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- THÔNG TIN NHANH -->
+    <div class="sb">
+      <div class="sb-title"><span class="sb-icon">ℹ</span> THÔNG TIN NHANH</div>
+      <table class="info-tbl" style="width:100%;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📖</span>
+            <span style="color:#888;font-size:13px;">Tên đầy đủ</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Mỵ Châu (Mị Châu)</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👑</span>
+            <span style="color:#888;font-size:13px;">Thân phận</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Công chúa Âu Lạc</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📅</span>
+            <span style="color:#888;font-size:13px;">Thời kỳ</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Thế kỷ III–II TCN</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👨‍👧</span>
+            <span style="color:#888;font-size:13px;">Phụ vương</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">An Dương Vương</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">💍</span>
+            <span style="color:#888;font-size:13px;">Phu quân</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Trọng Thủy</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f5f0e8;">
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📍</span>
+            <span style="color:#888;font-size:13px;">Nơi mất</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Bờ biển Nghệ An</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px;display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⛩️</span>
+            <span style="color:#888;font-size:13px;">Di tích</span>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:600;">Đền thờ tại Cổ Loa</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- BẢN ĐỒ DI SẢN -->
+    <div class="sb">
+      <div class="sb-title">🗺️ BẢN ĐỒ DI SẢN</div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.971156429188!2d105.87076897503387!3d21.113716080556948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313500b30bf23a91%3A0xdc43228da55c8f19!2zxJDhu4FuIHRo4budIE3hu7UgQ2jDonU!5e0!3m2!1svi!2s!4v1780993580570!5m2!1svi!2s"
+        width="100%" height="200"
+        style="border-radius:12px;border:0;display:block;margin-bottom:12px;"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Đền thờ Mỵ Châu – Cổ Loa</div>
+            <div style="font-size:12px;color:#888;">Di tích quốc gia tại Đông Anh, Hà Nội</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Tượng đá Mỵ Châu</div>
+            <div style="font-size:12px;color:#888;">Hiện vật không đầu tại khu di tích</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Giếng Ngọc – Cổ Loa</div>
+            <div style="font-size:12px;color:#888;">Giếng gắn với truyền thuyết ngọc trai</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Đền Am Mỵ Nương</div>
+            <div style="font-size:12px;color:#888;">Nơi thờ phụng và lễ hội hàng năm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NHÂN VẬT LIÊN QUAN -->
+    <div class="sb">
+      <div class="sb-title">👑 NHÂN VẬT LIÊN QUAN</div>
+      <div class="char-list">
+        <a href="chi-tiet-an-duong-vuong.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <img src="images/anduongvuong.PNG" alt="An Dương Vương"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#7a6040';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">An Dương Vương</div>
+            <div class="char-role">Phụ vương</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+        <a href="chi-tiet-trieu-da.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <img src="images/trieuda.jpg" alt="Triệu Đà"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#5a4a3a';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">Triệu Đà</div>
+            <div class="char-role">Nhạc phụ – kẻ xâm lược</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+        <a href="chi-tiet-hung-vuong.html" class="char-row" style="text-decoration:none;color:inherit;">
+          <img src="images/hungvuong.jpg" alt="Hùng Vương"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#c8956c';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">Hùng Vương</div>
+            <div class="char-role">Tiền nhân – dựng nước Văn Lang</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- KHÁM PHÁ THÊM -->
+    <div class="sb">
+      <div class="sb-title">🔍 KHÁM PHÁ THÊM</div>
+      <div class="explore-list">
+        <div class="explore-item">
+          <span class="explore-icon">🏯</span>
+          <span class="explore-name">Thành Cổ Loa</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🏹</span>
+          <span class="explore-name">Nỏ Thần Liên Châu</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">💔</span>
+          <span class="explore-name">Truyện Trọng Thủy – Mỵ Châu</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🦪</span>
+          <span class="explore-name">Truyền thuyết Ngọc trai</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🐢</span>
+          <span class="explore-name">Truyền thuyết Rùa Vàng</span>
+          <span class="explore-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="van-lang.html" class="btn-back">← Quay lại Văn Lang – Âu Lạc</a>
+
+  </div><!-- /.sidebar -->
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+  <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lý Thường Kiệt — Nam Quốc Sơn Hà 1077</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #d4a017;
+  --gold-light: #e8d9a0;
+  --ink: #1a1a0e;
+  --cream: #f2ead0;
+  --green-dark: #2d3a1e;
+  --green-mid: #4a5e30;
+  --green-light: #7a9450;
+  --red-accent: #8B0000;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #0f0f0a;
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(45,58,30,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 70%, rgba(74,94,48,0.2) 0%, transparent 50%);
+}
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(15,15,10,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(212,160,23,0.2);
+  padding: 13px 36px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo {
+  font-family:'IM Fell English', serif;
+  font-size:18px; color:var(--gold);
+  text-decoration:none; letter-spacing:3px;
+}
+.nav-back {
+  color:rgba(242,234,208,0.5); font-size:13px;
+  text-decoration:none; transition:0.3s; letter-spacing:1px;
+}
+.nav-back:hover { color:var(--gold); }
+
+.progress-wrap {
+  position:fixed; top:50px; left:0; right:0; z-index:99;
+  height:2px; background:rgba(255,255,255,0.04);
+}
+.progress-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--gold), var(--red-accent));
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.chapter-dots {
+  position:fixed; right:20px; top:50%;
+  transform:translateY(-50%); z-index:98;
+  display:flex; flex-direction:column; gap:10px;
+}
+.cdot {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(212,160,23,0.2);
+  border:1px solid rgba(212,160,23,0.3);
+  transition:0.4s;
+}
+.cdot.done { background:var(--green-mid); border-color:var(--green-mid); }
+.cdot.active { background:var(--gold); border-color:var(--gold); transform:scale(1.4); }
+
+.story-wrap {
+  max-width:760px; margin:0 auto;
+  padding: 80px 24px 100px;
+  position:relative; z-index:1;
+}
+
+.scene { display:none; }
+.scene.active {
+  display:block;
+  animation: revealScene 0.7s ease both;
+}
+@keyframes revealScene {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.cbadge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(45,58,30,0.6);
+  border:1px solid rgba(212,160,23,0.3);
+  border-radius:4px; padding:5px 14px;
+  font-size:11px; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:22px;
+}
+
+.scene-img {
+  width:100%; height:300px;
+  object-fit:cover; border-radius:4px;
+  margin-bottom:28px;
+  border:1px solid rgba(212,160,23,0.15);
+  filter: sepia(0.2) contrast(1.05) brightness(0.93);
+}
+.scene-img.tall { height:360px; }
+
+.narrator {
+  font-size:11px; color:var(--gold);
+  letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:8px; opacity:0.7;
+}
+
+.story-p {
+  font-size:17px; line-height:1.95;
+  color:rgba(242,234,208,0.88);
+  margin-bottom:14px;
+  font-weight:300;
+}
+.story-p em { color:var(--gold-light); font-style:italic; }
+.story-p strong { color:#fff; font-weight:500; }
+
+.dialogue {
+  background:rgba(45,58,30,0.4);
+  border-left:3px solid var(--green-light);
+  border-radius:0 8px 8px 0;
+  padding:14px 20px; margin:18px 0;
+}
+.dlg-who {
+  font-size:11px; color:var(--green-light);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:6px;
+}
+.dlg-text {
+  font-size:17px; font-style:italic;
+  color:var(--cream); line-height:1.75;
+}
+
+.factbox {
+  background:rgba(212,160,23,0.07);
+  border:1px solid rgba(212,160,23,0.25);
+  border-radius:8px; padding:16px 20px;
+  margin:18px 0;
+}
+.factbox-label {
+  font-size:10px; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:7px;
+}
+.factbox p {
+  font-size:14px; color:rgba(242,234,208,0.75);
+  line-height:1.8;
+}
+
+.tension-bar {
+  display:flex; align-items:center; gap:10px;
+  margin:18px 0; padding:10px 16px;
+  background:rgba(139,0,0,0.08);
+  border:1px solid rgba(139,0,0,0.2);
+  border-radius:6px;
+}
+.tension-label { font-size:11px; color:#ff6b4a; letter-spacing:1px; min-width:80px; }
+.tension-track {
+  flex:1; height:4px; background:rgba(255,255,255,0.1);
+  border-radius:2px; overflow:hidden;
+}
+.tension-fill {
+  height:100%; border-radius:2px;
+  background:linear-gradient(90deg, var(--green-mid), var(--red-accent));
+  transition: width 1s ease;
+}
+.tension-val { font-size:12px; color:rgba(242,234,208,0.6); min-width:30px; text-align:right; }
+
+.divider {
+  text-align:center; color:var(--gold);
+  opacity:0.3; font-size:14px; letter-spacing:16px;
+  margin:26px 0;
+}
+
+.choices-label {
+  font-size:11px; color:var(--gold);
+  letter-spacing:3px; text-transform:uppercase;
+  margin:30px 0 14px; opacity:0.7;
+}
+.choices { display:flex; flex-direction:column; gap:10px; }
+
+.choice {
+  background:rgba(242,234,208,0.03);
+  border:1px solid rgba(242,234,208,0.12);
+  border-radius:6px; padding:16px 20px;
+  color:var(--cream); font-family:'Barlow',sans-serif;
+  font-size:16px; text-align:left; cursor:pointer;
+  transition:all 0.25s; display:flex; align-items:flex-start; gap:14px;
+  line-height:1.55;
+}
+.choice:hover {
+  background:rgba(74,94,48,0.2);
+  border-color:rgba(122,148,80,0.45);
+  transform:translateX(5px);
+}
+.choice-key {
+  width:26px; height:26px; min-width:26px;
+  border-radius:3px;
+  background:rgba(74,94,48,0.3);
+  border:1px solid var(--green-light);
+  color:var(--green-light);
+  font-size:11px; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Barlow',sans-serif;
+  margin-top:1px;
+}
+.choice-sub {
+  font-size:12px; color:rgba(212,160,23,0.55);
+  margin-top:5px; font-style:italic;
+}
+
+.outcome {
+  border-radius:8px; padding:20px 24px;
+  margin:20px 0; font-size:16px; line-height:1.85;
+}
+.outcome.bad {
+  background:rgba(139,0,0,0.1);
+  border:1px solid rgba(139,0,0,0.25);
+  color:rgba(242,234,208,0.85);
+}
+.outcome.good {
+  background:rgba(45,58,30,0.5);
+  border:1px solid rgba(122,148,80,0.35);
+  color:rgba(242,234,208,0.9);
+}
+.outcome-icon { font-size:28px; margin-bottom:10px; display:block; }
+
+.cont-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  margin-top:28px; padding:14px 28px;
+  background:rgba(45,58,30,0.7);
+  border:1px solid rgba(122,148,80,0.4);
+  border-radius:6px; color:var(--gold-light);
+  font-family:'Barlow',sans-serif; font-size:16px;
+  cursor:pointer; transition:all 0.3s; letter-spacing:0.5px;
+}
+.cont-btn:hover {
+  background:rgba(74,94,48,0.6);
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.score-strip {
+  display:flex; align-items:center; gap:14px;
+  padding:10px 16px; margin-bottom:20px;
+  background:rgba(45,58,30,0.3);
+  border:1px solid rgba(212,160,23,0.15);
+  border-radius:6px;
+}
+.score-lbl { font-size:11px; color:rgba(212,160,23,0.6); letter-spacing:1px; }
+.score-val { font-size:20px; font-weight:600; color:var(--gold); }
+.score-badge { font-size:12px; padding:3px 10px; border-radius:4px; background:rgba(45,58,30,0.5); border:1px solid rgba(212,160,23,0.2); color:var(--gold); }
+
+.final-wrap { text-align:center; padding:30px 10px 50px; }
+.final-star {
+  font-size:64px; margin:16px 0; display:block;
+  animation: starPulse 2s ease infinite alternate;
+}
+@keyframes starPulse {
+  from { transform:scale(1) rotate(-3deg); filter:brightness(1); }
+  to   { transform:scale(1.1) rotate(3deg); filter:brightness(1.3); }
+}
+.final-title {
+  font-family:'IM Fell English',serif;
+  font-size:30px; color:var(--gold);
+  margin-bottom:12px; line-height:1.3;
+}
+.final-circle {
+  width:110px; height:110px; border-radius:50%;
+  background:rgba(45,58,30,0.5);
+  border:2px solid var(--green-light);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IM Fell English',serif;
+  font-size:36px; color:var(--gold);
+  margin:20px auto;
+}
+.final-desc {
+  font-size:16px; color:rgba(242,234,208,0.75);
+  line-height:1.85; max-width:500px; margin:0 auto 28px;
+}
+.final-btns { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; }
+.btn-restart {
+  padding:12px 26px; background:transparent;
+  border:1px solid var(--green-light); border-radius:6px;
+  color:var(--green-light); font-family:'Barlow',sans-serif;
+  font-size:15px; cursor:pointer; transition:0.3s;
+}
+.btn-restart:hover { background:rgba(74,94,48,0.3); }
+.btn-home {
+  padding:12px 26px; background:rgba(45,58,30,0.6);
+  border:1px solid rgba(212,160,23,0.3); border-radius:6px;
+  color:var(--cream); font-family:'Barlow',sans-serif;
+  font-size:15px; cursor:pointer; transition:0.3s;
+  text-decoration:none; display:inline-block;
+}
+.lesson-box {
+  margin-top:36px; padding:22px 24px;
+  background:rgba(45,58,30,0.3);
+  border:1px solid rgba(212,160,23,0.15);
+  border-radius:8px; text-align:left;
+}
+.lesson-lbl { font-size:10px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.lesson-box p { font-size:15px; color:rgba(242,234,208,0.78); line-height:1.85; }
+
+@media(max-width:600px){
+  .chapter-dots { display:none; }
+  .scene-img { height:220px; }
+  .story-p { font-size:16px; }
+  .choice { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen-detail.html?id=10" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-fill" id="pBar" style="width:0%"></div>
+</div>
+
+<div class="chapter-dots" id="chDots">
+  <div class="cdot active" data-ch="0" title="Chương 1"></div>
+  <div class="cdot" data-ch="1" title="Chương 2"></div>
+  <div class="cdot" data-ch="2" title="Chương 3"></div>
+</div>
+
+<div class="story-wrap">
+
+  <div class="score-strip" id="scoreStrip">
+    <span class="score-lbl">ĐIỂM CHỈ HUY</span>
+    <span class="score-val" id="scoreVal">0</span>
+    <span class="score-badge" id="scoreBadge">📋 Học viên</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 1 — QUÂN TÔNG XÂM LỤC
+  ══════════════════════════════════════════ -->
+  <div class="scene active" id="s-c1-open">
+    <div class="cbadge">⚔ Chương 1 · Năm 1075 — Quân Tông Tấn Công</div>
+    <img class="scene-img" src="images/ltk-hero.jpg" alt="Lý Thường Kiệt">
+    <div class="narrator">Bối cảnh nguy cấp</div>
+    <div class="story-p">
+      Năm 1075. <strong>Ngươi — Lý Thường Kiệt</strong> — đứng trên tường thành Thăng Long, nhìn xuống quả lưu đứa được chiếu sáng bởi ánh lửa đèn lồng. Tiếng kèn chiến quân từ phía Bắc vang vọng qua đêm.
+    </div>
+    <div class="story-p">
+      Vua <strong>Tống Thần Tông</strong> sai 30 vạn quân xâm lược Đại Việt. Quân Tông là một trong những lực lượng quân sự mạnh nhất thế giới thời kỳ này. Mục tiêu của họ: chinh phục, cô lập từng nước ở Đông Nam Á.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Sứ thần Tông đứng trước lạc tướng</div>
+      <div class="dlg-text">"Vua Tông ra lệnh: Đầu hàng hoặc bị nuốt chửng. Quân Tông không biết lỗi trong chiến trường!"</div>
+    </div>
+    <div class="story-p">
+      Ngươi yên lặng nghe xong. Sau khi sứ thần rời đi, ngươi cầm cốc rượu, nhìn xa xôi về phía sông Như Nguyệt. Một ý tưởng bắt đầu nảy sinh...
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Bối cảnh thực tế</div>
+      <p>Năm 1075, quân Tông thực sự xâm lược Đại Việt với một quy mô lớn. Nhưng Lý Thường Kiệt không chọn chiến đấu trực tiếp. Thay vào đó, ông tìm ra một giải pháp khác.</p>
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:45%"></div></div>
+      <span class="tension-val">45%</span>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi quyết định...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Tập trung toàn bộ quân sự, đánh trực tiếp với quân Tông tại biên giới</div>
+          <div class="choice-sub">⚔ Anh dũng nhưng rất nguy hiểm</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c1-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div>Rút lui chiến lược, <strong>dồn quân về sông Như Nguyệt</strong> — chọn địa điểm bất lợi cho quân Tông</div>
+          <div class="choice-sub">🎯 Chọn chiến trường có lợi</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c1-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Đầu hàng để tránh binh lửa — có thể tìm cách phục hưng sau</div>
+          <div class="choice-sub">❌ Mất lòng dân, mất cơ hội chiến lược</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 BAD1 -->
+  <div class="scene" id="s-c1-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-chienkhao.jpg" alt="Chiến hào">
+    <div class="outcome bad">
+      <span class="outcome-icon">💀</span>
+      <div class="story-p"><strong>Thảm bại!</strong> Bộ đội ta không thể đối đầu với quân Tông trên chiến trường mở. Quân Tông có nhiều hơn, vũ khí tốt hơn. Hàng vạn chiến sĩ ta ngã xuống.</div>
+      <div class="story-p">Lý Thường Kiệt đã dạy: <em>"Không phải sức mạnh quân số quyết định chiến thắng, mà là địa thế và mưu kế."</em></div>
+    </div>
+    <div class="choices-label">⚡ Thay đổi chiến lược...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Rút lui, tập trung quân ở sông Như Nguyệt — nơi ta có lợi thế!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 BAD2 -->
+  <div class="scene" id="s-c1-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-hero.jpg" alt="Đầu hàng">
+    <div class="outcome bad">
+      <span class="outcome-icon">😔</span>
+      <div class="story-p"><strong>Sai lầm chiếm đoạt!</strong> Đầu hàng sẽ chỉ mang lại sự xô xát lâu dài. Quân Tông sẽ kiểm soát, áp đặt, bóc lột. Không còn cơ hội phục hưng.</div>
+      <div class="story-p">Tinh thần dân tộc sẽ bị chặn đứt. Đất nước sẽ mất độc lập hàng thế kỷ.</div>
+    </div>
+    <div class="choices-label">⚡ Phải chiến đấu...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Huy động quân sĩ — quyết chiến ở sông Như Nguyệt!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 GOOD -->
+  <div class="scene" id="s-c1-good">
+    <div class="cbadge">⭐ Lựa chọn B · Chiến lược thiên tài</div>
+    <img class="scene-img" src="images/ltk-song-nhu-nguyet.jpg" alt="Sông Như Nguyệt">
+    <div class="outcome good">
+      <span class="outcome-icon">🎯</span>
+      <div class="story-p"><strong>Quyết định tài ba!</strong> Sông Như Nguyệt — một dòng sông hẹp, nước chảy xiết. Quân Tông hùng mạnh trên chiến trường rộng, nhưng ở đây họ sẽ bị ràng buộc.</div>
+    </div>
+    <div class="story-p">
+      Ngươi ra lệnh: dồn quân về sông Như Nguyệt, <strong>xây dựng hệ thống chiến hào vững chắc</strong> dọc hai bờ sông. Không đánh trực tiếp, mà chọn địa điểm mà ta chiếm thế lợi.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Lý Thường Kiệt</div>
+      <div class="dlg-text">"Sông Như Nguyệt sẽ là bức tường bảo vệ ta. Quân Tông dù mạnh cũng phải chịu thua địa thế!"</div>
+    </div>
+    <button class="cont-btn" onclick="go('c2-open', 0)">Bước sang Chương 2 →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 2 — PHÒNG TUYẾN SÔNG NHƯ NGUYỆT
+  ══════════════════════════════════════════ -->
+  <div class="scene" id="s-c2-open">
+    <div class="cbadge">🔨 Chương 2 · Tháng 1-2/1076 — Xây Dựng Phòng Tuyến</div>
+    <img class="scene-img tall" src="images/ltk-chienkhao.jpg" alt="Chiến hào">
+    <div class="narrator">Thử thách xây dựng</div>
+    <div class="story-p">
+      Hàng chục nghìn bộ đội và dân công kéo đến sông Như Nguyệt. Ngươi chỉ huy từng đại đội, từng tiểu đội xây dựng <strong>3 phòng tuyến chiến hào</strong> dọc cả hai bờ sông.
+    </div>
+    <div class="story-p">
+      Chiến hào ngoài cùng được trang bị hàng rào giàn gỗ nhọn. Chiến hào trong cùng để lưu trữ thực phẩm và vũ khí. Chiến hào giữa là nơi bộ binh chính chủ lực đứng chờ.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Trung đoàn trưởng báo cáo</div>
+      <div class="dlg-text">"Báo cáo Lạc tướng — chiến hào ngoài cùng gần hoàn thành. Nhưng việc tập trục quân sẽ mất thêm 3 tuần."</div>
+    </div>
+    <div class="story-p">
+      Ngươi biết: khi quân Tông tấn công, điều quan trọng không phải là sớm hay muộn, mà là <em>sẵn sàng hay chưa sẵn sàng</em>.
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:60%"></div></div>
+      <span class="tension-val">60%</span>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi ra lệnh...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Vội vàng hoàn thành, tấn công quân Tông trước khi họ bao vây</div>
+          <div class="choice-sub">⚠ Công sự chưa hoàn toàn vẫn còn yếu</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c2-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div>Kiên nhẫn chờ đợi — <strong>hoàn thành 100% công sự, rồi mới chặn quân Tông</strong></div>
+          <div class="choice-sub">🛡 Địa điểm bất khả xâm phạm</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c2-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Cho phép bộ đội nghỉ ngơi, nới lỏng tập trung</div>
+          <div class="choice-sub">❌ Quân Tông sẽ lợi dụng khoảng không này</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 BAD1 -->
+  <div class="scene" id="s-c2-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-quan-tong.jpg" alt="Quân Tông">
+    <div class="outcome bad">
+      <span class="outcome-icon">💥</span>
+      <div class="story-p"><strong>Công sự chưa sẵn sàng!</strong> Chiến hào trong ngoài chưa liên kết được, hàng rào gỗ không hoàn chỉnh. Khi quân Tông tấn công, bộ đội ta bị chi phối, bị áp buộc phải rút lui từng vị trí một.</div>
+    </div>
+    <div class="choices-label">⚡ Thay đổi...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Sớm hoàn thành công sự, rồi mới chặn toàn bộ!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 BAD2 -->
+  <div class="scene" id="s-c2-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-chienkhao.jpg" alt="Lỏng lẻo">
+    <div class="outcome bad">
+      <span class="outcome-icon">⚠</span>
+      <div class="story-p"><strong>Quân Tông nhận ra điểm yếu!</strong> Khi quân Tông phát hiện chiến hào chưa hoàn toàn, họ tiến công dồn dập ở những điểm yếu. Bộ đội ta bị cuốn vào tình thế khó khăn.</div>
+    </div>
+    <div class="choices-label">⚡ Lập tức sắp xếp lại...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Nếu chưa sẵn sàng thì không nên chặn — hoàn thành công sự đã!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 GOOD -->
+  <div class="scene" id="s-c2-good">
+    <div class="cbadge">⭐ Lựa chọn B · Kiên nhẫn và tự tin</div>
+    <img class="scene-img tall" src="images/ltk-chienkhao.jpg" alt="Phòng tuyến hoàn chỉnh">
+    <div class="outcome good">
+      <span class="outcome-icon">🛡</span>
+      <div class="story-p"><strong>Hoàn hảo!</strong> 3 tháng sau, phòng tuyến sông Như Nguyệt đã hoàn toàn sẵn sàng. Chiến hào sâu, hàng rào vững, kho tư cung đầy đủ.</div>
+    </div>
+    <div class="story-p">
+      Quân Tông đang tiến tới. Nhưng lần này, Lý Thường Kiệt không sợ. Ngươi biết rõ: địa thế là của ta, công sự là vững chắc, tinh thần bộ đội cao vượng.
+    </div>
+    <div class="story-p">
+      Một bộ đội trưởng hỏi: <em>"Lạc tướng, quân Tông sắp đến. Sợ không?"</em>
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Lý Thường Kiệt</div>
+      <div class="dlg-text">"Sợ gì? Sông Như Nguyệt là pháo đài thiên nhiên của ta. Quân Tông dù mạnh cũng chỉ là những con nước chảy vào con sông — rồi sẽ bị cuốn đi!"</div>
+    </div>
+    <button class="cont-btn" onclick="go('c3-open', 0)">Bước sang Chương 3 →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 3 — TOÀN THẮNG NHƯ NGUYỆT
+  ══════════════════════════════════════════ -->
+  <div class="scene" id="s-c3-open">
+    <div class="cbadge">🏆 Chương 3 · Năm 1077 — Nam Quốc Sơn Hà</div>
+    <img class="scene-img tall" src="images/ltk-daiethang.jpg" alt="Đại thắng">
+    <div class="narrator">Khoảnh khắc lịch sử</div>
+    <div class="story-p">
+      Năm 1077. Quân Tông cuối cùng cũng tấn công. Nghe tiếng kèn chiến từ phía Bắc, Lý Thường Kiệt mỉm cười. Quân Tông vẫn dùng chiến thuật áp đảo bằng số lượng, nhưng <em>lần này họ sẽ tính sai</em>.
+    </div>
+    <div class="story-p">
+      Những lần tấn công liên tiếp được thực hiện. Nhưng mỗi lần, bộ đội quân Tông đều bị chặn lại bởi chiến hào vô cùng vững chắc. Nước sông Như Nguyệt cản trở sự tiến của họ.
+    </div>
+    <div class="story-p">
+      Tướng Tông nhận ra: <strong>chiến lược số lượng không có tác dụng</strong>. Họ cần phải rút lui để tổ chức lại, hoặc chìm dần trong giáp dưới mưi tên của bộ đội Việt.
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:85%"></div></div>
+      <span class="tension-val">85%</span>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Quân Tông yếu thế — Ngươi ra lệnh...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Cho họ thoát lui — kiếm lấy thời gian để tái tổ chức</div>
+          <div class="choice-sub">❌ Họ sẽ quay trở lại, tiêu tốn hơn nữa thời gian và nguồn lực</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c3-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div><strong>Đếy đủ pháo ra hủy diệt quân Tông</strong> — kết thúc dứt khoát trước khi họ rút lui</div>
+          <div class="choice-sub">⚡ Đánh đuổi quân Tông khỏi đất nước</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c3-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Chờ đợi thêm — quân Tông có thể có viện binh từ phía Bắc</div>
+          <div class="choice-sub">⏳ Quá cẩn thận</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 BAD1 -->
+  <div class="scene" id="s-c3-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-quan-tong.jpg" alt="Rút lui">
+    <div class="outcome bad">
+      <span class="outcome-icon">⏳</span>
+      <div class="story-p"><strong>Sai lầm!</strong> Cho quân Tông rút lui có nghĩa là họ sẽ tái tổ chức lại và quay trở lại. Chiến tranh sẽ kéo dài không tận, kiệt quệ quân, tài cháy..</div>
+    </div>
+    <div class="choices-label">⚡ Đảo ngược tình huống...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Không! Phải hủy diệt toàn bộ quân Tông ngay bây giờ!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 BAD2 -->
+  <div class="scene" id="s-c3-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/ltk-chienkhao.jpg" alt="Chờ đợi">
+    <div class="outcome bad">
+      <span class="outcome-icon">🚫</span>
+      <div class="story-p"><strong>Quá muộn!</strong> Khi ta chần chừ, quân Tông lợi dụng cơ hội để tập hợp lại. Viện binh từ Bắc thực sự đến, số quân thêm vào. Thế trận lại xấu đi.</div>
+    </div>
+    <div class="choices-label">⚡ Quyết đoán hành động...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Ra pháo ngay! Tiêu diệt quân Tông hoàn toàn!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 GOOD -->
+  <div class="scene" id="s-c3-good">
+    <div class="cbadge">⭐ Lựa chọn B · Đại Thắng Sông Như Nguyệt</div>
+    <img class="scene-img tall" src="images/ltk-daiethang.jpg" alt="Toàn thắng">
+    <div class="outcome good">
+      <span class="outcome-icon">🎆</span>
+      <div class="story-p"><strong>ĐẠI THẮNG SÔ NHƯ NGUYỆT!</strong></div>
+    </div>
+    <div class="story-p">
+      Lý Thường Kiệt ra lệnh: pháo nặng được đẩy lên mạnh mẽ. Từ cả hai bên bờ sông, <strong>tondees pháo, tung phát tấn công</strong> vào quân Tông đang lộn xộn.
+    </div>
+    <div class="story-p">
+      Quân Tông hoảng loạn cố tháo chạy. Nhiều binh sĩ rơi xuống sông Như Nguyệt. Tướng Tông bị thua lỗ, đài rút lui.
+    </div>
+    <div class="story-p">
+      Khi Lý Thường Kiệt nhìn thấy quân Tông bỏ chạy, ông yên lặng cầm một bút, viết lên một tấm vải:
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Lý Thường Kiệt — viết thơ tại đền Sông Như Nguyệt</div>
+      <div class="dlg-text">"Nam quốc sơn hà Nam đế cư. Tiệt nhiên định phận tại thiên thư!"</div>
+    </div>
+    <div class="story-p">
+      Bài thơ này — <em>"Đất nước phương Nam, sơn hà của các Hoàng đế phương Nam. Số phận được định sẵn trong sách trời"</em> — trở thành biểu tượng bất diệt của tinh thần độc lập Việt Nam.
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Sức mạnh của bài thơ</div>
+      <p>Bài thơ "Nam quốc sơn hà" được coi là Tuyên ngôn độc lập đầu tiên của Việt Nam — được viết hơn 700 năm trước khi Hồ Chí Minh đọc Tuyên ngôn độc lập năm 1945. Nó thể hiện: Việt Nam là của người Việt, nền số mệnh quốc gia được trời định sẵn.</p>
+    </div>
+    <button class="cont-btn" onclick="showFinal()">Xem kết quả →</button>
+  </div>
+
+  <!-- FINAL RESULT -->
+  <div class="scene" id="s-final">
+    <div class="final-wrap">
+      <div class="cbadge" style="margin:0 auto 20px;width:fit-content;">⭐ Chiến dịch hoàn thành</div>
+      <span class="final-star" id="finalStar">⭐</span>
+      <div class="final-title">Lý Thường Kiệt<br>— Nam Quốc Sơn Hà 1077</div>
+      <div class="final-circle" id="finalCircle">0</div>
+      <div class="final-desc" id="finalDesc">Bạn đã hoàn thành chiến dịch bảo vệ nền độc lập!</div>
+      <div class="final-btns">
+        <button class="btn-restart" onclick="restartGame()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="btn-home">📖 Câu chuyện khác</a>
+      </div>
+      <div class="lesson-box">
+        <div class="lesson-lbl">📚 Bài học từ Lý Thường Kiệt</div>
+        <p>
+          Lý Thường Kiệt dạy rằng: chiến thắng không đến từ sức mạnh quân số hay dũng khí mù quáng, mà từ <strong>lựa chọn chiến trường đúng đắn</strong> và <strong>kiên nhẫn xây dựng vững chắc</strong>. Khi chuyên chế được "chọn chiến trường có lợi", địch hùng mạnh cũng phải chịu thua.
+          <br><br>
+          Câu thơ "Nam quốc sơn hà Nam đế cư" không chỉ là thơ, mà là khẳng định: <strong>Việt Nam là của người Việt</strong> — một tuyên ngôn độc lập tinh tế, sâu sắc hơn bất kỳ chiến công quân sự nào.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end story-wrap -->
+
+<script>
+let pts = 0;
+const chapterMap = {
+  'c1-open':0,'c1-bad1':0,'c1-bad2':0,'c1-good':0,
+  'c2-open':1,'c2-bad1':1,'c2-bad2':1,'c2-good':1,
+  'c3-open':2,'c3-bad1':2,'c3-bad2':2,'c3-good':2,
+  'final':2
+};
+const progressMap = {
+  'c1-open':5,'c1-bad1':10,'c1-bad2':10,'c1-good':30,
+  'c2-open':35,'c2-bad1':45,'c2-bad2':45,'c2-good':65,
+  'c3-open':70,'c3-bad1':78,'c3-bad2':78,'c3-good':95,
+  'final':100
+};
+
+function go(id, addPts) {
+  pts += addPts;
+  updateUI(id);
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('s-' + id);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({top: 0, behavior:'smooth'});
+  }
+}
+
+function updateUI(id) {
+  document.getElementById('scoreVal').textContent = pts;
+  const b = document.getElementById('scoreBadge');
+  if (pts >= 75) b.textContent = '🏆 Lạc Tướng';
+  else if (pts >= 50) b.textContent = '⭐ Chiến Lược Gia';
+  else if (pts >= 25) b.textContent = '🎖 Trung Đoàn Trưởng';
+  else b.textContent = '📋 Học Viên';
+
+  const pct = progressMap[id] || 0;
+  document.getElementById('pBar').style.width = pct + '%';
+
+  const ch = chapterMap[id] !== undefined ? chapterMap[id] : -1;
+  document.querySelectorAll('.cdot').forEach((d,i) => {
+    d.classList.remove('active','done');
+    if (i < ch) d.classList.add('done');
+    else if (i === ch) d.classList.add('active');
+  });
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-final').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('pBar').style.width = '100%';
+  document.getElementById('finalCircle').textContent = pts;
+
+  const star = document.getElementById('finalStar');
+  const desc = document.getElementById('finalDesc');
+  if (pts >= 75) {
+    star.textContent = '⭐⭐⭐';
+    desc.textContent = 'Xuất sắc! Bạn đã nắm vững chiến lược của Lý Thường Kiệt — chọn chiến trường phù hợp, xây công sự vững chắc, rồi quyết đoán hành động. Xứng đáng là vị Lạc Tướng!';
+  } else if (pts >= 50) {
+    star.textContent = '⭐⭐';
+    desc.textContent = 'Tốt! Bạn đã hiểu được phần lớn về chiến lược phòng thủ của Lý Thường Kiệt. Hãy thử lại để hoàn thiện kỹ năng chỉ huy!';
+  } else {
+    star.textContent = '⭐';
+    desc.textContent = 'Chiến dịch sông Như Nguyệt đòi hỏi sự kiên nhẫn và lựa chọn chiến trường thông minh. Thử lại và cảm nhận trí tuệ quân sự của Lạc Tướng!';
+  }
+
+  document.querySelectorAll('.cdot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+}
+
+function restartGame() {
+  pts = 0;
+  updateUI('c1-open');
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-c1-open').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

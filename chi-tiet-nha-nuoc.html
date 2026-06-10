@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Nước Văn Lang | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.80) 45%, rgba(0,0,0,0.25) 100%),
+                        url('images/nhanuocvanlang.png') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        /* INLINE IMAGES */
+        .inline-img-right {
+            float: right; width: 250px;
+            margin: 0 0 16px 22px;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-right img { width: 100%; display: block; }
+        .inline-img-left {
+            float: left; width: 250px;
+            margin: 0 22px 16px 0;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-left img { width: 100%; display: block; }
+        .img-cap { background: #f8f4ea; font-size: 11px; color: #888; text-align: center; padding: 6px 8px; font-style: italic; }
+        .img-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); border: 2px solid #ede7d3; }
+        .img-banner img { width: 100%; display: block; max-height: 280px; object-fit: cover; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8); border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 2px solid white; box-shadow: 0 0 0 2px var(--gold); }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        /* QUOTE */
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        /* TAGS */
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+
+        /* ACHIEVE GRID */
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* STAT CARDS */
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .stat-card { background: linear-gradient(135deg, #fffdf7, #f8f4ea); border: 1px solid #ede7d3; border-radius: 14px; padding: 20px 16px; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--main); display: block; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+
+        /* BỘ MÁY NHÀ NƯỚC */
+        .org-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+        .org-row { display: flex; align-items: stretch; gap: 0; border-radius: 12px; overflow: hidden; border: 1px solid #ede7d3; }
+        .org-level { width: 130px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; text-align: center; padding: 14px 10px; }
+        .org-level.lv1 { background: #8B0000; color: white; }
+        .org-level.lv2 { background: #d4af37; color: #1e1206; }
+        .org-level.lv3 { background: #6a8a5a; color: white; }
+        .org-level.lv4 { background: #a88a6a; color: white; }
+        .org-desc { flex: 1; background: #fffdf7; padding: 14px 16px; }
+        .org-desc strong { display: block; font-size: 13px; color: #222; margin-bottom: 4px; }
+        .org-desc span { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* BỘ GRID */
+        .bo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 14px; }
+        .bo-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 10px; padding: 12px 10px; text-align: center; }
+        .bo-name { font-size: 12px; font-weight: 600; color: var(--main); margin-bottom: 4px; }
+        .bo-sub { font-size: 11px; color: #888; line-height: 1.5; }
+
+        /* LESSON BOX */
+        .lesson-box { background: linear-gradient(135deg, #1e1206, #3a2010); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        /* VĂN HÓA GRID */
+        .culture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .culture-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; border-left: 4px solid var(--gold); }
+        .culture-card.red-border { border-left-color: var(--main); }
+        .culture-card.green-border { border-left-color: #5a8a4a; }
+        .culture-card.blue-border { border-left-color: #4a6a9a; }
+        .culture-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+        .culture-title { font-size: 13px; font-weight: 700; color: #222; margin-bottom: 6px; }
+        .culture-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 44%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .heritage-card { margin-bottom: 16px; border: 1px solid #ede7d3; border-radius: 12px; overflow: hidden; background: #fffdf7; transition: 0.2s; }
+        .heritage-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .heritage-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .heritage-content { padding: 12px; }
+        .heritage-content strong { display: block; font-size: 13px; color: #222; margin-bottom: 6px; }
+        .heritage-content p { font-size: 12px; color: #666; line-height: 1.6; margin: 0; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">🏛️ SỰ KIỆN LỊCH SỬ</div>
+        <h1>NHÀ NƯỚC VĂN LANG</h1>
+        <p class="subtitle">Nhà nước đầu tiên của người Việt — nơi khởi nguồn của nền văn minh sông Hồng rực rỡ, đặt nền móng vĩnh cửu cho bản sắc và ý chí dân tộc suốt hàng nghìn năm sau</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 ~700 TCN – 258 TCN</span>
+            <span class="hero-tag">📍 Lưu vực sông Hồng</span>
+            <span class="hero-tag">🏛️ Nhà nước đầu tiên</span>
+            <span class="hero-tag">👑 18 đời Hùng Vương</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="van-lang.html">Văn Lang – Âu Lạc</a>
+    <span>›</span>
+    Nhà nước Văn Lang
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- GIỚI THIỆU -->
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="clearfix">
+                <div class="inline-img-right">
+                    <img src="images/nhanuoc.jpg" alt="Minh họa nhà nước Văn Lang" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Minh họa nhà nước Văn Lang thời Hùng Vương</div>
+                </div>
+                <p>
+                    Nhà nước Văn Lang là <span class="hl">nhà nước đầu tiên trong lịch sử Việt Nam</span>, ra đời vào khoảng thế kỷ VII TCN trên lưu vực sông Hồng và sông Mã. Đây là bước ngoặt vĩ đại đánh dấu người Việt chuyển từ giai đoạn bộ lạc lên tổ chức nhà nước có quy củ — mở ra kỷ nguyên văn minh dài nhất và rực rỡ nhất của tổ tiên.
+                </p>
+                <p>
+                    Nhà nước được cai trị bởi <span class="hl">18 đời Hùng Vương</span>, kéo dài gần 5 thế kỷ. Kinh đô đặt tại <span class="hl">Phong Châu</span> (nay thuộc Phú Thọ) — vùng đất trù phú nơi hợp lưu của sông Đà, sông Lô và sông Hồng, tạo điều kiện lý tưởng cho nông nghiệp và giao thương.
+                </p>
+                <p>
+                    Tên "Văn Lang" mang ý nghĩa sâu sắc — <span class="hl">"đất của người có văn hóa"</span>. Đây không chỉ là một quốc gia về địa lý mà còn là cái nôi nuôi dưỡng toàn bộ bản sắc văn hóa: từ tín ngưỡng thờ cúng tổ tiên, lễ hội mùa màng, đến nghề trồng lúa nước và nghệ thuật đúc trống đồng nổi tiếng toàn Đông Nam Á.
+                </p>
+            </div>
+            <div class="trait-tags">
+                <span class="trait-tag trait-gold">👑 18 đời Hùng Vương</span>
+                <span class="trait-tag trait-green">🌾 Nền nông nghiệp lúa nước</span>
+                <span class="trait-tag trait-blue">🥁 Văn minh trống đồng Đông Sơn</span>
+                <span class="trait-tag trait-red">🏛️ Nhà nước đầu tiên Việt Nam</span>
+            </div>
+        </div>
+
+        <!-- SỐ LIỆU NỔI BẬT -->
+        <div class="content-box">
+            <h2>📊 QUY MÔ NHÀ NƯỚC</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">18</span>
+                    <span class="stat-label">Đời Hùng Vương cai trị liên tiếp</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">Bộ (đơn vị hành chính cả nước)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">~500</span>
+                    <span class="stat-label">Năm tồn tại (700–258 TCN)</span>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">700 TCN</span>
+                    <span class="stat-label">Niên đại ước tính nhà nước ra đời</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Tầng lớp xã hội chính (vua – quý tộc – dân tự do – nô lệ)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">258 TCN</span>
+                    <span class="stat-label">Kết thúc khi Thục Phán lập nước Âu Lạc</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NGUỒN GỐC RA ĐỜI -->
+        <div class="content-box">
+            <h2>🌱 NGUỒN GỐC RA ĐỜI</h2>
+            <div class="clearfix">
+                <div class="inline-img-left">
+                    <img src="images/lacviet.jpg" alt="Các bộ lạc Lạc Việt" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Cộng đồng Lạc Việt trên lưu vực sông Hồng</div>
+                </div>
+                <p>
+                    Khoảng cuối thiên niên kỷ II đầu thiên niên kỷ I TCN, nhiều bộ lạc <span class="hl">Lạc Việt</span> sinh sống trên lưu vực sông Hồng, sông Mã và miền đồng bằng Bắc Bộ ngày nay. Các bộ lạc này có chung ngôn ngữ, phong tục và phương thức sản xuất — chủ yếu là <span class="hl">nông nghiệp lúa nước</span>.
+                </p>
+                <p>
+                    Quá trình trị thủy (đắp đê, điều tiết nước sông Hồng) và phát triển nông nghiệp đòi hỏi sự hợp tác quy mô lớn giữa các bộ lạc. Nhu cầu chống lũ lụt, khai hoang và tự vệ trước các thế lực bên ngoài đã thúc đẩy các bộ lạc liên kết lại dưới quyền lãnh đạo chung — đây là <span class="hl">điều kiện kinh tế – xã hội</span> trực tiếp dẫn đến sự ra đời của nhà nước.
+                </p>
+                <p>
+                    Theo truyền thuyết, <span class="hl">Kinh Dương Vương</span> (cha của Lạc Long Quân) là tổ khởi nguồn. Đến đời Lạc Long Quân và Âu Cơ, 100 người con ra đời từ bọc trứng huyền thoại — 50 người theo mẹ lên núi, 50 người theo cha xuống biển. Người con trưởng ở lại đồng bằng được tôn làm <span class="hl">Hùng Vương đầu tiên</span>, lập ra nước Văn Lang.
+                </p>
+            </div>
+            <div class="quote-block">
+                <p>"Bố Lạc Long Quân lấy Âu Cơ, sinh ra trăm trứng, nở ra trăm con. Năm mươi con theo mẹ lên núi, năm mươi con theo cha xuống biển. Người con trưởng ở lại được suy tôn làm vua, hiệu là Hùng Vương, đặt tên nước là Văn Lang."</p>
+                <span class="quote-source">— Đại Việt Sử Ký Toàn Thư (trích dẫn truyền thuyết)</span>
+            </div>
+        </div>
+
+        <!-- BỘ MÁY NHÀ NƯỚC -->
+        <div class="content-box">
+            <h2>⚙️ TỔ CHỨC BỘ MÁY NHÀ NƯỚC</h2>
+            <p>
+                Bộ máy nhà nước Văn Lang tuy còn <span class="hl">sơ khai</span> nhưng đã thể hiện sự phân cấp quản lý rõ ràng — từ trung ương xuống địa phương, đánh dấu bước tiến vượt bậc so với giai đoạn bộ lạc phân tán trước đó.
+            </p>
+            <div class="org-grid">
+                <div class="org-row">
+                    <div class="org-level lv1">👑<br>HÙNG VƯƠNG</div>
+                    <div class="org-desc">
+                        <strong>Vua (Hùng Vương) — Trung ương</strong>
+                        <span>Đứng đầu nhà nước, nắm toàn quyền cai trị. Ngôi vua cha truyền con nối, xưng hiệu "Hùng Vương" qua 18 đời. Là người đứng đầu về quân sự, tế lễ và ngoại giao.</span>
+                    </div>
+                </div>
+                <div class="org-row">
+                    <div class="org-level lv2">🎖️<br>LẠC HẦU<br>LẠC TƯỚNG</div>
+                    <div class="org-desc">
+                        <strong>Lạc hầu, Lạc tướng — Triều thần và Thủ lĩnh địa phương</strong>
+                        <span>Lạc hầu: quý tộc giúp vua cai trị trung ương (tương đương quan lại). Lạc tướng: cai quản từng bộ (tương đương tỉnh trưởng ngày nay). Cũng cha truyền con nối trong phạm vi bộ của mình.</span>
+                    </div>
+                </div>
+                <div class="org-row">
+                    <div class="org-level lv3">🌾<br>BỒ CHÍNH</div>
+                    <div class="org-desc">
+                        <strong>Bồ chính — Cấp cơ sở</strong>
+                        <span>Người đứng đầu các công xã nông thôn (chiềng, chạ). Giải quyết việc nội bộ làng xã, thu nộp sản vật, huy động lao động công ích. Là cầu nối giữa nhà nước và người dân.</span>
+                    </div>
+                </div>
+                <div class="org-row">
+                    <div class="org-level lv4">👨‍👩‍👧<br>LẠC DÂN</div>
+                    <div class="org-desc">
+                        <strong>Lạc dân — Tầng lớp thường dân</strong>
+                        <span>Nông dân tự do chiếm đại đa số dân số. Canh tác ruộng lạc (ruộng công của làng), nộp thuế bằng sản vật, tham gia lao động công ích xây dựng công trình và quân dịch khi có chiến tranh.</span>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top:16px;">
+                Nhà nước Văn Lang chưa có luật thành văn, chưa có quân đội thường trực quy mô lớn và chưa có hệ thống thuế má rõ ràng như các nhà nước phong kiến sau này — nhưng đã đặt nền móng cho <span class="hl">mô hình tổ chức nhà nước có thứ bậc</span> đầu tiên trên đất Việt.
+            </p>
+        </div>
+
+        <!-- 15 BỘ -->
+        <div class="content-box">
+            <h2>🗺️ 15 BỘ — ĐƠN VỊ HÀNH CHÍNH</h2>
+            <p>Cả nước Văn Lang được chia làm <span class="hl">15 bộ</span>, mỗi bộ do một Lạc tướng cai quản. Kinh đô Phong Châu thuộc bộ Văn Lang — bộ trung tâm quan trọng nhất. Dưới bộ là các <span class="hl">chiềng, chạ</span> (làng xã) do Bồ chính cai quản.</p>
+            <div class="bo-grid">
+                <div class="bo-card"><div class="bo-name">Văn Lang</div><div class="bo-sub">Kinh đô Phong Châu (Phú Thọ)</div></div>
+                <div class="bo-card"><div class="bo-name">Châu Diên</div><div class="bo-sub">Vĩnh Phúc – Phú Thọ</div></div>
+                <div class="bo-card"><div class="bo-name">Phúc Lộc</div><div class="bo-sub">Sơn Tây – Hà Nội</div></div>
+                <div class="bo-card"><div class="bo-name">Tân Hưng</div><div class="bo-sub">Hưng Hóa – Sơn La</div></div>
+                <div class="bo-card"><div class="bo-name">Vũ Định</div><div class="bo-sub">Thái Nguyên – Bắc Kạn</div></div>
+                <div class="bo-card"><div class="bo-name">Vũ Ninh</div><div class="bo-sub">Bắc Ninh – Bắc Giang</div></div>
+                <div class="bo-card"><div class="bo-name">Lục Hải</div><div class="bo-sub">Lạng Sơn – Quảng Ninh</div></div>
+                <div class="bo-card"><div class="bo-name">Ninh Hải</div><div class="bo-sub">Quảng Ninh ven biển</div></div>
+                <div class="bo-card"><div class="bo-name">Dương Tuyền</div><div class="bo-sub">Hải Dương – Hưng Yên</div></div>
+                <div class="bo-card"><div class="bo-name">Giao Chỉ</div><div class="bo-sub">Hà Nội – Hà Nam</div></div>
+                <div class="bo-card"><div class="bo-name">Cửu Chân</div><div class="bo-sub">Thanh Hóa – Nghệ An</div></div>
+                <div class="bo-card"><div class="bo-name">Hoài Hoan</div><div class="bo-sub">Nghệ An – Hà Tĩnh</div></div>
+                <div class="bo-card"><div class="bo-name">Cửu Đức</div><div class="bo-sub">Hà Tĩnh</div></div>
+                <div class="bo-card"><div class="bo-name">Việt Thường</div><div class="bo-sub">Quảng Bình – Quảng Trị</div></div>
+                <div class="bo-card"><div class="bo-name">Bình Văn</div><div class="bo-sub">Vùng biên giới phía Bắc</div></div>
+            </div>
+        </div>
+
+        <!-- KINH TẾ VÀ VĂN HÓA -->
+        <div class="content-box">
+            <h2>🌾 KINH TẾ & VĂN HÓA</h2>
+            <p>
+                Nền kinh tế Văn Lang dựa trên <span class="hl">nông nghiệp lúa nước</span> là chủ đạo, kết hợp với thủ công nghiệp và thương mại trao đổi. Người Văn Lang đã làm chủ kỹ thuật canh tác lúa nước trên cả ruộng đồng bằng lẫn ruộng bậc thang miền núi — thích ứng linh hoạt với địa hình đa dạng.
+            </p>
+            <div class="culture-grid">
+                <div class="culture-card">
+                    <span class="culture-icon">🥁</span>
+                    <div class="culture-title">Trống đồng Đông Sơn</div>
+                    <div class="culture-text">Đỉnh cao văn minh luyện kim Văn Lang. Trống đồng không chỉ là nhạc cụ mà còn là biểu tượng quyền lực, công cụ tế lễ và trao đổi ngoại giao. Các trống Đông Sơn tìm thấy khắp Đông Nam Á chứng minh tầm ảnh hưởng văn hóa Văn Lang.</div>
+                </div>
+                <div class="culture-card red-border">
+                    <span class="culture-icon">🌾</span>
+                    <div class="culture-title">Lúa nước & Trị thủy</div>
+                    <div class="culture-text">Kỹ thuật trồng lúa nước tiên tiến với hệ thống đê điều, mương máng tưới tiêu. Chống lũ sông Hồng là bài toán sống còn buộc người Văn Lang phải tổ chức cộng đồng chặt chẽ — chính điều này thúc đẩy nhà nước ra đời.</div>
+                </div>
+                <div class="culture-card green-border">
+                    <span class="culture-icon">🎋</span>
+                    <div class="culture-title">Thủ công nghiệp</div>
+                    <div class="culture-text">Nghề đúc đồng, dệt vải, đan lát, làm gốm và chế tác đồ trang sức phát triển cao. Đặc biệt, kỹ thuật đúc đồng thau Đông Sơn được đánh giá đạt trình độ ngang với văn minh Trung Hoa và Ấn Độ cùng thời.</div>
+                </div>
+                <div class="culture-card blue-border">
+                    <span class="culture-icon">🎑</span>
+                    <div class="culture-title">Tín ngưỡng & Lễ hội</div>
+                    <div class="culture-text">Thờ cúng tổ tiên, thần sông, thần núi và lực lượng tự nhiên. Lễ hội mùa màng, cầu mưa, hội đua thuyền là sinh hoạt cộng đồng quan trọng. Tín ngưỡng thờ Hùng Vương bắt đầu hình thành và tồn tại đến tận ngày nay.</div>
+                </div>
+            </div>
+            <div class="img-banner" style="margin-top: 4px;">
+                <img src="images/trongdong.jpg" alt="Trống đồng Đông Sơn" onerror="this.parentElement.style.display='none'">
+                <div class="img-cap">Trống đồng Đông Sơn — biểu tượng rực rỡ của nền văn minh Văn Lang</div>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN LỊCH SỬ -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~2879 TCN (truyền thuyết)</div>
+                    <div class="tl-title">Kinh Dương Vương — Thủy tổ người Việt</div>
+                    <div class="tl-text">Theo Đại Việt Sử Ký Toàn Thư, Kinh Dương Vương là tổ khai sáng, cai trị vùng đất phương Nam. Con ông là Lạc Long Quân kết hôn với Âu Cơ, sinh ra bọc trăm trứng — nguồn gốc của trăm họ người Việt theo truyền thuyết. Niên đại này mang tính biểu tượng hơn là lịch sử thực chứng.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~700 TCN</div>
+                    <div class="tl-title">Hùng Vương đầu tiên — Nhà nước Văn Lang ra đời</div>
+                    <div class="tl-text">Hùng Vương thứ nhất được tôn làm vua, lập nước Văn Lang, đóng đô tại Phong Châu (Phú Thọ). Đây là mốc thực tế nhà nước sơ khai hình thành, dựa trên nền tảng liên kết các bộ lạc Lạc Việt để cùng trị thủy và phát triển nông nghiệp.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~500 – 300 TCN</div>
+                    <div class="tl-title">Đỉnh cao văn minh Đông Sơn</div>
+                    <div class="tl-text">Giai đoạn nhà nước Văn Lang phát triển thịnh vượng nhất. Nông nghiệp lúa nước mở rộng, thủ công nghiệp đồng thau đạt đỉnh cao với những chiếc trống đồng Đông Sơn tinh xảo. Mạng lưới trao đổi với các vùng Đông Nam Á mở rộng đáng kể.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~300 – 258 TCN</div>
+                    <div class="tl-title">Áp lực từ phương Bắc — Thục Phán nổi lên</div>
+                    <div class="tl-text">Nhà Tần (Trung Quốc) bành trướng xuống phía Nam gây sức ép lớn. Trong bối cảnh đó, Thục Phán — thủ lĩnh bộ tộc Âu Việt ở phía Bắc — tấn công và đánh bại Hùng Vương thứ 18. Văn Lang sụp đổ, nhưng không mất đi mà hợp nhất vào nước Âu Lạc lớn hơn và mạnh hơn.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">258 TCN</div>
+                    <div class="tl-title">Văn Lang kết thúc — Âu Lạc kế thừa</div>
+                    <div class="tl-text">Thục Phán xưng An Dương Vương, hợp nhất Âu Việt và Lạc Việt thành nước Âu Lạc, tiếp nối toàn bộ di sản Văn Lang. Mọi phong tục, tổ chức xã hội và văn hóa Văn Lang được bảo tồn trong Âu Lạc — Văn Lang không biến mất, nó tiến hóa.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÀNH TỰU NỔI BẬT -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU NỔI BẬT</h2>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">🏛️</span>
+                    <div class="achieve-title">Nhà nước đầu tiên</div>
+                    <div class="achieve-text">Văn Lang là nhà nước có tổ chức đầu tiên trong lịch sử Việt Nam — vượt ra ngoài mô hình bộ lạc phân tán, đặt nền móng cho mọi nhà nước sau này trong suốt hàng nghìn năm lịch sử dân tộc.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🥁</span>
+                    <div class="achieve-title">Văn minh trống đồng Đông Sơn</div>
+                    <div class="achieve-text">Nền văn minh đồng thau đạt đỉnh cao, ảnh hưởng toàn Đông Nam Á. Trống đồng Ngọc Lũ, Hoàng Hạ được UNESCO và giới khảo cổ thế giới đánh giá là kiệt tác kỹ thuật và nghệ thuật của nhân loại.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🌾</span>
+                    <div class="achieve-title">Hệ thống nông nghiệp lúa nước</div>
+                    <div class="achieve-text">Kỹ thuật trồng lúa nước với đê điều, mương máng tưới tiêu quy mô lớn — nền tảng kinh tế nuôi sống toàn bộ nền văn minh. Đây là một trong những trung tâm thuần hóa lúa nước sớm nhất của nhân loại.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🎎</span>
+                    <div class="achieve-title">Bản sắc văn hóa dân tộc</div>
+                    <div class="achieve-text">Toàn bộ phong tục tập quán cốt lõi của người Việt — thờ cúng tổ tiên, lễ hội Giỗ Tổ Hùng Vương, tục ăn trầu, mặc váy yếm — đều hình thành từ thời Văn Lang và tồn tại vẹn nguyên đến ngày nay.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA LỊCH SỬ</h2>
+            <p>
+                Nhà nước Văn Lang không đơn thuần là một chính thể lịch sử đã qua — nó là <span class="hl">nền móng tinh thần</span> của cả dân tộc Việt Nam. Mọi lần người Việt vùng lên chống ngoại xâm trong gần 1.000 năm Bắc thuộc đều lấy ký ức Văn Lang làm sức mạnh — "Con Rồng Cháu Tiên", "con Lạc cháu Hồng" là lời nhắc nhở về nguồn cội chung không thể xóa nhòa.
+            </p>
+            <p>
+                Về mặt thực tiễn, Văn Lang đã chứng minh người Việt hoàn toàn có khả năng tự tổ chức nhà nước độc lập, phát triển kinh tế và xây dựng nền văn hóa đặc sắc — không phải học từ Trung Hoa mà là <span class="hl">tự sáng tạo trên mảnh đất của chính mình</span>.
+            </p>
+            <div class="quote-block">
+                <p>"Hùng Vương dựng nước, trải qua 18 đời, đó là cơ đồ từ buổi đầu. Dầu thịnh dầu suy, ngôi báu ấy vẫn là của người Việt. Ai muốn lấy phải dùng mưu, kẻ dùng sức sẽ thua."</p>
+                <span class="quote-source">— Tinh thần lịch sử Việt Nam qua các giai đoạn đấu tranh bảo vệ độc lập</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🏛️ Di sản sống mãi</div>
+                <div class="lesson-text">Ngày Giỗ Tổ Hùng Vương (10/3 Âm lịch) là ngày lễ quốc gia, hàng triệu người Việt trong và ngoài nước cùng hướng về Phú Thọ để tưởng nhớ. Đây là bằng chứng sống động rằng nhà nước Văn Lang — dù đã chấm dứt hơn 2.200 năm — vẫn đang tồn tại trong tâm hồn của mỗi người Việt Nam hôm nay.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Tên nước</td><td>Văn Lang</td></tr>
+                <tr><td>Người lập</td><td>Hùng Vương (đời 1)</td></tr>
+                <tr><td>Thành lập</td><td>~700 TCN</td></tr>
+                <tr><td>Kết thúc</td><td>258 TCN</td></tr>
+                <tr><td>Kinh đô</td><td>Phong Châu (Phú Thọ)</td></tr>
+                <tr><td>Số đời vua</td><td>18 đời Hùng Vương</td></tr>
+                <tr><td>Đơn vị HC</td><td>15 bộ</td></tr>
+                <tr><td>Lãnh thổ</td><td>Lưu vực sông Hồng & sông Mã</td></tr>
+                <tr><td>Kinh tế</td><td>Nông nghiệp lúa nước</td></tr>
+                <tr><td>Kế thừa</td><td>Nhà nước Âu Lạc (258 TCN)</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+
+            <div class="heritage-card">
+                <img src="images/denhung.jpg" alt="Đền Hùng Phú Thọ">
+                <div class="heritage-content">
+                    <strong>Khu Di tích Đền Hùng</strong>
+                    <p>Di tích lịch sử quốc gia đặc biệt tại Phú Thọ. Quần thể đền thờ các Vua Hùng trên núi Nghĩa Lĩnh. Lễ hội Giỗ Tổ 10/3 Âm lịch là Di sản văn hóa phi vật thể đại diện của UNESCO.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/trongdong.jpg" alt="Trống đồng Đông Sơn">
+                <div class="heritage-content">
+                    <strong>Trống đồng Ngọc Lũ</strong>
+                    <p>Bảo vật quốc gia, hiện lưu giữ tại Bảo tàng Lịch sử Quốc gia Hà Nội. Được đúc vào thế kỷ V–IV TCN, là trống đồng đẹp nhất và lớn nhất còn lại của nền văn minh Đông Sơn.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/phongchau.jpg" alt="Vùng đất Phong Châu">
+                <div class="heritage-content">
+                    <strong>Kinh đô Phong Châu</strong>
+                    <p>Vùng đất Việt Trì – Phú Thọ ngày nay, nơi từng là trung tâm quyền lực của 18 đời Hùng Vương. Nhiều di chỉ khảo cổ Đông Sơn quan trọng được khai quật tại khu vực này.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/langco.jpg" alt="Làng xã Việt cổ">
+                <div class="heritage-content">
+                    <strong>Mô hình làng xã Việt cổ</strong>
+                    <p>Cấu trúc chiềng, chạ (làng – xóm) của thời Văn Lang là tiền thân của mô hình làng xã Việt Nam tồn tại đến ngày nay — "cây đa, giếng nước, sân đình" bắt đầu từ đây.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #8B0000;">👑</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Hùng Vương</div>
+                    <div class="char-mini-desc">18 đời vua lập & giữ nước</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #3a6a8a;">🐉</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lạc Long Quân</div>
+                    <div class="char-mini-desc">Cha của trăm họ người Việt</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #7a5a8a;">🧚</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Âu Cơ</div>
+                    <div class="char-mini-desc">Mẹ của trăm họ người Việt</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #5a7a5a;">⚔️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Thánh Gióng</div>
+                    <div class="char-mini-desc">Anh hùng chống giặc Ân</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-an-duong-vuong.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #6a3a1a;">🏯</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">An Dương Vương</div>
+                    <div class="char-mini-desc">Người kế thừa Văn Lang</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>✨ SỰ THẬT THÚ VỊ</h3>
+            <div class="legacy-item">
+                <div class="legacy-icon">📅</div>
+                <div class="legacy-text">
+                    <strong>Ngày Giỗ Tổ</strong>
+                    Lễ Giỗ Tổ Hùng Vương 10/3 Âm lịch là ngày nghỉ lễ quốc gia duy nhất của Việt Nam tưởng nhớ một thời đại lịch sử cụ thể.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🥁</div>
+                <div class="legacy-text">
+                    <strong>Trống đồng nổi tiếng thế giới</strong>
+                    Trống đồng Đông Sơn tìm thấy ở tận Indonesia, Thái Lan, Vân Nam — chứng minh tầm ảnh hưởng rộng lớn của văn minh Văn Lang.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🌊</div>
+                <div class="legacy-text">
+                    <strong>Con Rồng Cháu Tiên</strong>
+                    Câu nói "Đồng bào" (cùng bào thai) bắt nguồn từ truyền thuyết trăm trứng — tất cả người Việt đều là anh em chung nguồn gốc.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🌾</div>
+                <div class="legacy-text">
+                    <strong>Lúa nước từ 4.000 năm trước</strong>
+                    Hạt lúa cháy tìm thấy trong di chỉ Phùng Nguyên (tiền Đông Sơn) cho thấy người Việt trồng lúa ít nhất từ 2.000–1.500 TCN.
+                </div>
+            </div>
+        </div>
+
+        <a href="van-lang.html" class="btn-back">← Quay lại Văn Lang – Âu Lạc</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

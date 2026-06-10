@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Võ Thị Sáu — Người Con Gái Đất Đỏ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0e00;
+  --parchment: #f5ead6;
+  --gold: #c9920a;
+  --gold-light: #f4c542;
+  --red: #8B0000;
+  --rose: #c2185b;
+  --brown: #3d1f00;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: #0e0a12;
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(194,24,91,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,0,0,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(30,10,20,0.6) 0%, transparent 70%);
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(14,10,18,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(194,24,91,0.25);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; color: var(--gold-light);
+  text-decoration: none; letter-spacing: 2px;
+}
+.nav-back {
+  color: rgba(245,234,214,0.6); font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+}
+.nav-back:hover { color: var(--gold-light); }
+
+.progress-bar {
+  position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+  height: 3px; background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  transition: width 0.6s ease;
+}
+
+.story-container {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+.scene { display: none; animation: fadeScene 0.8s ease; }
+.scene.active { display: block; }
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(194,24,91,0.12);
+  border: 1px solid rgba(194,24,91,0.35);
+  border-radius: 30px; padding: 6px 16px;
+  font-size: 13px; color: #f48fb1;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.scene-img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(194,24,91,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  filter: sepia(0.2) contrast(1.1);
+}
+
+.narrator {
+  font-size: 13px; color: #f48fb1;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.8;
+}
+
+.story-text {
+  font-size: 20px; line-height: 1.9;
+  color: rgba(245,234,214,0.92);
+  margin-bottom: 16px;
+}
+.story-text em { color: #f48fb1; font-style: italic; }
+.story-text strong { color: white; font-weight: 600; }
+
+.dialogue {
+  background: rgba(194,24,91,0.08);
+  border-left: 3px solid #c2185b;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-size: 19px; font-style: italic;
+  color: var(--parchment); line-height: 1.7;
+}
+.dialogue-speaker {
+  font-size: 12px; font-style: normal;
+  color: #f48fb1; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.fact-box {
+  background: rgba(201,146,10,0.08);
+  border: 1px solid rgba(201,146,10,0.3);
+  border-radius: 12px; padding: 18px 22px;
+  margin: 20px 0; font-size: 16px; line-height: 1.8;
+  color: rgba(245,234,214,0.85);
+}
+.fact-box .fact-title {
+  font-size: 12px; color: var(--gold);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px; font-style: normal;
+}
+
+.divider {
+  text-align: center; color: #c2185b;
+  opacity: 0.4; font-size: 18px; letter-spacing: 12px;
+  margin: 28px 0;
+}
+
+.choices-title {
+  font-size: 13px; color: #f48fb1;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 36px 0 16px; opacity: 0.8;
+}
+
+.choices { display: flex; flex-direction: column; gap: 12px; }
+
+.choice-btn {
+  background: rgba(245,234,214,0.04);
+  border: 1px solid rgba(245,234,214,0.15);
+  border-radius: 12px; padding: 18px 24px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 17px; text-align: left; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: flex-start; gap: 14px;
+  line-height: 1.5;
+}
+.choice-btn:hover {
+  background: rgba(194,24,91,0.1);
+  border-color: rgba(194,24,91,0.45);
+  transform: translateX(6px);
+}
+
+.choice-letter {
+  width: 28px; height: 28px; min-width: 28px;
+  border-radius: 50%; background: rgba(194,24,91,0.2);
+  border: 1px solid #c2185b; color: #f48fb1;
+  font-size: 13px; font-weight: 600; font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+}
+
+.outcome {
+  background: rgba(139,0,0,0.15);
+  border: 1px solid rgba(139,0,0,0.3);
+  border-radius: 16px; padding: 24px; margin: 24px 0;
+  font-size: 18px; line-height: 1.8;
+}
+.outcome.good {
+  background: rgba(194,24,91,0.1);
+  border-color: rgba(194,24,91,0.3);
+}
+.outcome-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+
+.continue-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 16px 32px;
+  background: linear-gradient(135deg, #880e4f, #c2185b);
+  border: 1px solid rgba(201,146,10,0.3);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 17px;
+  cursor: pointer; transition: all 0.3s;
+}
+.continue-btn:hover {
+  background: linear-gradient(135deg, #c2185b, #e91e63);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(194,24,91,0.4);
+}
+
+.final-result { text-align: center; padding: 40px 20px; }
+.final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px; color: #f48fb1;
+  margin-bottom: 16px; line-height: 1.3;
+}
+.final-flower {
+  font-size: 60px; margin: 20px 0; display: block;
+  animation: bloom 2s ease infinite alternate;
+}
+@keyframes bloom {
+  from { transform: scale(1); filter: brightness(1); }
+  to { transform: scale(1.1); filter: brightness(1.3); }
+}
+.final-score {
+  display: inline-block;
+  background: rgba(194,24,91,0.15);
+  border: 1px solid #c2185b;
+  border-radius: 50%; width: 120px; height: 120px;
+  line-height: 120px; font-size: 38px;
+  color: #f48fb1; margin: 16px auto;
+  font-family: 'Playfair Display', serif;
+}
+.final-desc {
+  font-size: 18px; color: rgba(245,234,214,0.82);
+  line-height: 1.8; max-width: 520px; margin: 0 auto 32px;
+}
+.restart-btn {
+  padding: 14px 32px; background: transparent;
+  border: 1px solid #c2185b; border-radius: 12px;
+  color: #f48fb1; font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+}
+.restart-btn:hover { background: rgba(194,24,91,0.15); }
+.home-btn {
+  padding: 14px 32px; background: #880e4f;
+  border: 1px solid rgba(201,146,10,0.3);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 16px;
+  cursor: pointer; transition: 0.3s; margin: 0 8px;
+  text-decoration: none; display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen-detail.html?id=11" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="story-container">
+
+  <!-- SCENE 1: MỞ ĐẦU -->
+  <div class="scene active" id="scene-1">
+    <div class="chapter-badge">🌺 Chương 1 · Đất Đỏ, Bà Rịa — 1947</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Võ Thị Sáu">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Năm 1947. <strong>Ngươi — Võ Thị Sáu</strong> — mới 14 tuổi, nhưng lòng đã sục sôi căm hờn trước cảnh quê hương bị giày xéo dưới gót giày thực dân Pháp.
+    </div>
+    <div class="story-text">
+      Làng Đất Đỏ của ngươi — những người dân lao động nghèo bị thu thuế tàn nhẫn, những thanh niên bị bắt đi phu, những tiếng khóc đêm khuya khi nhà ai đó bị lính Pháp lục soát.
+    </div>
+    <div class="story-text">
+      Một buổi chiều, anh Hai Thành — người liên lạc cách mạng trong xóm — bí mật gặp ngươi bên bờ sông:
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Anh Hai Thành</div>
+      "Sáu ơi, tổ chức cần người dẫn đường quen địa hình quanh đây. Em có dám làm không? Nguy hiểm lắm đó — nhưng là việc cho nước, cho dân."
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Sự thật lịch sử</div>
+      Võ Thị Sáu tham gia cách mạng từ năm 14 tuổi (1947), làm liên lạc và dẫn đường cho lực lượng Việt Minh kháng chiến chống Pháp tại Bà Rịa.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">A</span>
+        <span>Nhận lời ngay — "Anh Hai đừng lo, em thuộc từng con đường, bờ ruộng trong làng này!"</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">B</span>
+        <span>Do dự — "Nhưng em còn nhỏ, anh tìm người lớn hơn đi..."</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">C</span>
+        <span>Từ chối — "Em sợ lắm anh ơi, lính Pháp bắt được là chết..."</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1A: NHẬN LỜI -->
+  <div class="scene" id="scene-1A">
+    <div class="chapter-badge">⭐ Lựa chọn A · Dũng cảm nhận nhiệm vụ</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Võ Thị Sáu dũng cảm">
+    <div class="narrator">Kết quả xuất sắc!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">🌺</span>
+      <div class="story-text">
+        <strong>Đây chính là tinh thần của Võ Thị Sáu!</strong> Dù chỉ 14 tuổi, cô không hề sợ hãi. Ngọn lửa yêu nước trong trái tim cô còn mạnh hơn nỗi sợ hãi.
+      </div>
+    </div>
+    <div class="story-text">
+      Anh Hai Thành xúc động siết chặt tay ngươi: <em>"Cô bé gan lì! Tổ chức sẽ không quên công em đâu."</em>
+    </div>
+    <div class="story-text">
+      Từ đó, ngươi trở thành liên lạc viên tin cậy nhất — dẫn đường cho bộ đội trong đêm tối, truyền tin tức qua các chốt kiểm soát của giặc, <strong>không một lần bị lộ.</strong>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Tiếp tục hành trình...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2')">
+        <span class="choice-letter">→</span>
+        <span>Ba năm sau — 1950. Một nhiệm vụ nguy hiểm hơn đang chờ...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1B: DO DỰ -->
+  <div class="scene" id="scene-1B">
+    <div class="chapter-badge">📍 Lựa chọn B · Do dự</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Suy nghĩ">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">💭</span>
+      <div class="story-text">
+        Anh Hai Thành mỉm cười: <em>"Sáu à, cách mạng cần những người trẻ như em — vì tuổi nhỏ ít bị nghi ngờ hơn. Hãy tin vào bản thân!"</em>
+      </div>
+      <div class="story-text">
+        Lời động viên đó chạm đến trái tim ngươi. Ngươi nhớ lại những đêm nghe tiếng súng, những buổi sáng thấy bà con bị lính Pháp đánh đập...
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Suy nghĩ lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">→</span>
+        <span>"Được rồi anh Hai — em làm! Đất nước này là của mình, mình phải giữ lấy!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1C: TỪ CHỐI -->
+  <div class="scene" id="scene-1C">
+    <div class="chapter-badge">📍 Lựa chọn C · Sợ hãi</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Nỗi sợ">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Anh Hai Thành không trách, chỉ nhìn ngươi với ánh mắt buồn: <em>"Thôi được. Nhưng Sáu ơi — nếu không ai dám đứng lên, đất nước này sẽ mãi trong tay giặc."</em>
+      </div>
+      <div class="story-text">
+        Đêm hôm đó, ngươi không ngủ được. Hình ảnh bà con khổ cực, hình ảnh quê hương bị giày xéo... <strong>Ngươi biết mình không thể đứng ngoài mãi được.</strong>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thay đổi quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">→</span>
+        <span>Sáng hôm sau, ngươi tìm lại anh Hai Thành: "Anh ơi, em đổi ý rồi. Em sẽ làm!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2: NĂM 1950 — BỊ BẮT -->
+  <div class="scene" id="scene-2">
+    <div class="chapter-badge">⚔️ Chương 2 · Năm 1950 — Bị bắt</div>
+    <img class="scene-img" src="images/con-dao-phap-truong.jpg" alt="Nhà tù">
+    <div class="narrator">Ba năm sau</div>
+    <div class="story-text">
+      Năm 1950. Ngươi đã 17 tuổi, trở thành một trong những liên lạc viên dũng cảm và khôn ngoan nhất của lực lượng kháng chiến Bà Rịa.
+    </div>
+    <div class="story-text">
+      Nhưng sau một trận đánh ác liệt, ngươi bị giặc Pháp bắt. Chúng tra tấn ngươi ngày đêm để khai thác thông tin về đồng đội và cơ sở cách mạng.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Tên sĩ quan Pháp — hăm dọa</div>
+      "Mày chỉ là đứa trẻ con! Khai ra tên đồng bọn, tao tha mạng cho mày. Không khai — mày sẽ hối hận!"
+    </div>
+    <div class="story-text">
+      Ngươi nhìn thẳng vào mắt hắn, trong lòng chỉ có một ý nghĩ duy nhất...
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">A</span>
+        <span>Không khai — "Tôi không biết gì hết. Dù có chết tôi cũng không phản bội đồng đội!"</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2B')">
+        <span class="choice-letter">B</span>
+        <span>Giả vờ khai thông tin sai để đánh lạc hướng địch</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2C')">
+        <span class="choice-letter">C</span>
+        <span>Cầu xin tha mạng và hứa sẽ hợp tác</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2A: KHÔNG KHAI — ĐÚNG -->
+  <div class="scene" id="scene-2A">
+    <div class="chapter-badge">⭐ Lựa chọn A · Kiên trung bất khuất</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Kiên trung">
+    <div class="narrator">Kết quả xuất sắc!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">🌺</span>
+      <div class="story-text">
+        <strong>Đây chính là Võ Thị Sáu trong lịch sử!</strong> Dù bị tra tấn dã man trong nhiều tháng, cô không hề khai nửa lời về đồng đội hay cơ sở cách mạng.
+      </div>
+    </div>
+    <div class="story-text">
+      Giặc Pháp tức tối nhưng không làm gì được. Tinh thần bất khuất của ngươi khiến ngay cả những tên lính cai ngục cũng phải kính nể trong lòng.
+    </div>
+    <div class="story-text">
+      Sau nhiều tháng tra tấn vô ích, chúng đưa ngươi ra <em>tòa án binh</em> — và tuyên án tử hình. Dù ngươi chưa đủ 18 tuổi theo chính luật pháp của chúng.
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Sự thật lịch sử</div>
+      Bản án tử hình với Võ Thị Sáu gây phẫn nộ ngay cả trong dư luận Pháp. Nhiều luật sư và nhà hoạt động nhân quyền Pháp lên tiếng phản đối, nhưng bản án vẫn được thi hành.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Tiếp tục hành trình...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3')">
+        <span class="choice-letter">→</span>
+        <span>Năm 1952 — Con đường ra pháp trường Côn Đảo...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2B: KHAI SAI — TRUNG BÌNH -->
+  <div class="scene" id="scene-2B">
+    <div class="chapter-badge">📍 Lựa chọn B · Khai thông tin sai</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Mưu trí">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Ngươi cố tình khai những thông tin sai lệch. Ban đầu địch tin, nhưng sau khi kiểm tra, chúng phát hiện ngươi lừa chúng.
+      </div>
+      <div class="story-text">
+        Chúng tra tấn ngươi nặng nề hơn. Nhưng trong thực tế — <em>Võ Thị Sáu đã chọn im lặng hoàn toàn</em>, không khai dù một lời, thể hiện khí tiết cao quý nhất của người chiến sĩ cách mạng.
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Quyết định lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>"Thôi — im lặng hoàn toàn. Dù chúng làm gì ta cũng không nói nửa lời!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2C: CẦU XIN — SAI -->
+  <div class="scene" id="scene-2C">
+    <div class="chapter-badge">📍 Lựa chọn C · Cầu xin</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Không phải Võ Thị Sáu">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Đây không phải Võ Thị Sáu trong lịch sử. <strong>Cô gái Đất Đỏ không bao giờ cầu xin kẻ thù.</strong>
+      </div>
+      <div class="story-text">
+        Trái lại, chính sự hiên ngang, bất khuất của Võ Thị Sáu trước kẻ thù đã làm nên tên tuổi bất tử của cô — <em>khiến ngay cả những tên lính Pháp cũng phải kính phục trong lòng.</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thể hiện đúng tinh thần...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>Ngẩng cao đầu: "Tôi không sợ chết. Yêu nước không phải là tội!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: ĐƯỜNG RA PHÁP TRƯỜNG -->
+  <div class="scene" id="scene-3">
+    <div class="chapter-badge">🌺 Chương 3 · Côn Đảo — Tháng 1 năm 1952</div>
+    <img class="scene-img" src="images/con-dao-phap-truong.jpg" alt="Côn Đảo">
+    <div class="narrator">Buổi sáng định mệnh</div>
+    <div class="story-text">
+      Sáng sớm ngày 23 tháng 1 năm 1952. Côn Đảo. Nhà tù khét tiếng — <em>địa ngục trần gian</em> giữa biển khơi.
+    </div>
+    <div class="story-text">
+      Giặc Pháp đã bí mật đưa ngươi ra đây, sợ nếu xử ở đất liền sẽ gây làn sóng phản đối lớn. Bên ngoài phòng giam, ngươi nghe tiếng bước chân của đội hành quyết.
+    </div>
+    <div class="story-text">
+      Tên linh mục bước vào, đề nghị làm lễ cuối cùng. Ngươi lắng nghe, rồi nhìn ra cửa sổ nhỏ — nơi ánh bình minh vừa ló dạng trên biển Đông.
+    </div>
+    <div class="story-text">
+      Bên ngoài cửa phòng giam, một bông hoa dại nhỏ mọc lên từ kẽ đất. Ngươi nhìn nó — <em>và mỉm cười.</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Trên đường ra pháp trường, bạn...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">A</span>
+        <span>Hái bông hoa cài vào tóc, cất cao giọng hát Tiến quân ca — bước đi hiên ngang</span>
+      </button>
+      <button class="choice-btn" onclick="choose('3B')">
+        <span class="choice-letter">B</span>
+        <span>Cúi đầu im lặng bước đi, không để kẻ thù thấy nỗi đau</span>
+      </button>
+      <button class="choice-btn" onclick="choose('3C')">
+        <span class="choice-letter">C</span>
+        <span>Hét vang khẩu hiệu và chạy về phía kẻ thù trong tuyệt vọng</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3A: ĐÚNG — CÀI HOA HÁT BÀI CA -->
+  <div class="scene" id="scene-3A">
+    <div class="chapter-badge">⭐ Lựa chọn A · Hiên ngang bất tử</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Võ Thị Sáu hiên ngang">
+    <div class="narrator">Khoảnh khắc bất tử</div>
+    <div class="outcome good">
+      <span class="outcome-icon">🌺</span>
+      <div class="story-text">
+        <strong>Đây chính là Võ Thị Sáu — đúng như lịch sử ghi lại!</strong>
+      </div>
+    </div>
+    <div class="story-text">
+      Ngươi bình thản hái bông hoa dại, cài vào mái tóc đen. Rồi cất tiếng hát — <em>giọng trong trẻo vang vọng giữa đảo xa, giữa sự im lặng chết chóc của bình minh Côn Đảo.</em>
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Võ Thị Sáu — hô vang trước pháp trường</div>
+      "Đả đảo thực dân Pháp xâm lược! Việt Nam độc lập muôn năm! Kháng chiến thắng lợi muôn năm!"
+    </div>
+    <div class="story-text">
+      Những tên lính hành quyết nhìn nhau — <strong>run sợ.</strong> Không phải vì sức mạnh thể xác, mà vì đối diện với một điều gì đó họ không bao giờ hiểu được: <em>tinh thần không thể bị giết chết.</em>
+    </div>
+    <div class="story-text">
+      Ngươi từ chối bịt mắt. Ngươi nhìn thẳng vào họng súng — <strong>bình thản như ngắm cảnh bình minh trên biển quê hương.</strong>
+    </div>
+    <button class="continue-btn" onclick="choose('4_final')">
+      Xem kết thúc →
+    </button>
+  </div>
+
+  <!-- SCENE 3B: CÚIR ĐẦU -->
+  <div class="scene" id="scene-3B">
+    <div class="chapter-badge">📍 Lựa chọn B · Im lặng</div>
+    <img class="scene-img" src="images/VoThiSau.jpg" alt="Im lặng">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">💭</span>
+      <div class="story-text">
+        Im lặng cũng là một hình thức dũng cảm. Nhưng Võ Thị Sáu trong lịch sử đã chọn điều khác — <em>cô muốn kẻ thù và cả thế giới biết rằng cô chết vì lý tưởng, không phải vì tội lỗi.</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thể hiện tinh thần thật sự...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">→</span>
+        <span>Ngẩng cao đầu — cài hoa vào tóc và hát vang bài ca cách mạng!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3C: HÉT VANG -->
+  <div class="scene" id="scene-3C">
+    <div class="chapter-badge">📍 Lựa chọn C · Tuyệt vọng</div>
+    <img class="scene-img" src="images/con-dao-phap-truong.jpg" alt="Côn Đảo">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Đây không phải cách Võ Thị Sáu đối diện với cái chết. <strong>Cô không tuyệt vọng — cô bình thản và hiên ngang.</strong>
+      </div>
+      <div class="story-text">
+        Sự bình thản đó mới chính là điều khiến kẻ thù run sợ — vì nó cho thấy tinh thần cách mạng không thể bị khuất phục dù có thể giết được thân xác.
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thể hiện đúng khí phách...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">→</span>
+        <span>Bình thản — cài hoa, hát bài ca, hô khẩu hiệu — hiên ngang không sợ hãi</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 4: KẾT THÚC -->
+  <div class="scene" id="scene-4_final">
+    <div class="chapter-badge">🌺 Chương cuối · Di sản bất tử</div>
+    <img class="scene-img" src="images/den-tho-vo-thi-sau.jpg" alt="Đền thờ Võ Thị Sáu">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Võ Thị Sáu hy sinh ngày 23 tháng 1 năm 1952 — khi mới <strong>19 tuổi.</strong>
+    </div>
+    <div class="story-text">
+      Nhưng cái chết không kết thúc câu chuyện của cô. Nó chỉ là khởi đầu của một <em>huyền thoại bất tử.</em>
+    </div>
+    <div class="story-text">
+      Ngôi mộ của cô tại nghĩa trang Hàng Dương, Côn Đảo — <strong>ngày nào cũng đầy hoa tươi.</strong> Hàng triệu người Việt Nam đã và sẽ đến đây để tưởng nhớ cô gái nhỏ đã dạy cho cả một dân tộc biết rằng: <em>lòng dũng cảm không có giới hạn tuổi tác.</em>
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Võ Thị Sáu — trước tòa án thực dân</div>
+      "Yêu nước, thương dân không phải là tội. Tôi không có tội!"
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Di sản</div>
+      Nhà nước Việt Nam truy tặng Võ Thị Sáu danh hiệu <strong>Anh hùng Lực lượng vũ trang nhân dân</strong> — một trong những người trẻ nhất được nhận danh hiệu cao quý này. Tên cô được đặt cho hàng trăm trường học và con đường trên khắp cả nước.
+    </div>
+    <button class="continue-btn" onclick="showFinal()">
+      Xem kết quả cuối →
+    </button>
+  </div>
+
+  <!-- FINAL RESULT -->
+  <div class="scene" id="scene-final">
+    <div class="final-result">
+      <div class="chapter-badge" style="justify-content:center">🌺 Hành trình hoàn thành</div>
+      <span class="final-flower">🌸</span>
+      <div class="final-title">Võ Thị Sáu — Người Con Gái Bất Tử</div>
+      <div class="final-score" id="finalScore">⭐</div>
+      <div class="final-desc" id="finalDesc">
+        Bạn đã hoàn thành hành trình cùng Võ Thị Sáu!
+      </div>
+      <div style="margin-top:8px">
+        <button class="restart-btn" onclick="restartStory()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="home-btn">📖 Câu chuyện khác</a>
+      </div>
+      <div style="margin-top:40px; padding:24px; background:rgba(194,24,91,0.07); border:1px solid rgba(194,24,91,0.2); border-radius:16px; text-align:left;">
+        <div style="font-size:13px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📚 Bài học lịch sử</div>
+        <div style="font-size:16px;line-height:1.8;color:rgba(245,234,214,0.85);">
+          Võ Thị Sáu là minh chứng cho thấy <strong>lòng yêu nước không có giới hạn tuổi tác.</strong> Ở tuổi 14, cô đã dám dấn thân vào con đường đầy hiểm nguy. Ở tuổi 19, cô đối diện với cái chết bằng sự bình thản và hiên ngang khiến kẻ thù phải run sợ. Tinh thần của cô — cài hoa vào tóc, hát bài ca cách mạng trước họng súng — là biểu tượng bất tử của ý chí Việt Nam.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let correctChoices = 0;
+let totalChoices = 0;
+
+const correctPaths = ['1A', '2A', '3A', '4_final'];
+
+function choose(sceneId) {
+  totalChoices++;
+  if (correctPaths.includes(sceneId)) correctChoices++;
+
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('scene-' + sceneId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  updateProgress(sceneId);
+}
+
+function updateProgress(sceneId) {
+  const progressMap = {
+    '1': 0, '1A': 20, '1B': 10, '1C': 5,
+    '2': 35, '2A': 55, '2B': 40, '2C': 35,
+    '3': 65, '3A': 80, '3B': 70, '3C': 68,
+    '4_final': 90, 'final': 100
+  };
+  const pct = progressMap[sceneId] || 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-final').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const ratio = totalChoices > 0 ? correctChoices / totalChoices : 0;
+  const scoreEl = document.getElementById('finalScore');
+  const descEl = document.getElementById('finalDesc');
+
+  if (ratio >= 0.7) {
+    scoreEl.textContent = '⭐⭐⭐';
+    descEl.textContent = 'Xuất sắc! Bạn đã thể hiện đúng tinh thần bất khuất của Võ Thị Sáu — dũng cảm nhận nhiệm vụ, kiên trung không khai, hiên ngang trước kẻ thù. Xứng đáng là người con gái Đất Đỏ!';
+  } else if (ratio >= 0.4) {
+    scoreEl.textContent = '⭐⭐';
+    descEl.textContent = 'Tốt! Bạn đã hiểu được phần lớn tinh thần của Võ Thị Sáu. Hãy thử lại để trải nghiệm đầy đủ hành trình của cô!';
+  } else {
+    scoreEl.textContent = '⭐';
+    descEl.textContent = 'Hành trình của Võ Thị Sáu đòi hỏi lòng dũng cảm phi thường. Hãy thử lại và cảm nhận tinh thần bất khuất của người con gái Đất Đỏ!';
+  }
+
+  if (ratio >= 0.7 && typeof confetti !== 'undefined') {
+    setTimeout(() => confetti({
+      particleCount: 150,
+      spread: 100,
+      colors: ['#f48fb1', '#c2185b', '#f4c542', '#ffffff']
+    }), 500);
+  }
+}
+
+function restartStory() {
+  correctChoices = 0;
+  totalChoices = 0;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

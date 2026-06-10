@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thử Thách Sử Việt</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body style="background: var(--cream);">
+
+    <nav>
+        <div class="logo">SỬ VIỆT</div>
+        <ul><li><a href="index.html">Quay về trang chủ</a></li></ul>
+    </nav>
+
+    <div class="quiz-nav-container"> 
+        <button class="nav-arrow" onclick="scrollNav(-1)">&#10094;</button> 
+        <div class="quiz-nav-scroll" id="navScroll"> 
+            <button class="nav-item active" onclick="loadTopic('van-lang')">01. Văn Lang</button>
+            <button class="nav-item" onclick="loadTopic('bac-thuoc')">02. Bắc Thuộc</button>
+            <button class="nav-item" onclick="loadTopic('ly-tran')">03. Lý - Trần</button>
+            <button class="nav-item" onclick="loadTopic('le-nguyen')">04. Lê - Nguyễn</button>
+            <button class="nav-item" onclick="loadTopic('khang-chien-phap')">05. Chống Pháp</button>
+            <button class="nav-item" onclick="loadTopic('khang-chien-my')">06. Chống Mỹ</button>
+        </div>
+        <button class="nav-arrow" onclick="scrollNav(1)">&#10095;</button> 
+    </div>
+
+   <main class="main-quiz-wrapper">
+        <button class="nav-arrow" onclick="changeQuestion(-1)">&#10094;</button>
+
+        <section class="quiz" id="quiz-section">
+            </section>
+
+        <button class="nav-arrow" onclick="changeQuestion(1)">&#10095;</button>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

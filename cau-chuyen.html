@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Qua Câu Chuyện - Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #1a1a2e;
+  --secondary: #16213e;
+  --accent: #ff6b35;
+  --accent-light: #ffa500;
+  --text: #ffffff;
+  --text-muted: #b0b0b0;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 107, 53, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ========================= */
+/* FIX CHÍNH: body dùng scroll thay vì fixed */
+/* ========================= */
+html {
+  /* Đặt gradient trực tiếp trên html để phủ toàn bộ chiều cao thực */
+  background: linear-gradient(135deg, #0f1f3f 0%, #1a1a3e 25%, #3d1f2f 75%, #4a1a2e 100%);
+  background-attachment: scroll; /* ← FIX: không dùng fixed */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  /* Nền trong suốt để thấy màu của html */
+  background: transparent;
+  min-height: 100vh;
+  color: var(--text);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ========================= */
+/* FIX STARS: dùng absolute thay fixed */
+/* ========================= */
+#stars-container {
+  position: absolute; /* ← FIX: không dùng fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Chiều cao bằng toàn bộ trang, không chỉ viewport */
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+.navbar {
+    width: 100%;
+    height: 80px;
+    background: #2c1b12;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #c8a96e;
+}
+
+.logo {
+    color: #c8a96e;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #c8a96e;
+}
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+.nav-menu a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+    font-size: 17px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.nav-menu a:hover { color: #c8a96e; }
+
+/* ========================= */
+/* HERO SECTION */
+/* ========================= */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 160px;
+  padding-left: 80px;
+  padding-right: 80px;
+  gap: 60px;
+  z-index: 2;
+
+  
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 700px;
+  text-align: left;
+  animation: heroFadeUp 1s ease-out;
+  position: relative;
+  z-index: 5;
+}
+
+.hero-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: iconBounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  color: white;
+  text-shadow:
+    0 0 15px rgba(255,215,0,0.4),
+    0 0 30px rgba(255,215,0,0.2);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 40px;
+  line-height: 1.8;
+  animation: heroFadeUp 1s ease-out 0.2s both;
+}
+
+.hero-button {
+  display: inline-block;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa500 100%);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  animation: heroFadeUp 1s ease-out 0.4s both;
+}
+
+.hero-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(255, 107, 53, 0.4);
+}
+
+.hero-tag {
+  display: inline-block;
+  background: #ffd700;
+  color: #1a0a00;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: heroFadeUp 1s ease-out 0.3s both;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+  transition: all 0.4s ease;
+}
+
+.hero-image img:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 80px rgba(255, 107, 53, 0.5);
+}
+
+/* ========================= */
+/* FILTER SECTION */
+/* ========================= */
+.filter-section {
+  position: relative;
+  padding: 60px 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.filter-wrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.filter-btn {
+  padding: 12px 28px;
+  border: 2px solid rgba(255, 107, 53, 0.4);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa500 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+
+.filter-btn:hover::before { transform: scaleX(1); }
+
+.filter-btn:hover,
+.filter-btn.active {
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+/* ========================= */
+/* STORIES SECTION */
+/* ========================= */
+.stories-section {
+  position: relative;
+  padding: 80px 20px;
+  z-index: 2;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ========================= */
+/* STORY CARDS */
+/* ========================= */
+.story-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  animation: cardFadeIn 0.6s ease-out;
+}
+
+.story-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.story-card:hover::before { opacity: 1; }
+
+.story-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 165, 0, 0.1));
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.story-card:hover .card-image img { transform: scale(1.08); }
+
+.card-body {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.card-year {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffa500 0%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-icon {
+  font-size: 32px;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.card-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.card-hero {
+  font-size: 15px;
+  color: var(--accent-light);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.card-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 15px;
+}
+
+.card-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa500 100%);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  align-self: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.card-btn:hover::after { transform: translateX(100%); }
+
+.card-btn:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+}
+
+/* ========================= */
+/* ANIMATIONS */
+/* ========================= */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-20px); }
+}
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); }
+  50%       { filter: drop-shadow(0 0 30px rgba(255, 165, 0, 0.6)); }
+}
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+@media (max-width: 1024px) {
+  .stories-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 20px; height: 60px; }
+  .logo { font-size: 22px; }
+  .nav-menu { gap: 20px; }
+  .nav-menu a { font-size: 13px; }
+  .hero-section {
+    flex-direction: column;
+    min-height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 40px;
+  }
+  .hero-content { text-align: center; max-width: 100%; }
+  .hero-icon { font-size: 60px; margin-bottom: 15px; }
+  .hero-title { font-size: 36px; margin-bottom: 15px; }
+  .hero-subtitle { font-size: 14px; margin-bottom: 30px; }
+  .hero-image img { max-height: 300px; border-radius: 15px; }
+  .filter-section { padding: 40px 0; }
+  .filter-btn { padding: 10px 20px; font-size: 13px; }
+  .stories-section { padding: 60px 15px; }
+  .stories-grid { grid-template-columns: 1fr; gap: 20px; }
+  .card-body { padding: 20px; }
+  .card-image { height: 150px; }
+  .card-header { margin-bottom: 10px; }
+  .card-icon { font-size: 24px; }
+  .card-content h3 { font-size: 18px; }
+  .card-hero { font-size: 13px; }
+  .card-desc { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 28px; }
+  .hero-icon { font-size: 50px; }
+  .hero-button { padding: 12px 24px; font-size: 14px; }
+  .hero-image img { max-height: 250px; }
+  .filter-wrapper { gap: 8px; }
+  .filter-btn { padding: 8px 16px; font-size: 12px; }
+  .card-body { padding: 16px; }
+  .card-year { font-size: 24px; }
+  .card-icon { font-size: 20px; }
+  .card-image { height: 120px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <nav class="navbar">
+    <div class="logo">
+        <img src="images/logo.png" alt="Sử Việt Logo">
+        SỬ VIỆT
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="">Hành trình lịch sử</a></li>
+      <li><a href="cau-chuyen.html" style="color:#ffa500">Câu chuyện</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="">Nhân vật</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- STARS: absolute, trải dài toàn trang -->
+<div id="stars-container"></div>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <img src="images/cchchu.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;">
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(20,10,5,0.5);z-index:1;"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Lịch Sử Việt Nam</span>
+    <h1 class="hero-title">Những Trang Sử Hào Hùng</h1>
+    <p class="hero-subtitle">Khám phá lịch sử Việt Nam qua những câu chuyện sống động</p>
+    <button class="hero-button" onclick="document.querySelector('.filter-section').scrollIntoView({behavior:'smooth'})">Khám Phá Ngay →</button>
+  </div>
+</section>
+
+<!-- FILTER SECTION -->
+<section class="filter-section">
+  <div class="filter-wrapper">
+    <button class="filter-btn active" onclick="filterStories('all')" data-filter="all">🏛️ Tất cả</button>
+    <button class="filter-btn" onclick="filterStories('battle')" data-filter="battle">⚔️ Trận chiến</button>
+    <button class="filter-btn" onclick="filterStories('hero')" data-filter="hero">👸 Nữ anh hùng</button>
+    <button class="filter-btn" onclick="filterStories('unite')" data-filter="unite">👑 Thống nhất</button>
+    <button class="filter-btn" onclick="filterStories('modern')" data-filter="modern">Việt Nam cận đại</button>
+  </div>
+</section>
+
+<!-- STORIES GRID -->
+<section class="stories-section">
+  <div class="stories-grid">
+
+    <div class="story-card" data-cat="battle">
+      <div class="card-image"><img src="images/ngo-quyen-portrait.jpg" alt="Trận Bạch Đằng"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">938</div><div class="card-icon">⚔️</div></div>
+        <h3>Trận Bạch Đằng</h3>
+        <p class="card-hero">Ngô Quyền Phá Quân Nam Hán</p>
+        <p class="card-desc">Dùng kế cắm cọc nhọn tiêu diệt hoàn toàn thủy quân Nam Hán, chấm dứt hơn 1000 năm Bắc thuộc.</p>
+        <div class="card-meta"><span>🕐 5 phút</span><span>📍 Sông Bạch Đằng</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=1'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="battle">
+      <div class="card-image"><img src="images/game-hd-vuon-khong.jpg" alt="Hưng Đạo Vương"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1288</div><div class="card-icon">🛡️</div></div>
+        <h3>Hưng Đạo Vương</h3>
+        <p class="card-hero">Ba Lần Đánh Bại Quân Nguyên Mông</p>
+        <p class="card-desc">Đế chế Nguyên Mông hùng mạnh nhất thế giới, nhưng bị đánh bại ba lần liên tiếp bởi quân dân Đại Việt.</p>
+        <div class="card-meta"><span>🕐 7 phút</span><span>📍 Đại Việt</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=2'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="battle">
+      <div class="card-image"><img src="images/quanthanh1.jpg" alt="Quang Trung"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1789</div><div class="card-icon">🔥</div></div>
+        <h3>Quang Trung</h3>
+        <p class="card-hero">Đại Phá 29 Vạn Quân Thanh</p>
+        <p class="card-desc">Chỉ trong 5 ngày thần tốc, vua Quang Trung đã đánh tan 29 vạn quân Thanh xâm lược.</p>
+        <div class="card-meta"><span>🕐 6 phút</span><span>📍 Thăng Long</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=3'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="hero">
+      <div class="card-image"><img src="images/2batrung.jpg" alt="Hai Bà Trưng"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">40</div><div class="card-icon">👸</div></div>
+        <h3>Hai Bà Trưng</h3>
+        <p class="card-hero">Khởi Nghĩa Chống Ách Đô Hộ</p>
+        <p class="card-desc">Hai chị em Trưng Trắc và Trưng Nhị phất cờ khởi nghĩa, giành lại độc lập trong hơn 3 năm.</p>
+        <div class="card-meta"><span>🕐 5 phút</span><span>📍 Mê Linh</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=4'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="battle">
+      <div class="card-image"><img src="images/ll10nam.jpg" alt="Lê Lợi"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1418</div><div class="card-icon">🏯</div></div>
+        <h3>Lê Lợi</h3>
+        <p class="card-hero">10 Năm Kháng Chiến Chống Quân Minh</p>
+        <p class="card-desc">Từ núi rừng Lam Sơn, Lê Lợi lãnh đạo cuộc kháng chiến gian khổ, đánh đuổi quân Minh.</p>
+        <div class="card-meta"><span>🕐 8 phút</span><span>📍 Lam Sơn</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=5'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="unite">
+      <div class="card-image"><img src="images/DinhBoLinh.jpg" alt="Đinh Bộ Lĩnh" style="object-position:center 30%"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">968</div><div class="card-icon">👑</div></div>
+        <h3>Đinh Bộ Lĩnh</h3>
+        <p class="card-hero">Dẹp Loạn 12 Sứ Quân</p>
+        <p class="card-desc">Từ cậu bé chăn trâu, Đinh Bộ Lĩnh dẹp loạn, thống nhất giang sơn, lập nhà Đinh.</p>
+        <div class="card-meta"><span>🕐 6 phút</span><span>📍 Hoa Lư</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=6'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="modern">
+      <div class="card-image"><img src="images/hochiminh.jfif" alt="Hồ Chí Minh"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1945</div><div class="card-icon">🇻🇳</div></div>
+        <h3>Hồ Chí Minh</h3>
+        <p class="card-hero">Tuyên Ngôn Độc Lập 2/9/1945</p>
+        <p class="card-desc">Tại Quảng trường Ba Đình, Chủ tịch Hồ Chí Minh khai sinh nước Việt Nam Dân chủ Cộng hòa.</p>
+        <div class="card-meta"><span>🕐 6 phút</span><span>📍 Ba Đình</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=7'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="modern">
+      <div class="card-image"><img src="images/vng-hero.jpg" alt="Võ Nguyên Giáp"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1954</div><div class="card-icon">⭐</div></div>
+        <h3>Võ Nguyên Giáp</h3>
+        <p class="card-hero">Chiến Thắng Điện Biên Phủ</p>
+        <p class="card-desc">Chiến thắng quân sự vĩ đại nhất thế kỷ 20, đập tan huyền thoại bất bại của thực dân Pháp.</p>
+        <div class="card-meta"><span>🕐 7 phút</span><span>📍 Điện Biên Phủ</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=8'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="hero">
+      <div class="card-image"><img src="images/btrnu.jpg" alt="Bà Triệu"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">248</div><div class="card-icon">🐘</div></div>
+        <h3>Bà Triệu</h3>
+        <p class="card-hero">Nữ Tướng Cưỡi Voi Đánh Giặc</p>
+        <p class="card-desc">Cô gái cưỡi voi xông trận, lãnh đạo nghĩa quân chống ách đô hộ của quân Đông Ngô.</p>
+        <div class="card-meta"><span>🕐 5 phút</span><span>📍 Thanh Hóa</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=9'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="battle">
+      <div class="card-image"><img src="images/lthk.jpg" alt="Lý Thường Kiệt"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1077</div><div class="card-icon">📜</div></div>
+        <h3>Lý Thường Kiệt</h3>
+        <p class="card-hero">Nam Quốc Sơn Hà</p>
+        <p class="card-desc">Lý Thường Kiệt đọc vang bài thơ thần — bản Tuyên ngôn độc lập đầu tiên của dân tộc Việt.</p>
+        <div class="card-meta"><span>🕐 6 phút</span><span>📍 Sông Như Nguyệt</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=10'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="hero">
+      <div class="card-image"><img src="images/vths.jpg" alt="Võ Thị Sáu"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">1952</div><div class="card-icon">🌺</div></div>
+        <h3>Võ Thị Sáu</h3>
+        <p class="card-hero">Người Con Gái Đất Đỏ</p>
+        <p class="card-desc">Cô gái 19 tuổi hiên ngang bước ra pháp trường, biểu tượng bất tử của tuổi trẻ cách mạng.</p>
+        <div class="card-meta"><span>🕐 5 phút</span><span>📍 Côn Đảo</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=11'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="unite">
+      <div class="card-image"><img src="images/hungvuong1.jpg" alt="Hùng Vương"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">~2879 TCN</div><div class="card-icon">🐉</div></div>
+        <h3>Hùng Vương</h3>
+        <p class="card-hero">Dựng Nước Văn Lang</p>
+        <p class="card-desc">18 đời Hùng Vương dựng nên nhà nước đầu tiên của người Việt — cội nguồn của nền văn minh lúa nước 4000 năm.</p>
+        <div class="card-meta"><span>🕐 7 phút</span><span>📍 Phong Châu - Phú Thọ</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=12'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="unite">
+      <div class="card-image"><img src="images/adv.jpg" alt="An Dương Vương"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">257 TCN</div><div class="card-icon">🏯</div></div>
+        <h3>An Dương Vương</h3>
+        <p class="card-hero">Thành Cổ Loa & Nỏ Thần Kim Quy</p>
+        <p class="card-desc">Xây thành Cổ Loa hình trôn ốc, chế nỏ thần bách phát bách trúng — nhưng bi kịch Mỵ Châu Trọng Thủy khiến cả giang sơn sụp đổ.</p>
+        <div class="card-meta"><span>🕐 8 phút</span><span>📍 Cổ Loa - Hà Nội</span></div>
+        <button class="card-btn" onclick="window.location.href='chi-tiet-an-duong-vuong.html'">Đọc thêm →</button>
+      </div>
+    </div>
+
+    <div class="story-card" data-cat="hero">
+      <div class="card-image"><img src="images/michau.webp" alt="Mỵ Châu"></div>
+      <div class="card-body">
+        <div class="card-header"><div class="card-year">179 TCN</div><div class="card-icon">🕊️</div></div>
+        <h3>Mỵ Châu</h3>
+        <p class="card-hero">Tình Yêu Hay Phản Bội?</p>
+        <p class="card-desc">Công chúa Âu Lạc yêu chồng hết lòng nhưng vô tình làm mất nỏ thần — bi kịch ngàn năm.</p>
+        <div class="card-meta"><span>🕐 7 phút</span><span>📍 Thành Cổ Loa</span></div>
+        <button class="card-btn" onclick="window.location.href='cau-chuyen-detail.html?id=14'">Đọc thêm →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Stars — trải theo chiều cao thực của trang
+  function createStars() {
+    const container = document.getElementById('stars-container');
+    const pageH = document.body.scrollHeight;
+    container.style.height = pageH + 'px';
+    const count = 120;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left  = Math.random() * 100 + '%';
+      s.style.top   = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      // Kích thước ngẫu nhiên thêm cho sinh động
+      const size = Math.random() < 0.2 ? '3px' : '2px';
+      s.style.width  = size;
+      s.style.height = size;
+      container.appendChild(s);
+    }
+  }
+  createStars();
+  // Cập nhật lại khi resize
+  window.addEventListener('resize', () => {
+    const c = document.getElementById('stars-container');
+    c.innerHTML = '';
+    createStars();
+  });
+
+  // Filter stories
+  function filterStories(cat) {
+    document.querySelectorAll('.story-card').forEach((card, idx) => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? 'grid' : 'none';
+      if (match) card.style.animation = `cardFadeIn 0.5s ease-out ${idx * 0.06}s both`;
+    });
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.filter === cat);
+    });
+  }
+</script>
+
+<footer style="background:#2c1b12;color:white;padding:50px 80px 0;position:relative;z-index:2;">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:40px;">
+        <div>
+            <h3 style="color:#f4c542;font-size:28px;font-weight:700;margin-bottom:12px;">SỬ VIỆT</h3>
+            <p style="color:rgba(255,255,255,0.6);line-height:1.8;max-width:260px;font-size:14px;">Website học lịch sử Việt Nam tương tác — khám phá hàng nghìn năm văn hiến dân tộc.</p>
+        </div>
+        <div>
+            <h4 style="color:#f4c542;margin-bottom:16px;">Khám phá</h4>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+                <li><a href="index.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;">Trang chủ</a></li>
+                <li><a href="cau-chuyen.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;">Học qua câu chuyện</a></li>
+                <li><a href="quiz.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;">Quiz thử thách</a></li>
+                <li><a href="game.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;">Trò chơi lịch sử</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color:#f4c542;margin-bottom:16px;">Thông tin</h4>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);">
+                <li>🏫 Trường: <strong style="color:white;">ĐH CNTT & TT VIỆT HÀN</strong></li>
+                <li>👥 Nhóm: <strong style="color:white;">CMW</strong></li>
+                <li>🏆 Cuộc thi: <strong style="color:white;">Best Web Design</strong></li>
+                <li>📅 Năm: <strong style="color:white;">2026</strong></li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-top:1px solid rgba(200,169,110,0.25);padding:16px 0;display:flex;justify-content:space-between;align-items:center;">
+        <div style="color:#c8a96e;font-size:14px;font-weight:600;">📖 Hiểu sử – Yêu nước – Tự hào dân tộc</div>
+        <div style="display:flex;gap:20px;">
+            <a href="#" style="color:rgba(255,255,255,0.5);font-size:20px;text-decoration:none;">f</a>
+            <a href="#" style="color:rgba(255,255,255,0.5);font-size:20px;text-decoration:none;">▶</a>
+            <a href="#" style="color:rgba(255,255,255,0.5);font-size:20px;text-decoration:none;">🌐</a>
+        </div>
+    </div>
+    <div style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;padding:10px 0 20px;">© 2026 Sử Việt — Tự hào lịch sử Việt Nam</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Võ Nguyên Giáp — Điện Biên Phủ 1954</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --olive: #2d3a1e;
+  --olive-mid: #4a5e30;
+  --olive-light: #7a9450;
+  --khaki: #c8b87a;
+  --khaki-light: #e8d9a0;
+  --parchment: #f2ead0;
+  --red-flag: #cc2200;
+  --gold: #d4a017;
+  --ink: #1a1a0e;
+  --mist: rgba(200,184,122,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #0f120a;
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* TEXTURE OVERLAY */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 15% 30%, rgba(45,58,30,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 70%, rgba(74,94,48,0.2) 0%, transparent 50%);
+}
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(15,18,10,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(200,184,122,0.2);
+  padding: 13px 36px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo {
+  font-family:'IM Fell English', serif;
+  font-size:18px; color:var(--khaki);
+  text-decoration:none; letter-spacing:3px;
+}
+.nav-back {
+  color:rgba(242,234,208,0.5); font-size:13px;
+  text-decoration:none; transition:0.3s; letter-spacing:1px;
+}
+.nav-back:hover { color:var(--khaki); }
+
+/* PROGRESS */
+.progress-wrap {
+  position:fixed; top:50px; left:0; right:0; z-index:99;
+  height:2px; background:rgba(255,255,255,0.04);
+}
+.progress-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--olive-mid), var(--khaki));
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+/* CHAPTER INDICATOR */
+.chapter-dots {
+  position:fixed; right:20px; top:50%;
+  transform:translateY(-50%); z-index:98;
+  display:flex; flex-direction:column; gap:10px;
+}
+.cdot {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(200,184,122,0.2);
+  border:1px solid rgba(200,184,122,0.3);
+  transition:0.4s;
+}
+.cdot.done { background:var(--olive-mid); border-color:var(--olive-mid); }
+.cdot.active { background:var(--khaki); border-color:var(--khaki); transform:scale(1.4); }
+
+/* CONTAINER */
+.story-wrap {
+  max-width:760px; margin:0 auto;
+  padding: 80px 24px 100px;
+  position:relative; z-index:1;
+}
+
+/* SCENE */
+.scene { display:none; }
+.scene.active {
+  display:block;
+  animation: revealScene 0.7s ease both;
+}
+@keyframes revealScene {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* CHAPTER BADGE */
+.cbadge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(45,58,30,0.6);
+  border:1px solid rgba(200,184,122,0.3);
+  border-radius:4px; padding:5px 14px;
+  font-size:11px; color:var(--khaki);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:22px;
+}
+
+/* HERO IMAGE */
+.scene-img {
+  width:100%; height:300px;
+  object-fit:cover; border-radius:4px;
+  margin-bottom:28px;
+  border:1px solid rgba(200,184,122,0.15);
+  filter: sepia(0.25) contrast(1.05) brightness(0.92);
+}
+.scene-img.tall { height:360px; }
+
+/* TYPOGRAPHY */
+.narrator {
+  font-size:11px; color:var(--khaki);
+  letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:8px; opacity:0.7;
+}
+
+.story-p {
+  font-size:17px; line-height:1.95;
+  color:rgba(242,234,208,0.88);
+  margin-bottom:14px;
+  font-weight:300;
+}
+.story-p em { color:var(--khaki-light); font-style:italic; }
+.story-p strong { color:#fff; font-weight:500; }
+
+/* DIALOGUE */
+.dialogue {
+  background:rgba(45,58,30,0.4);
+  border-left:3px solid var(--olive-light);
+  border-radius:0 8px 8px 0;
+  padding:14px 20px; margin:18px 0;
+}
+.dlg-who {
+  font-size:11px; color:var(--olive-light);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:6px;
+}
+.dlg-text {
+  font-size:17px; font-style:italic;
+  color:var(--parchment); line-height:1.75;
+}
+
+/* FACT BOX */
+.factbox {
+  background:rgba(212,160,23,0.07);
+  border:1px solid rgba(212,160,23,0.25);
+  border-radius:8px; padding:16px 20px;
+  margin:18px 0;
+}
+.factbox-label {
+  font-size:10px; color:var(--gold);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:7px;
+}
+.factbox p {
+  font-size:14px; color:rgba(242,234,208,0.75);
+  line-height:1.8;
+}
+
+/* TENSION BAR */
+.tension-bar {
+  display:flex; align-items:center; gap:10px;
+  margin:18px 0; padding:10px 16px;
+  background:rgba(204,34,0,0.08);
+  border:1px solid rgba(204,34,0,0.2);
+  border-radius:6px;
+}
+.tension-label { font-size:11px; color:#ff6b4a; letter-spacing:1px; min-width:80px; }
+.tension-track {
+  flex:1; height:4px; background:rgba(255,255,255,0.1);
+  border-radius:2px; overflow:hidden;
+}
+.tension-fill {
+  height:100%; border-radius:2px;
+  background:linear-gradient(90deg, var(--olive-mid), var(--red-flag));
+  transition: width 1s ease;
+}
+.tension-val { font-size:12px; color:rgba(242,234,208,0.6); min-width:30px; text-align:right; }
+
+/* DIVIDER */
+.divider {
+  text-align:center; color:var(--khaki);
+  opacity:0.3; font-size:14px; letter-spacing:16px;
+  margin:26px 0;
+}
+
+/* CHOICES */
+.choices-label {
+  font-size:11px; color:var(--khaki);
+  letter-spacing:3px; text-transform:uppercase;
+  margin:30px 0 14px; opacity:0.7;
+}
+.choices { display:flex; flex-direction:column; gap:10px; }
+
+.choice {
+  background:rgba(242,234,208,0.03);
+  border:1px solid rgba(242,234,208,0.12);
+  border-radius:6px; padding:16px 20px;
+  color:var(--parchment); font-family:'Barlow',sans-serif;
+  font-size:16px; text-align:left; cursor:pointer;
+  transition:all 0.25s; display:flex; align-items:flex-start; gap:14px;
+  line-height:1.55;
+}
+.choice:hover {
+  background:rgba(74,94,48,0.2);
+  border-color:rgba(122,148,80,0.45);
+  transform:translateX(5px);
+}
+.choice-key {
+  width:26px; height:26px; min-width:26px;
+  border-radius:3px;
+  background:rgba(74,94,48,0.3);
+  border:1px solid var(--olive-light);
+  color:var(--olive-light);
+  font-size:11px; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Barlow',sans-serif;
+  margin-top:1px;
+}
+.choice-sub {
+  font-size:12px; color:rgba(200,184,122,0.55);
+  margin-top:5px; font-style:italic;
+}
+
+/* OUTCOME */
+.outcome {
+  border-radius:8px; padding:20px 24px;
+  margin:20px 0; font-size:16px; line-height:1.85;
+}
+.outcome.bad {
+  background:rgba(204,34,0,0.1);
+  border:1px solid rgba(204,34,0,0.25);
+  color:rgba(242,234,208,0.85);
+}
+.outcome.good {
+  background:rgba(45,58,30,0.5);
+  border:1px solid rgba(122,148,80,0.35);
+  color:rgba(242,234,208,0.9);
+}
+.outcome-icon { font-size:28px; margin-bottom:10px; display:block; }
+
+/* CONTINUE BUTTON */
+.cont-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  margin-top:28px; padding:14px 28px;
+  background:rgba(45,58,30,0.7);
+  border:1px solid rgba(122,148,80,0.4);
+  border-radius:6px; color:var(--khaki-light);
+  font-family:'Barlow',sans-serif; font-size:16px;
+  cursor:pointer; transition:all 0.3s; letter-spacing:0.5px;
+}
+.cont-btn:hover {
+  background:rgba(74,94,48,0.6);
+  border-color:var(--khaki);
+  transform:translateY(-2px);
+}
+
+/* SCORE STRIP */
+.score-strip {
+  display:flex; align-items:center; gap:14px;
+  padding:10px 16px; margin-bottom:20px;
+  background:rgba(45,58,30,0.3);
+  border:1px solid rgba(200,184,122,0.15);
+  border-radius:6px;
+}
+.score-lbl { font-size:11px; color:rgba(200,184,122,0.6); letter-spacing:1px; }
+.score-val { font-size:20px; font-weight:600; color:var(--khaki); }
+.score-badge { font-size:12px; padding:3px 10px; border-radius:4px; background:rgba(45,58,30,0.5); border:1px solid rgba(200,184,122,0.2); color:var(--khaki); }
+
+/* TIMELINE MINI */
+.mini-timeline {
+  display:flex; gap:0; margin:20px 0; overflow:hidden; border-radius:4px;
+}
+.mt-seg {
+  flex:1; padding:8px 6px; text-align:center;
+  font-size:10px; letter-spacing:0.5px; text-transform:uppercase;
+  background:rgba(45,58,30,0.3); border-right:1px solid rgba(200,184,122,0.1);
+  color:rgba(200,184,122,0.4); transition:0.4s;
+}
+.mt-seg:last-child { border-right:none; }
+.mt-seg.done { background:rgba(74,94,48,0.4); color:var(--khaki); }
+.mt-seg.active { background:rgba(74,94,48,0.6); color:#fff; font-weight:500; }
+
+/* FINAL */
+.final-wrap { text-align:center; padding:30px 10px 50px; }
+.final-star {
+  font-size:64px; margin:16px 0; display:block;
+  animation: starPulse 2s ease infinite alternate;
+}
+@keyframes starPulse {
+  from { transform:scale(1) rotate(-3deg); filter:brightness(1); }
+  to   { transform:scale(1.1) rotate(3deg); filter:brightness(1.3); }
+}
+.final-title {
+  font-family:'IM Fell English',serif;
+  font-size:30px; color:var(--khaki);
+  margin-bottom:12px; line-height:1.3;
+}
+.final-circle {
+  width:110px; height:110px; border-radius:50%;
+  background:rgba(45,58,30,0.5);
+  border:2px solid var(--olive-light);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IM Fell English',serif;
+  font-size:36px; color:var(--khaki);
+  margin:20px auto;
+}
+.final-desc {
+  font-size:16px; color:rgba(242,234,208,0.75);
+  line-height:1.85; max-width:500px; margin:0 auto 28px;
+}
+.final-btns { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; }
+.btn-restart {
+  padding:12px 26px; background:transparent;
+  border:1px solid var(--olive-light); border-radius:6px;
+  color:var(--olive-light); font-family:'Barlow',sans-serif;
+  font-size:15px; cursor:pointer; transition:0.3s;
+}
+.btn-restart:hover { background:rgba(74,94,48,0.3); }
+.btn-home {
+  padding:12px 26px; background:rgba(45,58,30,0.6);
+  border:1px solid rgba(200,184,122,0.3); border-radius:6px;
+  color:var(--parchment); font-family:'Barlow',sans-serif;
+  font-size:15px; cursor:pointer; transition:0.3s;
+  text-decoration:none; display:inline-block;
+}
+.lesson-box {
+  margin-top:36px; padding:22px 24px;
+  background:rgba(45,58,30,0.3);
+  border:1px solid rgba(200,184,122,0.15);
+  border-radius:8px; text-align:left;
+}
+.lesson-lbl { font-size:10px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.lesson-box p { font-size:15px; color:rgba(242,234,208,0.78); line-height:1.85; }
+
+@media(max-width:600px){
+  .chapter-dots { display:none; }
+  .scene-img { height:220px; }
+  .story-p { font-size:16px; }
+  .choice { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen-detail.html?id=8" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-fill" id="pBar" style="width:0%"></div>
+</div>
+
+<div class="chapter-dots" id="chDots">
+  <div class="cdot active" data-ch="0" title="Chương 1"></div>
+  <div class="cdot" data-ch="1" title="Chương 2"></div>
+  <div class="cdot" data-ch="2" title="Chương 3"></div>
+  <div class="cdot" data-ch="3" title="Chương 4"></div>
+</div>
+
+<div class="story-wrap">
+
+  <!-- SCORE STRIP -->
+  <div class="score-strip" id="scoreStrip">
+    <span class="score-lbl">ĐIỂM CHỈ HUY</span>
+    <span class="score-val" id="scoreVal">0</span>
+    <span class="score-badge" id="scoreBadge">📋 Học viên</span>
+  </div>
+
+  <!-- MINI TIMELINE -->
+  <div class="mini-timeline" id="mTimeline">
+    <div class="mt-seg active" id="mt0">Kế hoạch</div>
+    <div class="mt-seg" id="mt1">Kéo pháo</div>
+    <div class="mt-seg" id="mt2">Tổng công kích</div>
+    <div class="mt-seg" id="mt3">Toàn thắng</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 1 — QUY KẾ SÁCH
+  ══════════════════════════════════════════ -->
+  <div class="scene active" id="s-c1-open">
+    <div class="cbadge">⭐ Chương 1 · Cuối 1953 — Bàn Cờ Định Mệnh</div>
+    <img class="scene-img" src="images/vng-hero.jpg" alt="Võ Nguyên Giáp">
+    <div class="narrator">Bối cảnh</div>
+    <div class="story-p">
+      Cuối năm 1953. <strong>Ngươi — Đại tướng Võ Nguyên Giáp</strong> — đứng trước tấm bản đồ trải rộng trong lán chỉ huy. Khói thuốc vờn quanh ánh đèn dầu leo lét.
+    </div>
+    <div class="story-p">
+      Tướng Pháp <strong>Navarre</strong> vừa điều 16.000 quân tinh nhuệ xuống lòng chảo Điện Biên Phủ — một thung lũng hẻo lánh giữa núi rừng Tây Bắc. Hắn tự tin đây là <em>"cái bẫy nghiền nát Việt Minh"</em>.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Tham mưu trưởng báo cáo</div>
+      <div class="dlg-text">"Báo cáo Đại tướng — địch đã xây xong 49 cứ điểm, 3 phân khu. Pháo cao xạ dày đặc. Chúng thách ta tấn công trực tiếp."</div>
+    </div>
+    <div class="story-p">
+      Các cố vấn đề xuất phương án <em>"đánh nhanh thắng nhanh"</em> — tấn công ào ạt 3 đêm liên tiếp, dứt điểm trước khi địch kịp củng cố. Nhưng trong lòng ngươi, một tiếng cảnh báo thầm thì vang lên…
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Bối cảnh thực tế</div>
+      <p>Chiến dịch Điện Biên Phủ là trận đánh lớn nhất trong cuộc kháng chiến chống Pháp. Nếu thất bại, toàn bộ phong trào kháng chiến có thể sụp đổ.</p>
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:40%"></div></div>
+      <span class="tension-val">40%</span>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi quyết định phương án tấn công...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Đánh nhanh thắng nhanh — tổng tấn công ngay lập tức, 3 đêm liên tiếp</div>
+          <div class="choice-sub">⚡ Táo bạo — nhưng có thể bỏ qua yếu tố bất ngờ chưa đủ</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c1-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div>Hoãn kế hoạch — rút toàn bộ pháo về, chuyển sang <strong>"đánh chắc tiến chắc"</strong></div>
+          <div class="choice-sub">🎯 Quyết định lịch sử của Đại tướng Giáp trong thực tế</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c1-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Không tấn công — chờ thêm viện binh từ Trung ương</div>
+          <div class="choice-sub">⏳ Cơ hội có thể vuột mất</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 BAD1 -->
+  <div class="scene" id="s-c1-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/vng-chienkhao.jpg" alt="Chiến hào">
+    <div class="outcome bad">
+      <span class="outcome-icon">💀</span>
+      <div class="story-p"><strong>Thảm bại!</strong> Pháo chưa vào đúng vị trí, bộ binh xung phong giữa ban ngày bị hỏa lực Pháp nghiền nát. Trung đoàn 141 mất hơn 600 người chỉ trong một đêm.</div>
+      <div class="story-p">Đại tướng Giáp đã từng nói: <em>"Tôi ra lệnh hoãn trận đánh vì biết rằng đánh theo kiểu đó là đưa bộ đội vào chỗ chết."</em></div>
+    </div>
+    <div class="choices-label">⚡ Rút kinh nghiệm...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Thay đổi kế hoạch ngay — áp dụng "đánh chắc tiến chắc"!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 BAD2 -->
+  <div class="scene" id="s-c1-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/vng-hero.jpg" alt="Do dự">
+    <div class="outcome bad">
+      <span class="outcome-icon">⏰</span>
+      <div class="story-p"><strong>Chờ đợi quá lâu!</strong> Địch củng cố thêm công sự, pháo cao xạ tăng lên gấp đôi. Thời cơ chiến lược dần vuột mất.</div>
+      <div class="story-p">Đại tướng Giáp dạy: <em>"Chắc thắng mới đánh — nhưng đã chắc thắng thì phải đánh ngay!"</em></div>
+    </div>
+    <div class="choices-label">⚡ Hành động quyết đoán...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c1-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Lập tức triển khai kế hoạch "đánh chắc tiến chắc"!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C1 GOOD -->
+  <div class="scene" id="s-c1-good">
+    <div class="cbadge">⭐ Lựa chọn B · Quyết định lịch sử</div>
+    <img class="scene-img" src="images/vng-hero.jpg" alt="Quyết định">
+    <div class="outcome good">
+      <span class="outcome-icon">🎯</span>
+      <div class="story-p"><strong>Chính xác tuyệt đối!</strong> Đây là quyết định dũng cảm nhất trong cuộc đời Đại tướng Giáp — hoãn trận đánh khi tất cả đã sẵn sàng, vì ông nhận ra điều kiện chưa đủ để chắc thắng.</div>
+    </div>
+    <div class="story-p">
+      Ngươi triệu tập Hội nghị chỉ huy lúc nửa đêm. Giọng ngươi trầm và kiên quyết:
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Võ Nguyên Giáp</div>
+      <div class="dlg-text">"Tôi ra lệnh hoãn tổng công kích. Kéo toàn bộ pháo ra — bố trí lại. Chúng ta sẽ đánh chắc tiến chắc. Mỗi mét chiến hào là một bước chắc chắn về phía chiến thắng!"</div>
+    </div>
+    <div class="story-p">
+      Cả sở chỉ huy lặng đi. Hàng tháng chuẩn bị sắp phải làm lại từ đầu. Nhưng ngươi biết — <em>đây là con đường duy nhất đến chiến thắng</em>.
+    </div>
+    <button class="cont-btn" onclick="go('c2-open', 0)">Bước sang Chương 2 →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 2 — KÉO PHÁO LÊN NÚI
+  ══════════════════════════════════════════ -->
+  <div class="scene" id="s-c2-open">
+    <div class="cbadge">🔩 Chương 2 · Tháng 1/1954 — Kỳ Tích Kéo Pháo</div>
+    <img class="scene-img tall" src="images/vng-kaophao.jpg" alt="Kéo pháo">
+    <div class="narrator">Thử thách không tưởng</div>
+    <div class="story-p">
+      Để áp dụng "đánh chắc tiến chắc", ngươi cần đưa <strong>24 khẩu pháo hạng nặng 105mm</strong> lên các đỉnh núi bao quanh lòng chảo Điện Biên Phủ — điều mà quân Pháp cho là <em>hoàn toàn bất khả thi</em>.
+    </div>
+    <div class="story-p">
+      Không có máy móc. Không có đường lớn. Chỉ có <strong>hàng chục nghìn dân công</strong> với đôi tay trần và dây thừng.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Tướng Pháp Cogny — qua điện đài bị nghe lén</div>
+      <div class="dlg-text">"Việt Minh không thể kéo pháo lên núi. Điều đó là không thể về mặt kỹ thuật. Điện Biên Phủ bất khả xâm phạm!"</div>
+    </div>
+    <div class="story-p">
+      Một trung đoàn trưởng chạy vào sở chỉ huy, mặt tái nhợt:
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Trung đoàn trưởng</div>
+      <div class="dlg-text">"Báo cáo! Khẩu pháo số 3 đang trên dốc, dây đứt — pháo trôi xuống vực. Đồng chí Tô Vĩnh Diện đã dùng thân mình chèn bánh pháo... Anh ấy đã hy sinh."</div>
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:70%"></div></div>
+      <span class="tension-val">70%</span>
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Tô Vĩnh Diện — người anh hùng</div>
+      <p>Ngày 1/2/1954, chiến sĩ Tô Vĩnh Diện thực sự đã dùng thân mình chèn bánh pháo để cứu khẩu pháo không trôi xuống vực. Anh hy sinh và được phong Anh hùng LLVTND.</p>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi quyết định...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Dừng kéo pháo — tổn thất quá lớn, đây là dấu hiệu xấu</div>
+          <div class="choice-sub">😰 Sợ hãi trước thử thách</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c2-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div>Tổ chức lễ truy điệu ngay tại chiến địa, truyền lửa tinh thần — <strong>tiếp tục kéo pháo</strong></div>
+          <div class="choice-sub">🔥 Biến đau thương thành sức mạnh</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c2-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Bỏ pháo hạng nặng, chỉ dùng súng cối và bộ binh</div>
+          <div class="choice-sub">⚠ Hỏa lực không đủ để chọc thủng phòng tuyến địch</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 BAD1 -->
+  <div class="scene" id="s-c2-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/vng-kaophao.jpg" alt="Dừng lại">
+    <div class="outcome bad">
+      <span class="outcome-icon">❌</span>
+      <div class="story-p"><strong>Tinh thần quân sĩ sụp đổ!</strong> Khi chỉ huy dừng lại trước khó khăn, cả chiến dịch rơi vào khủng hoảng niềm tin. Dân công bỏ về, bộ đội mất phương hướng.</div>
+    </div>
+    <div class="choices-label">⚡ Đứng dậy...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Không! Sự hy sinh của Tô Vĩnh Diện không thể vô nghĩa — tiếp tục!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 BAD2 -->
+  <div class="scene" id="s-c2-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/vng-chienkhao.jpg" alt="Thiếu pháo">
+    <div class="outcome bad">
+      <span class="outcome-icon">💣</span>
+      <div class="story-p"><strong>Hỏa lực không đủ!</strong> Không có pháo hạng nặng, bộ binh tấn công vào lô cốt bê tông của Pháp như đập đầu vào tường. Tổn thất khổng lồ không đổi lại được gì.</div>
+    </div>
+    <div class="choices-label">⚡ Nhìn lại...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c2-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Phải đưa pháo lên núi — dù tốn bao nhiêu mồ hôi xương máu!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C2 GOOD -->
+  <div class="scene" id="s-c2-good">
+    <div class="cbadge">⭐ Lựa chọn B · Biến đau thương thành sức mạnh</div>
+    <img class="scene-img" src="images/vng-kaophao.jpg" alt="Kỳ tích">
+    <div class="outcome good">
+      <span class="outcome-icon">💪</span>
+      <div class="story-p"><strong>Kỳ tích lịch sử!</strong> Ngươi đứng trước toàn thể dân công và bộ đội, giọng bình tĩnh nhưng đầy lửa:</div>
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Võ Nguyên Giáp</div>
+      <div class="dlg-text">"Đồng chí Tô Vĩnh Diện đã hiến thân để cứu khẩu pháo này. Mỗi vòng quay của bánh xe pháo từ đây mang theo máu của anh. Tiến lên!"</div>
+    </div>
+    <div class="story-p">
+      Hơn <strong>33.000 dân công</strong> ngày đêm kéo pháo, đào đường, vác đạn xuyên rừng. 56 ngày đêm lao động thầm lặng và kiên cường. Đến đầu tháng 3/1954, <em>24 khẩu pháo đã án ngữ trên các đỉnh núi</em> — họng súng chĩa thẳng xuống lòng chảo Điện Biên Phủ.
+    </div>
+    <div class="story-p">
+      Khi các sĩ quan Pháp nhìn thấy qua ống nhòm, họ <em>không thể tin vào mắt mình</em>.
+    </div>
+    <button class="cont-btn" onclick="go('c3-open', 0)">Bước sang Chương 3 →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 3 — 56 NGÀY ĐÊM
+  ══════════════════════════════════════════ -->
+  <div class="scene" id="s-c3-open">
+    <div class="cbadge">🔥 Chương 3 · 13/3 – 7/5/1954 — Địa Ngục Lòng Chảo</div>
+    <img class="scene-img tall" src="images/vng-chienkhao.jpg" alt="Chiến hào">
+    <div class="narrator">56 ngày đêm không ngủ</div>
+    <div class="story-p">
+      Ngày <strong>13/3/1954</strong>, tiếng pháo khai màn. Cứ điểm Him Lam thất thủ chỉ sau 3 giờ.
+    </div>
+    <div class="story-p">
+      Nhưng đến đợt tấn công thứ hai, bộ đội ta vấp phải hàng rào dây thép gai dày đặc và mìn chống bộ binh. Tổn thất tăng nhanh. Tinh thần bắt đầu dao động.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Điện mật từ sở chỉ huy phía trước</div>
+      <div class="dlg-text">"Đại tướng — đợt xung phong đêm qua thất bại. Tiểu đoàn 251 mất 40% quân số. Đề nghị rút về củng cố..."</div>
+    </div>
+    <div class="story-p">
+      Ngươi nhìn bản đồ. Đồng hồ chỉ 2 giờ sáng. Bên ngoài, tiếng pháo vẫn không ngừng. Trong lòng ngươi, hai luồng suy nghĩ đấu tranh dữ dội...
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:90%"></div></div>
+      <span class="tension-val">90%</span>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi ra lệnh...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Rút lui tạm thời — bảo toàn lực lượng, chờ đợt viện binh mới</div>
+          <div class="choice-sub">⚠ Sẽ tạo cơ hội cho địch phản công và tái tổ chức</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c3-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div>Chuyển sang <strong>đào chiến hào tiếp cận</strong> — tiến từng mét, bao vây siết chặt từng cứ điểm</div>
+          <div class="choice-sub">🌟 Chiến thuật "vây lấn" thiên tài</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c3-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Tổng xung phong toàn bộ — đánh dứt điểm trong một đêm</div>
+          <div class="choice-sub">💀 Liều lĩnh khi địch còn đủ hỏa lực phòng ngự</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 BAD1 -->
+  <div class="scene" id="s-c3-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/vng-chienkhao.jpg" alt="Rút lui">
+    <div class="outcome bad">
+      <span class="outcome-icon">📉</span>
+      <div class="story-p"><strong>Sai lầm chiến lược!</strong> Khi ta rút lui, quân Pháp lập tức phản công chiếm lại vị trí, dựng thêm công sự. Viện binh Pháp từ Hà Nội đến tăng cường. Thế trận xấu đi nhanh chóng.</div>
+    </div>
+    <div class="choices-label">⚡ Thay đổi chiến thuật...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Áp dụng chiến thuật vây lấn — đào chiến hào tiến dần!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 BAD2 -->
+  <div class="scene" id="s-c3-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/vng-chienkhao.jpg" alt="Tổn thất">
+    <div class="outcome bad">
+      <span class="outcome-icon">🩸</span>
+      <div class="story-p"><strong>Tổn thất khủng khiếp!</strong> Ba trung đoàn xung phong trực tiếp vào lô cốt đang bắn — gần 2.000 chiến sĩ ngã xuống chỉ trong một đêm mà không đạt được mục tiêu.</div>
+    </div>
+    <div class="choices-label">⚡ Rút kinh nghiệm đắt giá...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c3-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Phải thay đổi — chiến thuật vây lấn từng bước một!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C3 GOOD -->
+  <div class="scene" id="s-c3-good">
+    <div class="cbadge">⭐ Lựa chọn B · Chiến thuật thiên tài</div>
+    <img class="scene-img" src="images/vng-chienkhao.jpg" alt="Vây lấn">
+    <div class="outcome good">
+      <span class="outcome-icon">⛏</span>
+      <div class="story-p"><strong>Thiên tài chiến thuật!</strong> Ngươi ra lệnh đào hàng trăm km chiến hào — tạo thành mạng lưới bao vây siết chặt từng cứ điểm của Pháp. Địch không thể ra ngoài tiếp tế, không thể tiếp nhận thêm viện binh đường bộ.</div>
+    </div>
+    <div class="story-p">
+      Ngày qua ngày, đêm qua đêm. Chiến hào ta bò sát vào vị trí địch. Máy bay Pháp thả dù tiếp tế nhưng nhiều dù rơi lạc vào tay quân ta. Địch bắt đầu thiếu đạn, thiếu cơm.
+    </div>
+    <div class="story-p">
+      Tướng De Castries gửi điện về Paris: <em>"Tình hình nguy cấp. Không thể giữ Điện Biên Phủ nếu không có viện binh ngay lập tức."</em>
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Kỳ tích đào hào</div>
+      <p>Bộ đội và dân công đào tổng cộng hơn 600km chiến hào — gấp đôi khoảng cách Hà Nội đến Huế — bao vây toàn bộ lòng chảo Điện Biên Phủ.</p>
+    </div>
+    <button class="cont-btn" onclick="go('c4-open', 0)">Bước sang Chương 4 →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHƯƠNG 4 — TOÀN THẮNG
+  ══════════════════════════════════════════ -->
+  <div class="scene" id="s-c4-open">
+    <div class="cbadge">🏆 Chương 4 · 7/5/1954 — Khoảnh Khắc Lịch Sử</div>
+    <img class="scene-img tall" src="images/vng-decastries.jpg" alt="De Castries đầu hàng">
+    <div class="narrator">Giờ phút quyết định</div>
+    <div class="story-p">
+      Chiều ngày <strong>7/5/1954</strong>. 56 ngày đêm chiến đấu không ngừng.
+    </div>
+    <div class="story-p">
+      Cứ điểm cuối cùng — hầm chỉ huy của tướng De Castries — đang bị bao vây hoàn toàn. Quân ta ở cách chỉ 50 mét. Ngươi cầm điện thoại, ngón tay đặt lên nút lệnh tổng xung phong.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Tham mưu phó báo cáo qua điện đàm</div>
+      <div class="dlg-text">"Đại tướng — toàn bộ phân khu Bắc và Nam đã thất thủ. Chỉ còn hầm De Castries. Phân khu Trung tâm kiệt sức. Một số sĩ quan địch đang giương cờ trắng trên nóc hầm!"</div>
+    </div>
+    <div class="tension-bar">
+      <span class="tension-label">CĂNG THẲNG</span>
+      <div class="tension-track"><div class="tension-fill" style="width:100%"></div></div>
+      <span class="tension-val">MAX</span>
+    </div>
+    <div class="story-p">
+      Giờ quyết định đã đến. Nhưng ngay lúc này, một đề nghị từ phía Pháp truyền qua đài: <em>"Yêu cầu ngừng bắn để thương lượng điều kiện đầu hàng tử tế..."</em>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-label">⚡ Ngươi trả lời...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c4-bad1', 0)">
+        <span class="choice-key">A</span>
+        <div>
+          <div>Đồng ý ngừng bắn — thương lượng điều kiện, đối xử tử tế với tù binh</div>
+          <div class="choice-sub">⚠ Chậm trễ có thể tạo cơ hội địch nhận viện binh từ trên không</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c4-good', 25)">
+        <span class="choice-key">B</span>
+        <div>
+          <div><strong>Ra lệnh tổng xung phong ngay lập tức</strong> — chiếm hầm chỉ huy, bắt sống De Castries</div>
+          <div class="choice-sub">⚡ Kết thúc dứt khoát — lịch sử không chờ đợi</div>
+        </div>
+      </button>
+      <button class="choice" onclick="go('c4-bad2', 0)">
+        <span class="choice-key">C</span>
+        <div>
+          <div>Cho địch tự do rút lui về Hà Nội để tránh đổ thêm máu</div>
+          <div class="choice-sub">❌ Đánh mất ý nghĩa chiến thắng hoàn toàn</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C4 BAD1 -->
+  <div class="scene" id="s-c4-bad1">
+    <div class="cbadge">⚠ Lựa chọn A · Hậu quả</div>
+    <img class="scene-img" src="images/vng-decastries.jpg" alt="Thương lượng">
+    <div class="outcome bad">
+      <span class="outcome-icon">✈</span>
+      <div class="story-p"><strong>Nguy hiểm!!</strong> Trong lúc thương lượng, Pháp gửi khẩn lên Paris — hai tiểu đoàn lính dù đang chuẩn bị nhảy xuống giải vây. Nếu không hành động ngay, chiến thắng có thể bị đánh cắp vào phút cuối.</div>
+    </div>
+    <div class="choices-label">⚡ Hành động ngay...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c4-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Tổng xung phong ngay! Không thể chần chừ thêm nữa!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C4 BAD2 -->
+  <div class="scene" id="s-c4-bad2">
+    <div class="cbadge">⚠ Lựa chọn C · Hậu quả</div>
+    <img class="scene-img" src="images/vng-cochienchang.jpg" alt="Rút lui">
+    <div class="outcome bad">
+      <span class="outcome-icon">🚶</span>
+      <div class="story-p"><strong>Sai lầm!</strong> Địch rút lui nhưng không phải đầu hàng — họ tái tổ chức ở Hà Nội và tiếp tục chiến tranh. Chiến dịch không có kết thúc dứt khoát, áp lực ngoại giao giảm xuống đáng kể.</div>
+    </div>
+    <div class="choices-label">⚡ Phải dứt khoát...</div>
+    <div class="choices">
+      <button class="choice" onclick="go('c4-good', 10)">
+        <span class="choice-key">→</span>
+        <div>Bắt sống De Castries — chiến thắng hoàn toàn!</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- C4 GOOD -->
+  <div class="scene" id="s-c4-good">
+    <div class="cbadge">🏆 Toàn Thắng · 17:30 ngày 7/5/1954</div>
+    <img class="scene-img tall" src="images/vng-cochienchang.jpg" alt="Cờ chiến thắng">
+    <div class="outcome good">
+      <span class="outcome-icon">🚩</span>
+      <div class="story-p"><strong>ĐIỆN BIÊN PHỦ TOÀN THẮNG!</strong></div>
+    </div>
+    <div class="story-p">
+      Lúc <strong>17 giờ 30 phút ngày 7/5/1954</strong> — lá cờ <em>"Quyết chiến Quyết thắng"</em> tung bay trên nóc hầm tướng De Castries.
+    </div>
+    <div class="story-p">
+      Toàn bộ <strong>16.000 quân Pháp đầu hàng</strong>. Tướng De Castries bước ra khỏi hầm với hai tay giơ cao — lần đầu tiên trong lịch sử, một đội quân thuộc địa châu Á đánh bại hoàn toàn một đội quân thực dân phương Tây trên chiến trường.
+    </div>
+    <div class="dialogue">
+      <div class="dlg-who">Võ Nguyên Giáp — điện báo về Trung ương</div>
+      <div class="dlg-text">"Toàn bộ tập đoàn cứ điểm Điện Biên Phủ đã bị tiêu diệt và bắt sống. Chiến dịch hoàn toàn thắng lợi."</div>
+    </div>
+    <div class="story-p">
+      Ngày <strong>20/7/1954</strong>, Pháp ký Hiệp định Genève — công nhận độc lập của Việt Nam. <em>80 năm đô hộ thực dân chính thức kết thúc</em>.
+    </div>
+    <div class="factbox">
+      <div class="factbox-label">📌 Tầm vóc lịch sử thế giới</div>
+      <p>Trận Điện Biên Phủ được coi là "Waterloo của chủ nghĩa thực dân" — mở đầu làn sóng giải phóng dân tộc ở châu Á, châu Phi, châu Mỹ Latinh trong những thập niên sau đó.</p>
+    </div>
+    <button class="cont-btn" onclick="showFinal()">Xem kết quả →</button>
+  </div>
+
+  <!-- FINAL RESULT -->
+  <div class="scene" id="s-final">
+    <div class="final-wrap">
+      <div class="cbadge" style="margin:0 auto 20px;width:fit-content;">⭐ Chiến dịch hoàn thành</div>
+      <span class="final-star" id="finalStar">⭐</span>
+      <div class="final-title">Đại Tướng Võ Nguyên Giáp<br>— Điện Biên Phủ 1954</div>
+      <div class="final-circle" id="finalCircle">0</div>
+      <div class="final-desc" id="finalDesc">Bạn đã hoàn thành hành trình 56 ngày đêm lịch sử!</div>
+      <div class="final-btns">
+        <button class="btn-restart" onclick="restartGame()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="btn-home">📖 Câu chuyện khác</a>
+      </div>
+      <div class="lesson-box">
+        <div class="lesson-lbl">📚 Bài học từ Đại tướng Giáp</div>
+        <p>
+          Thiên tài của Võ Nguyên Giáp không phải ở chỗ ông dũng cảm nhất, mà ở chỗ ông <em>dám thay đổi</em> khi cần. Hoãn trận đánh lúc tất cả đã sẵn sàng là quyết định khó nhất — nhưng đúng nhất. Kéo pháo lên núi khi địch cho là không thể. Đào 600km chiến hào khi bộ binh không thể xung phong thẳng. Mỗi quyết định đều hướng về một điều duy nhất: <strong>chắc thắng mới đánh.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end story-wrap -->
+
+<script>
+let pts = 0;
+const chapterMap = {
+  'c1-open':0,'c1-bad1':0,'c1-bad2':0,'c1-good':0,
+  'c2-open':1,'c2-bad1':1,'c2-bad2':1,'c2-good':1,
+  'c3-open':2,'c3-bad1':2,'c3-bad2':2,'c3-good':2,
+  'c4-open':3,'c4-bad1':3,'c4-bad2':3,'c4-good':3,
+  'final':3
+};
+const progressMap = {
+  'c1-open':5,'c1-bad1':10,'c1-bad2':10,'c1-good':22,
+  'c2-open':25,'c2-bad1':32,'c2-bad2':32,'c2-good':48,
+  'c3-open':50,'c3-bad1':58,'c3-bad2':58,'c3-good':73,
+  'c4-open':75,'c4-bad1':83,'c4-bad2':83,'c4-good':95,
+  'final':100
+};
+const timelineMap = [
+  ['c1-open','c1-bad1','c1-bad2','c1-good'],
+  ['c2-open','c2-bad1','c2-bad2','c2-good'],
+  ['c3-open','c3-bad1','c3-bad2','c3-good'],
+  ['c4-open','c4-bad1','c4-bad2','c4-good','final']
+];
+
+function go(id, addPts) {
+  pts += addPts;
+  updateUI(id);
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('s-' + id);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({top: 0, behavior:'smooth'});
+  }
+}
+
+function updateUI(id) {
+  document.getElementById('scoreVal').textContent = pts;
+  const b = document.getElementById('scoreBadge');
+  if (pts >= 80) b.textContent = '🏆 Đại Tướng';
+  else if (pts >= 50) b.textContent = '⭐ Chỉ Huy Trưởng';
+  else if (pts >= 25) b.textContent = '🎖 Trung Đoàn Trưởng';
+  else b.textContent = '📋 Học Viên';
+
+  const pct = progressMap[id] || 0;
+  document.getElementById('pBar').style.width = pct + '%';
+
+  const ch = chapterMap[id] !== undefined ? chapterMap[id] : -1;
+  document.querySelectorAll('.cdot').forEach((d,i) => {
+    d.classList.remove('active','done');
+    if (i < ch) d.classList.add('done');
+    else if (i === ch) d.classList.add('active');
+  });
+
+  for (let ci = 0; ci < 4; ci++) {
+    const el = document.getElementById('mt' + ci);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (ci < ch) el.classList.add('done');
+    else if (ci === ch) el.classList.add('active');
+  }
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-final').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('pBar').style.width = '100%';
+  document.getElementById('finalCircle').textContent = pts;
+
+  const star = document.getElementById('finalStar');
+  const desc = document.getElementById('finalDesc');
+  if (pts >= 80) {
+    star.textContent = '⭐⭐⭐';
+    desc.textContent = 'Xuất sắc! Bạn đã đưa ra mọi quyết định đúng đắn như Đại tướng Giáp — hoãn đánh khi chưa chắc thắng, kéo pháo lên núi, đào chiến hào vây lấn, và kết thúc chiến dịch dứt khoát. Xứng đáng là Đại Tướng!';
+  } else if (pts >= 50) {
+    star.textContent = '⭐⭐';
+    desc.textContent = 'Tốt! Bạn đã nắm được phần lớn tư duy chiến lược của Đại tướng Giáp. Hãy thử lại để đạt điểm tối đa!';
+  } else {
+    star.textContent = '⭐';
+    desc.textContent = 'Hành trình Điện Biên Phủ đòi hỏi sự kiên nhẫn và quyết đoán. Thử lại và cảm nhận tinh thần "chắc thắng mới đánh" của Đại tướng!';
+  }
+
+  document.querySelectorAll('.cdot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+  document.querySelectorAll('.mt-seg').forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
+}
+
+function restartGame() {
+  pts = 0;
+  updateUI('c1-open');
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-c1-open').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

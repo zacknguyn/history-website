@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trợ Lý Lịch Sử Việt Nam</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dark: #8a6a1f;
+    --brown: #2c1a0e;
+    --brown-mid: #5c3a1e;
+    --cream: #f5ead6;
+    --cream-dark: #e8d5b0;
+    --red-vn: #c0392b;
+    --ink: #1a0f00;
+    --parchment: #fdf6e3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--brown);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(192,57,43,0.06) 0%, transparent 60%);
+  }
+
+  .chat-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 95vh;
+    max-height: 1200px;
+    display: flex;
+    flex-direction: column;
+    background: var(--parchment);
+    border-radius: 4px;
+    border: 1px solid var(--gold-dark);
+    box-shadow:
+      0 0 0 4px var(--brown),
+      0 0 0 5px var(--gold-dark),
+      0 20px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .chat-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  .chat-header {
+    background: linear-gradient(135deg, var(--brown) 0%, var(--brown-mid) 100%);
+    padding: 20px 28px;
+    border-bottom: 2px solid var(--gold-dark);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(201,168,76,0.1);
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+
+  .header-text p {
+    font-size: 12px;
+    color: rgba(232,201,122,0.6);
+    margin-top: 3px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(232,201,122,0.7);
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4caf50;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* MESSAGES */
+  .messages-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .messages-area::-webkit-scrollbar { width: 4px; }
+  .messages-area::-webkit-scrollbar-track { background: transparent; }
+  .messages-area::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+  /* Welcome message */
+  .welcome-msg {
+    text-align: center;
+    padding: 28px 20px;
+  }
+
+  .welcome-msg .dragon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+    filter: sepia(0.3);
+  }
+
+  .welcome-msg h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+
+  .welcome-msg p {
+    font-size: 16px;
+    color: var(--brown-mid);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 auto 20px;
+  }
+
+  .quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .quick-btn {
+    background: white;
+    border: 1px solid var(--gold-dark);
+    color: var(--brown-mid);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .quick-btn:hover {
+    background: var(--gold-dark);
+    color: var(--cream);
+    border-color: var(--gold-dark);
+    transform: translateY(-1px);
+  }
+
+  /* Messages */
+  .message {
+    display: flex;
+    gap: 12px;
+    max-width: 92%;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  .message.bot {
+    align-self: flex-start;
+  }
+
+  .msg-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .message.bot .msg-avatar {
+    background: var(--brown);
+    border: 1.5px solid var(--gold-dark);
+  }
+
+  .message.user .msg-avatar {
+    background: var(--red-vn);
+    border: 1.5px solid rgba(192,57,43,0.4);
+  }
+
+  .msg-bubble {
+    padding: 12px 16px;
+    border-radius: 4px;
+     font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+
+  .message.bot .msg-bubble {
+    background: white;
+    border: 1px solid var(--cream-dark);
+    border-radius: 0 12px 12px 12px;
+    box-shadow: 0 2px 8px rgba(44,26,14,0.06);
+  }
+
+  .message.user .msg-bubble {
+    background: var(--brown);
+    color: var(--cream);
+    border-radius: 12px 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(44,26,14,0.2);
+  }
+
+  .msg-bubble p { margin-bottom: 8px; }
+  .msg-bubble p:last-child { margin-bottom: 0; }
+  .msg-bubble strong { color: var(--gold-dark); font-weight: 600; }
+  .message.user .msg-bubble strong { color: var(--gold-light); }
+
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 16px;
+    background: white;
+    border: 1px solid var(--cream-dark);
+    border-radius: 0 12px 12px 12px;
+    width: fit-content;
+  }
+
+  .typing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold-dark);
+    animation: typing 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* INPUT */
+  .input-area {
+    border-top: 1.5px solid var(--cream-dark);
+    padding: 16px 20px;
+    background: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .api-notice {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    color: var(--brown-mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .api-key-input {
+    width: 100%;
+    padding: 9px 14px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--parchment);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 10px;
+  }
+
+  .api-key-input:focus {
+    border-color: var(--gold-dark);
+    background: white;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .msg-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 24px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--parchment);
+    outline: none;
+    resize: none;
+    max-height: 120px;
+    min-height: 50px;
+    transition: border-color 0.2s;
+    line-height: 1.5;
+  }
+
+  .msg-input:focus {
+    border-color: var(--gold-dark);
+    background: white;
+  }
+
+  .msg-input::placeholder { color: #b8a08a; }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brown);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .send-btn:hover { background: var(--brown-mid); transform: scale(1.05); }
+  .send-btn:active { transform: scale(0.95); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .send-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--gold-light);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Decorative border lines */
+  .ornament {
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 16px;
+    letter-spacing: 8px;
+    padding: 4px 0;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="header-icon">🏯</div>
+    <div class="header-text">
+      <h1>Trợ Lý Lịch Sử Việt Nam</h1>
+      <p>Khám phá hàng nghìn năm văn hiến</p>
+    </div>
+    <div class="header-status">
+      <div class="status-dot"></div>
+      <span>Sẵn sàng</span>
+    </div>
+  </div>
+
+  <div class="messages-area" id="messagesArea">
+    <div class="welcome-msg" id="welcomeMsg">
+      <span class="dragon">🐉</span>
+      <h2>Xin chào, hỡi người tìm hiểu sử Việt!</h2>
+      <p>Tôi là trợ lý thông minh chuyên về lịch sử Việt Nam — từ thời Hùng Vương dựng nước đến những trang sử hào hùng chống ngoại xâm. Hãy đặt câu hỏi để cùng khám phá!</p>
+      <div class="ornament">✦ ✦ ✦</div>
+      <br>
+      <div class="quick-questions">
+        <button class="quick-btn" onclick="askQuestion('Trận Bạch Đằng 938 diễn ra như thế nào?')">⚔️ Trận Bạch Đằng 938</button>
+        <button class="quick-btn" onclick="askQuestion('Ngô Quyền là ai và công lao của ông?')">👑 Ngô Quyền</button>
+        <button class="quick-btn" onclick="askQuestion('Thời kỳ Bắc thuộc kéo dài bao lâu?')">📜 Thời Bắc thuộc</button>
+        <button class="quick-btn" onclick="askQuestion('Hưng Đạo Vương Trần Quốc Tuấn có công gì?')">🛡️ Trần Hưng Đạo</button>
+        <button class="quick-btn" onclick="askQuestion('Quang Trung đánh bại quân Thanh như thế nào?')">🔥 Vua Quang Trung</button>
+        <button class="quick-btn" onclick="askQuestion('Văn minh Đông Sơn có gì đặc sắc?')">🥁 Văn hóa Đông Sơn</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    
+    <div class="input-row">
+      <textarea class="msg-input" id="msgInput" placeholder="Hỏi về lịch sử Việt Nam..." rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <svg class="send-icon" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+const SYSTEM_PROMPT = `Bạn là một học giả lịch sử Việt Nam uyên bác.
+
+Chế độ mặc định:
+- Trả lời câu hỏi lịch sử một cách rõ ràng, chi tiết, có dẫn chứng
+- Ngôn ngữ trang trọng, dễ hiểu
+- Nếu câu hỏi không liên quan lịch sử Việt Nam, nhẹ nhàng hướng về chủ đề
+
+Chế độ hóa thân (khi người dùng nói "hóa thân thành [tên nhân vật]"):
+- Lập tức đóng vai nhân vật đó
+- Xưng "ta" hoặc "trẫm" tùy nhân vật
+- Nói chuyện như đang ở thời đại của nhân vật
+- Kể chuyện từ góc nhìn cá nhân "ta đã từng..."
+- Duy trì vai diễn cho đến khi người dùng nói "thoát vai" hoặc hỏi về nhân vật khác`;
+let conversationHistory = [];
+let isLoading = false;
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function askQuestion(q) {
+  document.getElementById('msgInput').value = q;
+  sendMessage();
+}
+
+function formatText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p>')
+    .replace(/$/, '</p>');
+}
+
+function addMessage(role, content) {
+  const area = document.getElementById('messagesArea');
+  const welcome = document.getElementById('welcomeMsg');
+  if (welcome) welcome.remove();
+
+  const div = document.createElement('div');
+  div.className = `message ${role === 'user' ? 'user' : 'bot'}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'user' ? '👤' : '🏯';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = role === 'assistant' ? formatText(content) : content;
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+}
+
+function showTyping() {
+  const area = document.getElementById('messagesArea');
+  const div = document.createElement('div');
+  div.className = 'message bot';
+  div.id = 'typingIndicator';
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = '🏯';
+  const typing = document.createElement('div');
+  typing.className = 'typing-indicator';
+  for (let i = 0; i < 3; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'typing-dot';
+    typing.appendChild(dot);
+  }
+  div.appendChild(avatar);
+  div.appendChild(typing);
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  isLoading = true;
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+
+  addMessage('user', text);
+  conversationHistory.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  method: "POST",
+  headers: { "Content-Type": "application/json",
+    "Authorization": "Bearer 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"
+
+   
+  },
+  body: JSON.stringify({
+    model: "llama-3.1-8b-instant",
+    max_tokens: 1000,
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...conversationHistory
+    ]
+  })
+});
+
+    removeTyping();
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || 'Lỗi API');
+    }
+
+    const data = await response.json();
+    const reply = data.choices[0].message.content;
+    conversationHistory.push({ role: 'assistant', content: reply });
+    addMessage('assistant', reply);
+
+  } catch (err) {
+    removeTyping();
+    addMessage('assistant', `⚠️ **Lỗi:** ${err.message}`);
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bà Triệu | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.78) 45%, rgba(0,0,0,0.2) 100%),
+                        url('images/batrieu-hero.jpg') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+            background-color: #1a0808;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8);
+            border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot {
+            position: absolute; left: -24px; top: 4px;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--gold); border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-dot.green { background: #2a8a2a; box-shadow: 0 0 0 2px #2a8a2a; }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+        .trait-pink  { background: #fce4ec; color: #880e4f; }
+
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        .relation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .relation-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 14px; padding: 16px; display: flex; gap: 13px; align-items: flex-start; }
+        .relation-avatar { width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .relation-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+        .relation-role { font-size: 11px; color: #888; margin-bottom: 6px; }
+        .relation-desc { font-size: 12px; color: #555; line-height: 1.5; }
+        .relation-link { font-size: 11px; color: var(--main); text-decoration: none; font-weight: 500; margin-top: 6px; display: inline-block; }
+        .relation-link:hover { text-decoration: underline; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        .lesson-box {
+            background: linear-gradient(135deg, #1e1206, #3a2010);
+            border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white;
+        }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 42%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">🌺 NHÂN VẬT LỊCH SỬ</div>
+        <h1>BÀ TRIỆU</h1>
+        <p class="subtitle">Triệu Thị Trinh — người phụ nữ 23 tuổi cưỡi voi dẫn quân từ núi Nưa, khiến cả Giao Châu chấn động, để lại câu tuyên ngôn bất hủ về khát vọng tự do của người Việt</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 225 – 248 SCN</span>
+            <span class="hero-tag">📍 Quan Yên, Thanh Hóa</span>
+            <span class="hero-tag">⚔️ Chống ách đô hộ Đông Ngô</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="bac-thuoc.html">Bắc Thuộc</a>
+    <span>›</span>
+    Bà Triệu
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- TIỂU SỬ -->
+        <div class="content-box">
+            <h2>📖 TIỂU SỬ</h2>
+            <p>
+                Triệu Thị Trinh sinh khoảng năm <span class="hl">225 SCN</span> tại vùng Quan Yên, quận Cửu Chân (nay thuộc huyện Yên Định, Thanh Hóa). Từ nhỏ bà đã bộc lộ tính cách mạnh mẽ khác thường, giỏi võ nghệ và mang trong lòng chí lớn hơn hẳn những người cùng thời. Sống dưới ách đô hộ tàn bạo của nhà <span class="hl">Đông Ngô</span> — với sưu cao thuế nặng và chính sách đồng hóa văn hóa — bà sớm nung nấu quyết tâm đứng lên.
+            </p>
+            <p>
+                Khi người anh trai <span class="hl">Triệu Quốc Đạt</span> khuyên bà nên lấy chồng để ổn định cuộc sống, Triệu Thị Trinh đã thốt lên câu nói trở thành tuyên ngôn bất hủ của tinh thần độc lập Việt Nam. Bà không màng đến an phận — bà muốn cưỡi sóng, chém kình ngư, giành lại giang sơn. Năm <span class="hl">248 SCN</span>, ở tuổi 23, bà phát động khởi nghĩa từ núi Nưa, làm cả Giao Châu chấn động.
+            </p>
+            <div class="quote-block">
+                <p>"Tôi muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ, chém cá kình ở biển Đông, giành lại giang sơn, cởi ách nô lệ, chứ không chịu khom lưng làm tì thiếp cho người!"</p>
+                <span class="quote-source">— Triệu Thị Trinh (theo sử liệu)</span>
+            </div>
+            <p>
+                Hình ảnh Bà Triệu trong sử sách và truyền thuyết luôn gắn với sự <span class="hl">oai phong lẫm liệt</span>: mặc áo giáp vàng, thắt đai nịt, cài trâm vàng, cưỡi trên đầu voi chiến xông thẳng vào trận địa — khiến quân Ngô khiếp sợ. Dù chỉ hoạt động trong thời gian ngắn, tinh thần của bà trở thành ngọn lửa bất tử tiếp nối từ Hai Bà Trưng.
+            </p>
+            <div class="trait-tags">
+                <span class="trait-tag trait-pink">🌺 Nữ tướng oai hùng</span>
+                <span class="trait-tag trait-red">⚔️ Chí khí phi thường</span>
+                <span class="trait-tag trait-gold">🐘 Cưỡi voi ra trận</span>
+                <span class="trait-tag trait-green">🏔️ Căn cứ núi Nưa</span>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN LỊCH SỬ -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Khoảng 225 SCN</div>
+                    <div class="tl-title">Sinh ra tại Quan Yên, Cửu Chân</div>
+                    <div class="tl-text">Triệu Thị Trinh sinh tại vùng Quan Yên, quận Cửu Chân (Thanh Hóa ngày nay) — vùng đất luôn có tinh thần chống đối mạnh mẽ trước ách đô hộ phương Bắc. Ngay từ nhỏ bà đã bộc lộ tính cách bất khuất và tài năng võ nghệ vượt trội.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Trước năm 248 SCN</div>
+                    <div class="tl-title">Xây dựng căn cứ tại núi Nưa</div>
+                    <div class="tl-text">Cùng anh trai Triệu Quốc Đạt, bà về vùng núi Nưa (Triệu Sơn) và núi Tùng (Hậu Lộc, Thanh Hóa) xây dựng hệ thống căn cứ hiểm trở. Ngày đêm mài rìu luyện kiếm, huấn luyện hàng nghìn nghĩa sĩ yêu nước từ khắp nơi đổ về, chuẩn bị kỹ lưỡng cho cuộc khởi nghĩa.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">Năm 248 SCN — Phát binh</div>
+                    <div class="tl-title">Khởi nghĩa từ núi Nưa — cả Giao Châu chấn động</div>
+                    <div class="tl-text">Năm 248, Bà Triệu chính thức phát binh. Nghĩa quân từ núi Nưa ra quân như vũ bão, đánh tan nhiều đồn trại của quân Ngô, lan rộng khắp quận Cửu Chân rồi lan ra cả Giao Chỉ. Sử sách nhà Ngô phải thừa nhận cuộc khởi nghĩa đã làm "toàn bộ Giao Châu chấn động".</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">248 SCN — Trên chiến trường</div>
+                    <div class="tl-title">Voi chiến và hình ảnh nữ tướng oai phong</div>
+                    <div class="tl-text">Trên trận địa, hình ảnh Bà Triệu mặc áo giáp vàng, cưỡi đầu voi chiến, dẫn đầu xung phong đã trở thành nỗi khiếp đảm của binh lính nhà Ngô. Nghĩa quân dùng chiến thuật voi chiến kết hợp du kích và mai phục, hạ nhiều thành trì, khiến các quan lại đô hộ hoảng sợ tháo chạy.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">248 SCN — Phản công</div>
+                    <div class="tl-title">Lục Dập đem 8.000 quân sang đàn áp</div>
+                    <div class="tl-text">Trước nguy cơ mất kiểm soát Giao Châu, vua Ngô cử danh tướng <strong>Lục Dập</strong> mang 8.000 quân tinh nhuệ sang đàn áp. Lục Dập vừa dùng vũ lực bao vây, vừa dùng tiền tài mua chuộc và chia rẽ nghĩa quân — kết hợp cả hai mũi quân sự lẫn tâm lý chiến.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">Năm 248 SCN — Tuẫn tiết</div>
+                    <div class="tl-title">Gieo mình tại núi Tùng — khí tiết vẹn toàn</div>
+                    <div class="tl-text">Dù chiến đấu quả cảm qua hàng chục trận, nghĩa quân dần rơi vào thế cô lập trước lực lượng áp đảo. Để giữ vẹn khí tiết, không rơi vào tay quân thù, Bà Triệu rút về núi Tùng và tuẫn tiết ở tuổi 23. Cái chết của bà để lại tiếng thơm bất tử trong lòng dân tộc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÀNH TỰU -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU NỔI BẬT</h2>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">🌺</span>
+                    <div class="achieve-title">Người kế thừa tinh thần Hai Bà Trưng</div>
+                    <div class="achieve-text">Chỉ 200 năm sau Hai Bà Trưng, Bà Triệu tiếp nối truyền thống phụ nữ Việt đứng đầu chống ngoại xâm — chứng minh ngọn lửa bất khuất không bao giờ tắt dù bị đô hộ hàng trăm năm.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🐘</span>
+                    <div class="achieve-title">Nghệ thuật quân sự độc đáo</div>
+                    <div class="achieve-text">Kết hợp voi chiến với du kích và mai phục — chiến thuật phát huy tối đa địa hình núi rừng Thanh Hóa. Đội quân Bà Triệu đánh tan nhiều đồn trại, khiến "cả Giao Châu chấn động" theo ghi chép của chính sử nhà Ngô.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">💬</span>
+                    <div class="achieve-title">Câu tuyên ngôn bất hủ về tự do</div>
+                    <div class="achieve-text">Lời thề "cưỡi cơn gió mạnh, đạp luồng sóng dữ" của Bà Triệu trở thành một trong những câu nói nổi tiếng nhất lịch sử Việt Nam — biểu tượng cho khát vọng tự do và ý chí không khuất phục trước bất kỳ hoàn cảnh nào.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🔥</span>
+                    <div class="achieve-title">Ngọn lửa tiếp nối 1000 năm Bắc thuộc</div>
+                    <div class="achieve-text">Trong suốt nghìn năm Bắc thuộc, cuộc khởi nghĩa Bà Triệu là một trong những ngọn lửa sáng nhất — chứng minh rằng dù bị đô hộ, người Việt chưa bao giờ từ bỏ ý chí giành lại độc lập, dù phải trả giá bằng sinh mạng.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA VÀ BÀI HỌC LỊCH SỬ</h2>
+            <p>
+                Bà Triệu không để lại một nền độc lập lâu dài — nhưng bà để lại thứ còn quý hơn: <span class="hl">tấm gương ý chí</span> rằng ngay cả một người phụ nữ 23 tuổi, dù lực lượng chênh lệch, dù biết trước con đường gian khó — vẫn chọn chiến đấu thay vì khuất phục.
+            </p>
+            <p>
+                Cuộc khởi nghĩa của bà là mắt xích quan trọng trong chuỗi liên tiếp các cuộc đấu tranh chống Bắc thuộc — từ Hai Bà Trưng (40 SCN) qua Bà Triệu (248 SCN) đến Lý Nam Đế (542 SCN) và cuối cùng là Ngô Quyền (938 SCN). Mỗi lần thất bại là một lần <span class="hl">ngọn lửa được truyền tiếp</span>, không bao giờ tắt.
+            </p>
+            <div class="quote-block">
+                <p>"Ru con con ngủ cho lành — Để mẹ gánh nước rửa bành con voi — Muốn coi lên núi mà coi — Coi Bà Triệu tướng cưỡi voi đánh cồng."</p>
+                <span class="quote-source">— Ca dao Thanh Hóa</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🌺 Nhận định tổng hợp</div>
+                <div class="lesson-text">Bà Triệu là hiện thân của chân lý: ý chí con người không bị đo bằng tuổi tác, giới tính hay quân số. Ở tuổi 23, bà chọn cưỡi voi ra trận thay vì khom lưng làm tì thiếp — và lựa chọn đó đã làm bất tử tên tuổi của bà qua hàng nghìn năm lịch sử dân tộc.</div>
+            </div>
+        </div>
+
+        <!-- QUAN HỆ NHÂN VẬT -->
+        <div class="content-box">
+            <h2>👥 QUAN HỆ NHÂN VẬT</h2>
+            <div class="relation-grid">
+                <div class="relation-card">
+                    <div class="relation-avatar" style="background: #6a3a8a;">⚔️</div>
+                    <div>
+                        <div class="relation-name">Triệu Quốc Đạt</div>
+                        <div class="relation-role">Anh trai — đồng lãnh đạo</div>
+                        <div class="relation-desc">Người anh trai cùng xây dựng căn cứ và phát động khởi nghĩa tại núi Nưa. Dù ban đầu khuyên em lấy chồng, sau đó ông cùng em gái dốc lòng cho sự nghiệp chống Ngô.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar" style="background: #3a5a6a;">🗡️</div>
+                    <div>
+                        <div class="relation-name">Lục Dập</div>
+                        <div class="relation-role">Tướng Đông Ngô — kẻ đàn áp</div>
+                        <div class="relation-desc">Danh tướng nhà Ngô được cử sang với 8.000 quân. Lục Dập dùng cả vũ lực lẫn mua chuộc để đàn áp khởi nghĩa — cuối cùng thắng về quân số nhưng không xóa được tên tuổi Bà Triệu.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar" style="background: #8b1a3a;">👸</div>
+                    <div>
+                        <div class="relation-name">Hai Bà Trưng</div>
+                        <div class="relation-role">Người truyền cảm hứng — đi trước 200 năm</div>
+                        <div class="relation-desc">Trưng Trắc và Trưng Nhị là những người phụ nữ Việt đầu tiên phất cờ khởi nghĩa. Tinh thần của hai bà trực tiếp truyền cảm hứng cho Bà Triệu 200 năm sau tiếp tục con đường đó.</div>
+                        <a href="chi-tiet-hai-ba-trung.html" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+                <div class="relation-card">
+                    <div class="relation-avatar" style="background: #2a5a3a;">🏛️</div>
+                    <div>
+                        <div class="relation-name">Lý Nam Đế</div>
+                        <div class="relation-role">Người kế thừa — khởi nghĩa 542 SCN</div>
+                        <div class="relation-desc">Lý Bí (Lý Nam Đế) tiếp nối ngọn lửa bất khuất của Bà Triệu năm 542, lập nên nước Vạn Xuân — bước tiến gần hơn đến nền độc lập thực sự mà Ngô Quyền hoàn thành năm 938.</div>
+                        <a href="#" class="relation-link">Xem chi tiết →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Tên thật</td><td>Triệu Thị Trinh</td></tr>
+                <tr><td>Sinh</td><td>Khoảng 225 SCN</td></tr>
+                <tr><td>Mất</td><td>248 SCN (23 tuổi)</td></tr>
+                <tr><td>Quê hương</td><td>Quan Yên, Cửu Chân (Thanh Hóa)</td></tr>
+                <tr><td>Căn cứ</td><td>Núi Nưa, Triệu Sơn, Thanh Hóa</td></tr>
+                <tr><td>Kẻ thù</td><td>Quân đô hộ Đông Ngô</td></tr>
+                <tr><td>Đối thủ chính</td><td>Tướng Lục Dập</td></tr>
+                <tr><td>Vũ khí đặc trưng</td><td>Voi chiến</td></tr>
+                <tr><td>Tuẫn tiết</td><td>Núi Tùng, Hậu Lộc</td></tr>
+                <tr><td>Ngày giỗ</td><td>Mùng 21 tháng Hai âm lịch</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+            <div class="legacy-item">
+                <div class="legacy-icon">⛩️</div>
+                <div class="legacy-text">
+                    <strong>Đền Bà Triệu — Hậu Lộc, Thanh Hóa</strong>
+                    Tọa lạc gần núi Tùng, nơi bà tuẫn tiết. Di tích lịch sử Quốc gia, lễ hội hàng năm vào ngày 21-23 tháng Hai âm lịch thu hút đông đảo người hành hương.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🏔️</div>
+                <div class="legacy-text">
+                    <strong>Núi Nưa — Triệu Sơn, Thanh Hóa</strong>
+                    Nơi Bà Triệu xây dựng căn cứ và phát động khởi nghĩa. Vùng núi rừng hiểm trở nay vẫn còn nhiều địa danh gắn với tên tuổi bà và các nghĩa sĩ.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">🏫</div>
+                <div class="legacy-text">
+                    <strong>Tên gọi bất tử</strong>
+                    Tên Triệu Thị Trinh được đặt cho đường phố, trường học ở nhiều tỉnh thành — đặc biệt tại Thanh Hóa và Hà Nội. Hình ảnh bà cưỡi voi xuất hiện trong tranh dân gian và nghệ thuật Việt Nam.
+                </div>
+            </div>
+            <div class="legacy-item">
+                <div class="legacy-icon">📜</div>
+                <div class="legacy-text">
+                    <strong>Được sử Trung Hoa ghi nhận</strong>
+                    Sử sách nhà Ngô ghi lại rằng cuộc khởi nghĩa đã làm "cả Giao Châu chấn động" — minh chứng cho quy mô và sức ảnh hưởng của cuộc khởi nghĩa vượt ra ngoài biên giới Việt Nam.
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="chi-tiet-hai-ba-trung.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #8b1a3a;">👸</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Hai Bà Trưng</div>
+                    <div class="char-mini-desc">Người truyền cảm hứng — đi trước 200 năm</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #2a5a3a;">🏛️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lý Nam Đế</div>
+                    <div class="char-mini-desc">Người kế thừa — lập nước Vạn Xuân 542</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #1a3a6b;">⚓</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Ngô Quyền</div>
+                    <div class="char-mini-desc">Người hoàn thành sự nghiệp giải phóng — 938</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <a href="bac-thuoc.html" class="btn-back">← Quay lại Bắc Thuộc</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+
+

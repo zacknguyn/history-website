@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời Nhà Nguyễn | Sử Việt</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --main: #8B0000; 
+            --gold: #FFD700;
+            --dark: #2c1b12;
+            --bg-light: #fdfaf1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        /* GIỮ NGUYÊN STYLE NAV CỦA LÝ TRẦN */
+        nav { background: #2c1b12; display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; color: white; }
+        .logo { font-weight: 700; font-size: 32px; color: var(--gold); text-decoration: none; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        
+        /* Chỗ này giữ nguyên kiểu chữ, không thêm khung tròn bo quanh */
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-item:hover, .nav-item.active { color: var(--gold); }
+
+        /* HERO AREA */
+        .ly-tran-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/nha-nguyen-hero.jpg');
+            background-size: cover; background-position: center;
+            height: 65vh; display: flex; align-items: center; padding: 0 80px; color: white; border-bottom: 5px solid var(--gold);
+        }
+        .lesson-overlay h1 { font-size: 70px; margin-bottom: 15px; }
+        .lesson-overlay p { font-size: 22px; max-width: 900px; line-height: 1.6; }
+
+        /* LAYOUT GIỮ NGUYÊN */
+        .lesson-layout { display: flex; gap: 40px; padding: 50px 80px; max-width: 1600px; margin: 0 auto; }
+        .lesson-main { flex: 2.5; }
+        .lesson-sidebar { flex: 1; }
+
+        .content-box { background: white; border-radius: 25px; padding: 40px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .content-box h2 { color: var(--main); margin-bottom: 25px; font-size: 28px; border-left: 5px solid var(--gold); padding-left: 15px; }
+
+        .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .event-card { background: #fffdf7; border-radius: 20px; border: 1px solid #eee; overflow: hidden; transition: 0.4s; }
+        .event-card img { width: 100%; height: 200px; object-fit: cover; }
+        .event-card h3 { padding: 20px 20px 10px; font-size: 18px; }
+        .event-card p { padding: 0 20px 20px; font-size: 14px; color: #555; }
+
+        .character-row { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 35px; }
+        .mini-character { display: flex; gap: 20px; background: #fffdf7; border-radius: 20px; border: 1px solid #eee; overflow: hidden; align-items: center; padding: 10px; }
+        .mini-character img { width: 150px; height: 150px; border-radius: 15px; object-fit: cover; }
+
+        .discover-btn-link { 
+            display: inline-block; padding: 12px 25px; background: var(--main); color: white !important; 
+            text-decoration: none; border-radius: 12px; font-size: 14px; font-weight: 600; 
+        }
+
+        .quiz-box { 
+            background: #fff2cc; border-radius: 25px; padding: 40px; 
+            display: flex; justify-content: space-between; align-items: center;
+            border: 2px dashed var(--gold);
+        }
+        .quiz-box button { 
+            background: var(--dark); color: white; border: none; padding: 15px 35px; 
+            border-radius: 15px; font-weight: 600; cursor: pointer; 
+        }
+
+        .video-item iframe { width: 100%; height: 230px; border-radius: 20px; margin-bottom: 10px; border: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">SỬ VIỆT</a>
+    <ul>
+        <li><a href="index.html" class="nav-item">Trang chủ</a></li>
+        <li><a href="#" class="nav-item">Hành trình lịch sử </a></li>
+        <li><a href="#" class="nav-item">Nhân vật</a></li>
+        <li><a href="#" class="nav-item">Quiz</a></li>
+        <li><a href="#" class="nav-item">Mini game</a></li>
+    </ul>
+</nav>
+
+<section class="ly-tran-bg">
+    <div class="lesson-overlay">
+        <h1>TRIỀU NGUYỄN</h1>
+        <p>Triều đại phong kiến cuối cùng của Việt Nam, để lại những di sản văn hóa đồ sộ và một cương vực lãnh thổ thống nhất trọn vẹn.</p>
+    </div>
+</section>
+
+<section class="lesson-layout">
+    <div class="lesson-main">
+        <div class="content-box">
+             <h2>⭐ SỰ KIỆN NỔI BẬT</h2>
+             <div class="event-grid">
+                 <div class="event-card">
+                     <img src="images/hue.jpg">
+                     <h3>Kinh thành Huế</h3>
+                     <p>Quần thể kiến trúc cung đình độc đáo được UNESCO công nhận.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+                 <div class="event-card">
+                     <img src="images/map.jpg">
+                     <h3>Thống nhất đất nước</h3>
+                     <p>Xác lập chủ quyền toàn vẹn lãnh thổ từ Bắc chí Nam.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+                 <div class="event-card">
+                     <img src="images/hoang-sa.jpg">
+                     <h3>Chủ quyền Biển đảo</h3>
+                     <p>Thực thi và khẳng định chủ quyền tại Hoàng Sa và Trường Sa.</p>
+                     <a href="#" class="discover-btn-link">Xem chi tiết</a>
+                 </div>
+             </div>
+        </div>
+
+        <div class="character-row">
+            <div class="mini-character">
+                 <img src="images/gia-long.jpg">
+                 <div>
+                     <h3>Vua Gia Long</h3>
+                     <p>Vị vua khai sáng triều đại nhà Nguyễn.</p>
+                     <a href="#" class="discover-btn-link">Khám phá</a>
+                 </div>
+            </div>
+            <div class="mini-character">
+                 <img src="images/minh-mang.jpg">
+                 <div>
+                     <h3>Vua Minh Mạng</h3>
+                     <p>Vị vua đưa triều đại lên đỉnh cao cường thịnh.</p>
+                     <a href="#" class="discover-btn-link">Khám phá</a>
+                 </div>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <div>
+                <h3>🧠 QUIZ NHANH</h3>
+                <p>Trả lời câu hỏi để kiểm tra kiến thức của bạn!</p>
+            </div>
+            <button onclick="location.href='quiz-nha-nguyen.html'">Làm quiz ngay ></button>
+        </div>
+    </div>
+
+    <div class="lesson-sidebar">
+        <div class="content-box">
+            <h2 style="font-size: 22px;">🎬 VIDEO</h2>
+            <div class="video-item">
+                <iframe src="https://www.youtube.com/embed/S_I5p6T-s5Q" allowfullscreen></iframe>
+                <h3 style="font-size: 16px; margin-top:10px;">Tổng quan về Triều Nguyễn</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

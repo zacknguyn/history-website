@@ -1,0 +1,405 @@
+cat > /mnt/user-data/outputs/ly-tran.html << 'ENDOFFILE'
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Lý – Nhà Trần | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #2c1b12;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: #1e1206;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white;
+        }
+        .logo-wrap { display: flex; align-items: center; }
+        .logo-text span:first-child { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: color 0.2s, background 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+        nav ul li a.active { background: var(--gold); color: #1e1206; font-weight: 600; }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.52), rgba(0,0,0,0.52)), url('images/ly-tran-hero.PNG') center/cover no-repeat;
+            min-height: 340px; display: flex; padding: 0 50px; color: white; border-bottom: 3px solid var(--gold);
+        }
+        .hero-left { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 40px 0; }
+        .hero h1 { font-size: 54px; font-weight: 800; line-height: 1.05; margin-bottom: 14px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+        .hero p { font-size: 15px; font-weight: 300; line-height: 1.7; max-width: 560px; color: rgba(255,255,255,0.88); margin-bottom: 20px; }
+        .hero-meta { display: flex; gap: 20px; font-size: 13px; opacity: 0.85; }
+        .hero-meta span { display: flex; align-items: center; gap: 5px; }
+
+        .video-lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; }
+        .video-lightbox.open { display: flex; }
+        .video-lightbox-inner { position: relative; width: 82vw; max-width: 960px; background: #000; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
+        .video-lightbox-inner video { width: 100%; display: block; max-height: 80vh; }
+        .video-lightbox-close { position: absolute; top: 10px; right: 12px; background: rgba(255,255,255,0.18); border: none; color: white; font-size: 20px; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 10; }
+        .video-lightbox-close:hover { background: rgba(255,255,255,0.35); }
+
+        .mindmap-lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; }
+        .mindmap-lightbox.open { display: flex; }
+        .mindmap-lightbox-inner { position: relative; max-width: 92vw; max-height: 90vh; background: #fff; border-radius: 14px; overflow: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; }
+        .mindmap-lightbox-inner img { max-width: 100%; max-height: 90vh; display: block; object-fit: contain; }
+
+        .page-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; padding: 28px 50px; max-width: 1400px; margin: 0 auto; }
+
+        .content-box { background: white; border-radius: 16px; padding: 26px 28px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .content-box h2 { color: var(--main); font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .intro-wrap { display: flex; gap: 28px; align-items: flex-start; }
+        .intro-text { flex: 1; font-size: 14px; line-height: 1.85; color: #444; }
+        .infobox { width: 300px; flex-shrink: 0; background: #fffdf5; border: 1px solid #ede7d3; border-radius: 12px; overflow: hidden; }
+        .infobox-title { background: #fdf8ec; border-bottom: 1px solid #ede7d3; text-align: center; padding: 11px 16px; font-weight: 700; font-size: 13px; color: var(--main); }
+        .infobox table { width: 100%; border-collapse: collapse; }
+        .infobox tr { border-bottom: 1px solid #f2ede0; }
+        .infobox tr:last-child { border-bottom: none; }
+        .infobox td { padding: 10px 16px; font-size: 13px; vertical-align: middle; }
+        .infobox td:first-child { color: #666; white-space: nowrap; width: 42%; }
+        .infobox td:last-child { font-weight: 600; color: #222; }
+
+        .event-scroll { overflow-x: auto; padding-bottom: 8px; cursor: grab; }
+        .event-scroll:active { cursor: grabbing; }
+        .event-scroll::-webkit-scrollbar { height: 5px; }
+        .event-scroll::-webkit-scrollbar-track { background: #f0ece0; border-radius: 10px; }
+        .event-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .event-grid { display: flex; gap: 16px; width: max-content; }
+        .event-card { width: 230px; flex-shrink: 0; background: #fff; border-radius: 14px; border: 1px solid #eee; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: block; }
+        .event-card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,0.1); }
+        .event-card img { width: 100%; height: 140px; object-fit: cover; }
+        .event-card-body { padding: 12px 14px 14px; }
+        .event-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+        .event-card p { font-size: 12px; color: #666; line-height: 1.55; }
+
+        .section-label { font-size: 16px; font-weight: 700; color: var(--main); display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .char-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+        .char-card { background: white; border-radius: 14px; overflow: hidden; border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s; }
+        .char-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.09); }
+        .char-card img { width: 100%; height: 150px; object-fit: cover; }
+        .char-card-body { padding: 11px 13px 13px; }
+        .char-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+        .char-card p { font-size: 11px; color: #666; line-height: 1.5; margin-bottom: 9px; }
+        .btn-detail { display: inline-block; padding: 5px 13px; background: var(--main); color: white; border-radius: 7px; font-size: 11px; font-weight: 500; text-decoration: none; transition: background 0.2s; }
+        .btn-detail:hover { background: var(--gold); color: #1e1206; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h2 { font-size: 15px; font-weight: 700; color: var(--main); margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+
+        .vid-scroll-wrap { max-height: 420px; overflow-y: scroll; padding-right: 4px; }
+        .vid-scroll-wrap::-webkit-scrollbar { width: 5px; }
+        .vid-scroll-wrap::-webkit-scrollbar-track { background: #f0ece0; border-radius: 10px; }
+        .vid-scroll-wrap::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        .vid-item { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; cursor: pointer; border-radius: 12px; padding: 8px; transition: background 0.2s; }
+        .vid-item:hover { background: #f5f0e8; }
+        .vid-item:last-of-type { margin-bottom: 0; }
+        .vid-thumb { width: 100%; height: 150px; border-radius: 10px; background: #111; position: relative; overflow: hidden; }
+        .vid-thumb video { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; pointer-events: none; }
+        .vid-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.35); transition: background 0.2s; border-radius: 10px; }
+        .vid-item:hover .vid-play { background: rgba(0,0,0,0.5); }
+        .vid-play span { width: 44px; height: 44px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #222; padding-left: 3px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .vid-info { padding: 0 4px; }
+        .vid-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.35; color: #222; }
+        .vid-info p { font-size: 11px; color: #777; line-height: 1.45; }
+
+        .quiz-sidebar p { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.6; }
+        .btn-quiz { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; background: var(--main); color: white; border: none; border-radius: 11px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-quiz:hover { background: #6b0000; }
+
+        .mindmap-sidebar p { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.6; }
+        .btn-mindmap { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; background: #2d7a52; color: white; border: none; border-radius: 11px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+        .btn-mindmap:hover { background: #1f5c3c; }
+
+        footer { background: #2c1a0e; color: #bbb; padding: 48px 50px 0; margin-top: 20px; }
+        .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1.4fr; gap: 50px; padding-bottom: 36px; }
+        .footer-brand-name { font-size: 28px; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; margin-bottom: 14px; font-style: italic; }
+        .footer-brand-desc { font-size: 13px; color: #9a8878; line-height: 1.7; max-width: 260px; }
+        .footer-col h4 { color: var(--gold); font-size: 15px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.3px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #b0a090; font-size: 14px; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--gold); }
+        .footer-info-list { list-style: none; }
+        .footer-info-list li { font-size: 13px; color: #b0a090; margin-bottom: 11px; display: flex; align-items: flex-start; gap: 9px; line-height: 1.55; }
+        .footer-info-list li strong { color: #e0d0b8; font-weight: 600; }
+        .footer-bottom { border-top: 1px solid #3e2a1a; padding: 18px 0; display: flex; justify-content: center; align-items: center; font-size: 13px; color: #7a6858; gap: 6px; }
+        .footer-bottom span { color: #9a8878; }
+        .footer-bottom .vn-tag { font-size: 11px; color: #6a5848; background: #3a2510; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+<div class="video-lightbox" id="videoLightbox" onclick="closeLightboxOnBg(event)">
+    <div class="video-lightbox-inner">
+        <button class="video-lightbox-close" onclick="closeVideo()">✕</button>
+        <video id="lightboxVideo" controls></video>
+    </div>
+</div>
+
+<nav>
+    <div class="logo-wrap">
+        <div class="logo-text"><span>SỬ VIỆT</span></div>
+    </div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="hero-left">
+        <h1>NHÀ LÝ – NHÀ TRẦN</h1>
+        <p>Thời kỳ phát triển rực rỡ của Đại Việt, với nền văn hóa thịnh vượng và những chiến công hiển hách ba lần đánh bại quân Nguyên Mông.</p>
+        <div class="hero-meta">
+            <span>📅 1009 – 1400</span>
+            <span>📍 Kinh đô Thăng Long</span>
+        </div>
+    </div>
+</section>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="intro-wrap">
+                <p class="intro-text">
+                    Năm 1009, Lý Công Uẩn lên ngôi, mở ra triều đại nhà Lý. Năm 1010, ông dời đô từ Hoa Lư về Thăng Long, khởi đầu kỷ nguyên xây dựng quốc gia Đại Việt hùng mạnh. Nhà Lý đặt nền móng cho nền giáo dục nước nhà qua Văn Miếu – Quốc Tử Giám, đồng thời đánh bại quân Tống trong trận Như Nguyệt lịch sử.<br><br>
+                    Kế tiếp, nhà Trần (1225–1400) ghi danh vào sử sách với ba lần chiến thắng giặc Nguyên Mông – kỳ tích hiếm có trong lịch sử thế giới, được thắp sáng bởi hào khí Đông A và tên tuổi bất tử của Trần Hưng Đạo.
+                </p>
+                <div class="infobox">
+                    <div class="infobox-title">THÔNG TIN CƠ BẢN</div>
+                    <table>
+                        <tr><td>📅 Thời kỳ:</td><td>Độc lập – Hưng thịnh</td></tr>
+                        <tr><td>🏛️ Kinh đô:</td><td>Thăng Long</td></tr>
+                        <tr><td>👑 Triều đại:</td><td>Nhà Lý & Nhà Trần</td></tr>
+                        <tr><td>🕐 Thời gian:</td><td>1009 – 1400</td></tr>
+                        <tr><td>⚔️ Đặc điểm:</td><td>Văn hiến & chống ngoại xâm</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h2>⭐ SỰ KIỆN NỔI BẬT</h2>
+            <div class="event-scroll" id="eventScroll">
+                <div class="event-grid">
+                    <a href="chi-tiet-doi-do-ve-thang-long.html" class="event-card">
+                        <img src="images/kinh-do.jpg" onerror="this.style.background='#b07040';this.removeAttribute('src')">
+                        <div class="event-card-body">
+                            <h3>Dời đô về Thăng Long</h3>
+                            <p>Lý Công Uẩn dời đô năm 1010, mở ra kỷ nguyên Thăng Long rực rỡ.</p>
+                        </div>
+                    </a>
+                    <a href="chi-tiet-hao-khi-dong-a.html" class="event-card">
+                        <img src="images/tran.jpg" onerror="this.style.background='#6a8a5a';this.removeAttribute('src')">
+                        <div class="event-card-body">
+                            <h3>Hào khí Đông A</h3>
+                            <p>Ba lần đại thắng quân xâm lược Nguyên Mông lừng lẫy thế giới.</p>
+                        </div>
+                    </a>
+                    <a href="chi-tiet-van-mieu.html" class="event-card">
+                        <img src="images/van-mieu.PNG" onerror="this.style.background='#7a6540';this.removeAttribute('src')">
+                        <div class="event-card-body">
+                            <h3>Văn Miếu Quốc Tử Giám</h3>
+                            <p>Trường đại học đầu tiên của Việt Nam, nơi đào tạo nhân tài đất nước.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">👑 NHÂN VẬT TIÊU BIỂU</div>
+        <div class="char-grid">
+            <div class="char-card">
+                <img src="images/ly-thai-to1.jpeg" onerror="this.style.background='#c8956c';this.style.height='150px';this.removeAttribute('src')">
+                <div class="char-card-body">
+                    <h3>Lý Thái Tổ</h3>
+                    <p>Người sáng lập triều Lý, dời đô về Thăng Long năm 1010.</p>
+                    <a href="chi-tiet-ly-thai-to.html" class="btn-detail">Xem chi tiết</a>
+                </div>
+            </div>
+            <div class="char-card">
+                <img src="images/LyThuongKiet.jpg" onerror="this.style.background='#9b7a5a';this.style.height='150px';this.removeAttribute('src')">
+                <div class="char-card-body">
+                    <h3>Lý Thường Kiệt</h3>
+                    <p>Danh tướng nhà Lý, tác giả bài thơ Thần khẳng định chủ quyền đất nước.</p>
+                    <a href="chi-tiet-ly-thuong-kiet.html" class="btn-detail">Xem chi tiết</a>
+                </div>
+            </div>
+            <div class="char-card">
+                <img src="images/tran-hung-dao.jpg" onerror="this.style.background='#7a6855';this.style.height='150px';this.removeAttribute('src')">
+                <div class="char-card-body">
+                    <h3>Trần Hưng Đạo</h3>
+                    <p>Đại nguyên soái lừng danh, ba lần lãnh đạo đánh bại quân Nguyên Mông.</p>
+                    <a href="chi-tiet-tran-hung-dao.html" class="btn-detail">Xem chi tiết</a>
+                </div>
+            </div>
+            <div class="char-card">
+                <img src="images/tran-quoc-tuan.jpg" onerror="this.style.background='#5a6e7a';this.style.height='150px';this.removeAttribute('src')">
+                <div class="char-card-body">
+                    <h3>Trần Nhân Tông</h3>
+                    <p>Vị vua anh minh, lãnh đạo kháng chiến Nguyên Mông lần 2 và 3 thắng lợi.</p>
+                    <a href="chi-tiet-tran-nhan-tong.html" class="btn-detail">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-box">
+            <h2>🎬 VIDEO BÀI GIẢNG</h2>
+            <div class="vid-scroll-wrap">
+                <div class="vid-item" onclick="openVideo('videos/lytran1.mp4')">
+                    <div class="vid-thumb">
+                        <video src="videos/lytran1.mp4" preload="metadata"></video>
+                        <div class="vid-play"><span>▶</span></div>
+                    </div>
+                    <div class="vid-info">
+                        <h4>1. Nhà Lý – Nhà Trần</h4>
+                        <p>Tổng quan thời kỳ phát triển rực rỡ của Đại Việt.</p>
+                    </div>
+                </div>
+                <div class="vid-item" onclick="openVideo('videos/lytran2.mp4')">
+                    <div class="vid-thumb">
+                        <video src="videos/lytran2.mp4" preload="metadata"></video>
+                        <div class="vid-play"><span>▶</span></div>
+                    </div>
+                    <div class="vid-info">
+                        <h4>2. Dời đô về Thăng Long</h4>
+                        <p>Lý Công Uẩn và quyết định lịch sử dời đô năm 1010.</p>
+                    </div>
+                </div>
+                <div class="vid-item" onclick="openVideo('videos/lytran3.mp4')">
+                    <div class="vid-thumb">
+                        <video src="videos/lytran3.mp4" preload="metadata"></video>
+                        <div class="vid-play"><span>▶</span></div>
+                    </div>
+                    <div class="vid-info">
+                        <h4>3. Kháng chiến Nguyên Mông</h4>
+                        <p>Ba lần đại thắng quân Nguyên Mông lừng lẫy thế giới.</p>
+                    </div>
+                </div>
+                <div class="vid-item" onclick="openVideo('videos/lytran4.mp4')">
+                    <div class="vid-thumb">
+                        <video src="videos/lytran4.mp4" preload="metadata"></video>
+                        <div class="vid-play"><span>▶</span></div>
+                    </div>
+                    <div class="vid-info">
+                        <h4>4. Văn hóa – Giáo dục thời Lý Trần</h4>
+                        <p>Văn Miếu, Quốc Tử Giám và nền giáo dục thịnh vượng.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-box quiz-sidebar">
+            <h2>🏆 KIỂM TRA KIẾN THỨC</h2>
+            <p>Trả lời câu hỏi trắc nghiệm để ôn tập và kiểm tra kiến thức của bạn!</p>
+            <button class="btn-quiz" onclick="location.href='quiz.html?topic=ly-tran'">🎮 Chơi Quiz ngay!</button>
+        </div>
+
+        <div class="sidebar-box mindmap-sidebar">
+            <h2>🧠 BIỂU ĐỒ THÔNG TIN</h2>
+            <p>Tổng hợp toàn bộ kiến thức Nhà Lý – Nhà Trần bằng sơ đồ tư duy trực quan, dễ hiểu.</p>
+            <button class="btn-mindmap" onclick="openMindmap()">Xem biểu đồ →</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand-name">Sử Việt</div>
+            <p class="footer-brand-desc">Website học lịch sử Việt Nam tương tác — khám phá hàng nghìn năm văn hiến dân tộc.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Khám phá</h4>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="#">Học qua câu chuyện</a></li>
+                <li><a href="#">Quiz thử thách</a></li>
+                <li><a href="#">Trò chơi lịch sử</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Thông tin</h4>
+            <ul class="footer-info-list">
+                <li>🏫 <span>Trường: <strong>Trường Đại học Công nghệ Thông tin và Truyền thông Việt Hàn</strong></span></li>
+                <li>👥 <span>Nhóm: <strong>CMW</strong></span></li>
+                <li>🏆 <span>Cuộc thi: <strong>Best Web Design</strong></span></li>
+                <li>📅 <span>Năm: <strong>2026</strong></span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 Sử Việt — Tự hào lịch sử Việt Nam</span>
+        <span class="vn-tag">VN</span>
+    </div>
+</footer>
+
+<!-- Mindmap Lightbox -->
+<div class="mindmap-lightbox" id="mindmapLightbox" onclick="closeMindmapOnBg(event)">
+    <div class="mindmap-lightbox-inner">
+        <button class="video-lightbox-close" onclick="closeMindmap()">✕</button>
+        <img id="mindmapImg" src="images/sodolytran.PNG" alt="Biểu đồ thông tin Nhà Lý – Nhà Trần">
+    </div>
+</div>
+
+<script>
+    function makeDraggable(el) {
+        let isDown = false, startX, scrollLeft;
+        el.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+        el.addEventListener('mouseleave', () => isDown = false);
+        el.addEventListener('mouseup', () => isDown = false);
+        el.addEventListener('mousemove', e => {
+            if (!isDown) return;
+            e.preventDefault();
+            el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX);
+        });
+    }
+    makeDraggable(document.getElementById('eventScroll'));
+
+    function openVideo(src) {
+        const lb = document.getElementById('videoLightbox');
+        const vid = document.getElementById('lightboxVideo');
+        vid.src = src; lb.classList.add('open'); vid.play();
+    }
+    function closeVideo() {
+        const lb = document.getElementById('videoLightbox');
+        const vid = document.getElementById('lightboxVideo');
+        vid.pause(); vid.src = ''; lb.classList.remove('open');
+    }
+    function closeLightboxOnBg(e) {
+        if (e.target === document.getElementById('videoLightbox')) closeVideo();
+    }
+
+    function openMindmap() {
+        document.getElementById('mindmapLightbox').classList.add('open');
+    }
+    function closeMindmap() {
+        document.getElementById('mindmapLightbox').classList.remove('open');
+    }
+    function closeMindmapOnBg(e) {
+        if (e.target === document.getElementById('mindmapLightbox')) closeMindmap();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeVideo(); closeMindmap(); } });
+</script>
+</body>
+</html>

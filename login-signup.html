@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff8e7 0%, #ffe8cc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* COLOR VARIABLES */
+        :root {
+            --main: #8B0000;
+            --gold: #f4c542;
+            --cream: #fff8e7;
+            --dark: #2c1b12;
+            --light-dark: #5c4033;
+            --border: #e0d9d0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            perspective: 1000px;
+        }
+
+        .form-wrapper {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .form-wrapper.sign-up-mode {
+            transform: rotateY(0deg);
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--main) 0%, #c41e3a 100%);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FORM CONTENT */
+        .form-content {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fafaf8;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--main);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        /* CHECKBOX */
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--main);
+        }
+
+        .form-checkbox label {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .form-checkbox a {
+            color: var(--main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .form-checkbox a:hover {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--main) 0%, #c41e3a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(139, 0, 0, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* DIVIDER */
+        .divider {
+            margin: 24px 0;
+            position: relative;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        /* SOCIAL LOGIN */
+        .social-login {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            border-color: var(--main);
+            background: #fff8e7;
+            transform: translateY(-3px);
+        }
+
+        /* TOGGLE FORM */
+        .toggle-section {
+            background: #f5f2ed;
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .toggle-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn {
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+
+        .toggle-btn:hover {
+            background: #f4b520;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(244, 197, 66, 0.3);
+        }
+
+        /* FORGOT PASSWORD MODAL */
+        .forgot-password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .forgot-password-modal.show {
+            display: flex;
+        }
+
+        .forgot-password-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.2);
+            animation: slideInUp 0.4s ease;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .forgot-password-box h2 {
+            color: var(--main);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .forgot-password-box p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .forgot-password-box .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password-box .form-group input:focus {
+            outline: none;
+            border-color: var(--main);
+            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+        }
+
+        .forgot-password-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .forgot-password-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Roboto', 'Poppins', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .forgot-password-buttons .send-btn {
+            background: var(--main);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .forgot-password-buttons .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .forgot-password-buttons .cancel-btn {
+            background: #f0f0f0;
+            color: var(--dark);
+        }
+
+        .forgot-password-buttons .cancel-btn:hover {
+            background: #e0e0e0;
+        }
+
+        /* FORM VISIBILITY */
+        .form-login {
+            display: block;
+        }
+
+        .form-signup {
+            display: none;
+        }
+
+        .form-wrapper.sign-up-mode .form-login {
+            display: none;
+        }
+
+        .form-wrapper.sign-up-mode .form-signup {
+            display: block;
+        }
+
+        /* HIDDEN INPUT FOR SIGNUP */
+        .form-signup .form-group:nth-child(2) {
+            display: none;
+        }
+
+        .form-wrapper.sign-up-mode .form-signup .form-group:nth-child(2) {
+            display: block;
+        }
+
+        /* ANIMATIONS */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .form-wrapper.sign-up-mode .form-group {
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        .submit-btn {
+            animation: fadeIn 0.6s ease forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .divider {
+            animation: fadeIn 0.6s ease forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .social-login {
+            animation: fadeIn 0.6s ease forwards;
+            animation-delay: 0.7s;
+            opacity: 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+
+            .form-content {
+                padding: 30px 20px;
+            }
+
+            .header {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .toggle-section {
+                padding: 15px 20px;
+            }
+
+            .form-group input {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .submit-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .form-wrapper {
+                border-radius: 20px;
+            }
+        }
+
+        /* SUCCESS MESSAGE */
+        .success-msg {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            border-left: 4px solid #28a745;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <!-- HEADER -->
+            <div class="header">
+                <h1>SỬ VIỆT</h1>
+                <p>Khám phá lịch sử cùng chúng tôi</p>
+            </div>
+
+            <!-- FORM CONTENT -->
+            <div class="form-content">
+                <div class="success-msg" id="successMsg">
+                    ✓ Thành công! Chào mừng bạn đến với SỬ VIỆT
+                </div>
+
+                <!-- LOGIN FORM -->
+                <form class="form-login" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginUsername">Tên đăng nhập</label>
+                        <input 
+                            type="text" 
+                            id="loginUsername" 
+                            placeholder="Nhập tên đăng nhập"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Mật khẩu</label>
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            placeholder="Nhập mật khẩu"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Ghi nhớ tôi</label>
+                        <a id="forgotPasswordLink" style="margin-left: auto;">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Đăng nhập</button>
+
+                    <div class="divider">HOẶC</div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn" title="Google">🔵</button>
+                        <button type="button" class="social-btn" title="Facebook">📘</button>
+                        <button type="button" class="social-btn" title="Apple">🍎</button>
+                    </div>
+                </form>
+
+                <!-- SIGNUP FORM -->
+                <form class="form-signup" id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Họ và tên</label>
+                        <input 
+                            type="text" 
+                            id="signupName" 
+                            placeholder="Nhập tên của bạn"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupUsername">Tên đăng nhập</label>
+                        <input 
+                            type="text" 
+                            id="signupUsername" 
+                            placeholder="Chọn tên đăng nhập"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input 
+                            type="email" 
+                            id="signupEmail" 
+                            placeholder="Nhập email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Mật khẩu</label>
+                        <input 
+                            type="password" 
+                            id="signupPassword" 
+                            placeholder="Tối thiểu 8 ký tự"
+                            required
+                            minlength="8"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupConfirm">Xác nhận mật khẩu</label>
+                        <input 
+                            type="password" 
+                            id="signupConfirm" 
+                            placeholder="Xác nhận mật khẩu"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">Tôi đồng ý với <a href="#">điều khoản sử dụng</a></label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Đăng ký</button>
+
+                    <div class="divider">HOẶC</div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn" title="Google">🔵</button>
+                        <button type="button" class="social-btn" title="Facebook">📘</button>
+                        <button type="button" class="social-btn" title="Apple">🍎</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TOGGLE SECTION -->
+            <div class="toggle-section">
+                <div class="toggle-text" id="toggleText">
+                    Chưa có tài khoản?
+                </div>
+                <button type="button" class="toggle-btn" id="toggleBtn">
+                    Đăng ký ngay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div class="forgot-password-modal" id="forgotPasswordModal">
+        <div class="forgot-password-box">
+            <h2>Quên mật khẩu?</h2>
+            <p>Nhập email của bạn và chúng tôi sẽ gửi link reset mật khẩu</p>
+            
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label for="resetEmail">Email:</label>
+                    <input 
+                        type="email" 
+                        id="resetEmail" 
+                        placeholder="Nhập email của bạn"
+                        required
+                    >
+                </div>
+                
+                <div class="forgot-password-buttons">
+                    <button type="submit" class="send-btn">Gửi link</button>
+                    <button type="button" class="cancel-btn" id="cancelForgotBtn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    const API = 'http://localhost:3000/api';
+    const formWrapper = document.querySelector('.form-wrapper');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const toggleText = document.getElementById('toggleText');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const successMsg = document.getElementById('successMsg');
+
+    function showSuccess(msg) {
+        successMsg.textContent = '✓ ' + msg;
+        successMsg.classList.add('show');
+    }
+
+    function showError(msg) {
+        successMsg.textContent = '❌ ' + msg;
+        successMsg.style.background = '#f8d7da';
+        successMsg.style.color = '#721c24';
+        successMsg.style.borderColor = '#dc3545';
+        successMsg.classList.add('show');
+    }
+
+    // Toggle Login / Signup
+    toggleBtn.addEventListener('click', () => {
+        formWrapper.classList.toggle('sign-up-mode');
+        if (formWrapper.classList.contains('sign-up-mode')) {
+            toggleText.textContent = 'Đã có tài khoản?';
+            toggleBtn.textContent = 'Đăng nhập';
+        } else {
+            toggleText.textContent = 'Chưa có tài khoản?';
+            toggleBtn.textContent = 'Đăng ký ngay';
+        }
+        loginForm.reset();
+        signupForm.reset();
+        successMsg.classList.remove('show');
+    });
+
+    // ĐĂNG NHẬP - gọi API thật
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+            const res = await fetch(`${API}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem('token', data.token);
+localStorage.setItem('user', JSON.stringify(data.user));
+localStorage.setItem('history_user', JSON.stringify({...data.user, token: data.token}));
+localStorage.setItem('suVietUser', JSON.stringify({
+    email: data.user.email    || '',
+    name:  data.user.fullname || data.user.username || '',
+    avatar: data.user.avatar  || ''
+}));
+                showSuccess(`Chào mừng ${data.user.fullname}!`);
+                setTimeout(() => { const redirect = localStorage.getItem('redirectAfterLogin') || 'index.html';
+localStorage.removeItem('redirectAfterLogin');
+window.location.href = redirect; }, 1500);
+            } else {
+                showError(data.message || 'Đăng nhập thất bại!');
+            }
+        } catch (err) {
+            showError('Không kết nối được server! Kiểm tra backend.');
+        }
+    });
+
+    // ĐĂNG KÝ - gọi API thật
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fullname = document.getElementById('signupName').value;
+        const username = document.getElementById('signupUsername').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirm = document.getElementById('signupConfirm').value;
+
+        if (password !== confirm) {
+            showError('Mật khẩu không trùng khớp!');
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullname, username, email, password })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                showSuccess(`Đăng ký thành công! Chào mừng ${fullname}`);
+                signupForm.reset();
+                setTimeout(() => {
+                    formWrapper.classList.remove('sign-up-mode');
+                    toggleText.textContent = 'Chưa có tài khoản?';
+                    toggleBtn.textContent = 'Đăng ký ngay';
+                    successMsg.classList.remove('show');
+                }, 2000);
+            } else {
+                showError(data.message || 'Đăng ký thất bại!');
+            }
+        } catch (err) {
+            showError('Không kết nối được server! Kiểm tra backend.');
+        }
+    });
+
+    // Forgot Password (giữ nguyên)
+    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const cancelForgotBtn = document.getElementById('cancelForgotBtn');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        forgotPasswordModal.classList.add('show');
+    });
+    cancelForgotBtn.addEventListener('click', () => {
+        forgotPasswordModal.classList.remove('show');
+        forgotPasswordForm.reset();
+    });
+    forgotPasswordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
+        if (email) {
+            alert(`✅ Link reset mật khẩu đã được gửi đến ${email}`);
+            forgotPasswordModal.classList.remove('show');
+            forgotPasswordForm.reset();
+        }
+    });
+    forgotPasswordModal.addEventListener('click', (e) => {
+        if (e.target === forgotPasswordModal) forgotPasswordModal.classList.remove('show');
+    });
+
+    document.querySelectorAll('.social-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Chức năng này sẽ được kích hoạt sau!');
+        });
+    });
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thành Cổ Loa | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.78) 45%, rgba(0,0,0,0.2) 100%),
+                        url('images/thanhcoloa1.JPG') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        /* INLINE IMAGES */
+        .inline-img-right {
+            float: right; width: 250px;
+            margin: 0 0 16px 22px;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-right img { width: 100%; display: block; }
+        .inline-img-left {
+            float: left; width: 250px;
+            margin: 0 22px 16px 0;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-left img { width: 100%; display: block; }
+        .img-cap { background: #f8f4ea; font-size: 11px; color: #888; text-align: center; padding: 6px 8px; font-style: italic; }
+        .img-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); border: 2px solid #ede7d3; }
+        .img-banner img { width: 100%; display: block; max-height: 280px; object-fit: cover; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #e8d4a8); border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 2px solid white; box-shadow: 0 0 0 2px var(--gold); }
+        .tl-dot.red { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        /* QUOTE */
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        /* TAGS */
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #e6f0fb; color: #1a5fa8; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+
+        /* ACHIEVE GRID */
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        /* STAT CARDS */
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .stat-card { background: linear-gradient(135deg, #fffdf7, #f8f4ea); border: 1px solid #ede7d3; border-radius: 14px; padding: 20px 16px; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--main); display: block; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+
+        /* LAYER BOX */
+        .layer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .layer-card { border-radius: 12px; padding: 18px 16px; text-align: center; }
+        .layer-card.outer { background: #f0f7e6; border: 2px solid #8fb86a; }
+        .layer-card.mid   { background: #fdf3d0; border: 2px solid var(--gold); }
+        .layer-card.inner { background: #fdeaea; border: 2px solid #c0392b; }
+        .layer-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .layer-card.outer .layer-title { color: #2a6e1a; }
+        .layer-card.mid .layer-title   { color: #8a6800; }
+        .layer-card.inner .layer-title { color: #8b0000; }
+        .layer-text { font-size: 12px; color: #555; line-height: 1.6; }
+
+        /* LESSON BOX */
+        .lesson-box { background: linear-gradient(135deg, #1e1206, #3a2010); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 44%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #f9f4ec; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+        .heritage-card{
+    margin-bottom:16px;
+    border:1px solid #ede7d3;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fffdf7;
+    transition:0.2s;
+}
+
+.heritage-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.heritage-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    display:block;
+}
+
+.heritage-content{
+    padding:12px;
+}
+
+.heritage-content strong{
+    display:block;
+    font-size:13px;
+    color:#222;
+    margin-bottom:6px;
+}
+
+.heritage-content p{
+    font-size:12px;
+    color:#666;
+    line-height:1.6;
+    margin:0;
+}
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">🏯 SỰ KIỆN LỊCH SỬ</div>
+        <h1>THÀNH CỔ LOA</h1>
+        <p class="subtitle">Kỳ quan kiến trúc xoáy ốc — kinh đô kiên cố bậc nhất Đông Nam Á thời cổ đại, biểu tượng sức mạnh và trí tuệ của người Việt thế kỷ III TCN</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 255 – 245 TCN</span>
+            <span class="hero-tag">📍 Đông Anh, Hà Nội</span>
+            <span class="hero-tag">🏛️ Kinh đô Âu Lạc</span>
+            <span class="hero-tag">⚔️ Công trình quân sự</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="van-lang.html">Văn Lang – Âu Lạc</a>
+    <span>›</span>
+    Thành Cổ Loa
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- GIỚI THIỆU -->
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="clearfix">
+                <div class="inline-img-right">
+                    <img src="images/toacoloa.PNG" alt="Toàn cảnh thành Cổ Loa" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Toàn cảnh khu di tích Cổ Loa ngày nay</div>
+                </div>
+                <p>
+                    Thành Cổ Loa là kinh đô của nước <span class="hl">Âu Lạc</span> do An Dương Vương (Thục Phán) xây dựng vào khoảng thế kỷ III TCN. Đây là công trình kiến trúc và quân sự vĩ đại nhất của người Việt cổ đại — một minh chứng rực rỡ cho trí tuệ, kỹ thuật và ý chí bảo vệ đất nước của tổ tiên.
+                </p>
+                <p>
+                    Tên gọi "Cổ Loa" xuất phát từ hình dáng của tòa thành — <span class="hl">xoáy ốc</span> như con ốc sên nhìn từ trên cao. Thành nằm tại vùng đất Đông Anh (Hà Nội ngày nay), nơi hội tụ điều kiện tự nhiên lý tưởng: gần sông Hoàng Giang, địa thế cao ráo, dễ quan sát và phòng thủ tứ phía.
+                </p>
+                <p>
+                    Theo truyền thuyết, quá trình xây dựng ban đầu gặp nhiều khó khăn — thành đắp lên lại sụp đổ. Thần <span class="hl">Kim Quy (Rùa Vàng)</span> đã hiện ra giúp vua chỉ ra nguyên nhân và hướng dẫn xây thành hoàn chỉnh, sau đó còn tặng vuốt rùa để làm lẫy nỏ thần bảo vệ đất nước.
+                </p>
+            </div>
+            <div class="trait-tags">
+                <span class="trait-tag trait-gold">🏯 Kiến trúc xoáy ốc</span>
+                <span class="trait-tag trait-green">🌊 Hào nước bao quanh</span>
+                <span class="trait-tag trait-blue">⚔️ Quân sự phòng thủ</span>
+                <span class="trait-tag trait-red">🏛️ Di tích quốc gia đặc biệt</span>
+            </div>
+        </div>
+
+        <!-- SỐ LIỆU NỔI BẬT -->
+        <div class="content-box">
+            <h2>📊 QUY MÔ CÔNG TRÌNH</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Vòng thành xoáy ốc lồng vào nhau</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">~600</span>
+                    <span class="stat-label">Hecta diện tích toàn khu thành</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">16km</span>
+                    <span class="stat-label">Tổng chu vi các vòng thành</span>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">10m</span>
+                    <span class="stat-label">Chiều cao tường thành (thành nội)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Hệ thống hào nước bao quanh mỗi vòng</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">300 TCN</span>
+                    <span class="stat-label">Niên đại ước tính xây dựng</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- KIẾN TRÚC 3 VÒNG -->
+        <div class="content-box">
+            <h2>🏗️ KIẾN TRÚC BA VÒNG THÀNH</h2>
+            <p>Điểm độc đáo nhất của Cổ Loa là kiến trúc <span class="hl">3 vòng thành lồng vào nhau theo hình xoáy ốc</span> — một thiết kế phòng thủ thiên tài hiếm có trên thế giới thời bấy giờ. Kẻ tấn công phải phá vỡ lần lượt từng vòng, mỗi vòng đều có hào nước và quân phòng thủ riêng.</p>
+
+            <div class="layer-grid">
+                <div class="layer-card outer">
+                    <div class="layer-title">🟢 Thành Ngoại</div>
+                    <div class="layer-text">Vòng ngoài cùng, chu vi dài nhất (~8km). Tường đất nện dày, hào nước rộng bao quanh. Là tuyến phòng thủ đầu tiên chặn bước quân địch từ xa.</div>
+                </div>
+                <div class="layer-card mid">
+                    <div class="layer-title">🟡 Thành Trung</div>
+                    <div class="layer-text">Vòng giữa (~7km chu vi), cao và dày hơn thành ngoại. Hào nước thứ hai tạo thêm một lớp ngăn cách hiểm trở, buộc địch phải vượt hai lần trước khi tiếp cận lõi.</div>
+                </div>
+                <div class="layer-card inner">
+                    <div class="layer-title">🔴 Thành Nội</div>
+                    <div class="layer-text">Vòng trong cùng (~1,6km chu vi), nơi ở của An Dương Vương và triều đình. Tường cao ~10m, là pháo đài cuối cùng và kiên cố nhất — chỉ thất thủ khi nỏ thần mất linh.</div>
+                </div>
+            </div>
+
+            <div class="img-banner" style="margin-top:20px;">
+                <img src="images/so_do_co_loa.jpg" alt="Sơ đồ 3 vòng thành Cổ Loa" onerror="this.parentElement.style.display='none'">
+                <div class="img-cap">Sơ đồ mặt bằng 3 vòng thành xoáy ốc của Cổ Loa</div>
+            </div>
+
+            <div class="quote-block" style="margin-top:18px;">
+                <p>"Kiến trúc xoáy ốc của Cổ Loa không chỉ là sáng tạo nghệ thuật — đó là giải pháp quân sự thông minh bậc nhất Đông Nam Á thế kỷ III TCN, không kém gì các công trình phòng thủ danh tiếng ở châu Âu cùng thời."</p>
+                <span class="quote-source">— Đánh giá của các nhà khảo cổ học hiện đại</span>
+            </div>
+        </div>
+
+        <!-- KỸ THUẬT XÂY DỰNG -->
+        <div class="content-box">
+            <h2>⚙️ KỸ THUẬT XÂY DỰNG</h2>
+            <div class="clearfix">
+                <div class="inline-img-left">
+                    <img src="images/tuong_co_loa.jpg" alt="Tường thành Cổ Loa" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Dấu tích tường thành đất nện còn lại đến ngày nay</div>
+                </div>
+                <p>
+                    Thành Cổ Loa được xây hoàn toàn bằng <span class="hl">đất nện</span> — đất được đào lên, phơi khô, rồi đắp từng lớp và nén chặt. Phương pháp này tuy đơn giản nhưng tạo ra độ bền cực cao, giải thích tại sao tường thành vẫn còn dấu tích sau hơn 2.000 năm.
+                </p>
+                <p>
+                    Hệ thống <span class="hl">hào nước</span> tận dụng sông Hoàng Giang và các đầm lầy tự nhiên, được đào nối thông với nhau tạo thành vành đai nước bao bọc liên tục. Vào mùa mưa, hào nước dâng cao khiến thành gần như là một "pháo đài trên đảo" — không thể tiếp cận nếu không có thuyền.
+                </p>
+                <p>
+                    Theo các nhà khảo cổ ước tính, để xây Cổ Loa cần <span class="hl">hàng chục nghìn lao động</span> làm việc liên tục trong nhiều năm — minh chứng cho khả năng tổ chức và huy động nguồn lực của nhà nước Âu Lạc lúc bấy giờ.
+                </p>
+            </div>
+        </div>
+
+        <!-- NỎ THẦN LIÊN CHÂU -->
+        <div class="content-box">
+            <h2>🏹 NỎ THẦN VÀ KHO VŨ KHÍ</h2>
+            <p>
+                Sức mạnh phòng thủ của Cổ Loa không chỉ đến từ kiến trúc — mà còn từ kho vũ khí đặc biệt của An Dương Vương. <span class="hl">Nỏ Thần Liên Châu</span> (hay nỏ bắn nhiều phát) là vũ khí huyền thoại có thể phóng hàng chục — thậm chí hàng trăm — mũi tên đồng cùng một lúc.
+            </p>
+
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">🏹</span>
+                    <div class="achieve-title">Nỏ Liên Châu</div>
+                    <div class="achieve-text">Theo truyền thuyết, làm từ vuốt Rùa Vàng. Thực tế khảo cổ cho thấy người Âu Lạc đã phát triển kỹ thuật nỏ liên phát — bắn nhiều mũi tên liên tiếp với tốc độ cao hơn hẳn các loại nỏ thông thường đương thời.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🔱</span>
+                    <div class="achieve-title">Hàng nghìn mũi tên đồng</div>
+                    <div class="achieve-text">Các cuộc khai quật tại Cổ Loa tìm thấy kho mũi tên đồng với hàng chục nghìn chiếc còn nguyên vẹn — bằng chứng thực tế về quy mô vũ khí khổng lồ mà An Dương Vương tích trữ để bảo vệ đất nước.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">⚔️</span>
+                    <div class="achieve-title">Đẩy lùi Triệu Đà lần đầu</div>
+                    <div class="achieve-text">Nhờ nỏ thần và thành kiên cố, An Dương Vương đã đánh tan quân Nam Việt của Triệu Đà trong lần tấn công đầu tiên — giữ vững độc lập Âu Lạc thêm nhiều thập niên.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🥉</span>
+                    <div class="achieve-title">Kỹ thuật đúc đồng đỉnh cao</div>
+                    <div class="achieve-text">Mũi tên đồng 3 cạnh tìm thấy tại Cổ Loa là loại thiết kế khí động học tiên tiến — cho phép bay xa, xuyên giáp tốt và khó rút ra khỏi vết thương. Minh chứng cho trình độ luyện kim Đông Sơn.</div>
+                </div>
+            </div>
+
+            <div class="img-banner" style="margin-top:4px;">
+                <img src="images/mui_ten_dong.jpg" alt="Kho mũi tên đồng Cổ Loa" onerror="this.parentElement.style.display='none'">
+                <div class="img-cap">Kho mũi tên đồng khai quật tại Cổ Loa — hàng chục nghìn chiếc còn nguyên vẹn</div>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN LỊCH SỬ -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">257 TCN</div>
+                    <div class="tl-title">An Dương Vương lên ngôi, lập nước Âu Lạc</div>
+                    <div class="tl-text">Thục Phán thống nhất Âu Việt và Lạc Việt, lên ngôi vua xưng An Dương Vương. Ông quyết định dời đô từ vùng núi xuống đồng bằng để tiện cai trị và phát triển kinh tế.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~255 TCN</div>
+                    <div class="tl-title">Khởi công xây thành Cổ Loa</div>
+                    <div class="tl-text">An Dương Vương chọn đất Cổ Loa (vùng Đông Anh ngày nay) để xây kinh đô. Giai đoạn đầu gặp khó khăn lớn — thành cứ đắp lên lại sụp. Theo truyền thuyết, thần Kim Quy hiện ra giúp vua chỉ ra nguyên nhân (ma quỷ phá hoại) và hướng dẫn xây dựng thành công.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~245 TCN</div>
+                    <div class="tl-title">Hoàn thành thành Cổ Loa — Rùa Vàng trao vuốt</div>
+                    <div class="tl-text">Sau khoảng 10 năm xây dựng, thành Cổ Loa hoàn chỉnh với 3 vòng xoáy ốc kiên cố. Rùa Vàng tặng vuốt rùa để làm lẫy nỏ thần — vũ khí bí mật bảo vệ Âu Lạc.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~210 TCN</div>
+                    <div class="tl-title">Đẩy lùi cuộc tấn công đầu tiên của Triệu Đà</div>
+                    <div class="tl-text">Triệu Đà đem quân Nam Việt đánh Âu Lạc. Nhờ nỏ thần và thành kiên cố, An Dương Vương đại thắng. Triệu Đà phải xin giảng hòa và chuyển sang kế sách dùng hôn nhân để phá từ bên trong.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">~210 – 179 TCN</div>
+                    <div class="tl-title">Mỵ Châu – Trọng Thủy: Kẻ thù đã ở trong thành</div>
+                    <div class="tl-text">Triệu Đà cho con trai Trọng Thủy sang cầu hôn công chúa Mỵ Châu và ở lại Cổ Loa. Trọng Thủy bí mật đánh tráo lẫy nỏ thần bằng lẫy giả, rồi trốn về báo cho cha mình chuẩn bị tấn công.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot red"></div>
+                    <div class="tl-year">179 TCN</div>
+                    <div class="tl-title">Cổ Loa thất thủ — Âu Lạc diệt vong</div>
+                    <div class="tl-text">Triệu Đà tấn công lần hai. Nỏ thần đã bị đổi lẫy giả, bắn ra tên thường không còn uy lực. Quân Âu Lạc tan vỡ, An Dương Vương bỏ thành chạy về phía Nam. Cổ Loa rơi vào tay Triệu Đà — mở ra gần 1.000 năm Bắc thuộc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA LỊCH SỬ</h2>
+            <p>
+                Thành Cổ Loa là biểu tượng kép của lịch sử Việt — vừa là <span class="hl">đỉnh cao thành tựu</span> của người Việt cổ đại, vừa là <span class="hl">hiện trường bi kịch</span> của sự mất nước. Sức mạnh vật chất kiên cố đến đâu cũng không thể thay thế cảnh giác và trí tuệ chiến lược.
+            </p>
+            <p>
+                Về mặt lịch sử, Cổ Loa chứng minh rằng người Việt thế kỷ III TCN đã có đủ năng lực tổ chức nhà nước, huy động nhân lực quy mô lớn và làm chủ kỹ thuật xây dựng — kiến trúc phòng thủ không thua kém bất kỳ quốc gia nào cùng thời.
+            </p>
+            <div class="quote-block">
+                <p>"Cổ Loa không chỉ là một tòa thành — đó là tuyên ngôn về chủ quyền và sức mạnh của dân tộc Việt trước sức ép từ phương Bắc. Người đến sau muốn hiểu người Việt cổ đại đã mạnh đến đâu, hãy nhìn vào Cổ Loa."</p>
+                <span class="quote-source">— Nhận định lịch sử Việt Nam cổ đại</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">🏛️ Bài học muôn đời</div>
+                <div class="lesson-text">Cổ Loa dạy rằng: thành trì vững chắc nhất không phải là tường đất hay hào nước — mà là sự đoàn kết, cảnh giác và đặt lợi ích quốc gia lên trên tình cảm cá nhân. Khi Trọng Thủy đã vào bên trong, mọi lớp tường đều vô nghĩa.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Tên gọi</td><td>Thành Cổ Loa</td></tr>
+                <tr><td>Người xây</td><td>An Dương Vương</td></tr>
+                <tr><td>Xây dựng</td><td>~255 – 245 TCN</td></tr>
+                <tr><td>Vị trí</td><td>Đông Anh, Hà Nội</td></tr>
+                <tr><td>Diện tích</td><td>~600 ha</td></tr>
+                <tr><td>Số vòng thành</td><td>3 vòng xoáy ốc</td></tr>
+                <tr><td>Chu vi</td><td>~16 km (tổng)</td></tr>
+                <tr><td>Chất liệu</td><td>Đất nện + hào nước</td></tr>
+                <tr><td>Chức năng</td><td>Kinh đô + quân sự</td></tr>
+                <tr><td>Xếp hạng</td><td>Di tích QG đặc biệt</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+    <h3>🏛️ DI SẢN & DI TÍCH</h3>
+
+    <div class="heritage-card">
+        <img src="images/ditichcoloa.jpg" alt="Khu di tích Cổ Loa">
+
+        <div class="heritage-content">
+            <strong>Khu di tích Cổ Loa</strong>
+            Được xếp hạng Di tích quốc gia đặc biệt năm 2012. Hiện còn lưu giữ dấu tích 3 vòng thành, hào nước và đền thờ An Dương Vương trong khuôn viên hơn 860 ha.
+        </div>
+    </div>
+
+    <div class="heritage-card">
+        <img src="images/muitendong.jpg" alt="Kho mũi tên đồng">
+
+        <div class="heritage-content">
+            <strong>Kho mũi tên đồng</strong>
+            Khai quật năm 1959–1960 phát hiện hơn 10.000 mũi tên đồng 3 cạnh còn nguyên vẹn — bằng chứng khảo cổ quý giá nhất về sức mạnh quân sự Âu Lạc, hiện trưng bày tại Bảo tàng Lịch sử Quốc gia.
+        </div>
+    </div>
+
+    <div class="heritage-card">
+        <img src="images/denanduongvuong.jfif" alt="Đền An Dương Vương">
+
+        <div class="heritage-content">
+            <strong>Đền thờ An Dương Vương</strong>
+            Nằm ngay trong khu Cổ Loa, thờ phụng vị vua lập nước Âu Lạc. Lễ hội Cổ Loa tổ chức ngày 6/1 Âm lịch hàng năm thu hút hàng vạn người tham dự.
+        </div>
+    </div>
+
+    <div class="heritage-card">
+        <img src="images/haonuoc.jfif" alt="Hào nước Cổ Loa">
+
+        <div class="heritage-content">
+            <strong>Hệ thống hào nước</strong>
+            Một số đoạn hào nước nguyên bản vẫn còn đến ngày nay, kết nối với ao đầm tự nhiên — minh chứng sống cho thiết kế phòng thủ thiên tài của người xưa.
+        </div>
+    </div>
+
+</div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="chi-tiet-an-duong-vuong.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #6a3a1a;">👑</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">An Dương Vương</div>
+                    <div class="char-mini-desc">Người xây dựng Cổ Loa</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-my-chau.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #9b7a8a;">👸</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Mỵ Châu</div>
+                    <div class="char-mini-desc">Bi kịch làm mất nỏ thần</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="chi-tiet-trieu-da.html" class="char-mini">
+                <div class="char-mini-avatar" style="background: #5a6e7a;">⚔️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Triệu Đà</div>
+                    <div class="char-mini-desc">Kẻ chiếm thành Cổ Loa</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #3a6a5a;">🐢</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Rùa Vàng (Kim Quy)</div>
+                    <div class="char-mini-desc">Thần giúp xây thành</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+        <div class="sidebar-box">
+    <h3>✨ SỰ THẬT THÚ VỊ</h3>
+
+    <div class="legacy-item">
+        <div class="legacy-icon">📏</div>
+        <div class="legacy-text">
+            <strong>Quy mô khổng lồ</strong>
+            Tổng chu vi ba vòng thành Cổ Loa lên tới khoảng 16 km.
+        </div>
+    </div>
+
+    <div class="legacy-item">
+        <div class="legacy-icon">🏹</div>
+        <div class="legacy-text">
+            <strong>Kho tên đồng lớn nhất</strong>
+            Hơn 10.000 mũi tên đồng đã được phát hiện tại khu di tích.
+        </div>
+    </div>
+
+    <div class="legacy-item">
+        <div class="legacy-icon">🌏</div>
+        <div class="legacy-text">
+            <strong>Kiến trúc hiếm có</strong>
+            Thiết kế ba vòng thành xoáy ốc là kiểu kiến trúc quân sự rất độc đáo của thời cổ đại.
+        </div>
+    </div>
+
+    <div class="legacy-item">
+        <div class="legacy-icon">⏳</div>
+        <div class="legacy-text">
+            <strong>Hơn 2.000 năm tuổi</strong>
+            Nhiều đoạn thành và hào nước vẫn còn dấu tích đến ngày nay.
+        </div>
+    </div>
+</div>
+        <a href="van-lang.html" class="btn-back">← Quay lại Văn Lang – Âu Lạc</a>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

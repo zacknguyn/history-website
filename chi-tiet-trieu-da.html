@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triệu Đà | Sử Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #8B0000;
+  --gold: #d4a017;
+  --dark: #1a0f06;
+  --bg: #f5f0e8;
+  --white: #ffffff;
+  --border: #e8dfc8;
+  --text: #333333;
+  --muted: #777777;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+
+/* NAV */
+nav {
+  background:var(--dark);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px; height:56px; position:sticky; top:0; z-index:100;
+}
+.nav-logo { color:var(--gold); font-weight:800; font-size:20px; letter-spacing:1px; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a { color:#ccc; text-decoration:none; font-size:13px; padding:7px 15px; border-radius:7px; transition:.2s; }
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.1); }
+.nav-links .active a { background:var(--gold); color:var(--dark); font-weight:600; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(to right, rgba(15,8,3,.88) 42%, rgba(15,8,3,.4) 75%, rgba(0,0,0,.15) 100%),
+              url('images/trieuda.jpg') center/cover no-repeat;
+  min-height:400px; display:flex; align-items:center;
+  padding:56px 56px 50px; color:#fff;
+  border-bottom:3px solid var(--gold);
+  position:relative; overflow:hidden;
+}
+.hero-badge {
+  display:inline-block; background:rgba(212,160,23,.2); border:1px solid var(--gold);
+  color:var(--gold); font-size:11px; font-weight:600; padding:4px 14px; border-radius:20px;
+  margin-bottom:14px; letter-spacing:.8px; text-transform:uppercase;
+}
+.hero h1 { font-size:58px; font-weight:800; line-height:1; margin-bottom:12px; letter-spacing:-.5px; }
+.hero-sub { font-size:15px; color:rgba(255,255,255,.8); max-width:480px; line-height:1.6; margin-bottom:24px; }
+.hero-stats { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px; }
+.hero-stat { display:flex; align-items:center; gap:9px; }
+.hero-stat-icon { width:36px; height:36px; background:rgba(212,160,23,.2); border:1px solid rgba(212,160,23,.5); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.hero-stat-label { font-size:11px; color:rgba(255,255,255,.6); }
+.hero-stat-val { font-size:13px; font-weight:600; color:#fff; }
+.btn-story { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--dark); font-weight:700; font-size:13px; padding:11px 22px; border-radius:9px; text-decoration:none; transition:.2s; }
+.btn-story:hover { background:#e8b820; }
+
+/* BREADCRUMB */
+.breadcrumb { background:#fff; padding:12px 56px; font-size:13px; color:#999; border-bottom:1px solid var(--border); }
+.breadcrumb a { color:var(--red); text-decoration:none; font-weight:500; }
+.breadcrumb a:hover { text-decoration:underline; }
+.breadcrumb span { margin:0 7px; color:#ccc; }
+
+/* LAYOUT */
+.layout { display:grid; grid-template-columns:1fr 310px; gap:24px; padding:26px 56px 40px; max-width:1400px; margin:0 auto; }
+
+/* CARD */
+.card { background:#fff; border-radius:14px; padding:24px 28px; margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.card-title { color:var(--red); font-size:15px; font-weight:700; padding-bottom:14px; margin-bottom:18px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:8px; }
+.card p { font-size:13.5px; line-height:1.85; color:#444; margin-bottom:12px; }
+.card p:last-child { margin-bottom:0; }
+
+/* KEY STATS ROW */
+.key-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
+.ks-item { text-align:center; padding:14px 10px; background:#fffdf7; border:1px solid var(--border); border-radius:10px; }
+.ks-icon { font-size:22px; margin-bottom:6px; display:block; }
+.ks-val { font-size:13px; font-weight:700; color:var(--red); }
+.ks-label { font-size:11px; color:#999; margin-top:2px; }
+
+/* PHOTO GRID */
+.photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 0; }
+.photo-item img { width:100%; height:110px; object-fit:cover; border-radius:10px; border:1px solid var(--border); display:block; background:#eee; }
+.photo-caption { font-size:12px; font-weight:600; margin-top:6px; color:#222; }
+.photo-sub { font-size:11px; color:#999; }
+
+/* TIMELINE HORIZONTAL */
+.tl-h { position:relative; padding:10px 0 0; }
+.tl-h-track { position:relative; display:flex; justify-content:space-between; padding:0 10px; }
+.tl-h-track::before { content:''; position:absolute; top:22px; left:20px; right:20px; height:2px; background:linear-gradient(to right, var(--gold),#e8d080); }
+.tl-h-item { flex:1; display:flex; flex-direction:column; align-items:center; position:relative; }
+.tl-h-dot { width:18px; height:18px; border-radius:50%; background:var(--gold); border:3px solid #fff; box-shadow:0 0 0 2px var(--gold); z-index:1; margin-bottom:10px; flex-shrink:0; }
+.tl-h-dot.red { background:var(--red); box-shadow:0 0 0 2px var(--red); }
+.tl-h-year { font-size:10px; font-weight:700; color:var(--gold); margin-bottom:4px; text-align:center; }
+.tl-h-icon { font-size:24px; margin-bottom:6px; }
+.tl-h-name { font-size:12px; font-weight:700; text-align:center; margin-bottom:4px; }
+.tl-h-desc { font-size:10.5px; color:#666; text-align:center; line-height:1.5; max-width:110px; }
+
+/* ACHIEVE GRID */
+.achieve-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+.ac-item { text-align:center; padding:18px 12px; background:#fffdf7; border:1px solid var(--border); border-radius:12px; }
+.ac-icon { font-size:28px; margin-bottom:10px; display:block; }
+.ac-title { font-size:13px; font-weight:700; margin-bottom:6px; }
+.ac-text { font-size:11.5px; color:#666; line-height:1.55; }
+
+/* TWO-SIDE VIEW */
+.two-side { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+.side-card { border-radius:12px; padding:16px; }
+.side-card.pro { background:#f0f9f4; border:1px solid #b8ddc8; }
+.side-card.con { background:#fdf0f0; border:1px solid #ddb8b8; }
+.side-title { font-size:13px; font-weight:700; margin-bottom:10px; }
+.side-card.pro .side-title { color:#1a6b3c; }
+.side-card.con .side-title { color:#8b0000; }
+.side-item { font-size:12px; color:#555; line-height:1.6; margin-bottom:6px; padding-left:14px; position:relative; }
+.side-item::before { content:'•'; position:absolute; left:0; }
+
+/* FUN FACTS */
+.ff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+.ff-item { background:#fffdf7; border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:12px; }
+.ff-icon-wrap { width:44px; height:44px; border-radius:10px; background:#f2ead8; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.ff-text { font-size:12px; color:#555; line-height:1.6; }
+.ff-text strong { color:#222; display:block; margin-bottom:3px; font-size:13px; }
+.ff-highlight { color:var(--red); font-weight:700; }
+
+/* SIDEBAR */
+.sidebar { display:flex; flex-direction:column; gap:18px; }
+.sb { background:#fff; border-radius:14px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.sb-title { font-size:13px; font-weight:700; color:var(--red); padding-bottom:10px; margin-bottom:14px; border-bottom:2px solid #f2ead8; display:flex; align-items:center; gap:7px; }
+.sb-title .sb-icon { width:22px; height:22px; border-radius:6px; background:var(--gold); display:inline-flex; align-items:center; justify-content:center; font-size:12px; color:var(--dark); }
+
+/* INFO TABLE */
+.info-tbl { width:100%; border-collapse:collapse; }
+.info-tbl tr { border-bottom:1px solid #f2ead8; }
+.info-tbl tr:last-child { border-bottom:none; }
+.info-tbl td { padding:8px 0; font-size:12.5px; vertical-align:top; }
+.info-tbl td:first-child { color:#999; width:38%; padding-right:8px; display:flex; align-items:center; gap:6px; }
+.info-tbl td:last-child { font-weight:600; color:#222; }
+
+/* RELATED CHARS */
+.char-list { display:flex; flex-direction:column; gap:0; }
+.char-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; cursor:pointer; border-radius:8px; }
+.char-row:last-child { border-bottom:none; }
+.char-row:hover { background:#faf5ec; padding-left:6px; }
+.char-name { font-size:13px; font-weight:600; }
+.char-role { font-size:11px; color:#999; }
+.char-arrow { margin-left:auto; color:#ccc; font-size:16px; }
+
+/* EXPLORE MORE */
+.explore-list { display:flex; flex-direction:column; }
+.explore-item { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid #f2ead8; text-decoration:none; color:inherit; transition:.15s; }
+.explore-item:last-child { border-bottom:none; }
+.explore-item:hover { color:var(--red); padding-left:4px; }
+.explore-icon { font-size:16px; flex-shrink:0; }
+.explore-name { font-size:13px; font-weight:500; flex:1; }
+.explore-arrow { color:#ccc; font-size:14px; }
+
+/* BTN BACK */
+.btn-back { display:flex; align-items:center; justify-content:center; gap:8px; background:var(--red); color:#fff; font-weight:700; font-size:13px; padding:13px 20px; border-radius:10px; text-decoration:none; transition:.2s; text-align:center; }
+.btn-back:hover { background:#a00000; }
+
+/* FOOTER */
+footer { background:var(--dark); color:#888; padding:22px 56px; font-size:12px; display:flex; justify-content:space-between; align-items:center; }
+footer a { color:#777; text-decoration:none; }
+footer a:hover { color:#aaa; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SỬ VIỆT</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Trang chủ</a></li>
+    <li><a href="#">Hành trình lịch sử</a></li>
+    <li><a href="#">Câu chuyện</a></li>
+    <li><a href="#">Quiz</a></li>
+    <li class="active"><a href="#">Nhân vật</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">⚔️ Nhân vật lịch sử</div>
+    <h1>TRIỆU ĐÀ</h1>
+    <p class="hero-sub">Vua Nam Việt — nhà chiến lược thiên tài và kẻ đã dùng mưu kế chấm dứt nước Âu Lạc năm 179 TCN.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-icon">📅</div>
+        <div>
+          <div class="hero-stat-label">Thời gian sống</div>
+          <div class="hero-stat-val">240 TCN – 137 TCN</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🏛️</div>
+        <div>
+          <div class="hero-stat-label">Quốc hiệu</div>
+          <div class="hero-stat-val">Nam Việt</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🧠</div>
+        <div>
+          <div class="hero-stat-label">Chiến lược nổi bật</div>
+          <div class="hero-stat-val">Hôn nhân gián điệp</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-icon">🗺️</div>
+        <div>
+          <div class="hero-stat-label">Kinh đô</div>
+          <div class="hero-stat-val">Phiên Ngung</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-story">📖 Xem câu chuyện</a>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Trang chủ</a><span>›</span>
+  <a href="van-lang.html">Văn Lang – Âu Lạc</a><span>›</span>
+  Triệu Đà
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+  <div class="main-col">
+
+    <!-- TIỂU SỬ -->
+    <div class="card">
+      <div class="card-title">📖 TIỂU SỬ</div>
+      <p>Triệu Đà (趙佗), sinh khoảng năm <strong>240 TCN</strong> tại nước Triệu (Trung Quốc), vốn là tướng lĩnh nhà Tần được cử sang cai quản vùng Lĩnh Nam. Khi nhà Tần sụp đổ (206 TCN), ông nắm lấy cơ hội, tự lập làm vua, thành lập nước <strong>Nam Việt</strong>.</p>
+
+      <div class="key-stats">
+        <div class="ks-item">
+          <span class="ks-icon">👑</span>
+          <div class="ks-val">207 TCN</div>
+          <div class="ks-label">Lập nước Nam Việt</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🗺️</span>
+          <div class="ks-val">Phiên Ngung</div>
+          <div class="ks-label">Kinh đô (Quảng Châu)</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">🦊</span>
+          <div class="ks-val">Hôn nhân</div>
+          <div class="ks-label">Kế sách thôn tính</div>
+        </div>
+        <div class="ks-item">
+          <span class="ks-icon">👴</span>
+          <div class="ks-val">~103 tuổi</div>
+          <div class="ks-label">Tuổi thọ phi thường</div>
+        </div>
+      </div>
+
+      <div class="photo-grid">
+        <div class="photo-item">
+          <img src="images/luongquang.jpg" alt="Nước Nam Việt"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#3a5a7a,#5a8aaa);align-items:center;justify-content:center;font-size:32px;">🗺️</div>
+          <div class="photo-caption">Nước Nam Việt</div>
+          <div class="photo-sub">Lưỡng Quảng + Bắc Việt</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/phienngung.PNG" alt="Phiên Ngung"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a3a2a,#9a6a4a);align-items:center;justify-content:center;font-size:32px;">🏛️</div>
+          <div class="photo-caption">Phiên Ngung</div>
+          <div class="photo-sub">Kinh đô Nam Việt</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/langmovuanamviet.jpg" alt="Lăng mộ Nam Việt"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#3a4a2a,#6a8a4a);align-items:center;justify-content:center;font-size:32px;">🗿</div>
+          <div class="photo-caption">Lăng mộ Nam Việt</div>
+          <div class="photo-sub">Khai quật năm 1983</div>
+        </div>
+        <div class="photo-item">
+          <img src="images/baotangtq.WEBP" alt="Bảo tàng Nam Việt"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:100%;height:110px;border-radius:10px;background:linear-gradient(135deg,#5a3a5a,#9a6a9a);align-items:center;justify-content:center;font-size:32px;">🏛️</div>
+          <div class="photo-caption">Bảo tàng Nam Việt Vương</div>
+          <div class="photo-sub">Quảng Châu, Trung Quốc</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DÒNG THỜI GIAN -->
+    <div class="card">
+      <div class="card-title">🗓️ DÒNG THỜI GIAN</div>
+      <div class="tl-h">
+        <div class="tl-h-track">
+          <div class="tl-h-item">
+            <div class="tl-h-year">~220 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">⚔️</div>
+            <div class="tl-h-name">Tướng quân nhà Tần</div>
+            <div class="tl-h-desc">Được cử làm Huyện lệnh Long Xuyên, cai quản vùng Lĩnh Nam.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">207 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">👑</div>
+            <div class="tl-h-name">Lập nước Nam Việt</div>
+            <div class="tl-h-desc">Nhà Tần sụp đổ, tự phong "Nam Việt Vũ Vương".</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">~210 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">🏹</div>
+            <div class="tl-h-name">Đánh Âu Lạc lần 1 thất bại</div>
+            <div class="tl-h-desc">Bị nỏ thần An Dương Vương đánh bại, buộc rút lui.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">210–180 TCN</div>
+            <div class="tl-h-dot"></div>
+            <div class="tl-h-icon">💍</div>
+            <div class="tl-h-name">Kế sách Trọng Thủy – Mỵ Châu</div>
+            <div class="tl-h-desc">Cử con trai sang cầu hôn, đánh cắp bí mật nỏ thần.</div>
+          </div>
+          <div class="tl-h-item">
+            <div class="tl-h-year">179 TCN</div>
+            <div class="tl-h-dot red"></div>
+            <div class="tl-h-icon">🏚️</div>
+            <div class="tl-h-name">Âu Lạc thất thủ</div>
+            <div class="tl-h-desc">Thôn tính Âu Lạc, mở đầu thời Bắc thuộc.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THÀNH TỰU NỔI BẬT -->
+    <div class="card">
+      <div class="card-title">🏆 THÀNH TỰU NỔI BẬT</div>
+      <div class="achieve-grid">
+        <div class="ac-item">
+          <span class="ac-icon">🗺️</span>
+          <div class="ac-title">Lập nước Nam Việt</div>
+          <div class="ac-text">Vương quốc tồn tại 93 năm (207–111 TCN), bao gồm Lưỡng Quảng và Bắc Việt.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">🤝</span>
+          <div class="ac-title">Chính sách "Việt hóa"</div>
+          <div class="ac-text">Học tiếng Việt, lấy vợ người Việt, xây dựng chính quyền dung hợp Hoa–Việt.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">🧠</span>
+          <div class="ac-title">Chiến lược đa dạng</div>
+          <div class="ac-text">Kết hợp quân sự, ngoại giao và hôn nhân một cách linh hoạt để đạt mục đích.</div>
+        </div>
+        <div class="ac-item">
+          <span class="ac-icon">👴</span>
+          <div class="ac-title">Tuổi thọ phi thường</div>
+          <div class="ac-text">Sống ~103 tuổi, một trong những vị vua thọ nhất lịch sử cổ đại.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ĐÁNH GIÁ LỊCH SỬ -->
+    <div class="card" style="background:#fffbf0;border:1px solid #f0d890;">
+      <div class="card-title">⚖️ ĐÁNH GIÁ LỊCH SỬ</div>
+      <p>Triệu Đà là nhân vật gây tranh luận trong giới sử học Việt Nam — không hoàn toàn là anh hùng, cũng không chỉ là kẻ thù. Dưới đây là hai góc nhìn đối lập:</p>
+      <div class="two-side">
+        <div class="side-card pro">
+          <div class="side-title">✅ Góc nhìn tích cực</div>
+          <div class="side-item">Tạo lập vương quốc độc lập với nhà Hán, bảo vệ vùng Lĩnh Nam khỏi đồng hóa Hán hàng chục năm</div>
+          <div class="side-item">Tài năng chính trị và quân sự xuất sắc — xây dựng từ tay không một đế quốc hùng mạnh</div>
+          <div class="side-item">Chính sách "Việt hóa" — học tiếng địa phương, lấy vợ người Việt, tôn trọng phong tục</div>
+          <div class="side-item">Một số sử gia Việt xưa liệt Triệu Đà vào danh sách các vị vua trong lịch sử dân tộc</div>
+        </div>
+        <div class="side-card con">
+          <div class="side-title">❌ Góc nhìn tiêu cực</div>
+          <div class="side-item">Dùng mưu kế hôn nhân để gián điệp, phá hoại chủ quyền Âu Lạc</div>
+          <div class="side-item">Là người gốc Hán, không phải người Việt — bị nhiều sử gia hiện đại phản bác</div>
+          <div class="side-item">Cuộc chinh phục Âu Lạc mở đầu gần 1000 năm Bắc thuộc</div>
+          <div class="side-item">Sử dụng thủ đoạn gian trá thay vì chiến thắng quân sự chính đáng</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#1e1206,#3a2010);border-radius:14px;padding:20px 22px;margin-top:16px;color:white;">
+        <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:8px;">🏛️ Nhận định tổng hợp</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.7;">Sử học Việt Nam hiện đại không đưa Triệu Đà vào dòng vua chúa dân tộc, coi ông là kẻ xâm lược mở đầu thời Bắc thuộc. Tuy nhiên, ông vẫn là một trong những nhà chính trị có tầm nhìn hiếm có của lịch sử cổ đại Đông Nam Á.</div>
+      </div>
+    </div>
+
+    <!-- SỰ THẬT THÚ VỊ -->
+    <div class="card">
+      <div class="card-title">💡 SỰ THẬT THÚ VỊ</div>
+      <div class="ff-grid">
+        <div class="ff-item">
+          <div class="ff-icon-wrap">💍</div>
+          <div class="ff-text">
+            <strong>Kế hôn nhân thiên tài</strong>
+            Sau khi <span class="ff-highlight">thất bại về quân sự</span>, Triệu Đà chuyển sang dùng hôn nhân — cử con trai vào nội cung kẻ thù để đánh cắp bí mật nỏ thần.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">👴</div>
+          <div class="ff-text">
+            <strong>Sống thọ 103 tuổi</strong>
+            Triệu Đà được ghi nhận là <span class="ff-highlight">một trong những vị vua thọ nhất</span> lịch sử cổ đại, chứng kiến trọn vẹn sự thịnh vượng của Nam Việt.
+          </div>
+        </div>
+        <div class="ff-item">
+          <div class="ff-icon-wrap">📜</div>
+          <div class="ff-text">
+            <strong>Tranh luận sử học</strong>
+            Ngô Sĩ Liên thế kỷ XV <span class="ff-highlight">đưa Triệu Đà vào sử Việt</span>, nhưng quan điểm này bị hầu hết các nhà sử học hiện đại bác bỏ.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main-col -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- THÔNG TIN NHANH -->
+    <div class="sb">
+      <div class="sb-title"><span class="sb-icon">ℹ</span> THÔNG TIN NHANH</div>
+      <table class="info-tbl">
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📖</span><span style="color:#888;font-size:13px;">Tên đầy đủ</span></td>
+          <td>Triệu Đà (趙佗)</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🌏</span><span style="color:#888;font-size:13px;">Nguồn gốc</span></td>
+          <td>Nước Triệu, Trung Quốc</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⏱</span><span style="color:#888;font-size:13px;">Trị vì</span></td>
+          <td>207 TCN – 137 TCN</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏳️</span><span style="color:#888;font-size:13px;">Quốc hiệu</span></td>
+          <td>Nam Việt</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏯</span><span style="color:#888;font-size:13px;">Kinh đô</span></td>
+          <td>Phiên Ngung (Quảng Châu)</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👦</span><span style="color:#888;font-size:13px;">Con trai</span></td>
+          <td>Trọng Thủy</td>
+        </tr>
+        <tr>
+          <td><span style="background:#fff3e0;border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👴</span><span style="color:#888;font-size:13px;">Tuổi thọ</span></td>
+          <td>~103 tuổi</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- BẢN ĐỒ DI SẢN -->
+    <div class="sb">
+      <div class="sb-title">🗺️ BẢN ĐỒ DI SẢN</div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3817.672183211983!2d107.18970937492294!3d16.89210338391303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3140e73264ea3b15%3A0x501a1aeda2f117b3!2zTMSDbmcgbeG7mSBuZ8OgaSBU4buVIGjhu40gVHLGsMahbmcgVsSDbg!5e0!3m2!1svi!2s!4v1780993426414!5m2!1svi!2s"
+        width="100%" height="200"
+        style="border-radius:12px;border:0;display:block;margin-bottom:12px;"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Bảo tàng Nam Việt Vương</div>
+            <div style="font-size:12px;color:#888;">Quảng Châu, Trung Quốc</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Lăng mộ Triệu Văn Vương</div>
+            <div style="font-size:12px;color:#888;">Cháu nội Triệu Đà, khai quật 1983</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Thành Cổ Loa</div>
+            <div style="font-size:12px;color:#888;">Kinh đô Âu Lạc bị thôn tính</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="color:#c0392b;font-size:18px;flex-shrink:0;margin-top:1px;">📍</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);">Lưỡng Quảng – Bắc Việt</div>
+            <div style="font-size:12px;color:#888;">Lãnh thổ nước Nam Việt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NHÂN VẬT LIÊN QUAN -->
+    <div class="sb">
+      <div class="sb-title">👑 NHÂN VẬT LIÊN QUAN</div>
+      <div class="char-list">
+        <a href="chi-tiet-an-duong-vuong.html" class="char-row">
+          <img src="images/anduongvuong.PNG" alt="An Dương Vương"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#7a6855';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">An Dương Vương</div>
+            <div class="char-role">Đối thủ — vua Âu Lạc</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+        <a href="chi-tiet-my-chau.html" class="char-row">
+          <img src="images/mychau.jpg" alt="Mỵ Châu"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#9b7a8a';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">Mỵ Châu</div>
+            <div class="char-role">Con dâu — nạn nhân bi kịch</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+        <a href="chi-tiet-hung-vuong.html" class="char-row">
+          <img src="images/hungvuong.jpg" alt="Hùng Vương"
+            style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.background='#c8956c';this.removeAttribute('src')">
+          <div>
+            <div class="char-name">Hùng Vương</div>
+            <div class="char-role">Tiền nhân — dựng nước Văn Lang</div>
+          </div>
+          <span class="char-arrow">›</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- KHÁM PHÁ THÊM -->
+    <div class="sb">
+      <div class="sb-title">🔍 KHÁM PHÁ THÊM</div>
+      <div class="explore-list">
+        <div class="explore-item">
+          <span class="explore-icon">🏛️</span>
+          <span class="explore-name">Nước Nam Việt</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🏚️</span>
+          <span class="explore-name">Sự sụp đổ của Âu Lạc</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">💍</span>
+          <span class="explore-name">Truyện Trọng Thủy – Mỵ Châu</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">📜</span>
+          <span class="explore-name">Thời kỳ Bắc thuộc</span>
+          <span class="explore-arrow">›</span>
+        </div>
+        <div class="explore-item">
+          <span class="explore-icon">🗿</span>
+          <span class="explore-name">Bảo tàng Nam Việt Vương</span>
+          <span class="explore-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="van-lang.html" class="btn-back">← Quay lại Văn Lang – Âu Lạc</a>
+
+  </div><!-- /.sidebar -->
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+  <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+</footer>
+
+</body>
+</html>

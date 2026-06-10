@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hai Bà Trưng — Anh Hùng Nữ Quyền</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0e00;
+  --parchment: #f5ead6;
+  --gold: #c9920a;
+  --gold-light: #f4c542;
+  --red: #8B0000;
+  --rose: #d4a574;
+  --brown: #3d1f00;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: #0e0a12;
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(212,165,116,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,0,0,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(30,10,20,0.6) 0%, transparent 70%);
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(14,10,18,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212,165,116,0.25);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; color: var(--gold-light);
+  text-decoration: none; letter-spacing: 2px;
+}
+.nav-back {
+  color: rgba(245,234,214,0.6); font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+}
+.nav-back:hover { color: var(--gold-light); }
+
+.progress-bar {
+  position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+  height: 3px; background: rgba(255,255,255,0.05);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4a574, #f4c542);
+  transition: width 0.6s ease;
+}
+
+.story-container {
+  max-width: 800px; margin: 0 auto;
+  padding: 100px 24px 80px;
+  position: relative; z-index: 1;
+}
+
+.scene { display: none; animation: fadeScene 0.8s ease; }
+.scene.active { display: block; }
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(212,165,116,0.12);
+  border: 1px solid rgba(212,165,116,0.35);
+  border-radius: 30px; padding: 6px 16px;
+  font-size: 13px; color: #d4a574;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.scene-img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(212,165,116,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  filter: sepia(0.15) contrast(1.1);
+}
+
+.narrator {
+  font-size: 13px; color: #d4a574;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.8;
+}
+
+.story-text {
+  font-size: 20px; line-height: 1.9;
+  color: rgba(245,234,214,0.92);
+  margin-bottom: 16px;
+}
+.story-text em { color: #d4a574; font-style: italic; }
+.story-text strong { color: white; font-weight: 600; }
+
+.dialogue {
+  background: rgba(212,165,116,0.08);
+  border-left: 3px solid #d4a574;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-size: 19px; font-style: italic;
+  color: var(--parchment); line-height: 1.7;
+}
+.dialogue-speaker {
+  font-size: 12px; font-style: normal;
+  color: #d4a574; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+
+.fact-box {
+  background: rgba(201,146,10,0.08);
+  border: 1px solid rgba(201,146,10,0.3);
+  border-radius: 12px; padding: 18px 22px;
+  margin: 20px 0; font-size: 16px; line-height: 1.8;
+  color: rgba(245,234,214,0.85);
+}
+.fact-box .fact-title {
+  font-size: 12px; color: var(--gold);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px; font-style: normal;
+}
+
+.divider {
+  text-align: center; color: #d4a574;
+  opacity: 0.4; font-size: 18px; letter-spacing: 12px;
+  margin: 28px 0;
+}
+
+.choices-title {
+  font-size: 13px; color: #d4a574;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: 36px 0 16px; opacity: 0.8;
+}
+
+.choices { display: flex; flex-direction: column; gap: 12px; }
+
+.choice-btn {
+  background: rgba(245,234,214,0.04);
+  border: 1px solid rgba(245,234,214,0.15);
+  border-radius: 12px; padding: 18px 24px;
+  color: var(--parchment); font-family: 'Crimson Pro', serif;
+  font-size: 17px; text-align: left; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: flex-start; gap: 14px;
+  line-height: 1.5;
+}
+.choice-btn:hover {
+  background: rgba(212,165,116,0.1);
+  border-color: rgba(212,165,116,0.45);
+  transform: translateX(6px);
+}
+
+.choice-letter {
+  width: 28px; height: 28px; min-width: 28px;
+  border-radius: 50%; background: rgba(212,165,116,0.2);
+  border: 1px solid #d4a574; color: #d4a574;
+  font-size: 13px; font-weight: 600; font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+}
+
+.outcome {
+  background: rgba(139,0,0,0.15);
+  border: 1px solid rgba(139,0,0,0.3);
+  border-radius: 16px; padding: 24px; margin: 24px 0;
+  font-size: 18px; line-height: 1.8;
+}
+.outcome.good {
+  background: rgba(212,165,116,0.1);
+  border-color: rgba(212,165,116,0.3);
+}
+.outcome-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+
+.continue-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 16px 32px;
+  background: linear-gradient(135deg, #8b5a2b, #d4a574);
+  border: 1px solid rgba(212,165,116,0.3);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 17px;
+  cursor: pointer; transition: all 0.3s;
+}
+.continue-btn:hover {
+  background: linear-gradient(135deg, #d4a574, #f4c542);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212,165,116,0.4);
+}
+
+.final-result { text-align: center; padding: 40px 20px; }
+.final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px; color: #d4a574;
+  margin-bottom: 16px; line-height: 1.3;
+}
+.final-flower {
+  font-size: 60px; margin: 20px 0; display: block;
+  animation: bloom 2s ease infinite alternate;
+}
+@keyframes bloom {
+  from { transform: scale(1); filter: brightness(1); }
+  to { transform: scale(1.1); filter: brightness(1.3); }
+}
+.final-score {
+  display: inline-block;
+  background: rgba(212,165,116,0.15);
+  border: 1px solid #d4a574;
+  border-radius: 50%; width: 120px; height: 120px;
+  line-height: 120px; font-size: 38px;
+  color: #d4a574; margin: 16px auto;
+  font-family: 'Playfair Display', serif;
+}
+.final-desc {
+  font-size: 18px; color: rgba(245,234,214,0.82);
+  line-height: 1.8; max-width: 520px; margin: 0 auto 32px;
+}
+.restart-btn {
+  padding: 14px 32px; background: transparent;
+  border: 1px solid #d4a574; border-radius: 12px;
+  color: #d4a574; font-family: 'Crimson Pro', serif;
+  font-size: 16px; cursor: pointer; transition: 0.3s; margin: 0 8px;
+}
+.restart-btn:hover { background: rgba(212,165,116,0.15); }
+.home-btn {
+  padding: 14px 32px; background: #6b4423;
+  border: 1px solid rgba(212,165,116,0.3);
+  border-radius: 12px; color: var(--parchment);
+  font-family: 'Crimson Pro', serif; font-size: 16px;
+  cursor: pointer; transition: 0.3s; margin: 0 8px;
+  text-decoration: none; display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SỬ VIỆT</a>
+  <a href="cau-chuyen-detail.html?id=9" class="nav-back">← Về câu chuyện</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="story-container">
+
+  <!-- SCENE 1: MỞ ĐẦU -->
+  <div class="scene active" id="scene-1">
+    <div class="chapter-badge">⚔️ Chương 1 · Năm 40 — Tôi Định Giết Thi Sách</div>
+    <img class="scene-img" src="images/haibatrung.jpg" alt="Hai Bà Trưng">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Năm 40 Công Nguyên. <strong>Ngươi — Trưng Trắc</strong> — ngồi bên cạnh chồng là <strong>Thi Sách</strong>, quan chính của Mê Linh dưới thời quân phủ Sơn Hà của Hán.
+    </div>
+    <div class="story-text">
+      Tỷ muơn năm dưới gót giày thực dân Hán. Hàng năm, nhân dân bị thu thuế tàn nhẫn, bị bắt phu xây dựng công trình, bị chà đạp nhân phẩm như những con chó.
+    </div>
+    <div class="story-text">
+      Một tối, Thi Sách — người chồng thân yêu của ngươi — bí mật gặp các thủ lĩnh nông dân:
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Thi Sách</div>
+      "Các anh ơi, ta không thể chịu đựng nữa. Hán nhân đã đẩy dân ta vào tuyệt đường. Chúng ta phải khởi nghĩa ngay, không thể chờ đợi nữa!"
+    </div>
+    <div class="story-text">
+      Ngươi nghe từng lời, lửa cách mạng cháy rực trong lòng. Nhưng lúc đó, tên thực dân Tô Định — chúa phủ Hán —  biết được kế hoạch. Hắn bắt giữ Thi Sách và hạ quyết định tàn nhẫn.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Tô Định — tên chúa phủ Hán hung hãn</div>
+      "Ai dám khởi nghĩa chống Hán, sẽ bị xử tử. Thi Sách — chồng của ngươi — sẽ chết!"
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Sự thật lịch sử</div>
+      Tôi Định là chúa phủ Quận Giao Chỉ dưới thời Đông Hán. Hắn bắt giữ Thi Sách (chồng của Trưng Trắc) và hạ hành quyết để dập tắt tinh thần kháng chiến.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Bạn quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1A')">
+        <span class="choice-letter">A</span>
+        <span>Im lặng chặp mắt. Không cách nào cứu chồng. Hãy sống sót để chăm sóc con cái.</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1B')">
+        <span class="choice-letter">B</span>
+        <span>Cầu xin Tô Định tha mạng cho chồng. Hứa sẽ không bao giờ khởi nghĩa.</span>
+      </button>
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">C</span>
+        <span>Chí không chịu nhục! Sẽ lên kế hoạch khởi nghĩa ngay bây giờ để trả thù Tô Định!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1C: KHỞI NGHĨA — ĐÚNG -->
+  <div class="scene" id="scene-1C">
+    <div class="chapter-badge">⭐ Lựa chọn C · Quyết tâm khởi nghĩa</div>
+    <img class="scene-img" src="images/haibatrung.jpg" alt="Quyết tâm">
+    <div class="narrator">Kết quả xuất sắc!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">⚔️</span>
+      <div class="story-text">
+        <strong>Đây chính là tinh thần của Trưng Trắc!</strong> Dù chồng bị xử tử, cô không buồn rầu mà ngọn lửa khóc với nước mắt lại cháy thành quyết tâm.
+      </div>
+    </div>
+    <div class="story-text">
+      Trưng Trắc bí mật liên hệ với em gái là <strong>Trưng Nhị</strong>. Hai chị em bắt đầu tuyên truyền, vận động các thủ lĩnh nông dân và các bộ lạc dân tộc tây bộ.
+    </div>
+    <div class="story-text">
+      Thông điệp của cô rõ ràng: <em>"Mẹ của các ngươi bị thực dân Hán kỷ cục. Chúng ta phải dấy lên, không để con em ta bị nô lệ!"</em>
+    </div>
+    <div class="story-text">
+      Năm 40 Công Nguyên, <strong>Khởi nghĩa Hai Bà Trưng</strong> bùng phát. Hàng vạn người dân kéo đến, các quân đoàn nông dân tập hợp dưới cờ của hai chị em.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Tiếp tục hành trình...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2')">
+        <span class="choice-letter">→</span>
+        <span>Khởi nghĩa nổ ra — cần quyết định chiến lược...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1A: IM LẶNG -->
+  <div class="scene" id="scene-1A">
+    <div class="chapter-badge">📍 Lựa chọn A · Im lặng</div>
+    <img class="scene-img" src="images/haibatrung.jpg" alt="Im lặng">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">💭</span>
+      <div class="story-text">
+        Im lặng có thể là sự khôn ngoan, nhưng nó cũng là sự chấp nhận nô lệ. <strong>Trưng Trắc không chọn con đường này.</strong>
+      </div>
+      <div class="story-text">
+        Sau khi chồng chết, cô quyết tâm <em>"Chết chồng mà không trả thù, thì chết cũng vô nghĩa!"</em> Cô bắt đầu bí mật chuẩn bị khởi nghĩa.
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Suy nghĩ lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">→</span>
+        <span>"Không! Tôi sẽ khởi nghĩa để trả thù và giải phóng dân!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 1B: CẦU XIN -->
+  <div class="scene" id="scene-1B">
+    <div class="chapter-badge">📍 Lựa chọn B · Cầu xin</div>
+    <img class="scene-img" src="images/haibatrung.jpg" alt="Nỗi đau">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Tô Định nhìn cô với mắt tàn độc: <em>"Cầu xin ta? Nữ nhân như ngươi không có giá trị. Thi Sách vẫn sẽ chết!"</em>
+      </div>
+      <div class="story-text">
+        Nhưng <strong>Trưng Trắc không bao giờ cầu xin.</strong> Cô hiểu rằng chỉ có sức mạnh và quyết tâm mới có thể chống lại áp bức.
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thay đổi quyết định...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('1C')">
+        <span class="choice-letter">→</span>
+        <span>"Thôi cầu xin! Tôi sẽ dấy lên chủ động, không chờ đợi nhân phẩm từ kẻ áp bức!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2: KHỞI NGHĨA -->
+  <div class="scene" id="scene-2">
+    <div class="chapter-badge">⚔️ Chương 2 · Khởi Nghĩa — Năm 40</div>
+    <img class="scene-img" src="images/khoinghia2batrung.webp" alt="Khởi nghĩa">
+    <div class="narrator">Sự nổi dậy</div>
+    <div class="story-text">
+      Khởi nghĩa bùng phát khắp đất Giao Chỉ (Bắc Việt ngày nay). Hàng trăm nghìn người dân kéo đến theo Hai Bà Trưng, các thủ lĩnh nông dân, các bộ tộc dân tộc cùng đứng lên.
+    </div>
+    <div class="story-text">
+      Trưng Trắc được tôn làm <strong>Tây Bà — Bà Vương phương Tây</strong>. Trưng Nhị được tôn làm <strong>Đông Bà — Bà Vương phương Đông</strong>.
+    </div>
+    <div class="story-text">
+      Cô lên kế hoạch chiến dịch với sự tư vấn của các tướng lĩnh tài ba. Quân Hán của Tô Định đầu tiên bị đuổi khỏi các thành trì. Sau đó, Hai Bà Trưng ra lệnh tấn công tất cả các thành phố.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Trưng Trắc — lệnh cho quân đội</div>
+      "Các anh em, ngày giải phóng đã đến! Từng nơi mà thực dân Hán chà đạp, ta sẽ giành lại. Từng người bị áp bức, ta sẽ giải thoát!"
+    </div>
+    <div class="story-text">
+      Trong vòng vài tháng, <strong>65 thành phố rơi vào tay quân Hai Bà Trưng.</strong> Tô Định và các quan Hán phải tháo chạy. Giặc Hán hoàn toàn bị đuổi khỏi đất Giao Chỉ.
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Sự thật lịch sử</div>
+      Theo sử sách, khởi nghĩa Hai Bà Trưng đã giải phóng 65 thành phố trong Giao Chỉ, đuổi hoàn toàn quân Hán ra khỏi vùng đất này.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Sau khi chiến thắng, bạn...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">A</span>
+        <span>Lập quốc gia độc lập, tôn Trưng Trắc lên làm vua — xây dựng nước Việt tự do!</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2B')">
+        <span class="choice-letter">B</span>
+        <span>Đầu hàng lại Hán — xin hòa bình, hy vọng chúng sẽ tha thứ.</span>
+      </button>
+      <button class="choice-btn" onclick="choose('2C')">
+        <span class="choice-letter">C</span>
+        <span>Chia đất cho nông dân rồi rút lui khỏi chính quyền, sống cuộc sống bình thường.</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2A: LẬP QUỐC GIA — ĐÚNG -->
+  <div class="scene" id="scene-2A">
+    <div class="chapter-badge">⭐ Lựa chọn A · Xây dựng quốc gia độc lập</div>
+    <img class="scene-img" src="images/trung-vuong-len-ngoi.jpg" alt="Trưng Vương lên ngôi">
+    <div class="narrator">Kết quả xuất sắc!</div>
+    <div class="outcome good">
+      <span class="outcome-icon">👑</span>
+      <div class="story-text">
+        <strong>Đây chính là Trưng Trắc trong lịch sử!</strong> Cô không chỉ khởi nghĩa để trả thù, mà để <em>giải phóng cả một dân tộc.</em>
+      </div>
+    </div>
+    <div class="story-text">
+      Năm 40 Công Nguyên, Trưng Trắc được tôn lên làm <strong>Trưng Vương</strong> — hoàng đế của quốc gia Việt độc lập. Đây là lần đầu tiên người Việt có một quốc gia riêng, không chịu áp bức từ bất kỳ tên thực dân nào.
+    </div>
+    <div class="story-text">
+      Trưng Vương xây dựng một vương quốc công bằng, nơi:
+      <br>• Nữ giới có quyền bình đẳng với nam giới
+      <br>• Nông dân được sở hữu đất đai
+      <br>• Thuế được giảm bớt, nhân dân sống yên bình
+      <br>• Văn hóa Việt được phát triển thay vì bị thủn thô hóa
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Trưng Vương — lên ngôi vua</div>
+      "Ta không chiến đấu để trả thù một mình, mà để toàn thể dân ta sống tự do. Từ nay, không còn thực dân, không còn áp bức. Chúng ta là chủ nhân của đất nước của mình!"
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Tiếp tục hành trình...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3')">
+        <span class="choice-letter">→</span>
+        <span>Ba năm độc lập — nhưng một mối nguy hiểm sắp đến...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2B: ĐẦU HÀNG -->
+  <div class="scene" id="scene-2B">
+    <div class="chapter-badge">📍 Lựa chọn B · Đầu hàng</div>
+    <img class="scene-img" src="images/khoinghia2batrung.webp" alt="Đầu hàng">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Đầu hàng Hán? <strong>Trưng Trắc không bao giờ chọn con đường này.</strong> Cô biết rằng thực dân không bao giờ tha thứ cho những kẻ dám thách thức quyền lực của chúng.
+      </div>
+      <div class="story-text">
+        Trưng Trắc quyết tâm: <em>"Chúng tôi đã chiến đấu không phải để đầu hàng, mà để sống tự do!"</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Quyết định lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>"Không! Chúng tôi sẽ lập quốc gia độc lập và bảo vệ nó!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 2C: RÚT KHỎI CHÍNH QUYỀN -->
+  <div class="scene" id="scene-2C">
+    <div class="chapter-badge">📍 Lựa chọn C · Rút khỏi</div>
+    <img class="scene-img" src="images/khoinghia2batrung.webp" alt="Rút khỏi">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Rút khỏi chính quyền? Nhưng <strong>Trưng Trắc hiểu rằng không ai sẽ bảo vệ những gì chúng tôi đã giành được.</strong>
+      </div>
+      <div class="story-text">
+        Nếu không có một nhà lãnh đạo quyết tâm giữ gìn, thực dân sẽ quay lại. Cô chọn lên ngôi vua không vì tham vọng, mà vì trách nhiệm.
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Thể hiện tinh thần...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('2A')">
+        <span class="choice-letter">→</span>
+        <span>"Tôi phải đảm nhận trách nhiệm này để bảo vệ quốc gia!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3: BA NĂM ĐỘC LẬP -->
+  <div class="scene" id="scene-3">
+    <div class="chapter-badge">👑 Chương 3 · Ba Năm Độc Lập (40-43 CN)</div>
+    <img class="scene-img" src="images/trung-vuong-len-ngoi.jpg" alt="Ba năm độc lập">
+    <div class="narrator">Thời đoàn viên</div>
+    <div class="story-text">
+      Ba năm từ 40 đến 43 Công Nguyên, đất Giao Chỉ được giải phóng hoàn toàn. Trưng Vương trị vì một nước Việt tự do, nơi:
+    </div>
+    <div class="story-text">
+      • Nữ giới được đứng lên chính trị, lên chiến trường (cái lợi ích mà ngay cả phương Tây không có được cho nữ giới)
+      <br>• Nông dân không bị áp bức, được sở hữu đất
+      <br>• Văn hóa Việt được tôn vinh
+      <br>• Dân tộc sống yên bình, hạnh phúc
+    </div>
+    <div class="story-text">
+      Nhưng vào năm 43 Công Nguyên, Hán triều cử <strong>Mã Viện</strong> — tướng quân hùng mạnh — dẫn quân đại Phía Nam để "khôi phục lệnh" Hán.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Tùy tùng của Mã Viện báo cáo</div>
+      "Vua ơi, Mã Viện dẫn quân Hán với số lượng 20,000 người, trang bị hiện đại. Quân Trưng Vương chỉ có 3,000 chiến sĩ..."
+    </div>
+    <div class="story-text">
+      Trưng Vương nhìn xuống từ hoàng cung. Cô biết rằng thời kỳ độc lập sắp kết thúc. Nhưng cô không sợ — cô sẽ chiến đấu đến cùng cùng nước của mình.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Khi Mã Viện tiến vào, bạn...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">A</span>
+        <span>Tập hợp toàn bộ quân lực, quyết chiến chống lại Mã Viện dù biết sẽ thua!</span>
+      </button>
+      <button class="choice-btn" onclick="choose('3B')">
+        <span class="choice-letter">B</span>
+        <span>Đàm phán hòa bình với Mã Viện, hy vọng tìm được giải pháp hòa giải.</span>
+      </button>
+      <button class="choice-btn" onclick="choose('3C')">
+        <span class="choice-letter">C</span>
+        <span>Bỏ trốn, tìm chỗ ẩn náu an toàn để bảo tồn sức sống cho các năm tới.</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3A: QUYẾT CHIẾN — ĐÚNG -->
+  <div class="scene" id="scene-3A">
+    <div class="chapter-badge">⭐ Lựa chọn A · Quyết chiến</div>
+    <img class="scene-img" src="images/ma-vien-tan-cong.jpg" alt="Trận chiến">
+    <div class="narrator">Khoảnh khắc anh hùng</div>
+    <div class="outcome good">
+      <span class="outcome-icon">⚔️</span>
+      <div class="story-text">
+        <strong>Đây chính là Trưng Vương — hoàng đế nữ anh hùng của Việt Nam!</strong> Dù biết rằng chiến lực kém hơn, cô vẫn quyết chiến. Không phải để chiến thắng, mà vì <em>nhân phẩm, vì tự do, vì dân tộc.</em>
+      </div>
+    </div>
+    <div class="story-text">
+      Trưng Vương viết thư gửi cho Mã Viện:
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Thư của Trưng Vương gửi Mã Viện</div>
+      "Tướng Mã, nước tôi đã độc lập và tự do. Chúng tôi sẽ chết để bảo vệ tự do này. Nếu Hán muốn, hãy đến. Chúng tôi sẵn sàng."
+    </div>
+    <div class="story-text">
+      Năm 43 Công Nguyên, hai quân đội đâm vào nhau. Mặc dù thua về số lượng, quân Trưng Vương chiến đấu như những vị thần — <em>mỗi chiến sĩ là một anh hùng, mỗi người lính Việt chiến đấu cho chính người thân của mình.</em>
+    </div>
+    <div class="story-text">
+      Nhưng cuối cùng, trong một trận chiến quyết liệt, quân Hán chiếm ưu thế. Trưng Vương bị bao vây trên sông Hàm Ngạn.
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Khi bị bao vây, bạn...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('4')">
+        <span class="choice-letter">→</span>
+        <span>Xem kết cục của Trưng Vương...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3B: ĐÀM PHÁN -->
+  <div class="scene" id="scene-3B">
+    <div class="chapter-badge">📍 Lựa chọn B · Đàm phán</div>
+    <img class="scene-img" src="images/ma-vien-tan-cong.jpg" alt="Đàm phán">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">⚠️</span>
+      <div class="story-text">
+        Đàm phán với Mã Viện? <strong>Mã Viện là một tướng quân Hán, không phải một nhân vật có lòng nhân ái.</strong>
+      </div>
+      <div class="story-text">
+        Trưng Vương hiểu rằng giữa tự do và nô lệ không thể có thỏa hiệp. Cô phải <em>quyết chiến, dù biết sẽ thua.</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Quyết định lại...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">→</span>
+        <span>"Không đàm phán. Chúng tôi sẽ chiến đấu cho tự do!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 3C: BỎ TRỐN -->
+  <div class="scene" id="scene-3C">
+    <div class="chapter-badge">📍 Lựa chọn C · Bỏ trốn</div>
+    <img class="scene-img" src="images/trung-vuong-len-ngoi.jpg" alt="Bỏ trốn">
+    <div class="narrator">Kết quả</div>
+    <div class="outcome">
+      <span class="outcome-icon">❌</span>
+      <div class="story-text">
+        Bỏ trốn? <strong>Trưng Vương không bao giờ là kẻ bỏ chạy.</strong> Cô là một hoàng đế, một lãnh đạo. Cô không bỏ rơi dân tộc mình để cứu mạng riêng.
+      </div>
+      <div class="story-text">
+        Thực tế, <em>Trưng Vương quyết chiến cho đến cùng cùng đất nước của mình.</em>
+      </div>
+    </div>
+    <div class="divider">✦ ✦ ✦</div>
+    <div class="choices-title">⚡ Quay lại quyết định đúng...</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose('3A')">
+        <span class="choice-letter">→</span>
+        <span>"Tôi sẽ ở lại với dân tộc tôi, chiến đấu cho tự do!"</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCENE 4: KẾT THÚC -->
+  <div class="scene" id="scene-4">
+    <div class="chapter-badge">🌸 Chương Cuối · Di Sản Bất Tử</div>
+    <img class="scene-img" src="images/ma-vien-tan-cong.jpg" alt="Kết thúc">
+    <div class="narrator">Người kể chuyện</div>
+    <div class="story-text">
+      Năm 43 Công Nguyên, trên sông Hàm Ngạn, Trưng Vương bị bao vây. Biết rằng không thể thoát, cô chọn một con đường mà những chiến sĩ thực sự sẽ chọn — cô <strong>tự tìm cái chết trên chiến trường</strong> thay vì bị xúc nham.
+    </div>
+    <div class="story-text">
+      Với một cái chết như vậy, Trưng Vương không chỉ là hoàng đế, mà còn là chiến sĩ. Cô không chết như một phu nhân, mà chết như một anh hùng — <em>cùng với dân tộc mình.</em>
+    </div>
+    <div class="story-text">
+      Ba năm độc lập của Trưng Vương có thể ngắn, nhưng nó là ba năm quý giá nhất trong lịch sử Việt Nam — ba năm mà người Việt đã tự quản lý, tự quyết định số phận, tự xây dựng đất nước.
+    </div>
+    <div class="dialogue">
+      <div class="dialogue-speaker">Di chúc của Trưng Vương</div>
+      "Nước Việt sẽ lại độc lập. Dù mất bao lâu, dù phải chịu bao nhiêu kỷ khổ, dân Việt sẽ lại dấy lên. Vì chúng ta không phải để thống trị, chúng ta được sinh ra để tự do."
+    </div>
+    <div class="fact-box">
+      <div class="fact-title">📚 Di sản</div>
+      Hai Bà Trưng được cả Việt Nam và Trung Quốc công nhận là các anh hùng lịch sử. Ngôi đền thờ của họ tại Hà Nội (Đền Hai Bà Trưng) vẫn còn tồn tại cho tới nay — một minh chứng cho sự dũng cảm và yêu nước của hai chị em.
+    </div>
+    <button class="continue-btn" onclick="showFinal()">
+      Xem kết quả cuối →
+    </button>
+  </div>
+
+  <!-- FINAL RESULT -->
+  <div class="scene" id="scene-final">
+    <div class="final-result">
+      <div class="chapter-badge" style="justify-content:center">⚔️ Hành trình hoàn thành</div>
+      <span class="final-flower">🌸</span>
+      <div class="final-title">Hai Bà Trưng — Anh Hùng Nữ Quyền</div>
+      <div class="final-score" id="finalScore">⭐</div>
+      <div class="final-desc" id="finalDesc">
+        Bạn đã hoàn thành hành trình cùng Hai Bà Trưng!
+      </div>
+      <div style="margin-top:8px">
+        <button class="restart-btn" onclick="restartStory()">🔄 Chơi lại</button>
+        <a href="cau-chuyen.html" class="home-btn">📖 Câu chuyện khác</a>
+      </div>
+      <div style="margin-top:40px; padding:24px; background:rgba(212,165,116,0.07); border:1px solid rgba(212,165,116,0.2); border-radius:16px; text-align:left;">
+        <div style="font-size:13px;color:#d4a574;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">📚 Bài học lịch sử</div>
+        <div style="font-size:16px;line-height:1.8;color:rgba(245,234,214,0.85);">
+          Hai Bà Trưng là biểu tượng của sự dũng cảm nữ tính. Không phải những người phụ nữ yếu đuối, mà những nhà lãnh đạo, những chiến sĩ, những hoàng đế. Trong một thế giới nơi phụ nữ được coi là vô giá trị, họ đã đứng lên, khởi nghĩa, lập quốc gia, và chỉ chịu thua trước một tướng quân Hán hùng mạnh. Ba năm độc lập dưới Trưng Vương là chứng minh rằng Việt Nam có thể tự quản lý, tự giữ gìn, tự yêu nước. Di sản của họ không chỉ là lịch sử, mà là nguồn cảm hứng bất tận.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let correctChoices = 0;
+let totalChoices = 0;
+
+const correctPaths = ['1C', '2A', '3A', '4'];
+
+function choose(sceneId) {
+  totalChoices++;
+  if (correctPaths.includes(sceneId)) correctChoices++;
+
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('scene-' + sceneId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  updateProgress(sceneId);
+}
+
+function updateProgress(sceneId) {
+  const progressMap = {
+    '1': 0, '1A': 15, '1B': 10, '1C': 20,
+    '2': 35, '2A': 55, '2B': 40, '2C': 38,
+    '3': 65, '3A': 80, '3B': 70, '3C': 68,
+    '4': 90, 'final': 100
+  };
+  const pct = progressMap[sceneId] || 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function showFinal() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-final').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const ratio = totalChoices > 0 ? correctChoices / totalChoices : 0;
+  const scoreEl = document.getElementById('finalScore');
+  const descEl = document.getElementById('finalDesc');
+
+  if (ratio >= 0.75) {
+    scoreEl.textContent = '⭐⭐⭐';
+    descEl.textContent = 'Xuất sắc! Bạn đã thể hiện đúng tinh thần dũng cảm của Hai Bà Trưng — quyết tâm khởi nghĩa, xây dựng quốc gia độc lập, và quyết chiến chống lại áp bức. Xứng đáng là anh hùng!';
+  } else if (ratio >= 0.5) {
+    scoreEl.textContent = '⭐⭐';
+    descEl.textContent = 'Tốt! Bạn đã hiểu được phần lớn tinh thần của Hai Bà Trưng. Hãy thử lại để trải nghiệm đầy đủ hành trình khởi nghĩa của hai chị em!';
+  } else {
+    scoreEl.textContent = '⭐';
+    descEl.textContent = 'Hành trình của Hai Bà Trưng đòi hỏi sự dũng cảm và quyết tâm. Hãy thử lại và cảm nhận tinh thần anh hùng nữ quyền của hai chị em!';
+  }
+
+  if (ratio >= 0.75 && typeof confetti !== 'undefined') {
+    setTimeout(() => confetti({
+      particleCount: 150,
+      spread: 100,
+      colors: ['#d4a574', '#f4c542', '#8b5a2b', '#ffffff']
+    }), 500);
+  }
+}
+
+function restartStory() {
+  correctChoices = 0;
+  totalChoices = 0;
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById('scene-1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</body>
+</html>

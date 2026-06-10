@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trận Bạch Đằng 938 | Sử Việt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #8B0000;
+            --gold: #d4af37;
+            --dark: #1e1206;
+            --bg-light: #f8f4ea;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #333; }
+
+        nav {
+            background: var(--dark);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 50px; color: white; position: sticky; top: 0; z-index: 100;
+        }
+        .logo-text span { display: block; font-weight: 700; font-size: 22px; color: var(--gold); letter-spacing: 0.5px; }
+        nav ul { display: flex; list-style: none; gap: 6px; align-items: center; }
+        nav ul li a { color: #ddd; text-decoration: none; font-size: 14px; padding: 7px 16px; border-radius: 8px; transition: 0.2s; }
+        nav ul li a:hover { color: white; background: rgba(255,255,255,0.08); }
+
+        .hero {
+            background: linear-gradient(to right, rgba(6,14,30,0.88) 45%, rgba(6,14,30,0.3) 100%),
+                        url('images/bachdang-hero.jpg') center/cover no-repeat;
+            min-height: 420px;
+            display: flex; align-items: center;
+            padding: 60px 80px;
+            color: white;
+            border-bottom: 3px solid var(--gold);
+            background-color: #1a0808;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 12px; font-weight: 500;
+            padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.05; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 22px; max-width: 520px; line-height: 1.65; }
+        .hero-tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; }
+
+        .breadcrumb { padding: 14px 80px; font-size: 13px; color: #888; border-bottom: 1px solid #e8e2d4; background: white; }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        .page-layout {
+            display: grid; grid-template-columns: 1fr 300px;
+            gap: 26px; padding: 30px 80px;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .content-box {
+            background: white; border-radius: 16px;
+            padding: 28px 32px; margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .content-box h2 {
+            color: var(--main); font-size: 17px; font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; gap: 9px;
+            padding-bottom: 12px; border-bottom: 2px solid #f5ede0;
+        }
+        .content-box p { font-size: 14px; line-height: 1.9; color: #444; margin-bottom: 14px; }
+        .content-box p:last-child { margin-bottom: 0; }
+
+        .inline-img-right {
+            float: right; width: 250px;
+            margin: 0 0 16px 22px;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-right img { width: 100%; display: block; }
+        .inline-img-left {
+            float: left; width: 250px;
+            margin: 0 22px 16px 0;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            border: 2px solid #ede7d3;
+        }
+        .inline-img-left img { width: 100%; display: block; }
+        .img-cap { background: #f8f4ea; font-size: 11px; color: #888; text-align: center; padding: 6px 8px; font-style: italic; }
+        .img-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); border: 2px solid #ede7d3; }
+        .img-banner img { width: 100%; display: block; max-height: 280px; object-fit: cover; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, var(--gold), #a8c4e8); border-radius: 2px;
+        }
+        .tl-item { position: relative; margin-bottom: 28px; }
+        .tl-item:last-child { margin-bottom: 0; }
+        .tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 2px solid white; box-shadow: 0 0 0 2px var(--gold); }
+        .tl-dot.red { background: #8b0000; box-shadow: 0 0 0 2px #8b0000; }
+        .tl-dot.blue { background: var(--main); box-shadow: 0 0 0 2px var(--main); }
+        .tl-dot.green { background: #2a8a2a; box-shadow: 0 0 0 2px #2a8a2a; }
+        .tl-year { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .tl-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+        .quote-block {
+            background: #fffbf0; border-left: 4px solid var(--gold);
+            border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 18px 0;
+        }
+        .quote-block p { font-size: 14px; font-style: italic; color: #555; line-height: 1.8; margin-bottom: 8px; }
+        .quote-source { font-size: 12px; color: #999; font-weight: 500; }
+
+        .trait-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .trait-tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .trait-red  { background: #fdeaea; color: #8b0000; }
+        .trait-gold  { background: #fdf3d0; color: #8a6800; }
+        .trait-blue  { background: #fff2cc; color: #0a50a0; }
+        .trait-green { background: #eaf5e0; color: #2a6e1a; }
+        .trait-red   { background: #fdeaea; color: #8b0000; }
+
+        .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .achieve-card { background: #fffdf7; border: 1px solid #ede7d3; border-radius: 12px; padding: 16px; }
+        .achieve-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+        .achieve-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #222; }
+        .achieve-text { font-size: 12px; color: #666; line-height: 1.6; }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .stat-card { background: linear-gradient(135deg, #fffdf7, #f5ede0); border: 1px solid #ede7d3; border-radius: 14px; padding: 20px 16px; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--main); display: block; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+
+        .cause-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .cause-card { border-radius: 12px; padding: 18px 16px; }
+        .cause-card.politics  { background: #fdf3d0; border: 2px solid var(--gold); }
+        .cause-card.military  { background: #f5ede0; border: 2px solid #4a7abf; }
+        .cause-card.personal  { background: #fdeaea; border: 2px solid #c0392b; }
+        .cause-card.strategic { background: #eaf5e0; border: 2px solid #3a9a3a; }
+        .cause-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+        .cause-card.politics .cause-title  { color: #8a6800; }
+        .cause-card.military .cause-title  { color: #8b0000; }
+        .cause-card.personal .cause-title  { color: #8b0000; }
+        .cause-card.strategic .cause-title { color: #1a6e1a; }
+        .cause-text { font-size: 12px; color: #555; line-height: 1.6; }
+
+        .lesson-box { background: linear-gradient(135deg, #1e1206, #3a2010); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .lesson-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .lesson-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+        .legacy-box { background: linear-gradient(135deg, #200a15, #4a1a2a); border-radius: 14px; padding: 22px 24px; margin-top: 14px; color: white; }
+        .legacy-box .lesson-title { color: #a8d4ff; }
+
+        .hl { background: #fff2cc; padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 13px; color: #7a5a00; }
+
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-box { background: white; border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .sidebar-box h3 { font-size: 14px; font-weight: 700; color: var(--main); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5ede0; display: flex; align-items: center; gap: 7px; }
+
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid #f2ede0; }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 9px 0; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: #888; width: 44%; padding-right: 8px; }
+        .info-table td:last-child { font-weight: 500; color: #222; }
+
+        .legacy-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f2ede0; }
+        .legacy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .legacy-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .legacy-text { font-size: 12px; color: #555; line-height: 1.6; }
+        .legacy-text strong { color: #222; font-size: 13px; display: block; margin-bottom: 2px; }
+
+        .char-mini { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f2ede0; text-decoration: none; color: inherit; transition: 0.2s; border-radius: 8px; }
+        .char-mini:last-child { border-bottom: none; }
+        .char-mini:hover { background: #fffbf0; padding-left: 6px; }
+        .char-mini-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ede7d3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+        .char-mini-info { flex: 1; }
+        .char-mini-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .char-mini-desc { font-size: 11px; color: #888; }
+        .char-mini-arrow { font-size: 14px; color: #ccc; }
+
+        .heritage-card { margin-bottom: 16px; border: 1px solid #ede7d3; border-radius: 12px; overflow: hidden; background: #fffdf7; transition: 0.2s; }
+        .heritage-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .heritage-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .heritage-content { padding: 12px; }
+        .heritage-content strong { display: block; font-size: 13px; color: #222; margin-bottom: 6px; }
+        .heritage-content p { font-size: 12px; color: #666; line-height: 1.6; margin: 0; }
+
+        .btn-back { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--main); color: white; border-radius: 9px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.2s; }
+        .btn-back:hover { background: var(--gold); color: #1e1206; }
+
+        footer { background: var(--dark); color: #bbb; padding: 28px 80px; margin-top: 10px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #666; }
+        .footer-bottom a { color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text"><span>SỬ VIỆT</span></div>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#">Hành trình lịch sử</a></li>
+        <li><a href="#">Câu chuyện</a></li>
+        <li><a href="#">Quiz</a></li>
+        <li><a href="#">Nhân vật</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge">⚓ SỰ KIỆN LỊCH SỬ</div>
+        <h1>TRẬN BẠCH ĐẰNG<br>NĂM 938</h1>
+        <p class="subtitle">Thiên tài quân sự Ngô Quyền — cọc gỗ bịt sắt và thủy triều — đã nhấn chìm toàn bộ hải quân Nam Hán, chấm dứt hơn một nghìn năm Bắc thuộc và khai mở kỷ nguyên độc lập cho dân tộc Việt</p>
+        <div class="hero-tags">
+            <span class="hero-tag">📅 Năm 938</span>
+            <span class="hero-tag">📍 Sông Bạch Đằng, Quảng Ninh</span>
+            <span class="hero-tag">⚔️ Ngô Quyền</span>
+            <span class="hero-tag">🏛️ Chống quân Nam Hán</span>
+        </div>
+    </div>
+</section>
+
+<div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>›</span>
+    <a href="bac-thuoc.html">Bắc Thuộc</a>
+    <span>›</span>
+    Trận Bạch Đằng 938
+</div>
+
+<div class="page-layout">
+    <div class="main-col">
+
+        <!-- GIỚI THIỆU -->
+        <div class="content-box">
+            <h2>📖 GIỚI THIỆU</h2>
+            <div class="clearfix">
+                <div class="inline-img-right">
+                    <img src="images/bachdang.jfif" alt="Trận Bạch Đằng 938" onerror="this.parentElement.style.display='none'">
+                    <div class="img-cap">Ngô Quyền bày trận cọc trên sông Bạch Đằng năm 938</div>
+                </div>
+                <p>
+                    Trận Bạch Đằng năm <span class="hl">938</span> là một trong những chiến thắng vĩ đại nhất lịch sử dân tộc Việt Nam — trận đánh chấm dứt hơn <span class="hl">một nghìn năm Bắc thuộc</span> và mở ra kỷ nguyên độc lập tự chủ lâu dài. Người tạo nên kỳ tích đó là <span class="hl">Ngô Quyền</span> — vị tướng tài kiêm chiến lược gia thiên tài xuất thân từ Đường Lâm (Hà Nội ngày nay).
+                </p>
+                <p>
+                    Điều đặc biệt của trận đánh này là nghệ thuật <span class="hl">lợi dụng địa thế và thủy triều</span> — Ngô Quyền cho đóng hàng nghìn cọc gỗ bịt sắt nhọn xuống lòng sông Bạch Đằng, chờ thủy triều lên để nhử thuyền giặc vào, rồi khi triều xuống phản công dữ dội. Toàn bộ hạm đội Nam Hán bị đắm, hoàng tử Hoằng Thao tử trận.
+                </p>
+                <p>
+                    Chiến thắng Bạch Đằng 938 không chỉ là một trận thắng quân sự — đó là <span class="hl">tuyên ngôn độc lập bằng máu và lửa</span>, là bước ngoặt lịch sử chấm dứt toàn bộ tham vọng thống trị lâu dài của phương Bắc đối với đất Việt, khép lại một nghìn năm nô lệ và khai mở một kỷ nguyên mới.
+                </p>
+            </div>
+            <div class="trait-tags">
+                <span class="trait-tag trait-red">⚓ Trận thủy chiến lừng danh</span>
+                <span class="trait-tag trait-blue">🌊 Kế cọc Bạch Đằng độc đáo</span>
+                <span class="trait-tag trait-gold">🏛️ Kết thúc 1000 năm Bắc thuộc</span>
+                <span class="trait-tag trait-green">🌿 Khai mở kỷ nguyên tự chủ</span>
+            </div>
+        </div>
+
+        <!-- SỐ LIỆU NỔI BẬT -->
+        <div class="content-box">
+            <h2>📊 DẤU MỐC & CON SỐ</h2>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">938</span>
+                    <span class="stat-label">Năm diễn ra trận Bạch Đằng lịch sử</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Năm Bắc thuộc được kết thúc (111 TCN – 938)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">~2</span>
+                    <span class="stat-label">Vạn quân Nam Hán bị tiêu diệt trong trận</span>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Hoàng tử Nam Hán tử trận (Lưu Hoằng Thao)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">939</span>
+                    <span class="stat-label">Năm Ngô Quyền xưng vương, đóng đô Cổ Loa</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Lần sông Bạch Đằng là bãi chiến trường lịch sử (938, 981, 1288)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NGUYÊN NHÂN -->
+        <div class="content-box">
+            <h2>⚡ BỐI CẢNH & NGUYÊN NHÂN</h2>
+            <p>Trận Bạch Đằng bùng nổ trong bối cảnh đất Việt vừa trải qua biến cố lớn — Kiều Công Tiễn phản loạn giết chủ, cầu viện ngoại bang, tạo cớ cho quân Nam Hán xâm lược. Ngô Quyền đứng trước hai thử thách cùng lúc: dẹp kẻ phản bội và đánh tan giặc ngoại xâm.</p>
+            <div class="cause-grid">
+                <div class="cause-card personal">
+                    <div class="cause-title">🗡️ Kiều Công Tiễn giết Dương Đình Nghệ</div>
+                    <div class="cause-text">Năm 937, Kiều Công Tiễn — thuộc hạ phản phúc — giết Dương Đình Nghệ (người đã giải phóng Giao Châu khỏi Nam Hán năm 931) để đoạt quyền. Ngô Quyền là con rể của Dương Đình Nghệ, lập tức phát binh từ Ái Châu ra Bắc trả thù và khôi phục quyền lực.</div>
+                </div>
+                <div class="cause-card politics">
+                    <div class="cause-title">🏴 Nam Hán thừa cơ xâm lược</div>
+                    <div class="cause-text">Kiều Công Tiễn lo sợ Ngô Quyền trả thù liền cầu viện Nam Hán. Vua Nam Hán Lưu Nghiễm vốn nuôi tham vọng tái chiếm Giao Châu từ lâu, lập tức sai con trai Lưu Hoằng Thao đem thủy quân hùng mạnh theo đường biển tiến vào.</div>
+                </div>
+                <div class="cause-card military">
+                    <div class="cause-title">🌊 Chọn sông Bạch Đằng làm chiến trường</div>
+                    <div class="cause-text">Ngô Quyền xử trảm Kiều Công Tiễn trước khi quân Nam Hán đến nơi, rồi tập trung toàn lực chuẩn bị trận địa. Ông chọn sông Bạch Đằng — nơi thủy triều lên xuống mạnh và lòng sông có bãi cọc — làm nơi quyết chiến với thủy quân địch.</div>
+                </div>
+                <div class="cause-card strategic">
+                    <div class="cause-title">📐 Thiên tài bày trận cọc</div>
+                    <div class="cause-text">Biết rõ quân Nam Hán mạnh về thủy chiến, Ngô Quyền tận dụng điểm yếu: khi triều xuống thuyền lớn không thể cơ động. Ông cho đóng hàng nghìn cọc gỗ bịt sắt dưới lòng sông, dụ địch vào lúc triều lên rồi phản công khi triều rút — kế sách vừa độc đáo vừa chắc thắng.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIỄN BIẾN -->
+        <div class="content-box">
+            <h2>📜 DIỄN BIẾN LỊCH SỬ</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Năm 937</div>
+                    <div class="tl-title">Kiều Công Tiễn phản loạn — ngòi nổ cuộc chiến</div>
+                    <div class="tl-text">Kiều Công Tiễn ám sát Dương Đình Nghệ rồi cầu viện Nam Hán để đối phó với Ngô Quyền. Ngô Quyền từ Ái Châu (Thanh Hóa) kéo đại quân ra Bắc, bắt và giết Kiều Công Tiễn trước khi quân Nam Hán đặt chân đến Giao Châu.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Cuối năm 938 — Chuẩn bị</div>
+                    <div class="tl-title">Hạ cọc sắt — bẫy thủy triều trên sông Bạch Đằng</div>
+                    <div class="tl-text">Ngô Quyền huy động sức dân đóng hàng nghìn cột gỗ lớn bịt đầu sắt nhọn xuống lòng sông Bạch Đằng, tính toán chiều cao sao cho khi thủy triều lên cọc bị che khuất hoàn toàn dưới mặt nước, đủ để thuyền lớn của địch vượt qua mà không hay biết.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-year">Năm 938 — Giao chiến</div>
+                    <div class="tl-title">Nhử địch vào trận địa lúc triều lên</div>
+                    <div class="tl-text">Khi thủy quân Nam Hán do Lưu Hoằng Thao chỉ huy tiến vào cửa sông, Ngô Quyền cho thuyền nhỏ ra nghênh chiến rồi giả vờ thua chạy, nhử toàn bộ hạm đội địch vào sâu trong sông Bạch Đằng đúng lúc thủy triều đang lên cao nhất. Quân Nam Hán không nhận ra cái bẫy đang chờ.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">938 — Triều xuống, phản công</div>
+                    <div class="tl-title">Cọc nhô lên — thuyền địch bị đâm vỡ, mắc kẹt</div>
+                    <div class="tl-text">Khi thủy triều bắt đầu rút, những cọc sắt nhọn nhô dần lên khỏi mặt nước. Thuyền chiến lớn của Nam Hán bị đâm thủng hoặc mắc kẹt không thể cơ động. Ngô Quyền tung toàn bộ thủy bộ quân phản công, dùng thuyền nhỏ nhanh nhẹn tấn công vào đội hình đang hỗn loạn của địch.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot green"></div>
+                    <div class="tl-year">938 — Kết thúc trận đánh</div>
+                    <div class="tl-title">Lưu Hoằng Thao tử trận — hạm đội Nam Hán bị tiêu diệt</div>
+                    <div class="tl-text">Trận chiến kết thúc trong đại thắng của quân Việt. Hoàng tử Lưu Hoằng Thao tử trận trên sông Bạch Đằng. Quân Nam Hán chết gần hết, số còn lại tháo chạy ra biển. Vua Nam Hán Lưu Nghiễm khi nghe tin con trai tử trận đau đớn thương khóc, không dám phát binh sang báo thù nữa.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot blue"></div>
+                    <div class="tl-year">Năm 939</div>
+                    <div class="tl-title">Ngô Quyền xưng vương — kỷ nguyên độc lập mở ra</div>
+                    <div class="tl-text">Sau chiến thắng, Ngô Quyền xưng vương, đóng đô tại <strong>Cổ Loa</strong> (Đông Anh, Hà Nội ngày nay) — cố đô của Âu Lạc xưa. Đây là lần đầu tiên người Việt chính thức lập quốc gia độc lập sau hơn một nghìn năm nô lệ, khép lại hoàn toàn thời kỳ Bắc thuộc đầu tiên.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÀNH TỰU -->
+        <div class="content-box">
+            <h2>🏆 THÀNH TỰU & DẤU ẤN</h2>
+            <p>Trận Bạch Đằng 938 không chỉ là chiến thắng quân sự mà còn là cột mốc văn minh — lần đầu tiên người Việt tự quyết định vận mệnh mình sau hơn một nghìn năm, và thiên tài quân sự Ngô Quyền được lịch sử tôn vinh muôn đời.</p>
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <span class="achieve-icon">⚓</span>
+                    <div class="achieve-title">Kỳ tích thủy chiến bất hủ</div>
+                    <div class="achieve-text">Trận Bạch Đằng 938 được các sử gia đánh giá là một trong những trận thủy chiến xuất sắc nhất lịch sử châu Á cổ đại. Kế dùng cọc kết hợp thủy triều là sáng tạo quân sự độc đáo, chứng minh thiên tài chiến lược của Ngô Quyền.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🔓</span>
+                    <div class="achieve-title">Kết thúc 1000 năm Bắc thuộc</div>
+                    <div class="achieve-text">Chiến thắng này chấm dứt toàn bộ ý chí xâm lăng tái chiếm Giao Châu của các triều đại phương Bắc trong giai đoạn đó, mở ra nền độc lập thực sự — không còn bị chinh phục hoàn toàn như thời Bắc thuộc nữa. Đây là bước ngoặt không thể đảo ngược.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">👑</span>
+                    <div class="achieve-title">Khai sáng thời kỳ phong kiến độc lập</div>
+                    <div class="achieve-text">Ngô Quyền xưng vương, lập triều đình, đặt quan chế — đặt nền móng cho một nhà nước Việt độc lập. Từ đây, dù có lúc loạn lạc (thời 12 sứ quân), không có triều đại ngoại bang nào thực sự đô hộ hoàn toàn nước ta trong suốt nghìn năm tiếp theo.</div>
+                </div>
+                <div class="achieve-card">
+                    <span class="achieve-icon">🌊</span>
+                    <div class="achieve-title">Bạch Đằng — con sông huyền thoại</div>
+                    <div class="achieve-text">Sông Bạch Đằng trở thành biểu tượng thiêng liêng trong lịch sử dân tộc. Kế sách cọc Bạch Đằng được dùng lại thêm hai lần nữa: Lê Hoàn (981) đánh Tống và Trần Hưng Đạo (1288) đánh Nguyên — đều đại thắng — cho thấy tầm ảnh hưởng vượt thời gian của Ngô Quyền.</div>
+                </div>
+            </div>
+
+            <div class="img-banner" style="margin-top:4px;">
+                <img src="images/bachdang938_toan.jpg" alt="Toàn cảnh trận Bạch Đằng" onerror="this.parentElement.style.display='none'">
+                <div class="img-cap">Toàn cảnh trận Bạch Đằng 938 — Ngô Quyền phá tan hạm đội Nam Hán</div>
+            </div>
+
+            <div class="quote-block" style="margin-top:4px;">
+                <p>"Ngô Quyền là người hùng dân tộc, công đánh đuổi quân Nam Hán, giành lại nền độc lập cho nước ta sau gần một nghìn năm Bắc thuộc. Đó là công lao rất lớn đối với lịch sử nước nhà."</p>
+                <span class="quote-source">— Đại Việt sử ký toàn thư (Ngô Sĩ Liên)</span>
+            </div>
+        </div>
+
+        <!-- Ý NGHĨA -->
+        <div class="content-box">
+            <h2>💡 Ý NGHĨA LỊCH SỬ</h2>
+            <p>
+                Trận Bạch Đằng 938 là <span class="hl">bước ngoặt vĩ đại nhất lịch sử Việt Nam</span> sau hơn một nghìn năm. Không đơn thuần là một chiến thắng quân sự, đây là lời tuyên bố dứt khoát rằng: người Việt có đủ bản lĩnh, trí tuệ và ý chí để tự quyết định vận mệnh mình.
+            </p>
+            <p>
+                Điều làm nên sự vĩ đại của Ngô Quyền không chỉ ở chiến thắng mà ở <span class="hl">tầm nhìn chiến lược</span>: ông không chỉ đánh thắng một trận mà đánh vào ý chí xâm lăng của kẻ thù — sau thất bại thảm khốc này, Nam Hán không bao giờ dám mơ mộng tái chiếm Giao Châu nữa.
+            </p>
+            <div class="quote-block">
+                <p>"Trận Bạch Đằng năm 938 mãi mãi là trang sử vàng chói lọi — nơi một dân tộc dù nhỏ bé đã dùng trí tuệ, đất trời và ý chí sắt đá để đập tan đội quân xâm lăng hung hãn nhất, và từ đó bước vào nghìn năm tự làm chủ vận mệnh mình."</p>
+                <span class="quote-source">— Nhận định lịch sử Việt Nam</span>
+            </div>
+            <div class="lesson-box">
+                <div class="lesson-title">⚓ Bài học từ trận Bạch Đằng</div>
+                <div class="lesson-text">Ngô Quyền dạy rằng: kẻ yếu có thể thắng kẻ mạnh nếu biết dùng trí tuệ, địa hình và thời cơ. Không cần binh hùng tướng mạnh ngang bằng địch — chỉ cần hiểu địch, hiểu đất, hiểu trời, và có đủ dũng khí đặt cược tất cả vào một kế sách táo bạo.</div>
+            </div>
+            <div class="legacy-box" style="margin-top:14px;">
+                <div class="lesson-title">🌊 Di sản sống mãi với thời gian</div>
+                <div class="lesson-text">Kế cọc Bạch Đằng được Lê Hoàn và Trần Hưng Đạo kế thừa thắng lợi trong các thế kỷ sau. Sông Bạch Đằng trở thành biểu tượng bất tử của chủ quyền dân tộc. Tên Ngô Quyền được đặt cho quận, đường phố, trường học khắp Việt Nam — di sản sống mãi trong đời sống hàng ngày của người Việt.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📋 THÔNG TIN CƠ BẢN</h3>
+            <table class="info-table">
+                <tr><td>Sự kiện</td><td>Trận Bạch Đằng</td></tr>
+                <tr><td>Thời gian</td><td>Năm 938</td></tr>
+                <tr><td>Địa điểm</td><td>Sông Bạch Đằng, Quảng Ninh</td></tr>
+                <tr><td>Chỉ huy ta</td><td>Ngô Quyền</td></tr>
+                <tr><td>Kẻ thù</td><td>Thủy quân Nam Hán</td></tr>
+                <tr><td>Chỉ huy địch</td><td>Lưu Hoằng Thao</td></tr>
+                <tr><td>Vũ khí độc đáo</td><td>Cọc gỗ bịt sắt + thủy triều</td></tr>
+                <tr><td>Kết quả</td><td>Đại thắng, Hoằng Thao tử trận</td></tr>
+                <tr><td>Sau trận</td><td>Ngô Quyền xưng vương (939)</td></tr>
+                <tr><td>Đô thành</td><td>Cổ Loa (Đông Anh, Hà Nội)</td></tr>
+                <tr><td>Di sản</td><td>Kết thúc 1000 năm Bắc thuộc</td></tr>
+            </table>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>🏛️ DI SẢN & DI TÍCH</h3>
+
+            <div class="heritage-card">
+                <img src="images/khuditichbachdang.jpg" alt="Khu di tích Bạch Đằng Giang" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Khu di tích Bạch Đằng Giang — Quảng Ninh</strong>
+                    <p>Tọa lạc tại thị xã Quảng Yên, Quảng Ninh — nơi diễn ra trận đánh lịch sử. Được xếp hạng Di tích lịch sử Quốc gia đặc biệt, là điểm đến hành hương quan trọng bậc nhất Việt Nam.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/denngoquyen.jpg" alt="Đền thờ Ngô Quyền" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Đền thờ Ngô Quyền — Đường Lâm, Hà Nội</strong>
+                    <p>Tại làng Đường Lâm (quê hương Ngô Quyền) thuộc Sơn Tây, Hà Nội. Lễ hội tưởng niệm hàng năm thu hút đông đảo người dân về dâng hương tri ân vị anh hùng dân tộc.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/coloa.jpg" alt="Cổ Loa thành" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Cổ Loa — Đông Anh, Hà Nội</strong>
+                    <p>Nơi Ngô Quyền chọn làm kinh đô sau chiến thắng Bạch Đằng. Cổ Loa vốn là kinh đô của nhà nước Âu Lạc thời An Dương Vương, được Ngô Quyền phục hồi như biểu tượng tái lập chủ quyền dân tộc.</p>
+                </div>
+            </div>
+
+            <div class="heritage-card">
+                <img src="images/baicoc.jpg" alt="Cọc Bạch Đằng" onerror="this.parentElement.style.display='none'">
+                <div class="heritage-content">
+                    <strong>Bãi cọc Bạch Đằng — Quảng Yên</strong>
+                    <p>Các cọc gỗ lim hàng nghìn năm tuổi được khai quật và bảo tồn, là bằng chứng vật chất vô giá còn sót lại của trận chiến huyền thoại năm 938. Một số cọc hiện đang trưng bày tại bảo tàng.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidebar-box">
+            <h3>👑 NHÂN VẬT LIÊN QUAN</h3>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #1a4a8a;">⚔️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Ngô Quyền</div>
+                    <div class="char-mini-desc">Thủ lĩnh — người chỉ huy trận Bạch Đằng</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #2a5a8a;">🚢</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Lưu Hoằng Thao</div>
+                    <div class="char-mini-desc">Hoàng tử Nam Hán — chỉ huy quân xâm lược</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #6a1a1a;">🗡️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Kiều Công Tiễn</div>
+                    <div class="char-mini-desc">Kẻ phản loạn — châm ngòi cuộc xâm lăng</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+            <a href="#" class="char-mini">
+                <div class="char-mini-avatar" style="background: #3a6a2a;">🏛️</div>
+                <div class="char-mini-info">
+                    <div class="char-mini-name">Dương Đình Nghệ</div>
+                    <div class="char-mini-desc">Cha vợ Ngô Quyền — người giải phóng Giao Châu trước đó</div>
+                </div>
+                <span class="char-mini-arrow">›</span>
+            </a>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>✨ SỰ THẬT THÚ VỊ</h3>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🌊</div>
+                <div class="legacy-text">
+                    <strong>Dùng thủy triều làm vũ khí</strong>
+                    Ngô Quyền là người đầu tiên trong lịch sử Việt Nam biến thủy triều thành "đồng minh" — một thiên tài quân sự hiếm có trong lịch sử chiến tranh thế giới cổ đại.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🪵</div>
+                <div class="legacy-text">
+                    <strong>Cọc lim nghìn năm không mục</strong>
+                    Các cọc gỗ lim được đóng năm 938 vẫn còn được khai quật tốt hàng nghìn năm sau — minh chứng vật chất hùng hồn nhất của trận chiến lịch sử.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🔁</div>
+                <div class="legacy-text">
+                    <strong>Kế sách được dùng 3 lần</strong>
+                    Bãi cọc Bạch Đằng được tái dụng thêm hai lần nữa: Lê Hoàn (981) đại thắng quân Tống và Trần Hưng Đạo (1288) đại thắng quân Nguyên Mông — đều dùng lại kế cọc của Ngô Quyền.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">📜</div>
+                <div class="legacy-text">
+                    <strong>Sử Trung Hoa phải ghi nhận</strong>
+                    Sử sách nhà Hán ghi chép rõ thất bại thảm khốc này và cái chết của hoàng tử Hoằng Thao — bằng chứng cho thấy tầm vóc lịch sử vượt biên giới của trận Bạch Đằng 938.
+                </div>
+            </div>
+
+            <div class="legacy-item">
+                <div class="legacy-icon">🏙️</div>
+                <div class="legacy-text">
+                    <strong>Tên gọi bất tử</strong>
+                    Ngô Quyền được đặt tên cho quận (Hải Phòng), đường phố, trường học khắp Việt Nam. Lễ hội tưởng niệm tại Đường Lâm và Quảng Ninh hàng năm thu hút hàng vạn người về dâng hương.
+                </div>
+            </div>
+        </div>
+
+        <a href="bac-thuoc.html" class="btn-back">← Quay lại Bắc Thuộc</a>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <span>© 2025 Sử Việt. Bảo lưu mọi quyền.</span>
+        <span><a href="#">Chính sách</a> · <a href="#">Điều khoản</a></span>
+    </div>
+</footer>
+
+</body>
+</html>

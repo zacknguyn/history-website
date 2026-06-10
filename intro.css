@@ -1,0 +1,109 @@
+/* ===== INTRO SCREEN ===== */
+#intro-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(135deg, #0D1B35 0%, #1A2A4A 50%, #8B0000 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#intro-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.intro-dragon {
+  font-size: 5rem;
+  animation: dragonFloat 2s ease-in-out infinite alternate;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 32px rgba(243,156,18,0.8));
+}
+@keyframes dragonFloat {
+  from { transform: translateY(0) rotate(-3deg); }
+  to   { transform: translateY(-16px) rotate(3deg); }
+}
+
+.intro-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(243,156,18,0.7);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { text-shadow: 0 0 40px rgba(243,156,18,0.7); }
+  50%      { text-shadow: 0 0 80px rgba(243,156,18,1), 0 0 120px rgba(192,57,43,0.5); }
+}
+.intro-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 40px; letter-spacing: 2px;
+}
+
+.intro-btn {
+  background: linear-gradient(135deg, #C0392B, #F39C12);
+  color: #fff; border: none; border-radius: 50px;
+  padding: 18px 52px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem; font-weight: 800;
+  cursor: pointer; letter-spacing: 2px;
+  box-shadow: 0 8px 40px rgba(192,57,43,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.intro-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2s ease infinite;
+}
+@keyframes shimmer { to { transform: translateX(100%); } }
+.intro-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 16px 48px rgba(192,57,43,0.7); }
+
+.intro-stars {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.intro-star {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: #fff; border-radius: 50%;
+  animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+  opacity: 0;
+}
+@keyframes twinkle {
+  0%,100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 1; transform: scale(1.5); }
+}
+
+/* ===== PARTICLES CANVAS ===== */
+#particles-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  opacity: 0.35;
+}
+
+/* ===== CONFETTI ===== */
+.confetti-piece {
+  position: fixed;
+  width: 10px; height: 10px;
+  top: -20px;
+  animation: confettiFall var(--dur, 3s) linear var(--delay, 0s) forwards;
+  pointer-events: none; z-index: 9998;
+  border-radius: var(--br, 2px);
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg) translateX(var(--dx, 20px)); opacity: 0; }
+}
+
+/* ===== FLOATING ORBS (background atmosphere) ===== */
+.orb {
+  position: fixed; border-radius: 50%;
+  filter: blur(80px); pointer-events: none; z-index: 0;
+  animation: orbDrift var(--dur, 12s) ease-in-out infinite alternate;
+}
+@keyframes orbDrift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--dx, 30px), var(--dy, -30px)); }
+}
