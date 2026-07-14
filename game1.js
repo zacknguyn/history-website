@@ -2,7 +2,7 @@
 const g1Data = [
   
    {
-    img: 'images/ngoquyen.jpg',
+    img: 'ngoquyen.jpg',
     name: 'Ngô Quyền',
     clue: 'Năm 938, vị tướng này cắm cọc sắt dưới lòng sông, đánh tan quân Nam Hán và chấm dứt 1000 năm Bắc thuộc.',
     options: ['Ngô Quyền', 'Trần Hưng Đạo', 'Đinh Bộ Lĩnh', 'Lê Lợi'],
